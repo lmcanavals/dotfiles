@@ -1,0 +1,23 @@
+[core]
+	editor = nvim
+	excludesfile = /home/lmcs/.gitignore_global
+[user]
+	name = Luis M Canaval S
+	email = public02@canaval.org
+[color]
+	ui = true
+	status = auto
+	branch = auto
+[color "status"]
+	added = 10
+	untracked = 13
+	changed = 11
+	header = 6
+	nobranch = 15
+	updated = 12
+[push]
+	default = simple
+[credential]
+	helper = /usr/lib/git-core/git-credential-libsecret
+[init]
+	defaultBranch = main
