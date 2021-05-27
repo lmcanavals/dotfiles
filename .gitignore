@@ -44,6 +44,7 @@
 .config/nvim/plugged/
 .config/pulse/
 .config/Bitwarden\ CLI/
+.config/google-chrome/
 .config/Thunar/
 .config/VirtualBox/
 .config/autostart/
