@@ -38,6 +38,7 @@
 .jupyter/
 .local/share/
 .mozilla/
+.npm/
 .pki/
 
 
