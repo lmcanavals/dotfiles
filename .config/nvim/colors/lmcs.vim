@@ -46,7 +46,7 @@ let s:o = [
 			\ [   'CursorLine', -1,  0, 23 ],
 			\ [ 'CursorLineNr', 14,  0, 23 ],
 			\ [  'ColorColumn',  8,  0, 18 ],
-			\ [       'LineNr',  8,  0, -1 ],
+			\ [       'LineNr',  8, -1, -1 ],
 			\ [   'FoldColumn', 13,  4, -1 ],
 			\ [       'Folded', 14,  4, -1 ],
 			\ [   'MatchParen', 11,  7, 23 ],
