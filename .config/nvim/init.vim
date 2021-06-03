@@ -50,9 +50,10 @@ else
 
 	Plug 'junegunn/vim-easy-align'
 	Plug 'scrooloose/nerdtree',      { 'on':  'NERDTreeToggle' }
-	Plug 'beyondmarc/glsl.vim'
-	Plug 'fatih/vim-go',             { 'for': 'go' } " 'do': ':GoUpdateBinaries'
+"	Plug 'beyondmarc/glsl.vim'
+"	Plug 'fatih/vim-go',             { 'for': 'go' } " 'do': ':GoUpdateBinaries'
 	Plug 'pprovost/vim-ps1',         { 'for': 'ps1' }
+	Plug 'sheerun/vim-polyglot'
 
 	call plug#end()
 

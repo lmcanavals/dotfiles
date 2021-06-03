@@ -72,7 +72,7 @@ let s:o = [
 			\ [   'WarningMsg',  3, -1, 23 ],
 			\ [     'ErrorMsg',  1, 23, 23 ],
 			\ [      'MoreMsg',  2, -1, 23 ],
-			\ [      'Comment',  8, -1, -1 ],
+			\ [      'Comment',  8, -1, 20 ],
 			\ [         'Todo',  3, 23, -1 ],
 			\ [        'Error', 15,  1, -1 ],
 			\ [   'Identifier', 12, -1, 23 ],
