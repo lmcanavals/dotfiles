@@ -50,6 +50,7 @@
 .config/VirtualBox/
 .config/autostart/
 .config/blender/
+.config/configstore/
 .config/dconf/
 .config/gtk-3.0/
 .config/htop/

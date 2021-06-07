@@ -178,7 +178,7 @@ su - lmcs
 cd git
 git clone https://aur.archlinux.org/yay-bin.git
 cd yay-bin
-makepgk -Acs
+makepgk -Acsi
 ```
 
 Then as root or with sudo:

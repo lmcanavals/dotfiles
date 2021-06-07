@@ -25,8 +25,7 @@ else
 	set sbr=▼\ 
 	set list
 	set listchars=tab:┼─,trail:∙,extends:»,precedes:«,nbsp:§
-" Example characters
-		   
+" Example characters  			   
 	set scrolloff=5
 	set statusline=%f%M%Y%R%H%W,%{&ff},%{&fenc?&fenc:&enc}%=%-10(%l,%c%V%)%P
 	set laststatus=0
