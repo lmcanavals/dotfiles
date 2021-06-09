@@ -45,14 +45,15 @@ else
 	xmap <leader>a <Plug>(EasyAlign)
 	nmap <leader>a <Plug>(EasyAlign)
 
+	let g:polyglot_disabled = ['glsl']
+
 	call plug#begin()
 
 	Plug 'junegunn/vim-easy-align'
 	Plug 'scrooloose/nerdtree',      { 'on':  'NERDTreeToggle' }
-"	Plug 'beyondmarc/glsl.vim'
-"	Plug 'fatih/vim-go',             { 'for': 'go' } " 'do': ':GoUpdateBinaries'
-	Plug 'pprovost/vim-ps1',         { 'for': 'ps1' }
 	Plug 'sheerun/vim-polyglot'
+	Plug 'beyondmarc/glsl.vim'
+	Plug 'pprovost/vim-ps1',         { 'for': 'ps1' }
 
 	call plug#end()
 

@@ -176,8 +176,8 @@ Download and install yay as user:
 ```sh
 su - lmcs
 cd git
-git clone https://aur.archlinux.org/yay-bin.git
-cd yay-bin
+git clone https://aur.archlinux.org/yay.git
+cd yay
 makepgk -Acsi
 ```
 
@@ -232,9 +232,9 @@ Utilities
 yay -S papirus-icon-theme
 yay -S file-roller unrar p7zip ntp imagemagick htop
 yay -S redshift mosh network-manager-applet pavucontrol
-yay -S libcanberra-pulse libcanberra-gstreamer
 yay -S libcanberra gnome-keyring haveged jq
 yay -S firefox google-chrome opera opera-ffmpeg-codecs
+yay -S webp-pixbuf-loader
 ```
 
 Fonts, utilities, etc:
