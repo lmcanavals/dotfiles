@@ -5,7 +5,7 @@
 #	export TERM="xterm-256color"
 #fi
 
-if [ "$TERM" != "xterm-256color" ]; then
+if [[ "$TERM" == "linux" ]]; then
 #	echo -en "\e]P020201E" # on tty this redraws the background so not cool
 	echo -en "\e]P1DB4952"
 	echo -en "\e]P257A128"

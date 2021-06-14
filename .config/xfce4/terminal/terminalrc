@@ -43,8 +43,8 @@ ColorCursorForeground=#000000000000
 ColorCursor=#9999c1c1f1f1
 ColorCursorUseDefault=FALSE
 ColorSelectionUseDefault=FALSE
-ColorSelection=#1a1a5f5fb4b4
-ColorSelectionBackground=#f6f6f5f5f4f4
+ColorSelection=#00003d3c6161
+ColorSelectionBackground=#ffffd3d34342
 FontName=Monospace 6
 FontUseSystem=TRUE
 
