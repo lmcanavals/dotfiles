@@ -6,7 +6,7 @@ LCLR=("20201E" "DB4952" "57A128" "EE9D34" "538FD5" "A646D3" "32ABBA" "A09D80"
 
 if [[ "$TERM" == "linux" ]]; then
 	for i in {1..15}; do
-		echo -en "\e]P$(printf "%x" "$i")${color[i+1]}"
+		echo -en "\e]P$(printf "%x" "$i")${LCLR[i+1]}"
 	done
 	#echo -en "\e]P0${color[1]}"
 	#clear # for background artifacting
@@ -87,16 +87,16 @@ bindkey -v
 ## beginning-of-line OR beginning-of-buffer OR beginning of history
 ## by: Bart Schaefer <schaefer@brasslantern.com>, Bernhard Tittelbach
 beginning-or-end-of-somewhere() {
-local hno=$HISTNO
-if [[ ( "${LBUFFER[-1]}" == $'\n' && "$WIDGET" == beginning-of* ) || \
-	( "${RBUFFER[1]}" == $'\n' && "$WIDGET" == end-of* ) ]]; then
-	zle .${WIDGET:s/somewhere/buffer-or-history/} "$@"
-else
-	zle .${WIDGET:s/somewhere/line-hist/} "$@"
-	if (( HISTNO != hno )); then
+	local hno=$HISTNO
+	if [[ ( "${LBUFFER[-1]}" == $'\n' && "$WIDGET" == beginning-of* ) || \
+				( "${RBUFFER[1]}" == $'\n' && "$WIDGET" == end-of* ) ]]; then
 		zle .${WIDGET:s/somewhere/buffer-or-history/} "$@"
+	else
+		zle .${WIDGET:s/somewhere/line-hist/} "$@"
+		if (( HISTNO != hno )); then
+			zle .${WIDGET:s/somewhere/buffer-or-history/} "$@"
+		fi
 	fi
-fi
 }
 zle -N beginning-of-somewhere beginning-or-end-of-somewhere
 zle -N end-of-somewhere beginning-or-end-of-somewhere
@@ -105,14 +105,18 @@ bindkey "\eOH" beginning-of-somewhere  # home
 bindkey "[H" beginning-of-somewhere  # home
 bindkey "\eOF" end-of-somewhere        # end
 bindkey "[F" end-of-somewhere        # end
+if [[ "$TERM" == "linux" ]]; then
+	bindkey "[1~" beginning-of-somewhere  # home
+	bindkey "[4~" end-of-somewhere        # end
+fi
 
 bindkey "\e[A"  up-line-or-search       # cursor up
-bindkey "\e[B"  down-line-or-search     # <ESC>-
+bindkey "\e[B"  down-line-or-search     # <ESC>
 
 ## use Ctrl <- and Ctrl -> for jumping to word-beginnings on the CL
 bindkey "\e[1;5C" forward-word
 bindkey "\e[1;5D" backward-word
-## the same for alt-left-arrow and alt-right-arrow
+## the same for Alt <- and Alt ->
 bindkey "[1;3C" forward-word
 bindkey "[1;3D" backward-word
 
@@ -131,7 +135,7 @@ bindkey "$terminfo[kcbt]" reverse-menu-complete
 
 NOABBREVIATION=${NOABBREVIATION:-0}
 grml_toggle_abbrev() {
-	if (( $NOABBREVIATION > 0 )) ; then
+	if (( $NOABBREVIATION > 0 )); then
 		NOABBREVIATION=0
 	else
 		NOABBREVIATION=1
@@ -141,8 +145,8 @@ zle -N grml_toggle_abbrev
 bindkey "^xA" grml_toggle_abbrev
 
 commit-to-history() {
-print -s ${(z)BUFFER}
-zle send-break
+	print -s ${(z)BUFFER}
+	zle send-break
 }
 zle -N commit-to-history
 bindkey "^x^h" commit-to-history
@@ -174,7 +178,7 @@ function Accept-Line() {
 	(( ${#subs} < 1 )) && return 0
 
 	(( aldone = 0 ))
-	for sub in $subs ; do
+	for sub in $subs; do
 		[[ $sub == "accept-line" ]] && sub=".accept-line"
 		zle $sub
 		(( aldone > 0 )) && break
@@ -198,16 +202,15 @@ function Accept-Line-HandleContext() {
 	zle Accept-Line
 
 	default_action=$(Accept-Line-getdefault)
-	zstyle -T ":acceptline:$alcontext" call_default \
-		&& zle $default_action
-	}
+	zstyle -T ":acceptline:$alcontext" call_default && zle $default_action
+}
 function accept-line() {
 	setopt localoptions noksharrays
 	local -ax cmdline
-	local -x alcontext
+	local -x alctx
 	local buf com fname format msg default_action
 
-	alcontext="default"
+	alctx="default"
 	buf="$BUFFER"
 	cmdline=(${(z)BUFFER})
 	com="${cmdline[1]}"
@@ -215,62 +218,58 @@ function accept-line() {
 
 	Accept-Line "preprocess"
 
-	zstyle -t ":acceptline:$alcontext" rehash \
-		&& [[ -z ${commands[$com]} ]]           \
-		&& rehash
+	zstyle -t ":acceptline:$alctx" rehash && [[ -z ${commands[$com]} ]] && rehash
 
-	if   [[ -n $com               ]] \
+	if   [[ -n $com                 ]] \
 		&& [[ -n ${reswords[(r)$com]} ]] \
 		|| [[ -n ${aliases[$com]}     ]] \
 		|| [[ -n ${functions[$com]}   ]] \
 		|| [[ -n ${builtins[$com]}    ]] \
-		|| [[ -n ${commands[$com]}    ]] ; then
+		|| [[ -n ${commands[$com]}    ]]; then
 
 		# there is something sensible to execute, just do it.
-		alcontext="normal"
+		alctx="normal"
 		Accept-Line-HandleContext
 
 		return
 	fi
 
-	if   [[ -o correct              ]] \
-		|| [[ -o correctall           ]] \
-		&& [[ -n ${functions[$fname]} ]] ; then
+	if [[ -o correct ]]||[[ -o correctall ]]&&[[ -n ${functions[$fname]} ]]; then
 
-	if [[ $LASTWIDGET == "accept-line" ]] ; then
-		alcontext="force"
-		Accept-Line-HandleContext
+		if [[ $LASTWIDGET == "accept-line" ]]; then
+			alctx="force"
+			Accept-Line-HandleContext
 
-		return
-	fi
-
-	if zstyle -t ":acceptline:$alcontext" nocompwarn ; then
-		alcontext="normal"
-		Accept-Line-HandleContext
-	else
-		# prepare warning message for the user, configurable via zstyle.
-		zstyle -s ":acceptline:$alcontext" compwarnfmt msg
-
-		if [[ -z $msg ]] ; then
-			msg="%c will not execute and completion %f exists."
+			return
 		fi
 
-		zformat -f msg "$msg" "c:$com" "f:$fname"
+		if zstyle -t ":acceptline:$alctx" nocompwarn; then
+			alctx="normal"
+			Accept-Line-HandleContext
+		else
+			# prepare warning message for the user, configurable via zstyle.
+			zstyle -s ":acceptline:$alctx" compwarnfmt msg
 
-		zle -M -- "$msg"
-	fi
-	return
-elif [[ -n ${buf//[$' \t\n']##/} ]] ; then
-	alcontext="misc"
-	Accept-Line-HandleContext
+			if [[ -z $msg ]]; then
+				msg="%c will not execute and completion %f exists."
+			fi
 
-	return
-	fi
+			zformat -f msg "$msg" "c:$com" "f:$fname"
 
-		# If we got this far, the commandline only contains whitespace, or is empty
-		alcontext="empty"
+			zle -M -- "$msg"
+		fi
+		return
+	elif [[ -n ${buf//[$' \t\n']##/} ]]; then
+		alctx="misc"
 		Accept-Line-HandleContext
-	}
+
+		return
+	fi
+
+	# If we got this far, the commandline only contains whitespace, or is empty
+	alctx="empty"
+	Accept-Line-HandleContext
+}
 zle -N accept-line
 zle -N Accept-Line
 zle -N Accept-Line-HandleContext
@@ -288,7 +287,7 @@ done; unset rh
 autoload -U compinit && compinit
 autoload -U zed
 
-for mod in complist deltochar mathfunc ; do
+for mod in complist deltochar mathfunc; do
 	zmodload -i zsh/$mod 2>/dev/null
 done
 
@@ -304,7 +303,7 @@ bindkey "\ei" menu-complete
 autoload -U edit-command-line && zle -N edit-command-line \
 	&& bindkey "\ee" edit-command-line
 
-if [[ -n ${(k)modules[zsh/complist]} ]] ; then
+if [[ -n ${(k)modules[zsh/complist]} ]]; then
 	bindkey -M menuselect "\e^M" accept-and-menu-complete
 	bindkey -M menuselect "+" accept-and-menu-complete
 	bindkey -M menuselect "^[[2~" accept-and-menu-complete
@@ -335,7 +334,7 @@ bindkey "^z" grml-zsh-fg
 function jump_after_first_word() {
 	local words
 	words=(${(z)BUFFER})
-	if (( ${#words} <= 1 )) ; then
+	if (( ${#words} <= 1 )); then
 		CURSOR=${#BUFFER}
 	else
 		CURSOR=${#${words[1]}}
@@ -350,7 +349,7 @@ bindkey "^x^x" hist-complete
 
 DIRSTACKSIZE=${DIRSTACKSIZE:-20}
 DIRSTACKFILE=${DIRSTACKFILE:-$HOME/.zdirs}
-if [[ -f $DIRSTACKFILE ]] && [[ ${#dirstack[*]} -eq 0 ]] ; then
+if [[ -f $DIRSTACKFILE ]] && [[ ${#dirstack[*]} -eq 0 ]]; then
 	dirstack=( ${(f)"$(< $DIRSTACKFILE)"} )
 	[[ -d $dirstack[1] ]] && cd $dirstack[1] && cd $OLDPWD
 fi
@@ -484,7 +483,7 @@ precmd() {
 }
 
 preexec() {
-	# if [[ -n "$HOSTNAME" ]] && [[ "$HOSTNAME" != $(hostname) ]] ; then
+	# if [[ -n "$HOSTNAME" ]] && [[ "$HOSTNAME" != $(hostname) ]]; then
 	# 	NAME="@$HOSTNAME"
 	# fi
 	set_title "${(%):-"%n@%m"}" "$1"
@@ -536,10 +535,10 @@ _force_rehash() {
 
 setopt correct
 zstyle -e ":completion:*" completer '
-if [[ $_last_try != "$HISTNO$BUFFER$CURSOR" ]] ; then
+if [[ $_last_try != "$HISTNO$BUFFER$CURSOR" ]]; then
 	_last_try="$HISTNO$BUFFER$CURSOR"
 	reply=(_complete _match _ignored _prefix _files)
-elif [[ $words[1] == (rm|mv) ]] ; then
+elif [[ $words[1] == (rm|mv) ]]; then
 	reply=(_complete _files)
 else
 	reply=(_oldlist _expand _force_rehash _complete \

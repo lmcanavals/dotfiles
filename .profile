@@ -6,12 +6,11 @@
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
-export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 export NO_AT_BRIDGE=1
 
 xset -b
 
-play .local/share/sounds/Smooth/stereo/desktop-login.oga &
+play "$XDG_DATA_HOME/sounds/Smooth/stereo/desktop-login.oga" &
 
 # vim: set tabstop=2:softtabstop=2:shiftwidth=2:noexpandtab
 
