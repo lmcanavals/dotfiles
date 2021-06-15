@@ -1,23 +1,15 @@
 #!/usr/bin/zsh
 
+#     Black    Red      Green    Yellow   Blue     Magenta  Cyan     White
+LCLR=("20201E" "DB4952" "57A128" "EE9D34" "538FD5" "A646D3" "32ABBA" "A09D80"
+      "786458" "F6958F" "9BC76F" "F5D277" "81AFF3" "CC8FD8" "78D2E0" "E0DDC0")
+
 if [[ "$TERM" == "linux" ]]; then
-#	echo -en "\e]P020201E" # on tty this redraws the background so not cool
-	echo -en "\e]P1DB4952"
-	echo -en "\e]P257A128"
-	echo -en "\e]P3EE9D34"
-	echo -en "\e]P4538FD5"
-	echo -en "\e]P5A646D3"
-	echo -en "\e]P632ABBA"
-	echo -en "\e]P7A09D80"
-	echo -en "\e]P8786458"
-	echo -en "\e]P9F6958F"
-	echo -en "\e]PA9BC76F"
-	echo -en "\e]PBF5D277"
-	echo -en "\e]PC81AFF3"
-	echo -en "\e]PDCC8FD8"
-	echo -en "\e]PE78D2E0"
-	echo -en "\e]PFE0DDC0"
-	#  clear #for background artifacting
+	for i in {1..15}; do
+		echo -en "\e]P$(printf "%x" "$i")${color[i+1]}"
+	done
+	#echo -en "\e]P0${color[1]}"
+	#clear # for background artifacting
 fi
 
 eval $(dircolors $ZDOTDIR/16.dircolors)
@@ -29,11 +21,11 @@ else
 	bgp="[42m"
 	fgu="[92m"
 fi
-bg1="[41m"
+#bg1="[41m"
 bg3="[43m"
-bg6="[46m"
+#bg6="[46m"
 fg2="[32m"
-fg3="[33m"
+#fg3="[33m"
 fg6="[36m"
 fg9="[91m"
 fga="[92m"
