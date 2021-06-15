@@ -1,6 +1,5 @@
 #!/usr/bin/zsh
 
-ZSHDIR=$HOME/.config/zsh
 HISTFILE=$HOME/.zsh_histfile
 HISTSIZE=1000
 SAVEHIST=1000
@@ -11,22 +10,21 @@ export SHELL="/usr/bin/zsh"
 export BROWSER="exo-open --launch WebBrowser "
 export COLORTERM="yes"
 
-source $ZSHDIR/base.zsh
-source $ZSHDIR/paths.zsh
-source $ZSHDIR/funct.zsh
-source $ZSHDIR/aliases.zsh
-if [[ -s $ZSHDIR/dynamic.zsh ]]; then
-	source $ZSHDIR/dynamic.zsh
+source $ZDOTDIR/base.zsh
+source $ZDOTDIR/funct.zsh
+source $ZDOTDIR/aliases.zsh
+if [[ -s $ZDOTDIR/dynamic.zsh ]]; then
+	source $ZDOTDIR/dynamic.zsh
 fi
 
-if [[ -d $ZSHDIR/plugins/zsh-syntax-highlighting ]]; then
+if [[ -d $ZDOTDIR/plugins/zsh-syntax-highlighting ]]; then
 #elif (( EUID != 0 )); then
 else
 	url='https://github.com/zsh-users/zsh-syntax-highlighting.git'
-	git clone $url $ZSHDIR/plugins/zsh-syntax-highlighting
+	git clone --depth 1 $url $ZDOTDIR/plugins/zsh-syntax-highlighting
 	unset url
 fi
-source $ZSHDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 
 __conda_setup="$('$HOME/Apps/mc/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"

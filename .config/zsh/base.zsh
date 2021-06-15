@@ -1,10 +1,5 @@
 #!/usr/bin/zsh
 
-# Workaround for vte overriding $TERM
-#if [[ $TERM == "xterm" ]]; then
-#	export TERM="xterm-256color"
-#fi
-
 if [[ "$TERM" == "linux" ]]; then
 #	echo -en "\e]P020201E" # on tty this redraws the background so not cool
 	echo -en "\e]P1DB4952"
@@ -25,8 +20,8 @@ if [[ "$TERM" == "linux" ]]; then
 	#  clear #for background artifacting
 fi
 
-eval $(dircolors $ZSHDIR/16.dircolors)
-# the ^[ is "entered" by typing Ctrl+v and Ctrl+[
+eval $(dircolors $ZDOTDIR/16.dircolors)
+
 if (( EUID == 0 )); then
 	bgp="[41m"
 	fgu="[91m"
@@ -559,9 +554,9 @@ else
 				 _ignored _correct _approximate _files)
 fi'
 
-[[ -d $ZSHDIR/cache ]] && \
+[[ -d $ZDOTDIR/cache ]] && \
 	zstyle ":completion:*"           use-cache yes && \
-	zstyle ":completion::complete:*" cache-path $ZSHDIR/cache/
+	zstyle ":completion::complete:*" cache-path $ZDOTDIR/cache/
 
 # vim: set tabstop=2:softtabstop=2:shiftwidth=2:noexpandtab
 
