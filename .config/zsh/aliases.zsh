@@ -55,17 +55,17 @@ zleiab() {
 zle -N zleiab && bindkey "^@" zleiab
 #zle -N zleiab && bindkey ",." zleiab
 
+alias ...="cd ../../"
+alias da="du -sch"
 alias diff="diff --color=auto "
+alias dotfiles="git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME "
 alias grep="grep --color=auto "
+alias j="jobs -l"
 alias ls="ls -b -CF --color=auto --group-directories-first "
 alias la="ls -la "
 alias ll="ls -l "
 alias lh="ls -hAl "
 alias l="ls -lF "
-alias mdstat="cat /proc/mdstat"
-alias ...="cd ../../"
-alias da="du -sch"
-alias j="jobs -l"
 alias dir="ls -lSrah"
 alias lad="ls -d .*(/)"
 alias lsa="ls -a .*(.)"
@@ -81,8 +81,8 @@ alias lsold="ls -rtlh *(D.Om[1,10])"
 alias lssmall="ls -Srl *(.oL[1,10])"
 alias lsnewdir="ls -rthdl *(/om[1,10]) .*(D/om[1,10])"
 alias lsolddir="ls -rthdl *(/Om[1,10]) .*(D/Om[1,10])"
+alias mdstat="cat /proc/mdstat"
 alias rmcdir="cd ..; rmdir $OLDPWD || cd $OLDPWD"
-alias dotfiles="git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME "
 
 # vim: set tabstop=2:softtabstop=2:shiftwidth=2:noexpandtab
 

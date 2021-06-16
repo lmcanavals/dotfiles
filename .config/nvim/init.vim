@@ -21,11 +21,12 @@ else
 	set colorcolumn=81
 	set cursorline
 	set cursorcolumn
+	set foldcolumn=1
+	set foldmethod=syntax
 	set number
-	set sbr=▼\ 
+	set showbreak=▼\ 
 	set list
-	set listchars=tab:┼─,trail:∙,extends:»,precedes:«,nbsp:§
-" Example characters  			   
+	set listchars=tab:┼─,trail:∙,extends:»,precedes:«,nbsp:§ " characters  			  
 	set scrolloff=5
 	set statusline=%f%M%Y%R%H%W,%{&ff},%{&fenc?&fenc:&enc}%=%-10(%l,%c%V%)%P
 	set laststatus=0
