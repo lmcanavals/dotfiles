@@ -247,8 +247,9 @@ yay -S ttf-roboto ttf-roboto-mono
 yay -S ttf-liberation ttf-dejavu gnu-free-fonts
 yay -S noto-fonts-emoji ttf-croscore ttf-carlito ttf-caladea
 yay -S ttf-opensans # installed by telegram
-yay -S screenkey slop ttf-font-awesome
-yay -S cmake ccls pyright tree-sitter
+yay -S ttf-font-awesome ttf-nerd-fonts-symbols-mono screenkey slop
+yay -S cmake ccls pyright tree-sitter fzf
+yay -S bat exa fd procs sd ripgrep
 ```
 
 Cloud storage, Goodle Drive, One Drive, etc:
