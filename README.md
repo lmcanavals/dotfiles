@@ -248,7 +248,7 @@ yay -S ttf-liberation ttf-dejavu gnu-free-fonts
 yay -S noto-fonts-emoji ttf-croscore ttf-carlito ttf-caladea
 yay -S ttf-opensans # installed by telegram
 yay -S screenkey slop ttf-font-awesome
-yay -S ccls cmake
+yay -S cmake ccls pyright tree-sitter
 ```
 
 Cloud storage, Goodle Drive, One Drive, etc:
