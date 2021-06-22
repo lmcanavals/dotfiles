@@ -476,7 +476,7 @@ zle -N zle-line-init
 
 precmd() {
 	(( ${+functions[vcs_info]} )) && vcs_info
-	#ZLE_RPROMPT_INDENT=0 # NO USAR, buggy quita espacio al inicio
+	ZLE_RPROMPT_INDENT=0 # NO USAR, buggy quita espacio al inicio
 	RPROMPT="$(prompt_right)"
 	PROMPT="$(prompt_left)"
 	set_title ${(%):-"%n@%m %~"}
@@ -488,6 +488,7 @@ preexec() {
 	# fi
 	set_title "${(%):-"%n@%m"}" "$1"
 }
+#eval "$(starship init zsh)"
 
 # Use hard limits, except for a smaller stack and no core dumps
 unlimit

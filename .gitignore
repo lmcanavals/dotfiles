@@ -25,6 +25,7 @@
 .config/xfce4/helpers.rc
 .config/xfce4/terminal/accels.scm
 .config/xfce4/xfce4-taskmanager.rc
+.config/zoomus.conf
 .config/zsh/dynamic.zsh
 
 .android/
@@ -67,6 +68,7 @@
 .config/xfce4/panel/
 .config/xfce4/xfconf/xfce-perchannel-xml/
 .config/zsh/plugins/
+.zoom/
 
 Apps/
 Desktop/
