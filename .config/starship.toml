@@ -1,1 +1,209 @@
- 
+add_newline = false
+
+[aws]
+disabled = true
+
+[battery]
+disabled = true
+
+[character]
+success_symbol = "[ %% ](bg:green fg:bright-white)"
+error_symbol   = "[ ✗ ](bg:green fg:bright-red)"
+vicmd_symbol   = "[ ○ ](bg:green fg:yellow)"
+
+[cmake]
+format = "[$symbol($version )]($style)"
+style  = "blue"
+
+[cmd_duration]
+format            = "[ $duration]($style) "
+min_time          = 2_500
+show_milliseconds = true
+style             = "yellow"
+
+[conda]
+format = "[$symbol$environment]($style) "
+style  = "purple"
+symbol = "◯ "
+
+[crystal]
+disabled = true
+
+[dart]
+disabled = true
+
+[deno]
+disabled = true
+
+[directory]
+format            = "[$path]($style) "
+home_symbol       = " "
+read_only         = " "
+style             = "bright-blue"
+truncation_length = 2
+truncation_symbol = "…/"
+
+[docker_context]
+disabled = true
+
+[dotnet]
+disabled = true
+
+[elixir]
+disabled = true
+
+[elm]
+disabled = true
+
+[env_var]
+disabled = true
+
+[erlang]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[git_branch]
+format = "[$symbol$branch]($style) "
+style  = "bright-purple"
+symbol = " "
+
+[git_commit]
+style = "bright-purple"
+
+[git_state]
+style = "bright-purple"
+
+[git_status]
+format = "([$all_status$ahead_behind]($style) )"
+style  = "bright-purple"
+
+[golang]
+format = "[$symbol($version )]($style)"
+style  = "cyan"
+symbol = " "
+
+[helm]
+disabled = true
+
+[hostname]
+format   = "[$hostname]($style):"
+ssh_only = false
+style    = "green"
+
+[java]
+disabled = true
+
+[jobs]
+style = "blue"
+
+[julia]
+format = "[$symbol($version )]($style)"
+style  = "cyan"
+
+[kotlin]
+disabled = true
+
+[kubernetes]
+disabled = true
+
+[line_break]
+
+[lua]
+format = "[$symbol($version )]($style)"
+style  = "cyan"
+symbol = " "
+
+[memory_usage]
+format = "$symbol [${ram}( \\| ${swap})]($style) "
+style  = "white"
+
+[hg_branch]
+disabled = true
+
+[nim]
+disabled = true
+
+[nix_shell]
+disabled = true
+
+[nodejs]
+format = "[$symbol($version )]($style)"
+style  = "cyan"
+
+[ocaml]
+disabled = true
+
+[openstack]
+disabled = true
+
+[package]
+disabled = true
+
+[perl]
+disabled = true
+
+[php]
+disabled = true
+
+[purescript]
+disabled = true
+
+[python]
+format = "[$symbol($version )]($style)"
+style  = "cyan"
+symbol = " "
+
+[rlang]
+format = "[$symbol($version )]($style)"
+style  = "cyan"
+
+[red]
+disabled = true
+
+[ruby]
+disabled = true
+
+[rust]
+format = "[$symbol($version )]($style)"
+style  = "cyan"
+symbol = " "
+
+[scala]
+disabled = true
+
+[shell]
+
+[singularity]
+disabled = true
+
+[status]
+disabled = false
+
+[swift]
+disabled = true
+
+[terraform]
+disabled = true
+
+[time]
+
+[username]
+format      = "[$user]($style)@"
+show_always = true
+style_root  = "red"
+style_user  = "green"
+
+[vagrant]
+disabled = true
+
+[vlang]
+disabled = true
+
+[vcsh]
+disabled = true
+
+[zig]
+disabled = true
+

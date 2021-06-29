@@ -29,6 +29,8 @@
 .config/zoomus.conf
 .config/zsh/dynamic.zsh
 
+.local/bin/nvim
+
 .android/
 .cache/
 .conda/
