@@ -1,75 +1,47 @@
 #!/usr/bin/zsh
 
-#     Black    Red      Green    Yellow   Blue     Magenta  Cyan     White
-LCLR=("20201E" "DB4952" "57A128" "EE9D34" "538FD5" "A646D3" "32ABBA" "A09D80"
-      "786458" "F6958F" "9BC76F" "F5D277" "81AFF3" "CC8FD8" "78D2E0" "E0DDC0")
-
 if [[ "$TERM" == "linux" ]]; then
+	#     Black    Red      Green    Yellow   Blue     Magenta  Cyan     White
+	LCLR=("20201E" "DB4952" "57A128" "EE9D34" "538FD5" "A646D3" "32ABBA" "A09D80"
+		"786458" "F6958F" "9BC76F" "F5D277" "81AFF3" "CC8FD8" "78D2E0" "E0DDC0")
 	for i in {1..15}; do
 		echo -en "\e]P$(printf "%x" "$i")${LCLR[i+1]}"
 	done
-	#echo -en "\e]P0${color[1]}"
-	#clear # for background artifacting
+	#echo -en "\e]P0${color[1]} && clear # for background artifacting
+	unset LCLR
 fi
 
-eval $(dircolors $ZDOTDIR/16.dircolors)
-
-if (( EUID == 0 )); then
-	bgp="[41m"
-	fgu="[91m"
-else
-	bgp="[42m"
-	fgu="[92m"
-fi
-#bg1="[41m"
-bg3="[43m"
-#bg6="[46m"
-fg2="[32m"
-#fg3="[33m"
-fg6="[36m"
-fg9="[91m"
-fga="[92m"
-fgb="[93m"
-fgc="[94m"
-fgd="[95m"
-fge="[96m"
-fgf="[97m"
-vend="[0m"
-
-#export GREP_COLORS
-export LS_COLORS
-export LESS_TERMCAP_mb=$fgb
-export LESS_TERMCAP_md=$fgd
-export LESS_TERMCAP_me=$vend
-export LESS_TERMCAP_se=$vend
-export LESS_TERMCAP_so=$fg6
-export LESS_TERMCAP_ue=$vend
-export LESS_TERMCAP_us=$fga
-
-setopt append_history
-setopt share_history
-setopt histignorealldups
-setopt histignoredups
-setopt histignorespace
-setopt extended_glob
-setopt longlistjobs
-setopt nonomatch
-setopt notify
-setopt hash_list_all
-setopt completeinword
-setopt nohup
+setopt auto_cd
 setopt auto_pushd
-setopt nobeep
+setopt cdable_vars
 setopt pushd_ignore_dups
-setopt noglobdots
-setopt noshwordsplit
+
+setopt complete_in_word
+setopt hash_list_all
+
+setopt extended_glob
+setopt no_globdots
+setopt no_no_match
 setopt unset
 
-REPORTTIME=5
+setopt append_history
+setopt hist_ignore_all_dups
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_reduce_blanks
+setopt share_history
+
+setopt long_list_jobs
+setopt no_hup
+setopt notify
+
+setopt no_sh_word_split
+
+setopt no_beep
+
 watch=(notme root)
 
-# automatically remove duplicates from these arrays
-typeset -U path cdpath fpath manpath
+typeset -U PATH path cdpath fpath manpath
 
 bindkey -M vicmd "$terminfo[kdch1]" vi-delete-char
 bindkey -M vicmd "$terminfo[khome]" vi-beginning-of-line
@@ -101,48 +73,35 @@ beginning-or-end-of-somewhere() {
 zle -N beginning-of-somewhere beginning-or-end-of-somewhere
 zle -N end-of-somewhere beginning-or-end-of-somewhere
 
-bindkey "\eOH" beginning-of-somewhere  # home
-bindkey "[H" beginning-of-somewhere  # home
-bindkey "\eOF" end-of-somewhere        # end
-bindkey "[F" end-of-somewhere        # end
+bindkey "\eOH" beginning-of-somewhere    # 
+bindkey "\e[H" beginning-of-somewhere    # 
+bindkey "\eOF" end-of-somewhere          # end
+bindkey "\e[F" end-of-somewhere          # end
 if [[ "$TERM" == "linux" ]]; then
-	bindkey "[1~" beginning-of-somewhere  # home
-	bindkey "[4~" end-of-somewhere        # end
+	bindkey "\e[1~" beginning-of-somewhere # 
+	bindkey "\e[4~" end-of-somewhere       # end
 fi
 
-bindkey "\e[A"  up-line-or-search       # cursor up
-bindkey "\e[B"  down-line-or-search     # <ESC>
+bindkey "\e[A"  up-line-or-search        # ↑
+bindkey "\e[B"  down-line-or-search      # esc
 
-## use Ctrl <- and Ctrl -> for jumping to word-beginnings on the CL
 bindkey "\e[1;5C" forward-word
 bindkey "\e[1;5D" backward-word
-## the same for Alt <- and Alt ->
-bindkey "[1;3C" forward-word
-bindkey "[1;3D" backward-word
+bindkey "\e[1;3C" forward-word
+bindkey "\e[1;3D" backward-word
 
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end  history-search-end
 bindkey "^xp"   history-beginning-search-backward-end
 bindkey "^xP"   history-beginning-search-forward-end
-bindkey "\e[5~" history-beginning-search-backward-end # PageUp
-bindkey "\e[6~" history-beginning-search-forward-end  # PageDown
+bindkey "\e[5~" history-beginning-search-backward-end # Pg↑
+bindkey "\e[6~" history-beginning-search-forward-end  # Pg↓
 
-autoload -U insert-unicode-char
-zle -N insert-unicode-char
-bindkey "^xi" insert-unicode-char
+#autoload -U insert-unicode-char
+#zle -N insert-unicode-char
+#bindkey "^xi" insert-unicode-char
 
 bindkey "$terminfo[kcbt]" reverse-menu-complete
-
-NOABBREVIATION=${NOABBREVIATION:-0}
-grml_toggle_abbrev() {
-	if (( $NOABBREVIATION > 0 )); then
-		NOABBREVIATION=0
-	else
-		NOABBREVIATION=1
-	fi
-}
-zle -N grml_toggle_abbrev
-bindkey "^xA" grml_toggle_abbrev
 
 commit-to-history() {
 	print -s ${(z)BUFFER}
@@ -158,121 +117,13 @@ slash-backward-kill-word() {
 }
 zle -N slash-backward-kill-word
 
-bindkey "\ev" slash-backward-kill-word
-bindkey "\e^h" slash-backward-kill-word
+bindkey "\ev"  slash-backward-kill-word
 bindkey "\e^?" slash-backward-kill-word
+bindkey "\e^h" slash-backward-kill-word
+bindkey "^H"   slash-backward-kill-word
 
 bindkey "^r" history-incremental-pattern-search-backward
 bindkey "^s" history-incremental-pattern-search-forward
-
-zstyle ":acceptline:*" rehash true
-function Accept-Line() {
-	setopt localoptions noksharrays
-	local -a subs
-	local -xi aldone
-	local sub
-	local alcontext=${1:-$alcontext}
-
-	zstyle -a ":acceptline:$alcontext" actions subs
-
-	(( ${#subs} < 1 )) && return 0
-
-	(( aldone = 0 ))
-	for sub in $subs; do
-		[[ $sub == "accept-line" ]] && sub=".accept-line"
-		zle $sub
-		(( aldone > 0 )) && break
-	done
-}
-function Accept-Line-getdefault() {
-	emulate -L zsh
-	local default_action
-
-	zstyle -s ":acceptline:$alcontext" default_action default_action
-	case $default_action in
-		((accept-line|))
-			printf ".accept-line"
-			;;
-		(*)
-			printf $default_action
-			;;
-	esac
-}
-function Accept-Line-HandleContext() {
-	zle Accept-Line
-
-	default_action=$(Accept-Line-getdefault)
-	zstyle -T ":acceptline:$alcontext" call_default && zle $default_action
-}
-function accept-line() {
-	setopt localoptions noksharrays
-	local -ax cmdline
-	local -x alctx
-	local buf com fname format msg default_action
-
-	alctx="default"
-	buf="$BUFFER"
-	cmdline=(${(z)BUFFER})
-	com="${cmdline[1]}"
-	fname="_$com"
-
-	Accept-Line "preprocess"
-
-	zstyle -t ":acceptline:$alctx" rehash && [[ -z ${commands[$com]} ]] && rehash
-
-	if   [[ -n $com                 ]] \
-		&& [[ -n ${reswords[(r)$com]} ]] \
-		|| [[ -n ${aliases[$com]}     ]] \
-		|| [[ -n ${functions[$com]}   ]] \
-		|| [[ -n ${builtins[$com]}    ]] \
-		|| [[ -n ${commands[$com]}    ]]; then
-
-		# there is something sensible to execute, just do it.
-		alctx="normal"
-		Accept-Line-HandleContext
-
-		return
-	fi
-
-	if [[ -o correct ]]||[[ -o correctall ]]&&[[ -n ${functions[$fname]} ]]; then
-
-		if [[ $LASTWIDGET == "accept-line" ]]; then
-			alctx="force"
-			Accept-Line-HandleContext
-
-			return
-		fi
-
-		if zstyle -t ":acceptline:$alctx" nocompwarn; then
-			alctx="normal"
-			Accept-Line-HandleContext
-		else
-			# prepare warning message for the user, configurable via zstyle.
-			zstyle -s ":acceptline:$alctx" compwarnfmt msg
-
-			if [[ -z $msg ]]; then
-				msg="%c will not execute and completion %f exists."
-			fi
-
-			zformat -f msg "$msg" "c:$com" "f:$fname"
-
-			zle -M -- "$msg"
-		fi
-		return
-	elif [[ -n ${buf//[$' \t\n']##/} ]]; then
-		alctx="misc"
-		Accept-Line-HandleContext
-
-		return
-	fi
-
-	# If we got this far, the commandline only contains whitespace, or is empty
-	alctx="empty"
-	Accept-Line-HandleContext
-}
-zle -N accept-line
-zle -N Accept-Line
-zle -N Accept-Line-HandleContext
 
 autoload -U zmv
 autoload -U history-search-end
@@ -280,9 +131,8 @@ autoload -U history-search-end
 autoload -U url-quote-magic && zle -N self-insert url-quote-magic
 
 alias run-help >&/dev/null && unalias run-help
-for rh in run-help{,-git,-svk,-svn}; do
-	autoload -U $rh
-done; unset rh
+autoload -U run-help
+autoload -U run-help-git
 
 autoload -U compinit && compinit
 autoload -U zed
@@ -384,72 +234,39 @@ function chpwd_profiles() {
 
 chpwd_functions=( $chpwd_functions chpwd_profiles )
 
-if autoload -U vcs_info; then
-	zstyle ":vcs_info:*" max-exports 2
-	if [[ -o restricted ]]; then
-		zstyle ":vcs_info:*" enable NONE
-	fi
-fi
-
 #setopt transient_rprompt
-
-PS2="\`%_» "
-PS3="?# "
-PS4="+%N:%i:%_» "
-
-function prompt_misc() {
-	local tmp ttmp ttl ttr
-	tmp=$(git branch 2>/dev/null | grep '*')
-	if [[ -n $tmp ]]; then
-		tmp=${tmp:2}
-		ttmp=$(git status)
-		if [[ -n $(echo $ttmp | grep "Untracked") ]]; then
-			tmp+="+"
-		elif [[ -n $(echo $ttmp | grep "Changes") ]]; then
-			tmp+="°"
-		fi
-		ttl=$(git rev-list $tmp 2>/dev/null | wc -l)
-		ttr=$(git rev-list origin/$tmp 2>/dev/null | wc -l)
-		if [[ $ttl > $ttr ]]; then
-			tmp+="↑"
-		elif [[ $ttl < $ttr ]]; then
-			tmp+="↓"
-		fi
-		print "%{$fge%} $tmp"
-	fi
-}
-function prompt_left() {
-	if [[ $KEYMAP = vicmd ]]; then
-		print "%{$bg3%} : %{$vend%} "
+autoload -U colors && colors
+function left_prompt() {
+	local color
+	local sigil
+	if [[ $KEYMAP == vicmd ]]; then
+		sigil=" "
+		color="%{$bg[yellow]%}%{$fg[cyan]%}"
 	else
-		print "%{$bgp%} %(?.%{$fgf%}%#.%{$fgb%}☼) %{$vend%} "
+		sigil=" "
+		color="%{$bg[green]%}%{$fg[yellow]%}"
 	fi
-}
-function prompt_right() { 
-	local t
-	if [[ -n $VIRTUAL_ENV ]]; then
-		t="${VIRTUAL_ENV:t}"
-	elif [[ -n $CONDA_DEFAULT_ENV ]] && [[ $CONDA_DEFAULT_ENV != "base" ]]; then
-		t="$CONDA_DEFAULT_ENV"
-	else
-		t="☢"
+	if (( EUID == 0 )); then
+		color="%{$bg[red]%}%{$fg[black]%}"
 	fi
-	t="%(?.%{$fg2%}$t.%{$fg9%}%?) "
-	print "$t%{$fgu%}%n@%m%{$vend%}:%{$fgc%}%20<«<%~%<<$(prompt_misc)%{$vend%}"
+	print "$color$sigil%# %{$reset_color%} "
 }
+eval "$(starship init zsh)"
+RPROMPT=$PROMPT
+PROMPT="$(left_prompt)"
+# TODO add some cool colors to the ps2,3,4
+PS2='\`%_» '
+PS3='?# '
+PS4='+%N:%i:%_» '
 
 function info_print() {
 	local esc_begin esc_end
 	esc_begin="$1"
 	esc_end="$2"
 	shift 2
-	printf "%s" $esc_begin
+	printf "%s" "$esc_begin"
 	printf "%s" "$*"
 	printf "%s" "$esc_end"
-}
-
-function ESC_print() {
-	info_print $'\ek' $'\e\\' "$@"
 }
 
 function set_title() {
@@ -461,8 +278,7 @@ function set_title() {
 }
 
 zle-keymap-select() {
-	RPROMPT="$(prompt_right)"
-	PROMPT="$(prompt_left)"
+	PROMPT="$(left_prompt)"
 	() { return $__prompt_status }
 	zle reset-prompt
 }
@@ -475,20 +291,14 @@ zle -N zle-keymap-select
 zle -N zle-line-init
 
 precmd() {
-	(( ${+functions[vcs_info]} )) && vcs_info
-	ZLE_RPROMPT_INDENT=0 # NO USAR, buggy quita espacio al inicio
-	RPROMPT="$(prompt_right)"
-	PROMPT="$(prompt_left)"
+	ZLE_RPROMPT_INDENT=0 # not buggy anymore
+	PROMPT="$(left_prompt)"
 	set_title ${(%):-"%n@%m %~"}
 }
 
 preexec() {
-	# if [[ -n "$HOSTNAME" ]] && [[ "$HOSTNAME" != $(hostname) ]]; then
-	# 	NAME="@$HOSTNAME"
-	# fi
 	set_title "${(%):-"%n@%m"}" "$1"
 }
-#eval "$(starship init zsh)"
 
 # Use hard limits, except for a smaller stack and no core dumps
 unlimit
