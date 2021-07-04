@@ -38,6 +38,8 @@ local setupOptions = function()
 	opt.wildignore   = "*~,*.o,*.tmp"
 	opt.wildmode     = {"longest:full", "full"}
 
+	opt.termguicolors = true
+
 	g.mapleader = " "
 	local opts  = {noremap = true}
 	local l     = "<leader>"
@@ -47,6 +49,8 @@ local setupOptions = function()
 	map("n", l.."p",       ":bp<cr>",              opts)
 	map("n", l.."d",       ":bd<cr>",              opts)
 	map("n", l.."t",       ":NvimTreeToggle<cr>",  opts)
+
+	cmd'colorscheme lmcs'
 end
 
 local setupPackages = function()
@@ -57,7 +61,6 @@ local setupPackages = function()
 
 	require'paq-nvim' {
 		"savq/paq-nvim";
-		"folke/tokyonight.nvim";
 		"neovim/nvim-lspconfig";
 		"hrsh7th/nvim-compe";
 		{"nvim-treesitter/nvim-treesitter", run="TSUpdate"};
@@ -65,12 +68,8 @@ local setupPackages = function()
 		"junegunn/fzf.vim";
 		"ojroques/nvim-lspfuzzy";
 		"kyazdani42/nvim-tree.lua";
+		-- "rktjmp/lush.nvim"; -- only if we need to do some low level color cool
 	}
-end
-
-local setupTokyonight = function()
-	g.tokyonight_style = "night"
-	cmd'colorscheme tokyonight'
 end
 
 local setupLspconfig = function()
@@ -98,7 +97,8 @@ local setupLspconfig = function()
 			},
 		},
 	}
-	nvim_lsp.pyright.setup {}
+	nvim_lsp.pyright.setup {
+	}
 
 	-- Use an on_attach function to only map the following keys
 	-- after the language server attaches to the current buffer
@@ -229,7 +229,6 @@ end
 
 setupOptions()
 setupPackages()
-setupTokyonight()
 setupLspconfig()
 setupCompe()
 setupTreesitter()

@@ -45,23 +45,23 @@
 .npm/
 .pki/
 
-
-.config/nvim/plugged/
-.config/pulse/
 .config/Bitwarden\ CLI/
-.config/google-chrome/
 .config/Thunar/
 .config/VirtualBox/
 .config/autostart/
 .config/blender/
 .config/configstore/
 .config/dconf/
+.config/google-chrome/
 .config/gtk-3.0/
 .config/htop/
 .config/inkscape/
+.config/ksnip/
 .config/menus/
+.config/nvim/plugged/
 .config/obs-studio/
 .config/opera/
+.config/pulse/
 .config/rclone/
 .config/ristretto/
 .config/solaar/
@@ -83,3 +83,4 @@ Pictures/
 VirtualBox VMs/
 git/
 shared/
+
