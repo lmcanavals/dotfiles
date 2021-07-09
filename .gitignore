@@ -71,6 +71,7 @@
 .config/xfce4/panel/
 .config/xfce4/xfconf/xfce-perchannel-xml/
 .config/zsh/plugins/
+.config/coc/
 .zoom/
 
 Apps/

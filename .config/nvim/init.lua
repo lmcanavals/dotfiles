@@ -68,6 +68,7 @@ local setupPackages = function()
 		"junegunn/fzf.vim";
 		"ojroques/nvim-lspfuzzy";
 		"kyazdani42/nvim-tree.lua";
+		{"neoclide/coc.nvim", branch="release"};
 		-- "rktjmp/lush.nvim"; -- only if we need to do some low level color cool
 	}
 end

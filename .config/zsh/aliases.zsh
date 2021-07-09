@@ -19,8 +19,8 @@ abk=(
 	"S"   "| sort -u"
 	"T"   "| tail"
 	"V"   "|& nvim -"
-	"X"   "| xsel -ib"
 	"co"  "./configure && make && sudo make install"
+	"j"   "| jq"
 	"qd"  "yay -Qdt"
 	"qe"  "yay -Qet"
 	"qi"  "yay -Qi "
@@ -34,6 +34,7 @@ abk=(
 	"si"  "yay -Si "
 	"ss"  "yay -Ss "
 	"sy"  "yay -Syu"
+	"x"   "| xsel -ib"
 )
 
 zleiab() {
