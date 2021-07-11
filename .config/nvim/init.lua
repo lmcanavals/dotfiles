@@ -10,7 +10,6 @@ local cmd  = vim.cmd
 local fn   = vim.fn
 local g    = vim.g
 local map  = vim.api.nvim_set_keymap
-local ncmd = vim.api.nvim_command
 local opt  = vim.opt
 
 local setupOptions = function()
@@ -20,7 +19,7 @@ local setupOptions = function()
 	opt.cursorcolumn = true
 	opt.cursorline   = true
 	opt.expandtab    = false
-	opt.fillchars    = {fold=" "}
+	opt.fillchars    = {fold=" ", stl="-", stlnc="-"}
 	opt.laststatus   = 0
 	opt.list         = true
 	opt.listchars    = {tab="┼─", trail="∙", extends="»", precedes="«", nbsp="§"}
@@ -32,7 +31,7 @@ local setupOptions = function()
 	opt.showmatch    = true
 	opt.smartindent  = true
 	opt.softtabstop  = 2
-	opt.statusline   = "%f%M%Y%R%H%W,%{&ff},%{&fenc?&fenc:&enc}%=%-10(%l,%c%V%)%P"
+	opt.statusline   = "%t%M%=%v" --%{&ff},%{&fenc?&fenc:&enc}
 	opt.tabstop      = 2
 	opt.title        = true
 	opt.wildignore   = "*~,*.o,*.tmp"
@@ -41,22 +40,26 @@ local setupOptions = function()
 	opt.termguicolors = true
 
 	g.mapleader = " "
-	local opts  = {noremap = true}
-	local l     = "<leader>"
-	map("n", l.."<space>", ":noh<cr>",             opts)
-	map("n", l.."w",       ":w<cr>",               opts)
-	map("n", l.."n",       ":bn<cr>",              opts)
-	map("n", l.."p",       ":bp<cr>",              opts)
-	map("n", l.."d",       ":bd<cr>",              opts)
-	map("n", l.."t",       ":NvimTreeToggle<cr>",  opts)
+	local mappings = {
+		["<space>"] = "noh",
+		["s"]       = "w",
+		["n"]       = "bn",
+		["p"]       = "bp",
+		["d"]       = "bd",
+		["t"]       = "NvimTreeToggle"
+	}
+	for m, c in pairs(mappings) do
+		map("n", "<leader>"..m, ":"..c.."<cr>", {noremap = true})
+	end
 
 	cmd'colorscheme lmcs'
+	cmd'autocmd TermOpen * setlocal nonumber foldcolumn=0'
 end
 
 local setupPackages = function()
 	local pm_path = fn.stdpath("data") .. "/site/pack/paqs/start/paq-nvim"
 	if fn.empty(fn.glob(pm_path)) > 0 then
-		ncmd("!git clone --depth 1 https://github.com/savq/paq-nvim "..pm_path)
+		cmd("!git clone --depth 1 https://github.com/savq/paq-nvim "..pm_path)
 	end
 
 	require'paq-nvim' {
@@ -68,7 +71,8 @@ local setupPackages = function()
 		"junegunn/fzf.vim";
 		"ojroques/nvim-lspfuzzy";
 		"kyazdani42/nvim-tree.lua";
-		{"neoclide/coc.nvim", branch="release"};
+		--{"neoclide/coc.nvim", branch="release"};
+		'beyondmarc/glsl.vim';
 		-- "rktjmp/lush.nvim"; -- only if we need to do some low level color cool
 	}
 end
@@ -100,6 +104,8 @@ local setupLspconfig = function()
 	}
 	nvim_lsp.pyright.setup {
 	}
+	nvim_lsp.tsserver.setup {
+	}
 
 	-- Use an on_attach function to only map the following keys
 	-- after the language server attaches to the current buffer
@@ -111,35 +117,36 @@ local setupLspconfig = function()
 		bso("omnifunc", "v:lua.vim.lsp.omnifunc")
 
 		-- Mappings.
-		local opts = {noremap=true, silent=true}
-		local cl   = "<cmd>lua "
-		local clv  = cl.."vim.lsp."
-
 		-- See `:help vim.lsp.*` for documentation on any of the below functions
-		bsk("n", "gD",        clv.."buf.declaration()<CR>", opts)
-		bsk("n", "gd",        clv.."buf.definition()<CR>", opts)
-		bsk("n", "K",         clv.."buf.hover()<CR>", opts)
-		bsk("n", "gi",        clv.."buf.implementation()<CR>", opts)
-		bsk("n", "<C-k>",     clv.."buf.signature_help()<CR>", opts)
-		bsk("n", "<space>wa", clv.."buf.add_workspace_folder()<CR>", opts)
-		bsk("n", "<space>wr", clv.."buf.remove_workspace_folder()<CR>", opts)
-		bsk("n", "<space>wl",
-			cl.."print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", opts)
-		bsk("n", "<space>D",  clv.."buf.type_definition()<CR>", opts)
-		bsk("n", "<space>rn", clv.."buf.rename()<CR>", opts)
-		bsk("n", "<space>ca", clv.."buf.code_action()<CR>", opts)
-		bsk("n", "gr",        clv.."buf.references()<CR>", opts)
-		bsk("n", "<space>e",  clv.."diagnostic.show_line_diagnostics()<CR>", opts)
-		bsk("n", "[d",        clv.."diagnostic.goto_prev()<CR>", opts)
-		bsk("n", "]d",        clv.."diagnostic.goto_next()<CR>", opts)
-		bsk("n", "<space>q",  clv.."diagnostic.set_loclist()<CR>", opts)
-		bsk("n", "<space>f",  clv.."buf.formatting()<CR>", opts)
+		local mappings = {
+			["<C-k>"]     = "vim.lsp.buf.signature_help()",
+			["<space>D"]  = "vim.lsp.buf.type_definition()",
+			["<space>ca"] = "vim.lsp.buf.code_action()",
+			["<space>f"]  = "vim.lsp.buf.formatting()",
+			["<space>rn"] = "vim.lsp.buf.rename()",
+			["<space>wa"] = "vim.lsp.buf.add_workspace_folder()",
+			["<space>wr"] = "vim.lsp.buf.remove_workspace_folder()",
+			["K"]         = "vim.lsp.buf.hover()",
+			["gD"]        = "vim.lsp.buf.declaration()",
+			["gd"]        = "vim.lsp.buf.definition()",
+			["gi"]        = "vim.lsp.buf.implementation()",
+			["gr"]        = "vim.lsp.buf.references()",
 
+			["<space>e"]  = "vim.lsp.diagnostic.show_line_diagnostics()",
+			["<space>q"]  = "vim.lsp.diagnostic.set_loclist()",
+			["[d"]        = "vim.lsp.diagnostic.goto_prev()",
+			["]d"]        = "vim.lsp.diagnostic.goto_next()",
+
+			["<space>wl"] = "print(vim.inspect(vim.lsp.buf.list_workspace_folders()))"
+		}
+		for m, c in pairs(mappings) do
+			bsk("n", m, "<cmd>lua "..c.."<CR>", {noremap=true, silent=true})
+		end
 	end
 
 	-- Use a loop to conveniently call "setup" on multiple servers and
 	-- map buffer local keybindings when the language server attaches
-	local servers = {"ccls", "gopls", "pyright"}
+	local servers = {"ccls", "gopls", "pyright", "tsserver"}
 	for _, lsp in ipairs(servers) do
 		nvim_lsp[lsp].setup {on_attach = on_attach}
 	end
@@ -151,7 +158,7 @@ local setupCompe = function()
 		autocomplete = true;
 		debug = false;
 		min_length = 1;
-		preselect = 'enable';
+		preselect = "enable";
 		throttle_time = 80;
 		source_timeout = 200;
 		incomplete_delay = 400;
@@ -225,7 +232,7 @@ local setupTreesitter = function()
 end
 
 local setupLspfuzzy = function()
-	require('lspfuzzy').setup {}
+	require'lspfuzzy'.setup {}
 end
 
 setupOptions()
