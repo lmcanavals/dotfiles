@@ -5,6 +5,8 @@
 --	folke/which-key.nvim
 --	kevinhwang91/nvim-hlslens
 --	kevinhwang91/nvim-bqf
+--	rktjmp/lush.nvim -- only if we need to do some low level color cool
+--	prettier -- ok this one is gonna hurt
 
 local cmd  = vim.cmd
 local fn   = vim.fn
@@ -71,40 +73,56 @@ local setupPackages = function()
 		"junegunn/fzf.vim";
 		"ojroques/nvim-lspfuzzy";
 		"kyazdani42/nvim-tree.lua";
-		--{"neoclide/coc.nvim", branch="release"};
 		'beyondmarc/glsl.vim';
-		-- "rktjmp/lush.nvim"; -- only if we need to do some low level color cool
 	}
 end
 
 local setupLspconfig = function()
 	local nvim_lsp = require'lspconfig'
-	nvim_lsp.ccls.setup {
-		init_options = {
-			compilationDatabaseDirectory = "build";
-			index = {
-				threads = 0;
-			};
-			clang = {
-				excludeArgs = {"-frounding-math"};
-			};
+
+	local format_async = function(err, _, result, _, bufnr)
+		if err ~= nil or result == nil then return end
+		if not vim.api.nvim_buf_get_option(bufnr, "modified") then
+			local view = vim.fn.winsaveview()
+			vim.lsp.util.apply_text_edits(result, bufnr)
+			vim.fn.winrestview(view)
+			if bufnr == vim.api.nvim_get_current_buf() then
+				vim.api.nvim_command("noautocmd :update")
+			end
+		end
+	end
+	vim.lsp.handlers["textDocument/formatting"] = format_async
+	_G.lsp_organize_imports = function()
+		local params = {
+			command = "_typescript.organizeImports",
+			arguments = {vim.api.nvim_buf_get_name(0)},
+			title = ""
 		}
+		vim.lsp.buf.execute_command(params)
+	end
+	local filetypes = {
+		javascript = "eslint",
+		typescript = "eslint",
+		typescriptreact = "eslint",
 	}
-	nvim_lsp.gopls.setup {
-		-- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#neovim
-		cmd = {"gopls", "serve"},
-		settings = {
-			gopls = {
-				analyses = {
-					unusedparams = true,
-				},
-				staticcheck = true,
+	local linters = {
+		eslint = {
+			sourceName = "eslint",
+			command = "eslint_d",
+			rootPatterns = {".eslintrc.js", "package.json"},
+			debounce = 100,
+			args = {"--stdin", "--stdin-filename", "%filepath", "--format", "json"},
+			parseJson = {
+				errorsRoot = "[0].messages",
+				line = "line",
+				column = "column",
+				endLine = "endLine",
+				endColumn = "endColumn",
+				message = "${message} [${ruleId}]",
+				security = "severity"
 			},
-		},
-	}
-	nvim_lsp.pyright.setup {
-	}
-	nvim_lsp.tsserver.setup {
+			securities = {[2] = "error", [1] = "warning"}
+		}
 	}
 
 	-- Use an on_attach function to only map the following keys
@@ -143,6 +161,42 @@ local setupLspconfig = function()
 			bsk("n", m, "<cmd>lua "..c.."<CR>", {noremap=true, silent=true})
 		end
 	end
+
+	nvim_lsp.ccls.setup {
+		init_options = {
+			compilationDatabaseDirectory = "build";
+			index = {
+				threads = 0;
+			};
+			clang = {
+				excludeArgs = {"-frounding-math"};
+			};
+		}
+	}
+	nvim_lsp.gopls.setup {
+		-- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#neovim
+		cmd = {"gopls", "serve"},
+		settings = {
+			gopls = {
+				analyses = {
+					unusedparams = true,
+				},
+				staticcheck = true,
+			},
+		},
+	}
+	nvim_lsp.pyright.setup {
+	}
+	nvim_lsp.tsserver.setup {
+	}
+	nvim_lsp.diagnosticls.setup {
+		on_attach = on_attach,
+		filetypes = vim.tbl_keys(filetypes),
+		init_options = {
+			filetypes = filetypes,
+			linters = linters,
+		}
+	}
 
 	-- Use a loop to conveniently call "setup" on multiple servers and
 	-- map buffer local keybindings when the language server attaches

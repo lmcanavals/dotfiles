@@ -237,27 +237,23 @@ chpwd_functions=( $chpwd_functions chpwd_profiles )
 #setopt transient_rprompt
 autoload -U colors && colors
 function left_prompt() {
-	local color
-	local sigil
+	local c
+	local s
+	[[ EUID -eq 0 ]] && c="red" || c="green"
 	if [[ $KEYMAP == vicmd ]]; then
-		sigil=" "
-		color="%{$bg[yellow]%}%{$fg[cyan]%}"
+		s=" "
+		c="yellow"
 	else
-		sigil=" "
-		color="%{$bg[green]%}%{$fg[yellow]%}"
+		s=" "
 	fi
-	if (( EUID == 0 )); then
-		color="%{$bg[red]%}%{$fg[black]%}"
-	fi
-	print "$color$sigil%# %{$reset_color%} "
+	print "%{$bg[$c]$fg[black]%}$s%#%{$reset_color$fg[$c]%}%{$reset_color%}"
 }
 eval "$(starship init zsh)"
 RPROMPT=$PROMPT
 PROMPT="$(left_prompt)"
-# TODO add some cool colors to the ps2,3,4
-PS2='\`%_» '
-PS3='?# '
-PS4='+%N:%i:%_» '
+PS2='%{$bg[blue]%}%_%{$reset_color$fg[blue]%}%{$reset_color%}'
+PS3='%{$bg[blue]%}?#%{$reset_color$fg[blue]%}%{$reset_color%}'
+PS4='%{$bg[blue]%}+%N:%i:%_%{$reset_color$fg[blue]%}%{$reset_color%}'
 
 function info_print() {
 	local esc_begin esc_end

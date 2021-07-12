@@ -359,6 +359,14 @@ most drivers using the monitor's name shown by `xrandr` works, for nvidia
 xsetwacom set 10 MapToOutput HEAD-0
 ```
 
+**npm stuff** some stuff is needed for autocomplete, link etc in neovim:
+
+```sh
+npm config set prefix '~/.local/'
+npm install -g typescript typescript-language-server \
+	diagnostic-languageserver eslint_d
+```
+
 ### As super user
 
 **Configure nvidia**, copy the following files:
