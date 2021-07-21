@@ -35,7 +35,7 @@ local theme = {
 	Normal       = { gui = NA, guibg = NA, guifg = NA },
 	Underlined   = { gui = UL, guibg = NA, guisp = BL },
 	NonText      = { gui = NA, guibg = NA, guifg = BG },
-	Special      = { gui = NA, guibg = NA, guifg = re },
+	Special      = { gui = NA, guibg = NA, guifg = MA },
 	SpecialKey   = { gui = NA, guibg = NA, guifg = bg },
 	CursorColumn = { gui = NA, guibg = BG, guifg = NA },
 	CursorLine   = { gui = NA, guibg = BG, guifg = NA },
