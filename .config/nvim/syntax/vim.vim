@@ -31,7 +31,27 @@ let s:tokens=[
 			\ 'User6',        'User7',        'User8',          'User9',
 			\ 'VertSplit',    'Visual',       'VisualNC',       'VisualNOS',
 			\ 'WarningMsg',   'Whitespace',   'WildMenu',       'debugBreakpoint',
-			\ 'debugPC',      'lCursor']
+			\ 'debugPC',      'lCursor',
+			\ 'LspDiagnosticsDefaultHint',
+			\ 'LspDiagnosticsUnderlineHint',
+			\ 'LspDiagnosticsVirtualTextHint',
+			\ 'LspDiagnosticsFloatingHint',
+			\ 'LspDiagnosticsSignHint',
+			\ 'LspDiagnosticsDefaultError',
+			\ 'LspDiagnosticsUnderlineError',
+			\ 'LspDiagnosticsVirtualTextError',
+			\ 'LspDiagnosticsFloatingError',
+			\ 'LspDiagnosticsSignError',
+			\ 'LspDiagnosticsDefaultWarning',
+			\ 'LspDiagnosticsUnderlineWarning',
+			\ 'LspDiagnosticsVirtualTextWarning',
+			\ 'LspDiagnosticsFloatingWarning',
+			\ 'LspDiagnosticsSignWarning',
+			\ 'LspDiagnosticsDefaultInformation',
+			\ 'LspDiagnosticsUnderlineInformation',
+			\ 'LspDiagnosticsVirtualTextInformation',
+			\ 'LspDiagnosticsFloatingInformation',
+			\ 'LspDiagnosticsSignInformation']
 
 for token in s:tokens
 	exe 'sy match lmcs'.token.' "\<'.token.'\>" containedin=vimString contained'
