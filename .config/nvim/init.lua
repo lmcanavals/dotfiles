@@ -7,6 +7,7 @@
 --	kevinhwang91/nvim-bqf
 --	rktjmp/lush.nvim -- only if we need to do some low level color cool
 --	ray-x/lsp_signature.nvim
+--	https://github.com/rockerBOO/awesome-neovim#snippets
 
 local cmd  = vim.cmd
 local fn   = vim.fn
@@ -14,7 +15,11 @@ local g    = vim.g
 local map  = vim.api.nvim_set_keymap
 local opt  = vim.opt
 
-local setupOptions = function()
+local setup = function(fun)
+	fun()
+end
+
+setup(function() -- options
 	opt.background   = "dark"
 	opt.colorcolumn  = "81"
 	opt.completeopt  = {"menuone", "noselect"}
@@ -56,9 +61,9 @@ local setupOptions = function()
 
 	cmd'colorscheme lmcs'
 	cmd'autocmd TermOpen * setlocal nonumber foldcolumn=0'
-end
+end)
 
-local setupPackages = function()
+setup(function() -- packages
 	local pm_path = fn.stdpath("data") .. "/site/pack/paqs/start/paq-nvim"
 	if fn.empty(fn.glob(pm_path)) > 0 then
 		cmd("!git clone --depth 1 https://github.com/savq/paq-nvim "..pm_path)
@@ -76,13 +81,11 @@ local setupPackages = function()
 		"beyondmarc/glsl.vim";
 		"norcalli/nvim-colorizer.lua";
 	}
-end
+end)
 
-local setupLspconfig = function()
+setup(function() -- lspconfig
 	local nvim_lsp = require'lspconfig'
 
-	-- Use an on_attach function to only map the following keys
-	-- after the language server attaches to the current buffer
 	local on_attach = function(client, bufnr)
 		local function bsk(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 		local function bso(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -90,32 +93,30 @@ local setupLspconfig = function()
 		--Enable completion triggered by <c-x><c-o>
 		bso("omnifunc", "v:lua.vim.lsp.omnifunc")
 
-		-- Mappings.
 		-- See `:help vim.lsp.*` for documentation on any of the below functions
 		local mappings = {
-			["<C-k>"]     = "vim.lsp.buf.signature_help()",
-			["<space>D"]  = "vim.lsp.buf.type_definition()",
-			["<space>ca"] = "vim.lsp.buf.code_action()",
-			["<space>f"]  = "vim.lsp.buf.formatting()",
-			["<space>rn"] = "vim.lsp.buf.rename()",
-			["<space>wa"] = "vim.lsp.buf.add_workspace_folder()",
-			["<space>wr"] = "vim.lsp.buf.remove_workspace_folder()",
-			["K"]         = "vim.lsp.buf.hover()",
-			["gD"]        = "vim.lsp.buf.declaration()",
-			["gd"]        = "vim.lsp.buf.definition()",
-			["gi"]        = "vim.lsp.buf.implementation()",
-			["gr"]        = "vim.lsp.buf.references()",
-
-			["<space>e"]  = "vim.lsp.diagnostic.show_line_diagnostics()",
-			["<space>q"]  = "vim.lsp.diagnostic.set_loclist()",
-			["[d"]        = "vim.lsp.diagnostic.goto_prev()",
-			["]d"]        = "vim.lsp.diagnostic.goto_next()",
-
-			["<space>wl"] = "print(vim.inspect(vim.lsp.buf.list_workspace_folders()))"
+			["<space>wa"] = "buf.add_workspace_folder()",
+			["<space>ca"] = "buf.code_action()",
+			["gD"]        = "buf.declaration()",
+			["gd"]        = "buf.definition()",
+			["<space>f"]  = "buf.formatting()",
+			["K"]         = "buf.hover()",
+			["gi"]        = "buf.implementation()",
+			["gr"]        = "buf.references()",
+			["<space>wr"] = "buf.remove_workspace_folder()",
+			["<space>rn"] = "buf.rename()",
+			["<C-k>"]     = "buf.signature_help()",
+			["<space>D"]  = "buf.type_definition()",
+			["]d"]        = "diagnostic.goto_next()",
+			["[d"]        = "diagnostic.goto_prev()",
+			["<space>q"]  = "diagnostic.set_loclist()",
+			["<space>e"]  = "diagnostic.show_line_diagnostics()",
 		}
 		for m, c in pairs(mappings) do
-			bsk("n", m, "<cmd>lua "..c.."<CR>", {noremap=true, silent=true})
+			bsk("n", m, "<cmd>lua vim.lsp."..c.."<CR>", {noremap=true, silent=true})
 		end
+		--"<space>wl"
+		--"<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))"
 	end
 
 	nvim_lsp.ccls.setup {
@@ -130,8 +131,6 @@ local setupLspconfig = function()
 		}
 	}
 	nvim_lsp.gopls.setup {
-		-- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#neovim
-		cmd = {"gopls", "serve"},
 		settings = {
 			gopls = {
 				analyses = {
@@ -148,31 +147,29 @@ local setupLspconfig = function()
 		},
 	}
 
-		-- Use a loop to conveniently call "setup" on multiple servers and
-		-- map buffer local keybindings when the language server attaches
 	local servers = {"ccls", "gopls", "pyright", "denols"}
 	for _, lsp in ipairs(servers) do
 		nvim_lsp[lsp].setup {on_attach = on_attach}
 	end
-end
+end)
 
-local setupCompe = function()
+setup(function() -- compe
 	require'compe'.setup {
-		enabled = true;
-		autocomplete = true;
-		debug = false;
-		min_length = 1;
-		preselect = "enable";
-		throttle_time = 80;
-		source_timeout = 200;
+		enabled          = true;
+		autocomplete     = true;
+		debug            = false;
+		min_length       = 1;
+		preselect        = "enable";
+		throttle_time    = 80;
+		source_timeout   = 200;
 		incomplete_delay = 400;
-		max_abbr_width = 100;
-		max_kind_width = 100;
-		max_menu_width = 100;
-		documentation = true;
+		max_abbr_width   = 100;
+		max_kind_width   = 100;
+		max_menu_width   = 100;
+		documentation    = true;
 
 		source = {
-			path = true;
+			path     = true;
 			nvim_lsp = true;
 		};
 	}
@@ -206,14 +203,13 @@ local setupCompe = function()
 	map("s", "<Tab>",   "v:lua.tab_complete()",   {expr = true})
 	map("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 	map("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-end
+end)
 
-local setupTreesitter = function()
+setup(function() -- treesitter
 	require'nvim-treesitter.configs'.setup {
 		highlight = {
 			enable = true,
 			custom_captures = {
-				-- Highlight the @foo.bar capture group with the "Identifier" hl-group.
 				["foo.bar"] = "Identifier",
 			},
 		},
@@ -233,18 +229,11 @@ local setupTreesitter = function()
 	opt.foldcolumn = "1"
 	opt.foldmethod = "expr"
 	opt.foldexpr   = "nvim_treesitter#foldexpr()"
-end
+end)
 
-local setupLspfuzzy = function()
+setup(function() -- lspfuzzy
 	require'lspfuzzy'.setup {}
-end
-
-setupOptions()
-setupPackages()
-setupLspconfig()
-setupCompe()
-setupTreesitter()
-setupLspfuzzy()
+end)
 
 -- vim: set tabstop=2:softtabstop=2:shiftwidth=2:noexpandtab
 
