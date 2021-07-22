@@ -217,7 +217,7 @@ GUI base:
 
 ```sh
 yay -S xfce4 xfce4-goodies pulseaudio sox lightdm lightdm-gtk-greeter
-yay -S accountsservice xorg-xmodmap xcape xsel xorg-server
+yay -S accountsservice xorg-xmodmap xcape xsel xorg-server gvfs
 ```
 
 Graphics nvidia:
