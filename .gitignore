@@ -58,6 +58,7 @@
 .config/blender/
 .config/configstore/
 .config/dconf/
+.config/discord/
 .config/google-chrome/
 .config/gtk-3.0/
 .config/htop/
