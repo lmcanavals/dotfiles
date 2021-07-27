@@ -303,7 +303,17 @@ Important
 
 ### As user
 
-Make redshift-gtk start on login:
+**Screen tearing on xfce**
+[Source](https://techstop.github.io/fix-screen-tearing-xfce/), in short do this:
+
+Set `vblank_mode` to `glx` on the Xfce settings editor and then,
+
+```
+sudo echo "options nvidia-drm modset=1" > /etc/modprobe.d/nvidia-nomodset.conf
+sudo mkinitcpio -p linux
+```
+
+Make **redshift-gtk** start on login:
 
 ```sh
 systemctl --user start redshift-gtk.service
