@@ -1,3 +1,5 @@
+#!/usr/bin/zsh
+
 safeupdatemirrors() {
     local base
     local tempfile

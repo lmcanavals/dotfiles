@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/zsh
 
 for paq in $(pacman -Qqs); do
   yaourt -Qi $paq | grep "Installed Size  : 0"

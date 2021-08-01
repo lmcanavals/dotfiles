@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/zsh
 #define the filename to use as output
 motd="/etc/motd"
 # Collect useful information about your system
