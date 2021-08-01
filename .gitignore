@@ -29,12 +29,8 @@
 .config/zoomus.conf
 .config/zsh/dynamic.zsh
 
-.local/bin/diagnostic-languageserver
-.local/bin/eslint_d
-.local/bin/nvim
-.local/bin/tsc
-.local/bin/tsserver
-.local/bin/typescript-language-server
+.local/bin/*
+!.local/bin/lmcs*
 
 .android/
 .cache/
