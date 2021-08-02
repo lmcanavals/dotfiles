@@ -22,6 +22,8 @@ fi
 source $ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('$HOME/Apps/mc/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
 	eval "$__conda_setup"
@@ -33,6 +35,7 @@ else
 	fi
 fi
 unset __conda_setup
+# <<< conda initialize <<<
 
 # vim: set tabstop=2:softtabstop=2:shiftwidth=2:noexpandtab
 
