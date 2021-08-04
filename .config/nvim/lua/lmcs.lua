@@ -31,7 +31,6 @@ local NO = "none"
 local NA = "na"
 
 local theme = {
-	--              gui  bg  fg|sp
 	Normal       = { gui = NA, guibg = NA, guifg = NA },
 	Underlined   = { gui = UL, guibg = NA, guisp = BL },
 	NonText      = { gui = NA, guibg = NA, guifg = BG },
