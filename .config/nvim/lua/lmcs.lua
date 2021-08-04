@@ -40,6 +40,7 @@ local theme = {
 	CursorLine   = { gui = NA, guibg = BG, guifg = NA },
 	CursorLineNr = { gui = NA, guibg = BG, guifg = cy },
 	ColorColumn  = { gui = UC, guibg = NA, guisp = bg },
+	Conceal      = { gui = NA, guibg = NA, guifg = BG },
 	LineNr       = { gui = NA, guibg = NA, guifg = bg },
 	FoldColumn   = { gui = NA, guibg = NA, guifg = bg },
 	Folded       = { gui = NA, guibg = NA, guifg = WH },
@@ -112,7 +113,6 @@ end
 return L
 
 --[[ Unused or linked stuff
-Conceal
 Ignore
 NormalNC
 NonText EndOfBuffer Whitespace

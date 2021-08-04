@@ -18,6 +18,7 @@ require'paq-nvim' {
 	"ojroques/nvim-lspfuzzy";
 	"kyazdani42/nvim-tree.lua";
 	"beyondmarc/glsl.vim";
+	"chrisbra/csv.vim";
 	"norcalli/nvim-colorizer.lua";
 }
 
