@@ -23,16 +23,16 @@ $directory"""
 
 [character]
 format         = "$symbol"
-error_symbol   = "[❯](red)"
-success_symbol = "[❯](white)"
-vicmd_symbol   = "[❮](yellow)"
+error_symbol   = "[▢](red)"
+success_symbol = "[●](white)"
+vicmd_symbol   = "[◇](yellow)"
 
 [cmake]
 format = "[$symbol($version )]($style)"
 style  = "blue"
 
 [cmd_duration]
-format            = "[ $duration]($style) "
+format            = "[◶ $duration]($style) "
 min_time          = 2_500
 show_milliseconds = true
 style             = "yellow"
@@ -44,8 +44,8 @@ symbol = "◯ "
 
 [directory]
 format            = "[$path]($style)"
-home_symbol       = " "
-read_only         = " "
+home_symbol       = "⌂"
+read_only         = ""
 style             = "bright-blue"
 truncation_length = 2
 truncation_symbol = "…/"
@@ -53,7 +53,7 @@ truncation_symbol = "…/"
 [git_branch]
 format = "[$symbol$branch]($style) "
 style  = "bright-purple"
-symbol = " "
+symbol = ""
 
 [git_commit]
 style = "bright-purple"
