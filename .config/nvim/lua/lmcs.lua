@@ -1,24 +1,28 @@
 -- Vim color file
 -- Name:				lmcs.lua
--- Version:			3.0
+-- Version:			4.1
 -- Maintainer:	lmcanavals
 
-local BG = "#20201e"
-local RE = "#db4952"
-local GR = "#57a128"
-local YE = "#ee9d34"
-local BL = "#538fd5"
-local MA = "#a646d3"
-local CY = "#32abba"
-local WH = "#a09d80"
-local bg = "#786458"
-local re = "#f6958f"
-local gr = "#9bc76f"
-local ye = "#f5d277"
-local bl = "#81aff3"
-local ma = "#cc8fd8"
-local cy = "#78d2e0"
-local wh = "#e0ddc0"
+local ok = vim.env.ISMOSHBRAH ~= "yup"
+
+vim.opt.termguicolors = ok
+
+local BG = ok and "#20201e" or 0
+local RE = ok and "#db4952" or 1
+local GR = ok and "#57a128" or 2
+local YE = ok and "#ee9d34" or 3
+local BL = ok and "#538fd5" or 4
+local MA = ok and "#a646d3" or 5
+local CY = ok and "#32abba" or 6
+local WH = ok and "#a09d80" or 7
+local bg = ok and "#786458" or 8
+local re = ok and "#f6958f" or 9
+local gr = ok and "#9bc76f" or 10
+local ye = ok and "#f5d277" or 11
+local bl = ok and "#81aff3" or 12
+local ma = ok and "#cc8fd8" or 13
+local cy = ok and "#78d2e0" or 14
+local wh = ok and "#e0ddc0" or 15
 
 local BO = "bold"
 local UL = "underline"
@@ -31,67 +35,67 @@ local NO = "none"
 local NA = "na"
 
 local theme = {
-	Normal       = { gui = NA, guibg = NA, guifg = NA },
-	Underlined   = { gui = UL, guibg = NA, guisp = BL },
-	NonText      = { gui = NA, guibg = NA, guifg = BG },
-	Special      = { gui = NA, guibg = NA, guifg = MA },
-	SpecialKey   = { gui = NA, guibg = NA, guifg = bg },
-	CursorColumn = { gui = NA, guibg = BG, guifg = NA },
-	CursorLine   = { gui = NA, guibg = BG, guifg = NA },
-	CursorLineNr = { gui = NA, guibg = BG, guifg = cy },
-	ColorColumn  = { gui = UC, guibg = NA, guisp = bg },
-	Conceal      = { gui = NA, guibg = NA, guifg = BG },
-	LineNr       = { gui = NA, guibg = NA, guifg = bg },
-	FoldColumn   = { gui = NA, guibg = NA, guifg = bg },
-	Folded       = { gui = NA, guibg = NA, guifg = WH },
-	MatchParen   = { gui = BO, guibg = NA, guifg = wh },
-	IncSearch    = { gui = NA, guibg = MA, guifg = wh },
-	Search       = { gui = NA, guibg = GR, guifg = wh },
-	QuickFixLine = { gui = NA, guibg = GR, guifg = ye },
-	Pmenu        = { gui = NA, guibg = BG, guifg = WH },
-	PmenuSel     = { gui = NA, guibg = YE, guifg = BG },
-	PmenuSbar    = { gui = NA, guibg = bg, guifg = BG },
-	PmenuThumb   = { gui = NA, guibg = WH, guifg = BG },
-	VertSplit    = { gui = NA, guibg = NA, guifg = bg },
-	StatusLine   = { gui = NA, guibg = ye, guifg = BG },
-	StatusLineNC = { gui = NA, guibg = bg, guifg = WH },
-	TabLine      = { gui = NA, guibg = BG, guifg = bg },
-	TabLineSel   = { gui = NA, guibg = NA, guifg = cy },
-	TabLineFill  = { gui = NA, guibg = BG, guifg = bg },
-	SignColumn   = { gui = NA, guibg = NA, guifg = re },
-	Visual       = { gui = NA, guibg = ye, guifg = BL },
-	VisualNOS    = { gui = NA, guibg = RE, guifg = BL },
-	WildMenu     = { gui = NA, guibg = YE, guifg = BG },
-	MsgArea      = { gui = NA, guibg = NA, guifg = CY },
-	ModeMsg      = { gui = NA, guibg = NA, guifg = cy },
-	WarningMsg   = { gui = NA, guibg = NA, guifg = YE },
-	ErrorMsg     = { gui = NA, guibg = NA, guifg = RE },
-	MoreMsg      = { gui = NA, guibg = NA, guifg = GR },
-	Comment      = { gui = IT, guibg = NA, guifg = bg },
-	Todo         = { gui = NA, guibg = NA, guifg = YE },
-	Error        = { gui = NA, guibg = RE, guifg = BG },
-	Identifier   = { gui = NA, guibg = NA, guifg = bl },
-	Function     = { gui = NA, guibg = NA, guifg = BL },
-	PreProc      = { gui = NA, guibg = NA, guifg = ye },
-	Number       = { gui = NA, guibg = NA, guifg = gr },
-	Operator     = { gui = NA, guibg = NA, guifg = GR },
-	Constant     = { gui = NA, guibg = NA, guifg = YE },
-	Type         = { gui = NA, guibg = NA, guifg = GR },
-	Statement    = { gui = NA, guibg = NA, guifg = ma },
-	Title        = { gui = NA, guibg = NA, guifg = ma },
-	Directory    = { gui = NA, guibg = NA, guifg = cy },
-	DiffDelete   = { gui = NA, guibg = RE, guifg = BG },
-	DiffAdd      = { gui = NA, guibg = GR, guifg = BG },
-	DiffChange   = { gui = NA, guibg = YE, guifg = BG },
-	DiffText     = { gui = NA, guibg = BL, guifg = BG },
-	LspDiagnosticsDefaultError         = { gui = NA, guibg = NA, guifg = RE },
-	LspDiagnosticsDefaultWarning       = { gui = NA, guibg = NA, guifg = YE },
-	LspDiagnosticsDefaultInformation   = { gui = NA, guibg = NA, guifg = CY },
-	LspDiagnosticsDefaultHint          = { gui = NA, guibg = NA, guifg = ye },
-	LspDiagnosticsUnderlineError       = { gui = UC, guibg = NA, guisp = RE },
-	LspDiagnosticsUnderlineWarning     = { gui = UC, guibg = NA, guisp = YE },
-	LspDiagnosticsUnderlineInformation = { gui = UC, guibg = NA, guisp = CY },
-	LspDiagnosticsUnderlineHint        = { gui = UC, guibg = NA, guisp = ye },
+	Normal       = { ui = NA, bg = NA, fg = NA },
+	Underlined   = { ui = UL, bg = NA, sp = BL },
+	NonText      = { ui = NA, bg = NA, fg = BG },
+	Special      = { ui = NA, bg = NA, fg = MA },
+	SpecialKey   = { ui = NA, bg = NA, fg = bg },
+	CursorColumn = { ui = NA, bg = BG, fg = NA },
+	CursorLine   = { ui = NA, bg = BG, fg = NA },
+	CursorLineNr = { ui = NA, bg = BG, fg = cy },
+	ColorColumn  = { ui = UC, bg = NA, sp = bg },
+	Conceal      = { ui = NA, bg = NA, fg = BG },
+	LineNr       = { ui = NA, bg = NA, fg = bg },
+	FoldColumn   = { ui = NA, bg = NA, fg = bg },
+	Folded       = { ui = NA, bg = NA, fg = WH },
+	MatchParen   = { ui = BO, bg = NA, fg = wh },
+	IncSearch    = { ui = NA, bg = MA, fg = wh },
+	Search       = { ui = NA, bg = GR, fg = wh },
+	QuickFixLine = { ui = NA, bg = GR, fg = ye },
+	Pmenu        = { ui = NA, bg = BG, fg = WH },
+	PmenuSel     = { ui = NA, bg = YE, fg = BG },
+	PmenuSbar    = { ui = NA, bg = bg, fg = BG },
+	PmenuThumb   = { ui = NA, bg = WH, fg = BG },
+	VertSplit    = { ui = NA, bg = NA, fg = bg },
+	StatusLine   = { ui = NA, bg = ye, fg = BG },
+	StatusLineNC = { ui = NA, bg = bg, fg = WH },
+	TabLine      = { ui = NA, bg = BG, fg = bg },
+	TabLineSel   = { ui = NA, bg = NA, fg = cy },
+	TabLineFill  = { ui = NA, bg = BG, fg = bg },
+	SignColumn   = { ui = NA, bg = NA, fg = re },
+	Visual       = { ui = NA, bg = ye, fg = BL },
+	VisualNOS    = { ui = NA, bg = RE, fg = BL },
+	WildMenu     = { ui = NA, bg = YE, fg = BG },
+	MsgArea      = { ui = NA, bg = NA, fg = CY },
+	ModeMsg      = { ui = NA, bg = NA, fg = cy },
+	WarningMsg   = { ui = NA, bg = NA, fg = YE },
+	ErrorMsg     = { ui = NA, bg = NA, fg = RE },
+	MoreMsg      = { ui = NA, bg = NA, fg = GR },
+	Comment      = { ui = IT, bg = NA, fg = bg },
+	Todo         = { ui = NA, bg = NA, fg = YE },
+	Error        = { ui = NA, bg = RE, fg = BG },
+	Identifier   = { ui = NA, bg = NA, fg = bl },
+	Function     = { ui = NA, bg = NA, fg = BL },
+	PreProc      = { ui = NA, bg = NA, fg = ye },
+	Number       = { ui = NA, bg = NA, fg = gr },
+	Operator     = { ui = NA, bg = NA, fg = GR },
+	Constant     = { ui = NA, bg = NA, fg = YE },
+	Type         = { ui = NA, bg = NA, fg = GR },
+	Statement    = { ui = NA, bg = NA, fg = ma },
+	Title        = { ui = NA, bg = NA, fg = ma },
+	Directory    = { ui = NA, bg = NA, fg = cy },
+	DiffDelete   = { ui = NA, bg = RE, fg = BG },
+	DiffAdd      = { ui = NA, bg = GR, fg = BG },
+	DiffChange   = { ui = NA, bg = YE, fg = BG },
+	DiffText     = { ui = NA, bg = BL, fg = BG },
+	LspDiagnosticsDefaultError         = { ui = NA, bg = NA, fg = RE },
+	LspDiagnosticsDefaultWarning       = { ui = NA, bg = NA, fg = YE },
+	LspDiagnosticsDefaultInformation   = { ui = NA, bg = NA, fg = CY },
+	LspDiagnosticsDefaultHint          = { ui = NA, bg = NA, fg = ye },
+	LspDiagnosticsUnderlineError       = { ui = UC, bg = NA, sp = RE },
+	LspDiagnosticsUnderlineWarning     = { ui = UC, bg = NA, sp = YE },
+	LspDiagnosticsUnderlineInformation = { ui = UC, bg = NA, sp = CY },
+	LspDiagnosticsUnderlineHint        = { ui = UC, bg = NA, sp = ye },
 }
 
 local L = {}
@@ -103,8 +107,17 @@ function L.color()
 	for k, attrs in pairs(theme) do
 		vim.cmd("hi clear "..k)
 		local hi = "hi "..k
+		local term = ok and "gui" or "cterm"
+		local attr = ""
 		for a, v in pairs(attrs) do
-			if v ~= NA then hi = hi.." "..a.."="..v end
+			if a == "ui" then
+				attr = term
+			elseif a == "bg" or a == "fg" or ok then
+				attr = term..a
+			else
+				attr = term.."fg"
+			end
+			if v ~= NA then hi = hi.." "..attr.."="..v end
 		end
 		if hi ~= "hi "..k then vim.cmd(hi) end
 	end

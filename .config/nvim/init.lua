@@ -37,8 +37,6 @@ opt.title        = true
 opt.wildignore   = "*~,*.o,*.tmp"
 opt.wildmode     = {"longest:full", "full"}
 
-opt.termguicolors = true
-
 vim.g.mapleader = " "
 local mappings = {
 	["<space>"] = "noh",
