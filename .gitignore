@@ -46,6 +46,7 @@
 .mozilla/
 .npm/
 .pki/
+.ssh/
 
 .config/Bitwarden\ CLI/
 .config/Thunar/
