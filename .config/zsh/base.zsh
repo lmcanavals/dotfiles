@@ -1,14 +1,15 @@
 #!/usr/bin/zsh
 
+#     Black    Red      Green    Yellow   Blue     Magenta  Cyan     White
+LCLR=$(<$ZDOTDIR/colors)
+export LCLR
 if [[ "$TERM" == "linux" ]]; then
-	#     Black    Red      Green    Yellow   Blue     Magenta  Cyan     White
-	LCLR=("20201E" "DB4952" "57A128" "EE9D34" "538FD5" "A646D3" "32ABBA" "A09D80"
-		"786458" "F6958F" "9BC76F" "F5D277" "81AFF3" "CC8FD8" "78D2E0" "E0DDC0")
+	__lmcslcolor=(${(s/ /)LCLR})
 	for i in {1..15}; do
-		echo -en "\e]P$(printf "%x" "$i")${LCLR[i+1]}"
+		echo "P$(printf "%x" "$i")${__lmcslcolor[i+1]}"
 	done
-	#echo -en "\e]P0${color[1]} && clear # for background artifacting
-	unset LCLR
+	#echo -en "\e]P0${__lmcslcolor[1]} && clear # for background artifacting
+	unset __lmcslcolor
 fi
 
 setopt auto_cd
