@@ -24,8 +24,8 @@ $directory"""
 [character]
 format         = "$symbol"
 error_symbol   = "[●](red)"
-success_symbol = "[▢](white)"
-vicmd_symbol   = "[◇](yellow)"
+success_symbol = "[▢ ](white)"
+vicmd_symbol   = "[◇ ](yellow)"
 
 [cmake]
 format = "[$symbol($version )]($style)"
