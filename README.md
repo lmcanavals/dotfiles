@@ -229,7 +229,7 @@ yay -S redshift mosh network-manager-applet pavucontrol
 yay -S libcanberra gnome-keyring haveged jq
 yay -S firefox google-chrome opera opera-ffmpeg-codecs
 yay -S webp-pixbuf-loader solaar screenkey slop
-yay -S cmake ccls pyright tree-sitter fzf deno
+yay -S cmake ccls deno gopls pyright tree-sitter fzf
 yay -S bat exa fd procs sd ripgrep
 ```
 
