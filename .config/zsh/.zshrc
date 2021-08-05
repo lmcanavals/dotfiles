@@ -14,6 +14,8 @@ source $ZDOTDIR/funct.zsh
 source $ZDOTDIR/aliases.zsh
 [[ -s $ZDOTDIR/dynamic.zsh ]] && source $ZDOTDIR/dynamic.zsh
 
+lmcsismosh && export ISMOSHBRAH="yup"
+
 if [[ ! -d $ZDOTDIR/plugins/zsh-syntax-highlighting ]]; then
 	__url='https://github.com/zsh-users/zsh-syntax-highlighting.git'
 	git clone --depth 1 $__url $ZDOTDIR/plugins/zsh-syntax-highlighting
