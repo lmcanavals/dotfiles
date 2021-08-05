@@ -57,7 +57,7 @@ local theme = {
 	PmenuSbar    = { ui = NA, bg = bg, fg = BG },
 	PmenuThumb   = { ui = NA, bg = WH, fg = BG },
 	VertSplit    = { ui = NA, bg = NA, fg = bg },
-	StatusLine   = { ui = NA, bg = ye, fg = BG },
+	StatusLine   = { ui = NA, bg = bg, fg = wh },
 	StatusLineNC = { ui = NA, bg = bg, fg = WH },
 	TabLine      = { ui = NA, bg = BG, fg = bg },
 	TabLineSel   = { ui = NA, bg = NA, fg = cy },

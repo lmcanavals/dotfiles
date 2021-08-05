@@ -19,7 +19,7 @@ opt.completeopt  = {"menuone", "noselect"}
 opt.cursorcolumn = true
 opt.cursorline   = true
 opt.expandtab    = false
-opt.fillchars    = {fold=" ", vert="╳"}
+opt.fillchars    = {fold=" ", vert="┃"}
 opt.laststatus   = 2
 opt.list         = true
 opt.listchars    = {tab="┼─", trail="∙", extends="»", precedes="«", nbsp="§"}
