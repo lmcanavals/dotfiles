@@ -3,36 +3,50 @@
 -- Version:			4.1
 -- Maintainer:	lmcanavals
 
-local ok = vim.env.ISMOSHBRAH ~= "yup"
+local gui = vim.env.ISMOSHBRUH ~= "yup"
 
-vim.opt.termguicolors = ok
+vim.opt.termguicolors = gui
 
-local BG = ok and "#20201e" or 0
-local RE = ok and "#db4952" or 1
-local GR = ok and "#57a128" or 2
-local YE = ok and "#ee9d34" or 3
-local BL = ok and "#538fd5" or 4
-local MA = ok and "#a646d3" or 5
-local CY = ok and "#32abba" or 6
-local WH = ok and "#a09d80" or 7
-local bg = ok and "#786458" or 8
-local re = ok and "#f6958f" or 9
-local gr = ok and "#9bc76f" or 10
-local ye = ok and "#f5d277" or 11
-local bl = ok and "#81aff3" or 12
-local ma = ok and "#cc8fd8" or 13
-local cy = ok and "#78d2e0" or 14
-local wh = ok and "#e0ddc0" or 15
+local guicolors = vim.split(vim.env.LCLR, "\n", true)
+local termcolors = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 }
+local specials = {
+	"bold",
+	"underline",
+	"undercurl",
+	"reverse",
+	"italic",
+	"standout",
+	"strikethrough",
+	"none",
+	"na"
+}
 
-local BO = "bold"
-local UL = "underline"
-local UC = "undercurl"
-local RV = "reverse"
-local IT = "italic"
-local SO = "standout"
-local ST = "strikethrough"
-local NO = "none"
-local NA = "na"
+local BG = 1
+local RE = 2
+local GR = 3
+local YE = 4
+local BL = 5
+local MA = 6
+local CY = 7
+local WH = 8
+local bg = 9
+local re = 10
+local gr = 11
+local ye = 12
+local bl = 13
+local ma = 14
+local cy = 15
+local wh = 16
+
+local BO = 17
+local UL = 18
+local UC = 19
+local RV = 20
+local IT = 21
+local SO = 22
+local ST = 23
+local NO = 24
+local NA = 25
 
 local theme = {
 	Normal       = { ui = NA, bg = NA, fg = NA },
@@ -101,25 +115,23 @@ local theme = {
 local L = {}
 
 function L.color()
+	local colors = gui and guicolors or termcolors
+	local target = gui and "gui" or "cterm"
 	vim.cmd'hi clear'
 	vim.cmd'syntax reset'
 	vim.g.colors_name = 'lmcs'
-	for k, attrs in pairs(theme) do
-		vim.cmd("hi clear "..k)
-		local hi = "hi "..k
-		local term = ok and "gui" or "cterm"
-		local attr = ""
-		for a, v in pairs(attrs) do
-			if a == "ui" then
-				attr = term
-			elseif a == "bg" or a == "fg" or ok then
-				attr = term..a
-			else
-				attr = term.."fg"
+	for hlGroup, attributes in pairs(theme) do
+		vim.cmd("hi clear "..hlGroup)
+		local hi = "hi "..hlGroup
+		local attr = { ui = "", bg = "bg", fg = "fg", sp = gui and "sp" or "fg" }
+		local nonEmpty = false
+		for name, value in pairs(attributes) do
+			if value ~= NA then
+				hi = hi.." "..target..attr[name].."="..(value < 17 and colors[value] or specials[value - 16])
+				nonEmpty = true
 			end
-			if v ~= NA then hi = hi.." "..attr.."="..v end
 		end
-		if hi ~= "hi "..k then vim.cmd(hi) end
+		if nonEmpty then vim.cmd(hi) end
 	end
 end
 
@@ -177,5 +189,4 @@ LspDiagnosticsDefaultInformation LspDiagnosticsFloatingInformation
 LspDiagnosticsDefaultInformation LspDiagnosticsSignInformation
 --]]
 
--- vim: set tabstop=2:softtabstop=2:shiftwidth=2:noexpandtab
-
+-- vim: se ts=2:sw=2:noet:sts=
