@@ -53,5 +53,4 @@ map("s", "<Tab>",   "v:lua.tab_complete()",   {expr = true})
 map("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 map("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 
--- vim: set tabstop=2:softtabstop=2:shiftwidth=2:noexpandtab
-
+-- vim: se ts=2:sw=2:noet:sts=2

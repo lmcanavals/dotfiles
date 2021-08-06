@@ -514,5 +514,4 @@ fi'
 	zstyle ":completion:*"           use-cache yes && \
 	zstyle ":completion::complete:*" cache-path $ZDOTDIR/cache/
 
-# vim: set tabstop=2:softtabstop=2:shiftwidth=2:noexpandtab
-
+# vim: se ts=2:sw=2:noet:sts=2

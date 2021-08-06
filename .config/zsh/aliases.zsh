@@ -97,5 +97,4 @@ alias lsx="ls -l *(*)"
 alias mdstat="bat /proc/mdstat"
 alias rmcdir="cd ..; rmdir $OLDPWD || cd $OLDPWD"
 
-# vim: set tabstop=2:softtabstop=2:shiftwidth=2:noexpandtab
-
+# vim: se ts=2:sw=2:noet:sts=2

@@ -1,5 +1,4 @@
 export ZDOTDIR=/home/lmcs/.config/zsh
 export PATH=/home/lmcs/.local/bin:$PATH
 
-# vim: set tabstop=2:softtabstop=2:shiftwidth=2:noexpandtab
-
+# vim: se ts=2:sw=2:noet:sts=2

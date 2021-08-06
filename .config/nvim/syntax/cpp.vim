@@ -65,5 +65,4 @@ sy match   cppConstant "\<\([A-Z_][A-Z0-9_]*\)\>"
 
 hi def link cppSTL Identifier
 
-" vim: set tabstop=2:softtabstop=2:shiftwidth=2:noexpandtab
-
+" vim: se ts=2:sw=2:noet:sts=2

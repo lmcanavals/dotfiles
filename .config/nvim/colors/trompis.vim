@@ -92,4 +92,4 @@ call s:setHi('Directory',       14, -1, -1) " __Directory__
 
 unlet s:c
 
-" vim: set expandtab tabstop=4 shiftwidth=4 smarttab softtabstop=4:
+" vim: se ts=2:sw=2:noet:sts=2
