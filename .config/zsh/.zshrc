@@ -14,7 +14,7 @@ source $ZDOTDIR/funct.zsh
 source $ZDOTDIR/aliases.zsh
 [[ -s $ZDOTDIR/dynamic.zsh ]] && source $ZDOTDIR/dynamic.zsh
 
-lmcsismosh && export ISMOSHBRAH="yup"
+lmcsismosh && export ISMOSHBRUH="yup"
 
 if [[ ! -d $ZDOTDIR/plugins/zsh-syntax-highlighting ]]; then
 	__url='https://github.com/zsh-users/zsh-syntax-highlighting.git'
@@ -39,5 +39,4 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-# vim: set tabstop=2:softtabstop=2:shiftwidth=2:noexpandtab
-
+# vim: se ts=2:sw=2:noet:sts=2

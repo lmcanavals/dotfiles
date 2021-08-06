@@ -1,15 +1,11 @@
 #!/usr/bin/zsh
 
-#     Black    Red      Green    Yellow   Blue     Magenta  Cyan     White
-LCLR=$(<$ZDOTDIR/colors)
-export LCLR
+export LCLR=$(<$ZDOTDIR/colors)
 if [[ "$TERM" == "linux" ]]; then
-	__lmcslcolor=(${(s/ /)LCLR})
+	# echo -en "\e]P0${LCLR:1:6}" && clear # for background artifacting
 	for i in {1..15}; do
-		echo "P$(printf "%x" "$i")${__lmcslcolor[i+1]}"
+		echo -en "\e]P$(printf "%x" "$i")${LCLR:$i * 8 + 1:6}"
 	done
-	#echo -en "\e]P0${__lmcslcolor[1]} && clear # for background artifacting
-	unset __lmcslcolor
 fi
 
 setopt auto_cd
@@ -357,5 +353,4 @@ fi'
 	zstyle ":completion:*"           use-cache yes && \
 	zstyle ":completion::complete:*" cache-path $ZDOTDIR/cache/
 
-# vim: set tabstop=2:softtabstop=2:shiftwidth=2:noexpandtab
-
+# vim: se ts=2:sw=2:noet:sts=2
