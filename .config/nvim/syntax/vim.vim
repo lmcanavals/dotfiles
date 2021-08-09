@@ -60,4 +60,4 @@ endfor
 
 unlet s:tokens
 
-" vim: se ts=2:sw=2:noet:sts=2
+" vim: set ts=2:sw=2:noet:sts=2:

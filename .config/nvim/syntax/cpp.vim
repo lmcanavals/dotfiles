@@ -65,4 +65,4 @@ sy match   cppConstant "\<\([A-Z_][A-Z0-9_]*\)\>"
 
 hi def link cppSTL Identifier
 
-" vim: se ts=2:sw=2:noet:sts=2
+" vim: set ts=2:sw=2:noet:sts=2:

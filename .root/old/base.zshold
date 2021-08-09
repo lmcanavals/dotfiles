@@ -1,4 +1,5 @@
 #!/usr/bin/zsh
+# vim: set ts=2:sw=2:noet:sts=2:
 
 #     Black    Red      Green    Yellow   Blue     Magenta  Cyan     White
 LCLR=("20201E" "DB4952" "57A128" "EE9D34" "538FD5" "A646D3" "32ABBA" "A09D80"
@@ -514,4 +515,3 @@ fi'
 	zstyle ":completion:*"           use-cache yes && \
 	zstyle ":completion::complete:*" cache-path $ZDOTDIR/cache/
 
-# vim: se ts=2:sw=2:noet:sts=2

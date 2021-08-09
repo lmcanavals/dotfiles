@@ -1,4 +1,5 @@
 #!/usr/bin/zsh
+# vim: set ts=2:sw=2:noet:sts=2:
 
 if [[ "$TERM" == "linux" ]]; then
 	# echo -en "\e]P0${LCLR:1:6}" && clear # for background artifacting
@@ -73,10 +74,10 @@ bindkey "\eOH" beginning-of-somewhere    # 
 bindkey "\e[H" beginning-of-somewhere    # 
 bindkey "\eOF" end-of-somewhere          # end
 bindkey "\e[F" end-of-somewhere          # end
-if [[ "$TERM" == "linux" ]]; then
+#if [[ "$TERM" == "linux" ]]; then
 	bindkey "\e[1~" beginning-of-somewhere # 
 	bindkey "\e[4~" end-of-somewhere       # end
-fi
+#fi
 
 bindkey "\e[A"  up-line-or-search        # ↑
 bindkey "\e[B"  down-line-or-search      # esc
@@ -351,5 +352,3 @@ fi'
 [[ -d $ZDOTDIR/cache ]] && \
 	zstyle ":completion:*"           use-cache yes && \
 	zstyle ":completion::complete:*" cache-path $ZDOTDIR/cache/
-
-# vim: se ts=2:sw=2:noet:sts=2

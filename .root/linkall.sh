@@ -1,4 +1,5 @@
 #!/bin/sh
+# vim: set ts=2:sw=2:noet:sts=2:
 
 linkall() {
 	local dotfiles="/home/$1"
@@ -21,4 +22,3 @@ linkall() {
 }
 linkall lmcs
 
-# vim: se ts=2:sw=2:noet:sts=2

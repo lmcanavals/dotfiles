@@ -1,6 +1,6 @@
-"
 " My config
 "
+" vim: set ts=2:sw=2:noet:sts=2:
 
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
 	let s:t='~/.local/share/nvim/site/autoload/plug.vim'
@@ -81,4 +81,3 @@ call plug#end()
 
 colorscheme lmcs
 
-" vim: se ts=2:sw=2:noet:sts=2

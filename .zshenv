@@ -1,4 +1,2 @@
+# vim: set ts=2:sw=2:noet:sts=2:
 . /home/lmcs/.config/zsh/.zshenv
-
-# vim: set tabstop=2:softtabstop=2:shiftwidth=2:noexpandtab
-

@@ -69,4 +69,4 @@ for _, lsp in ipairs(servers) do
 	nvim_lsp[lsp].setup {on_attach = on_attach}
 end
 
--- vim: se ts=2:sw=2:noet:sts=2
+-- vim: set ts=2:sw=2:noet:sts=2:

@@ -21,4 +21,4 @@ require'paq-nvim' {
 	"norcalli/nvim-colorizer.lua";
 }
 
--- vim: se ts=2:sw=2:noet:sts=2
+-- vim: set ts=2:sw=2:noet:sts=2:

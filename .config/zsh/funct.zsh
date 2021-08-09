@@ -1,4 +1,5 @@
 #!/usr/bin/zsh
+# vim: set ts=2:sw=2:noet:sts=2:
 
 nt() {
 	if [[ -n $1 ]]; then
@@ -95,4 +96,3 @@ modified() {
 	print -l -- *(m-${1:-1})
 }
 
-# vim: se ts=2:sw=2:noet:sts=2

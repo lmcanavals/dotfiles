@@ -53,4 +53,4 @@ map("s", "<Tab>",   "v:lua.tab_complete()",   {expr = true})
 map("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 map("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 
--- vim: se ts=2:sw=2:noet:sts=2
+-- vim: set ts=2:sw=2:noet:sts=2:

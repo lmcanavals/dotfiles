@@ -92,4 +92,4 @@ call s:setHi('Directory',       14, -1, -1) " __Directory__
 
 unlet s:c
 
-" vim: se ts=2:sw=2:noet:sts=2
+" vim: set ts=2:sw=2:noet:sts=2:

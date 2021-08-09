@@ -1,3 +1,4 @@
+rust.sh
 *.netrwhist
 *.appimage
 
@@ -36,6 +37,7 @@
 
 .android/
 .cache/
+.cargo/
 .conda/
 .dotfiles.git/
 .gnome/
@@ -47,6 +49,7 @@
 .mozilla/
 .npm/
 .pki/
+.rustup/
 .ssh/
 
 .config/Bitwarden\ CLI/
