@@ -13,8 +13,6 @@ require'paq-nvim' {
 	"neovim/nvim-lspconfig";
 	"hrsh7th/nvim-compe";
 	{"nvim-treesitter/nvim-treesitter", run="TSUpdate"};
-	"junegunn/fzf";
-	"junegunn/fzf.vim";
 	"ojroques/nvim-lspfuzzy";
 	"kyazdani42/nvim-tree.lua";
 	"beyondmarc/glsl.vim";
