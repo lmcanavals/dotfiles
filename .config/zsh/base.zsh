@@ -1,6 +1,5 @@
 #!/usr/bin/zsh
 
-export LCLR=$(<$ZDOTDIR/colors)
 if [[ "$TERM" == "linux" ]]; then
 	# echo -en "\e]P0${LCLR:1:6}" && clear # for background artifacting
 	for i in {1..15}; do
