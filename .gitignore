@@ -51,13 +51,15 @@ rust.sh
 .pki/
 .rustup/
 .ssh/
+.zoom/
 
 .config/Bitwarden\ CLI/
-.config/bottom/
 .config/Thunar/
 .config/VirtualBox/
 .config/autostart/
 .config/blender/
+.config/bottom/
+.config/coc/
 .config/configstore/
 .config/dconf/
 .config/discord/
@@ -79,9 +81,8 @@ rust.sh
 .config/xfce4/desktop/
 .config/xfce4/panel/
 .config/xfce4/xfconf/xfce-perchannel-xml/
+.config/xournalpp/
 .config/zsh/plugins/
-.config/coc/
-.zoom/
 
 Apps/
 Desktop/

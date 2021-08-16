@@ -7,7 +7,16 @@ local gui = vim.env.ISMOSHBRUH ~= "yup"
 
 vim.opt.termguicolors = gui
 
-local guicolors = vim.split(vim.env.LCLR, "\n", true)
+local lclr
+if vim.env.LCLR ~= nil then
+	lclr = vim.env.LCLR
+else
+	local f = assert(io.open(vim.env.HOME.."/.config/zsh/colors", "rb"))
+	lclr = f:read("*all")
+	f:close()
+end
+
+local guicolors = vim.split(lclr, "\n", true)
 local termcolors = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 }
 local specials = {
 	"bold",
