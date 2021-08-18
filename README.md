@@ -171,14 +171,13 @@ Configure `sudoers` with `visudo`, add:
 lmcs stella= /usr/bin/pacman
 ```
 
-Download and install yay as user:
+Install an aur helper as user, clone the repo from aur.archlinux.org then run:
 
 ```sh
 su - lmcs
-cd git
-git clone https://aur.archlinux.org/yay.git
-cd yay
+# cloning repo and cding into the repo folder
 makepgk -Acsi
+# delete the repo folder
 ```
 
 Configure grub, copy the `/etc/default/grub` from arch-conf.git which adds the
@@ -204,64 +203,61 @@ Start console session as `lmcs`
 Sync, update and install the rest of the good stuff:
 
 ```sh
-yay -Syu
+<aur helper> -Syu
 ```
 
 GUI base:
 
 ```sh
-yay -S xfce4 xfce4-goodies pulseaudio sox lightdm lightdm-gtk-greeter xcape xsel
-yay -S accountsservice xorg-xmodmap xorg-server gvfs kitty ksnip
+xfce4 xfce4-goodies pulseaudio sox lightdm lightdm-gtk-greeter xcape xsel
+accountsservice xorg-xmodmap xorg-server gvfs kitty ksnip
 ```
 
 Graphics nvidia:
 
 ```sh
-yay -S nvidia nvidia-settings xorg-xrandr
+nvidia nvidia-settings xorg-xrandr
 ```
 
 Utilities
 
 ```sh
-yay -S papirus-icon-theme
-yay -S file-roller unrar p7zip ntp imagemagick htop
-yay -S redshift mosh network-manager-applet pavucontrol
-yay -S libcanberra gnome-keyring haveged jq
-yay -S firefox google-chrome opera opera-ffmpeg-codecs
-yay -S webp-pixbuf-loader solaar screenkey slop
-yay -S cmake ccls deno gopls pyright tree-sitter fzf
-yay -S bat exa fd procs sd ripgrep dust tokei bottom
+papirus-icon-theme file-roller unrar p7zip ntp imagemagick htop
+redshift mosh network-manager-applet pavucontrol
+libcanberra gnome-keyring haveged jq
+firefox google-chrome opera opera-ffmpeg-codecs
+webp-pixbuf-loader solaar screenkey slop
+cmake ccls deno gopls pyright tree-sitter fzf
+bat exa fd procs sd ripgrep dust tokei bottom
 ```
 
 Fonts, utilities, etc:
 
 ```sh
-yay -S adobe-source-code-pro-fonts # if not installed already
-yay -S adobe-source-han-sans-otc-fonts
-yay -S ttf-fira-code
-yay -S ttf-roboto ttf-roboto-mono
-yay -S ttf-liberation ttf-dejavu gnu-free-fonts
-yay -S noto-fonts-emoji ttf-croscore ttf-carlito ttf-caladea
-yay -S ttf-opensans # installed by telegram
-yay -S ttf-font-awesome ttf-nerd-fonts-symbols-mono
+adobe-source-han-sans-otc-fonts adobe-source-code-pro-fonts # if not present
+ttf-fira-code ttf-roboto ttf-roboto-mono
+ttf-liberation ttf-dejavu gnu-free-fonts
+noto-fonts-emoji ttf-croscore ttf-carlito ttf-caladea
+ttf-opensans # installed by telegram
+ttf-font-awesome ttf-nerd-fonts-symbols-mono
 ```
 
 Cloud storage, Goodle Drive, One Drive, etc:
 
 ```sh
-yay -S rclone fuse2
+rclone fuse2
 ```
 
 Streaming and virtual cam stream:
 
 ```sh
-yay -S obs-studio linux-headers v4l2loopback-dkms
+obs-studio linux-headers v4l2loopback-dkms
 ```
 
 Use a wacom tablet:
 
 ```sh
-yay -S xf86-input-wacom
+xf86-input-wacom
 ```
 
 Optional:
