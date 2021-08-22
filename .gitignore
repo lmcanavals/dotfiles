@@ -45,6 +45,7 @@ rust.sh
 .config/kmixrc
 .config/konquerorrc
 .config/konsolerc
+.config/korgacrc
 .config/kritadisplayrc
 .config/kritarc
 .config/krunnerrc
@@ -66,6 +67,8 @@ rust.sh
 .config/plasmashellrc
 .config/powermanagementprofilesrc
 .config/spectaclerc
+.config/touchpadxlibinputrc
+.config/trashrc
 .config/user-dirs.dirs
 .config/user-dirs.locale
 .config/webengineurlinterceptoradblockrc
