@@ -18,12 +18,15 @@ rust.sh
 .config/QtProject.conf
 .config/Trolltech.conf
 .config/akregatorrc
+.config/arkrc
 .config/baloofilerc
 .config/bluedevilglobalrc
 .config/device_automounter_kcmrc
 .config/discoverrc
 .config/dolphinrc
+.config/drkonqirc
 .config/emaildefaults
+.config/emailidentities
 .config/gtkrc
 .config/gtkrc-2.0
 .config/gwenviewrc
@@ -40,8 +43,10 @@ rust.sh
 .config/kfontinstuirc
 .config/kgammarc
 .config/kglobalshortcutsrc
+.config/khelpcenterrc
 .config/khotkeysrc
 .config/kmail2rc
+.config/kmixctrlrc
 .config/kmixrc
 .config/konquerorrc
 .config/konsolerc
@@ -59,14 +64,19 @@ rust.sh
 .config/kxkbrc
 .config/mimeapps.list
 .config/okularpartrc
+.config/okularrc
 .config/pavucontrol.ini
+.config/phishingurlrc
 .config/plasma-localerc
 .config/plasma-org.kde.plasma.desktop-appletsrc
 .config/plasma.emojierrc
 .config/plasmanotifyrc
+.config/plasmarc
 .config/plasmashellrc
 .config/powermanagementprofilesrc
+.config/specialmailcollectionsrc
 .config/spectaclerc
+.config/systemsettingsrc
 .config/touchpadxlibinputrc
 .config/trashrc
 .config/user-dirs.dirs
@@ -83,6 +93,7 @@ rust.sh
 !.local/bin/lmcs*
 .local/share/*
 !.local/share/themes/
+!.local/share/konsole/
 
 .android/
 .cache/
