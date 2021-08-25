@@ -23,7 +23,7 @@ $directory"""
 
 [character]
 format         = "$symbol"
-error_symbol   = "[●](red)"
+error_symbol   = "[● ](red)"
 success_symbol = "[▢ ](white)"
 vicmd_symbol   = "[◇ ](yellow)"
 
@@ -43,7 +43,7 @@ style  = "purple"
 symbol = "◯ "
 
 [directory]
-format            = "[$path]($style)"
+format            = "[$path]($style)[$read_only]($read_only_style)"
 home_symbol       = "⌂"
 read_only         = ""
 style             = "bright-blue"
@@ -68,11 +68,10 @@ style  = "bright-purple"
 [golang]
 format = "[$symbol($version )]($style)"
 style  = "cyan"
-symbol = " "
+symbol = "go."
 
 [hostname]
-format   = "[$hostname]($style):"
-ssh_only = false
+format   = "@[$hostname]($style):"
 style    = "green"
 
 [jobs]
@@ -81,11 +80,12 @@ style = "blue"
 [julia]
 format = "[$symbol($version )]($style)"
 style  = "cyan"
+symbol = "jl."
 
 [lua]
 format = "[$symbol($version )]($style)"
 style  = "cyan"
-symbol = " "
+symbol = "lua."
 
 [memory_usage]
 format = "$symbol [${ram}( \\| ${swap})]($style) "
@@ -94,27 +94,29 @@ style  = "white"
 [nodejs]
 format = "[$symbol($version )]($style)"
 style  = "cyan"
+symbol = "js."
 
 [python]
 format = "[$symbol($version )]($style)"
 style  = "cyan"
-symbol = " "
+symbol = "py."
 
 [rlang]
 format = "[$symbol($version )]($style)"
 style  = "cyan"
+symbol = "r."
 
 [rust]
 format = "[$symbol($version )]($style)"
 style  = "cyan"
-symbol = " "
+symbol = "rs."
 
 [status]
 disabled = false
+symbol = ""
 
 [username]
-format      = "[$user]($style)@"
-show_always = true
+format      = "[$user]($style)"
 style_root  = "red"
 style_user  = "green"
 
