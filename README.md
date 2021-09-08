@@ -224,7 +224,7 @@ Utilities
 ```sh
 papirus-icon-theme file-roller unrar p7zip ntp imagemagick htop
 redshift mosh network-manager-applet pavucontrol
-libcanberra gnome-keyring haveged jq
+libcanberra gnome-keyring haveged jq okular
 firefox google-chrome opera opera-ffmpeg-codecs
 webp-pixbuf-loader solaar screenkey slop
 cmake ccls deno gopls pyright tree-sitter fzf
