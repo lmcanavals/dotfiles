@@ -238,19 +238,19 @@ function left_prompt() {
 	local s
 	[[ EUID -eq 0 ]] && c="red" || c="green"
 	if [[ $KEYMAP == vicmd ]]; then
-		s="␛"
+		s=":"
 		c="yellow"
 	else
-		s="␁"
+		s=" "
 	fi
-	print "%{$bg[$c]$fg[black]%}$s%#%{$reset_color$fg[$c]%}▖%{$reset_color%}"
+	print "%{$bg[$c]$fg[black]%}$s%# %{$reset_color%} "
 }
 eval "$(starship init zsh)"
 RPROMPT=$PROMPT
 PROMPT="$(left_prompt)"
-PS2='%{$bg[blue]%}%_%{$reset_color$fg[blue]%}▖%{$reset_color%}'
-PS3='%{$bg[blue]%}?#%{$reset_color$fg[blue]%}▖%{$reset_color%}'
-PS4='%{$bg[blue]%}+%N:%i:%_%{$reset_color$fg[blue]%}▖%{$reset_color%}'
+PS2='%{$bg[blue]%}%_%{$reset_color%} '
+PS3='%{$bg[blue]%}?#%{$reset_color%} '
+PS4='%{$bg[blue]%}+%N:%i:%_%{$reset_color%} '
 
 function info_print() {
 	local esc_begin esc_end
