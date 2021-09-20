@@ -210,7 +210,7 @@ GUI base:
 
 ```sh
 xfce4 xfce4-goodies pulseaudio sox lightdm lightdm-gtk-greeter xcape xsel
-accountsservice xorg-xmodmap xorg-server gvfs kitty ksnip
+accountsservice xorg-xmodmap xorg-server gvfs kitty ksnip numlockx
 ```
 
 Graphics nvidia:
@@ -391,6 +391,13 @@ Edit `/etc/lightdm/lightdm.conf`, look for `[Seat:*]` then
 
 ```sh
 display-setup-script=/etc/lightdm/display_setup.sh
+```
+
+**Numpad on on lightdm**
+
+```
+[Seat:*]
+greeter-setup-script=/usr/bin/numlockx on
 ```
 
 More info about nvidia can be found
