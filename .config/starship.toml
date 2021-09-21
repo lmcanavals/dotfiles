@@ -2,7 +2,6 @@ add_newline = false
 format = """
 $character\
 $status\
-$memory_usage\
 $jobs\
 $cmd_duration\
 $conda\
@@ -11,9 +10,9 @@ $git_commit\
 $git_state\
 $git_status\
 $cmake\
+$deno\
 $golang\
 $julia\
-$nodejs\
 $python\
 $rust\
 $lua\
@@ -22,105 +21,105 @@ $hostname\
 $directory"""
 
 [character]
-format         = "$symbol"
-error_symbol   = "[E ](red)"
-success_symbol = "[* ](white)"
-vicmd_symbol   = "[i ](yellow)"
+format = "$symbol"
+error_symbol = "[•](red)"
+success_symbol = "[•](green)"
+vicmd_symbol = "[•](yellow)"
 
 [cmake]
 format = "[$symbol($version )]($style)"
-style  = "blue"
+style = "blue"
+version_format = "${major}.${minor}"
 
 [cmd_duration]
-format            = "[$duration]($style) "
-min_time          = 2_500
-show_milliseconds = true
-style             = "yellow"
+format = "[$duration]($style) "
+min_time = 10_000
+show_notifications = true
+style = "yellow"
 
 [conda]
 format = "[$symbol$environment]($style) "
-style  = "purple"
-symbol = "v "
+style = "purple"
+
+[deno]
+detect_extensions = ["js"]
+detect_folders = ["js"]
+format = "[$symbol($version )]($style)"
+style = "cyan"
+symbol = " "
+version_format = "${major}.${minor}"
 
 [directory]
-format            = "[$path]($style)[$read_only]($read_only_style)"
-home_symbol       = "~"
-read_only         = "!"
-style             = "bright-blue"
+format = "[$path]($style)[$read_only]($read_only_style)"
+home_symbol = "⌂"
+read_only = ""
+style = "bright-blue"
 truncation_length = 1
-truncation_symbol = "-/"
-
+truncation_symbol = "…"
 fish_style_pwd_dir_length = 1
 
 [git_branch]
 format = "[$symbol$branch]($style) "
-style  = "bright-purple"
-symbol = ""
+style = "bright-yellow"
 
 [git_commit]
-style = "bright-purple"
 
 [git_state]
-style = "bright-purple"
 
 [git_status]
 format = "([$all_status$ahead_behind]($style) )"
-style  = "bright-purple"
 
 [golang]
 format = "[$symbol($version )]($style)"
-style  = "cyan"
-symbol = "go."
+style = "cyan"
+symbol = " "
+version_format = "${major}.${minor}"
 
 [hostname]
-format   = "@[$hostname]($style):"
-style    = "green"
+format = "[$hostname]($style):"
+style = "yellow"
+ssh_only = false
 
 [jobs]
 style = "blue"
 
 [julia]
 format = "[$symbol($version )]($style)"
-style  = "cyan"
-symbol = "jl."
+style = "cyan"
+symbol = " "
+version_format = "${major}.${minor}"
 
 [lua]
 format = "[$symbol($version )]($style)"
-style  = "cyan"
-symbol = "lua."
-
-[memory_usage]
-format = "$symbol [${ram}( \\| ${swap})]($style) "
-style  = "white"
-
-[nodejs]
-format = "[$symbol($version )]($style)"
-style  = "cyan"
-symbol = "js."
+style = "cyan"
+symbol = " "
+version_format = "${major}.${minor}"
 
 [python]
 format = "[$symbol($version )]($style)"
-style  = "cyan"
-symbol = "py."
-
-[rlang]
-format = "[$symbol($version )]($style)"
-style  = "cyan"
-symbol = "r."
+style = "cyan"
+symbol = " "
+version_format = "${major}.${minor}"
 
 [rust]
 format = "[$symbol($version )]($style)"
-style  = "cyan"
-symbol = "rs."
+style = "cyan"
+symbol = " "
+version_format = "${major}.${minor}"
 
 [status]
 disabled = false
-symbol = ""
+success_symbol = "✓"
+not_executable_symbol = ""
+not_found_symbol = " "
+sigint_symbol = "⏹"
+signal_symbol = "🗲"
 
 [username]
-format      = "[$user]($style)"
-style_root  = "red"
-style_user  = "green"
+format = "[$user ]($style)"
+show_always = true
+style_root = "red"
+style_user = "green"
 
 [kotlin]
 disabled = true
@@ -135,8 +134,6 @@ disabled = true
 [crystal]
 disabled = true
 [dart]
-disabled = true
-[deno]
 disabled = true
 [docker_context]
 disabled = true
@@ -158,9 +155,12 @@ disabled = true
 disabled = true
 [hg_branch]
 disabled = true
+[memory_usage]
 [nim]
 disabled = true
 [nix_shell]
+disabled = true
+[nodejs]
 disabled = true
 [ocaml]
 disabled = true
@@ -175,6 +175,8 @@ disabled = true
 [purescript]
 disabled = true
 [red]
+disabled = true
+[rlang]
 disabled = true
 [ruby]
 disabled = true
