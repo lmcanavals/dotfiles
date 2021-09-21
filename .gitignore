@@ -37,7 +37,7 @@ rust.sh
 .config/zsh/dynamic.zsh
 
 .local/bin/*
-!.local/bin/lmcs*
+!.local/bin/local*
 .local/share/*
 !.local/share/themes/
 !.local/share/konsole/
