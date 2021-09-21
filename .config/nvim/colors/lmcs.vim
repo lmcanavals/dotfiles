@@ -1,7 +1,7 @@
 " Vim color file
 " Name:       lmcs.vim
 " Version:    3.0
-" Maintainer: lmcsnavals
+" Maintainer: lmcanavals
 
 lua require'lmcs'.color()
 
