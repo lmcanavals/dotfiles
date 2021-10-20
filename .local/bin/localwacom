@@ -1,9 +1,0 @@
-#!/usr/bin/zsh
-
-function changewacom() {
-	wid=$(xsetwacom list devices | rg stylus | awk '/stylus/{print $(NF-2)}')
-	displays=($(xrandr | rg " connected" | awk '{print $1}'))
-
-	xsetwacom set $wid MapToOutput ${displays[$1]}
-}
-changewacom $*
