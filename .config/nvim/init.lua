@@ -1,13 +1,5 @@
 -- author: lmcanavals
 -- date:   2021-07-26
--- TODO: check:
---	TimUntersberger/neogit
---	folke/which-key.nvim
---	kevinhwang91/nvim-hlslens
---	kevinhwang91/nvim-bqf
---	rktjmp/lush.nvim -- only if we need to do some low level color cool
---	ray-x/lsp_signature.nvim
---	https://github.com/rockerBOO/awesome-neovim#snippets
 
 local cmd  = vim.cmd
 local map  = vim.api.nvim_set_keymap
