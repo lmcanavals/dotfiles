@@ -60,6 +60,7 @@ rust.sh
 .pki/
 .rustup/
 .ssh/
+.var/
 .zoom/
 
 .config/Bitwarden\ CLI/
@@ -75,6 +76,7 @@ rust.sh
 .config/configstore/
 .config/dconf/
 .config/discord/
+.config/github-copilot/
 .config/google-chrome/
 .config/gtk-3.0/
 .config/gtk-4.0/
@@ -87,6 +89,7 @@ rust.sh
 .config/ksnip/
 .config/libaccounts-glib/
 .config/menus/
+.config/mypaint/
 .config/nvim/plugged/
 .config/obs-studio/
 .config/opera/
