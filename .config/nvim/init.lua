@@ -66,5 +66,6 @@ require'compesetup'
 require'treesittersetup'
 
 require'lspfuzzy'.setup {}
+require'nvim-tree'.setup {}
 
 -- vim: set ts=2:sw=2:noet:sts=2:

@@ -27,6 +27,7 @@ require'paq-nvim' {
 	"chrisbra/csv.vim";
 	{"glacambre/firenvim", run=function() vim.fn['firenvim#install'](0) end};
 	"norcalli/nvim-colorizer.lua";
+	"github/copilot.vim"
 }
 
 -- vim: set ts=2:sw=2:noet:sts=2:
