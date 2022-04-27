@@ -58,7 +58,7 @@ zle -N zleiab && bindkey "^@" zleiab
 #zle -N zleiab && bindkey ",." zleiab
 
 alias ...="cd ../../"
-alias exa="exa -F --icons --colour=auto "
+alias exa="exa -F --icons --colour=auto --group-directories-first "
 alias ea="exa -la "
 alias eaa="exa -a .*(.)"
 alias ead="exa -d .*(/)"

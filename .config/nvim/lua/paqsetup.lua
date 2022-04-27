@@ -16,7 +16,7 @@ if fn.empty(fn.glob(path)) > 0 then
 	vim.cmd("!git clone --depth 1 https://github.com/savq/paq-nvim "..path)
 end
 
-require'paq-nvim' {
+require'paq' {
 	"savq/paq-nvim";
 	"neovim/nvim-lspconfig";
 	"hrsh7th/nvim-compe";

@@ -9,6 +9,8 @@ rust.sh
 .lesshst
 .nvidia-settings-rc
 .python_history
+.steampath
+.steampid
 .xsession-*
 .zcompdump
 .zdirs
@@ -25,6 +27,7 @@ rust.sh
 .config/kwallet
 .config/mailtransports
 .config/mimeapps.list
+.config/okular.kmessagebox
 .config/pavucontrol.ini
 .config/user-dirs.dirs
 .config/user-dirs.locale
@@ -41,6 +44,7 @@ rust.sh
 .local/share/*
 !.local/share/themes/
 !.local/share/konsole/
+
 
 .android/
 .cache/
@@ -60,7 +64,9 @@ rust.sh
 .pki/
 .rustup/
 .ssh/
+.steam/
 .var/
+.wine/
 .zoom/
 
 .config/Bitwarden\ CLI/
@@ -72,6 +78,7 @@ rust.sh
 .config/autostart/
 .config/blender/
 .config/bottom/
+.config/cef_user_data/
 .config/coc/
 .config/configstore/
 .config/dconf/
@@ -80,6 +87,8 @@ rust.sh
 .config/google-chrome/
 .config/gtk-3.0/
 .config/gtk-4.0/
+.config/higan/
+.config/hiro/
 .config/htop/
 .config/inkscape/
 .config/kde.org/
@@ -88,6 +97,7 @@ rust.sh
 .config/khtml/
 .config/ksnip/
 .config/libaccounts-glib/
+.config/lutris/
 .config/menus/
 .config/mypaint/
 .config/nvim/plugged/
@@ -111,6 +121,8 @@ Apps/
 Desktop/
 Documents/
 Downloads/
+Emulation/
+Games/
 GoogleDrive/
 OneDrive/
 Pictures/
@@ -118,4 +130,3 @@ Videos/
 VirtualBox VMs/
 git/
 shared/
-
