@@ -21,7 +21,7 @@ $hostname\
 $directory"""
 
 [character]
-format = "$symbol"
+format = "$symbol "
 error_symbol = "[•](red)"
 success_symbol = "[•](green)"
 vicmd_symbol = "[•](yellow)"
@@ -108,11 +108,7 @@ version_format = "${major}.${minor}"
 
 [status]
 disabled = false
-success_symbol = "✓"
-not_executable_symbol = ""
-not_found_symbol = " "
-sigint_symbol = "⏹"
-signal_symbol = "🗲"
+format = "[$status]($style) "
 
 [username]
 format = "[$user ]($style)"

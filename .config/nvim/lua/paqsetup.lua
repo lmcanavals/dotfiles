@@ -25,7 +25,6 @@ require'paq' {
 	"kyazdani42/nvim-tree.lua";
 	"beyondmarc/glsl.vim";
 	"chrisbra/csv.vim";
-	{"glacambre/firenvim", run=function() vim.fn['firenvim#install'](0) end};
 	"norcalli/nvim-colorizer.lua";
 	"github/copilot.vim"
 }
