@@ -68,6 +68,7 @@ rust.sh
 .ssh/
 .steam/
 .var/
+.vscode-server/
 .wine/
 .zoom/
 
@@ -86,6 +87,7 @@ rust.sh
 .config/dconf/
 .config/discord/
 .config/github-copilot/
+.config/go/
 .config/google-chrome/
 .config/gtk-3.0/
 .config/gtk-4.0/

@@ -26,15 +26,15 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('$HOME/Apps/mc/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/lmcs/Apps/c/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
-	eval "$__conda_setup"
+    eval "$__conda_setup"
 else
-	if [ -f "$HOME/Apps/mc/etc/profile.d/conda.sh" ]; then
-		source "$HOME/Apps/mc/etc/profile.d/conda.sh"
-	else
-		export PATH="$HOME/Apps/mc/bin:$PATH"
-	fi
+    if [ -f "/home/lmcs/Apps/c/etc/profile.d/conda.sh" ]; then
+        . "/home/lmcs/Apps/c/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/lmcs/Apps/c/bin:$PATH"
+    fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
