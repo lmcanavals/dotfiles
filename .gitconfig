@@ -18,7 +18,8 @@
 [push]
 	default = simple
 [credential]
-	helper = /usr/lib/git-core/git-credential-libsecret
+	#helper = /usr/lib/git-core/git-credential-libsecret
+	helper = /mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager-core.exe
 [init]
 	defaultBranch = main
 [pull]
