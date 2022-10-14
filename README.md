@@ -147,8 +147,8 @@ ln -s /usr/share/zoneinfo/America/Lima /etc/localtime
 su - lmcs
 cd ~
 git clone --bare https://github.com/lmcanavals/dotfiles.git .dotfiles.git
-git restore --staged .
-git restore .
+git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME restore --staged .
+git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME restore .
 exit
 cd /home/lmcs/.root/
 cp etc/hostname /etc/
