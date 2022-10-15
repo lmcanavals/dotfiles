@@ -40,7 +40,6 @@ style = "yellow"
 [conda]
 format = "[$symbol$environment]($style) "
 style = "purple"
-symbol = "C"
 
 [deno]
 detect_extensions = ["js"]
