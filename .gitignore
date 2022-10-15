@@ -12,6 +12,7 @@ rust.sh
 .python_history
 .steampath
 .steampid
+.sudo_as_admin_successful
 .xsession-*
 .zcompdump
 .zdirs
