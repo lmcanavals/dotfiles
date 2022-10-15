@@ -9,4 +9,4 @@ export PATH=/home/lmcs/.local/bin:$PATH
 
 export LCLR=$(<$ZDOTDIR/colors)
 
-. "/home/lmcs/.cargo/env"
+. "$HOME/.cargo/env"

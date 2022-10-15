@@ -11,4 +11,7 @@ export NO_AT_BRIDGE=1
 
 xset -b
 
+. "$HOME/.cargo/env"
+
 play "$XDG_DATA_HOME/sounds/Smooth/stereo/desktop-login.oga" &
+
