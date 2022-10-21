@@ -9,6 +9,9 @@ export PAGER="less"
 export BROWSER="exo-open --launch WebBrowser "
 # unused vars: SHELL COLORTERM
 
+if (( "x${CUSTOMZSHENV}x" == "xx" )); then
+	source $ZDOTDIR/.zshenv
+fi
 source $ZDOTDIR/base.zsh
 source $ZDOTDIR/funct.zsh
 source $ZDOTDIR/aliases.zsh
