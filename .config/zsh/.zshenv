@@ -16,4 +16,5 @@ export PATH
 
 export LCLR=$(<$ZDOTDIR/colors)
 
+[[ -f "$HOME/.cargo/env" ]] && \
 . "$HOME/.cargo/env"
