@@ -14,6 +14,7 @@ rust.sh
 .steampath
 .steampid
 .sudo_as_admin_successful
+.wget-hsts
 .xsession-*
 .zcompdump
 .zdirs
@@ -25,6 +26,7 @@ rust.sh
 .config/Trolltech.conf
 .config/emaildefaults
 .config/emailidentities
+.config/gh/hosts.yml
 .config/gtkrc-2.0
 .config/kdeglobals
 .config/kwallet

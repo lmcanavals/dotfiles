@@ -245,7 +245,12 @@ function left_prompt() {
 	fi
 	print "%{$bg[$c]$fg[black]%}$s%# %{$reset_color%} "
 }
-eval "$(starship init zsh)"
+if command -v starship &> /dev/null; then
+	eval "$(starship init zsh)"
+else
+	[[ EUID -eq 0 ]] && PROMPT="%{$fg[red]%}" || PROMPT="%{$fg[green]%}"
+	PROMPT+="%n%{$fg[yellow]%}@%{$fg[cyan]%}%m:%{$fg[blue]%}%~%{$reset_color%}"
+fi
 RPROMPT=$PROMPT
 PROMPT="$(left_prompt)"
 PS2='%{$bg[blue]%}%_%{$reset_color%} '
