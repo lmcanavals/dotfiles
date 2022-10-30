@@ -96,7 +96,7 @@ local theme = {
 	MoreMsg      = { ui = NA, bg = NA, fg = GR },
 	Comment      = { ui = IT, bg = NA, fg = bg },
 	Todo         = { ui = NA, bg = NA, fg = YE },
-	Error        = { ui = NA, bg = RE, fg = BG },
+	Error        = { ui = NA, bg = NA, fg = RE },
 	Identifier   = { ui = NA, bg = NA, fg = bl },
 	Function     = { ui = NA, bg = NA, fg = BL },
 	PreProc      = { ui = NA, bg = NA, fg = ye },
