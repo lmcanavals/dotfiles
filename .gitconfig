@@ -1,7 +1,7 @@
 [core]
 	editor = nvim
 	excludesfile = /home/lmcs/.gitignore_global
-	autocrlf = true
+	autocrlf = input
 [user]
 	name = Luis M Canaval S
 	email = public02@canaval.org
