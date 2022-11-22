@@ -81,6 +81,7 @@ rust.sh
 .config/Thunar/
 .config/Unknown\ Organization/
 .config/VirtualBox/
+.config/asciinema/
 .config/akonadi/
 .config/autostart/
 .config/blender/

@@ -245,6 +245,8 @@ function left_prompt() {
 	fi
 	print "%{$bg[$c]$fg[black]%}$s%# %{$reset_color%} "
 }
+# /home/user/folder/stuff/tra/cool --> ~/f/s/t/cool
+# echo ${PWD/$HOME/\~} | sed -e "s/\(\w\)\(\w\+\)\//\1\//g"
 if command -v starship &> /dev/null; then
 	eval "$(starship init zsh)"
 else
