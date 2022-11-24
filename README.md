@@ -168,6 +168,7 @@ mkinitcpio -p linux
 Configure `sudoers` with `visudo`, add:
 
 ```sh
+export EDITOR=nvim
 lmcs stella= /usr/bin/pacman
 ```
 
@@ -176,6 +177,7 @@ Install an aur helper as user, clone the repo from aur.archlinux.org then run:
 ```sh
 su - lmcs
 # cloning repo and cding into the repo folder
+git clone https://aur.archlinux.org/paru-bin.git
 makepgk -Acsi
 # delete the repo folder
 ```
