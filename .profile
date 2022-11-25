@@ -9,6 +9,8 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export NO_AT_BRIDGE=1
 
+export QT_QPA_PLATFORMTHEME=qt5ct
+
 xset -b
 [[ -s $HOME/.cargo/env ]] && source "$HOME/.cargo/env"
 

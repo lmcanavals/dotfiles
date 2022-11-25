@@ -265,6 +265,7 @@ xf86-input-wacom
 
 Optional:
 
+* qt5ct # this might be needed to control qt styles
 * droidcam # android phone as webcam
 * arc-solid-gtk-theme
 * adobe-source-sans-pro-fonts
