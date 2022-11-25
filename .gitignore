@@ -6,7 +6,6 @@ rust.sh
 .Xauthority
 .bash_history
 .dmrc
-.face
 .hushlogin
 .lesshst
 .nvidia-settings-rc

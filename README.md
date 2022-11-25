@@ -226,7 +226,8 @@ Utilities
 ```sh
 papirus-icon-theme file-roller unrar p7zip ntp imagemagick htop
 redshift mosh network-manager-applet pavucontrol
-libcanberra gnome-keyring haveged jq okular
+gnome-keyring haveged jq okular
+libcanberra # installed by a bunch of packages
 firefox google-chrome opera opera-ffmpeg-codecs
 webp-pixbuf-loader solaar screenkey slop
 cmake ccls deno gopls pyright tree-sitter fzf
@@ -301,7 +302,7 @@ Important
 Set `vblank_mode` to `glx` on the Xfce settings editor and then,
 
 ```
-sudo echo "options nvidia-drm modset=1" > /etc/modprobe.d/nvidia-nomodset.conf
+sudo echo "options nvidia-drm modeset=1" > /etc/modprobe.d/nvidia-nomodeset.conf
 sudo mkinitcpio -p linux
 ```
 
@@ -309,6 +310,7 @@ Make **redshift-gtk** start on login:
 
 ```sh
 systemctl --user start redshift-gtk.service
+systemctl --user enable redshift-gtk.service
 ```
 
 Setup remotes with rclone:
