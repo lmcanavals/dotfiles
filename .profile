@@ -10,8 +10,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export NO_AT_BRIDGE=1
 
 xset -b
-
-. "$HOME/.cargo/env"
+[[ -s $HOME/.cargo/env ]] && source "$HOME/.cargo/env"
 
 play "$XDG_DATA_HOME/sounds/Smooth/stereo/desktop-login.oga" &
 

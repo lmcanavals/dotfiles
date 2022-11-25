@@ -9,6 +9,10 @@ fi
 
 export GTK_MODULES
 
+# this should be handled by lightdm I guess
+#xrandr --setprovideroutputsource modesetting NVIDIA-G0
+#xrandr --auto
+
 if [ -d /etc/X11/xinit/xinitrc.d ]; then
   for f in /etc/X11/xinit/xinitrc.d/*; do
     [ -x "$f" ] && . "$f"
@@ -19,7 +23,7 @@ fi
 QT_STYLE_OVERRIDE=gtk
 export QT_STYLE_OVERRIDE
 
-play /home/martin/.local/share/sounds/Fresh\ and\ Clean/stereo/desktop-login.ogg &
+play /home/lmcs/.local/share/sounds/Fresh\ and\ Clean/stereo/desktop-login.ogg &
 # xset s off & # not needed if using presentation mode on xfce power manager
 exec startxfce4
 
