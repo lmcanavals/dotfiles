@@ -455,7 +455,9 @@ Taken care by dotfiles.git
 **Fix fonts for some applications**:
 
 ```sh
-gsettings set org.gnome.desktop.interface font-name 'Open Sans 10'
+gsettings set org.gnome.desktop.interface color-scheme prefer-dark
+# the next 2 are synced with xfce appearance
+gsettings set org.gnome.desktop.interface font-name 'Noto Sans 10'
 gsettings set org.gnome.desktop.interface monospace-font-name \
 	'Cascadia Code PL Semi-Light 14'
 ```
