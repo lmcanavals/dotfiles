@@ -360,7 +360,8 @@ most drivers using the monitor's name shown by `xrandr` works, for nvidia
 `stylus`. More information can be found on the Archlinux wiki entry for Wacom.
 
 ```sh
-xsetwacom set 10 MapToOutput HEAD-0
+xsetwacom set "Wacom Intuos S Pen stylus" MapToOutput next
+# xsetwacom set 10 MapToOutput HEAD-0 # old stuff
 ```
 
 **npm stuff** some stuff is needed for autocomplete, link etc in neovim:
