@@ -75,6 +75,7 @@ rust.sh
 .wine/
 .zoom/
 
+.config/Bitwarden/
 .config/Bitwarden\ CLI/
 .config/KDE/
 .config/Thunar/
