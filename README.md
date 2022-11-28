@@ -360,7 +360,7 @@ The most beautiful command I just figured out is using `slop` to select a custom
 region anywhere in the screen. I like binding it to `Super+1`:
 
 ```sh
-xsetwacom set 10 MapToOutput $(slop)
+xsetwacom set "Wacom Intuos S Pen stylus" MapToOutput $(slop)
 ```
 
 To rotate between displays and full screen, useful to bing to `Super+2`:
