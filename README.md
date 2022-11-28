@@ -355,14 +355,28 @@ When using a wacom tablet with a dual monitor setup, this commands help:
 xsetwacom list devices
 ```
 
+The most beautiful command I just figured out is using `slop` to select a custom
+region anywhere in the screen. I like binding it to `Super+1`:
+
+```sh
+xsetwacom set 10 MapToOutput $(slop)
+```
+
+To rotate between displays and full screen, useful to bing to `Super+2`:
+
+```sh
+xsetwacom set "Wacom Intuos S Pen stylus" MapToOutput next
+```
+
+This next one is an old command, is a hassle, left here just in case...
+
 Then use the name or id of the `stylus` to set the area on 1 monitor only, for
 most drivers using the monitor's name shown by `xrandr` works, for nvidia 
 `HEAD-0` or `HEAD-1` might work instead, in the next example 10 is the ID of the
 `stylus`. More information can be found on the Archlinux wiki entry for Wacom.
 
 ```sh
-xsetwacom set "Wacom Intuos S Pen stylus" MapToOutput next
-# xsetwacom set 10 MapToOutput HEAD-0 # old stuff
+xsetwacom set 10 MapToOutput HEAD-0
 ```
 
 **npm stuff** some stuff is needed for autocomplete, link etc in neovim:
