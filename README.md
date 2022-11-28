@@ -232,6 +232,7 @@ firefox google-chrome opera opera-ffmpeg-codecs
 webp-pixbuf-loader solaar screenkey slop
 cmake ccls deno gopls pyright tree-sitter fzf
 bat exa fd procs sd ripgrep dust tokei bottom
+qt5ct breeze adwaita-qt{5,6} # to make qt 5 and 6 somewhat match the gtk theme
 ```
 
 Fonts, utilities, etc:
