@@ -7,7 +7,6 @@ Starting from installation media
 loadkeys us             # in case we need to change the keyboard settings
 setfont LatArCyrHeb-16  # better fonts
 ```
-
 Umask for group permissions
 [Link here](http://unix.stackexchange.com/questions/75972/)
 

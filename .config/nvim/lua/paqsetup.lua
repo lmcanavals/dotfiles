@@ -26,6 +26,7 @@ require'paq' {
 	"beyondmarc/glsl.vim";
 	"chrisbra/csv.vim";
 	"norcalli/nvim-colorizer.lua";
+	"edluffy/hologram.nvim";
 	-- "github/copilot.vim"
 }
 

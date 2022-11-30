@@ -14,7 +14,7 @@
     "key_mode": "composed",
     "bak_mode": "baked",
     "mods_mode": "normal",
-    "mods_only": false,
+    "mods_only": true,
     "multiline": false,
     "vis_shift": false,
     "vis_space": true,
@@ -27,6 +27,6 @@
     "screen": 0,
     "start_disabled": false,
     "mouse": true,
-    "button_hide_duration": 1.5,
+    "button_hide_duration": 1.0,
     "window": null
 }
