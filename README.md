@@ -177,7 +177,7 @@ Install an aur helper as user, clone the repo from aur.archlinux.org then run:
 su - lmcs
 # cloning repo and cding into the repo folder
 git clone https://aur.archlinux.org/paru-bin.git
-makepgk -Acsi
+makepkg -Acsi
 # delete the repo folder
 ```
 
