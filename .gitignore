@@ -48,6 +48,7 @@ rust.sh
 .local/bin/*
 !.local/bin/local*
 .local/share/*
+!.local/share/google-chrome/
 !.local/share/themes/
 !.local/share/konsole/
 
