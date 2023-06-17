@@ -20,7 +20,7 @@ require'paq' {
 	"savq/paq-nvim";
 	"neovim/nvim-lspconfig";
 	"hrsh7th/nvim-compe";
-	{"nvim-treesitter/nvim-treesitter", run = function() vim.cmd 'TSUpdate' end};
+	{"nvim-treesitter/nvim-treesitter", run = ':TSUpdate'};
 	"ojroques/nvim-lspfuzzy";
 	"kyazdani42/nvim-tree.lua";
 	"beyondmarc/glsl.vim";

@@ -5,7 +5,7 @@ MiscBellUrgent=FALSE
 MiscBordersDefault=TRUE
 MiscCursorBlinks=FALSE
 MiscCursorShape=TERMINAL_CURSOR_SHAPE_BLOCK
-MiscDefaultGeometry=116x33
+MiscDefaultGeometry=110x30
 MiscInheritGeometry=FALSE
 MiscMenubarDefault=FALSE
 MiscMouseAutohide=FALSE
@@ -27,7 +27,6 @@ MiscNewTabAdjacent=FALSE
 MiscSearchDialogOpacity=100
 MiscShowUnsafePasteDialog=TRUE
 DropdownWidth=100
-ScrollingOnOutput=FALSE
 ScrollingUnlimited=TRUE
 ScrollingBar=TERMINAL_SCROLLBAR_NONE
 DropdownKeepOpenDefault=TRUE
@@ -45,6 +44,7 @@ ColorCursorUseDefault=FALSE
 ColorSelectionUseDefault=FALSE
 ColorSelection=#00003d3c6161
 ColorSelectionBackground=#ffffd3d34342
-FontName=Monospace 6
+FontName=Fira Code weight=450 14
+MiscRightClickAction=TERMINAL_RIGHT_CLICK_ACTION_CONTEXT_MENU
 FontUseSystem=TRUE
 
