@@ -79,6 +79,7 @@ rust.sh
 
 .config/Bitwarden/
 .config/Bitwarden\ CLI/
+.config/JetBrains/
 .config/KDE/
 .config/Thunar/
 .config/Unknown\ Organization/
