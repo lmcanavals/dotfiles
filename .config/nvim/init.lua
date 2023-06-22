@@ -62,7 +62,7 @@ cmd'autocmd TermOpen * setlocal nonumber foldcolumn=0'
 
 require'paqsetup'
 require'lspsetup'
-require'compesetup'
+require'cmpsetup'
 require'treesittersetup'
 
 require'lspfuzzy'.setup {}

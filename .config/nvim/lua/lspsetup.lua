@@ -10,7 +10,7 @@ local on_attach = function(client, bufnr)
 	--Enable completion triggered by <c-x><c-o>
 	bso("omnifunc", "v:lua.vim.lsp.omnifunc")
 
-	-- See `:help vim.lsp.*` for documentation on any of the below functions
+	-- See `:help vim.lsp.*` for documentation on any of the functions below
 	local mappings = {
 		["<space>wa"] = "buf.add_workspace_folder()",
 		["<space>ca"] = "buf.code_action()",
@@ -36,6 +36,9 @@ local on_attach = function(client, bufnr)
 	--"<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))"
 end
 
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+--[===[
 nvim_lsp.ccls.setup {
 	init_options = {
 		compilationDatabaseDirectory = "build";
@@ -46,6 +49,9 @@ nvim_lsp.ccls.setup {
 			excludeArgs = {"-frounding-math"};
 		};
 	}
+}
+--]===]
+nvim_lsp.clangd.setup{
 }
 nvim_lsp.denols.setup {
 	init_options = {
@@ -62,11 +68,39 @@ nvim_lsp.gopls.setup {
 		},
 	},
 }
+nvim_lsp.lua_ls.setup {
+  settings = {
+    Lua = {
+      runtime = {
+        version = 'LuaJIT',
+      },
+      diagnostics = {
+        globals = {'vim'},
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+}
 nvim_lsp.pyright.setup {}
 
-local servers = {"ccls", "denols", "gopls", "pyright"}
+local servers = {
+	--"ccls",
+	"clangd",
+	"denols",
+	"gopls",
+	"lua_ls",
+	"pyright",
+}
 for _, lsp in ipairs(servers) do
-	nvim_lsp[lsp].setup {on_attach = on_attach}
+	nvim_lsp[lsp].setup {
+		on_attach = on_attach,
+		capabilities = capabilities,
+	}
 end
 
 -- vim: set ts=2:sw=2:noet:sts=2:
