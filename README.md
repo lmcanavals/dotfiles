@@ -83,7 +83,7 @@ pacman -S \
 		grub grub-theme-vimix \
 		dosfstools efibootmgr \
 		intel-ucode \
-		zsh starship neovim git sudo \
+		zsh starship neovim git github-cli sudo \
 		networkmanager \
 		pacman-contrib \
 		powertop tlp # for better power management
@@ -211,7 +211,7 @@ GUI base:
 
 ```sh
 xfce4 xfce4-goodies pulseaudio sox lightdm lightdm-gtk-greeter xcape xsel
-accountsservice xorg-xmodmap xorg-server gvfs kitty ksnip numlockx
+accountsservice xorg-xmodmap xorg-server gvfs wezterm ksnip numlockx
 ```
 
 Graphics nvidia:
@@ -229,7 +229,7 @@ gnome-keyring haveged jq okular
 libcanberra # installed by a bunch of packages
 firefox google-chrome opera opera-ffmpeg-codecs
 webp-pixbuf-loader solaar screenkey slop
-cmake ccls deno gopls pyright tree-sitter fzf
+cmake clang deno gopls pyright tree-sitter fzf
 bat exa fd procs sd ripgrep dust tokei bottom
 qt5ct breeze adwaita-qt{5,6} # to make qt 5 and 6 somewhat match the gtk theme
 ```
@@ -238,7 +238,7 @@ Fonts, utilities, etc:
 
 ```sh
 adobe-source-han-sans-otc-fonts adobe-source-code-pro-fonts # if not present
-ttf-fira-code ttf-roboto ttf-roboto-mono
+ttf-fira-code ttf-roboto ttf-roboto-mono ttf-jetbrains-mono-nerd
 ttf-liberation ttf-dejavu gnu-free-fonts
 noto-fonts-emoji ttf-croscore ttf-carlito ttf-caladea
 ttf-opensans # installed by telegram
@@ -265,6 +265,7 @@ xf86-input-wacom
 
 Optional:
 
+* kitty # now using wezterm because it's written in rust
 * qt5ct # this might be needed to control qt styles
 * droidcam # android phone as webcam
 * arc-solid-gtk-theme
