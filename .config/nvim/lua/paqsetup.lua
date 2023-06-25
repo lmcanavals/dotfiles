@@ -13,24 +13,32 @@ local fn = vim.fn
 
 local path = fn.stdpath("data") .. "/site/pack/paqs/start/paq-nvim"
 if fn.empty(fn.glob(path)) > 0 then
-	vim.cmd("!git clone --depth 1 https://github.com/savq/paq-nvim "..path)
+	fn.system({
+		"git",
+		"clone",
+		"--depth",
+		"1",
+		"https://github.com/savq/paq-nvim",
+		path
+	})
 end
+vim.opt.rtp:prepend(path)
 
-require'paq' {
-	"savq/paq-nvim";
-	"neovim/nvim-lspconfig";
+require 'paq' {
+	"savq/paq-nvim",
+	"neovim/nvim-lspconfig",
 
-	"hrsh7th/nvim-cmp";
-	"hrsh7th/cmp-nvim-lsp";
-	"L3MON4D3/LuaSnip";
+	"hrsh7th/nvim-cmp",
+	"hrsh7th/cmp-nvim-lsp",
+	"L3MON4D3/LuaSnip",
 
-	{"nvim-treesitter/nvim-treesitter", run = ':TSUpdate'};
-	"ojroques/nvim-lspfuzzy";
-	"kyazdani42/nvim-tree.lua";
-	"beyondmarc/glsl.vim";
-	"chrisbra/csv.vim";
-	"norcalli/nvim-colorizer.lua";
-	"edluffy/hologram.nvim";
+	{ "nvim-treesitter/nvim-treesitter", run = ':TSUpdate' },
+	"ojroques/nvim-lspfuzzy",
+	"kyazdani42/nvim-tree.lua",
+	"beyondmarc/glsl.vim",
+	"chrisbra/csv.vim",
+	"norcalli/nvim-colorizer.lua",
+	"edluffy/hologram.nvim",
 	-- "github/copilot.vim"
 }
 

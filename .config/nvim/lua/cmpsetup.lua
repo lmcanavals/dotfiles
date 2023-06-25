@@ -1,9 +1,9 @@
 -- author: lmcanavals
 -- date:   2021-07-26
 
-local fn = vim.fn
-local map  = vim.api.nvim_set_keymap
-local cmp = require'cmp'
+local fn  = vim.fn
+local map = vim.api.nvim_set_keymap
+local cmp = require 'cmp'
 
 cmp.setup {
 	snippet = {
@@ -25,7 +25,8 @@ cmp.setup {
 	sources = cmp.config.sources {
 		{ name = 'nvim_lsp' },
 		{ name = 'luasnip' },
-	}, {
+	},
+	{
 		{ name = 'buffer' },
 	}
 }
