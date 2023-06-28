@@ -47,6 +47,7 @@ rust.sh
 .local/state/
 .local/bin/*
 !.local/bin/local*
+.local/lib/
 .local/share/*
 !.local/share/google-chrome/
 !.local/share/themes/
@@ -65,7 +66,6 @@ rust.sh
 .java/
 .jupyter/
 .kde4/
-.local/lib/
 .mozilla/
 .npm/
 .pki/
@@ -130,7 +130,8 @@ rust.sh
 .config/zsh/plugins/
 
 Apps/*
-!Apps/scripts/*
+Apps/c/
+!Apps/scripts/
 
 Desktop/
 Documents/
