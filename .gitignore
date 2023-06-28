@@ -129,7 +129,9 @@ rust.sh
 .config/xsettingsd/
 .config/zsh/plugins/
 
-Apps/
+Apps/*
+!Apps/scripts/*
+
 Desktop/
 Documents/
 Downloads/
