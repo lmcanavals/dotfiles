@@ -27,6 +27,7 @@ vim.opt.rtp:prepend(path)
 require 'paq' {
 	"savq/paq-nvim",
 	"neovim/nvim-lspconfig",
+	"nvim-tree/nvim-web-devicons",
 
 	"hrsh7th/nvim-cmp",
 	"hrsh7th/cmp-nvim-lsp",

@@ -22,7 +22,7 @@ opt.listchars    = {
 	nbsp = "§"
 }
 opt.mouse        = "a"
--- opt.number       = true
+opt.number       = true
 opt.scrolloff    = 5
 opt.shiftwidth   = 2
 opt.showbreak    = "▼ "
@@ -67,12 +67,13 @@ cmd 'colorscheme lmcs'
 cmd 'autocmd TermOpen * setlocal nonumber foldcolumn=0'
 
 require 'paqsetup'
+require 'nvimtreesetup'
+require 'deviconssetup'
 require 'lspsetup'
 require 'cmpsetup'
 require 'treesittersetup'
 
 require 'lspfuzzy'.setup {}
-require 'nvim-tree'.setup {}
 require 'hologram'.setup {
 	auto_display = true
 }

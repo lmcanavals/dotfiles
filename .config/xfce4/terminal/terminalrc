@@ -35,8 +35,8 @@ DropdownAlwaysShowTabs=FALSE
 DropdownAnimationTime=250
 BackgroundMode=TERMINAL_BACKGROUND_TRANSPARENT
 BackgroundDarkness=0.850000
-ColorPalette=rgb(32,32,30);rgb(219,73,82);rgb(87,161,40);rgb(238,157,52);rgb(83,143,213);rgb(166,70,211);rgb(50,171,186);rgb(160,157,128);rgb(120,100,88);rgb(246,149,143);rgb(155,199,111);rgb(245,210,119);rgb(129,175,243);rgb(204,143,216);rgb(120,210,224);rgb(224,221,192)
-ColorForeground=#b253bdf0cf5b
+ColorPalette=rgb(8,0,46);rgb(100,0,44);rgb(93,115,26);rgb(205,117,28);rgb(29,109,161);rgb(183,7,126);rgb(66,163,140);rgb(243,224,184);rgb(51,30,77);rgb(208,32,99);rgb(180,206,89);rgb(250,195,87);rgb(64,164,207);rgb(241,42,174);rgb(98,202,168);rgb(255,245,219)
+ColorForeground=#dbdbd1d1b9b9
 ColorBoldIsBright=FALSE
 ColorCursorForeground=#000000000000
 ColorCursor=#9999c1c1f1f1
@@ -44,7 +44,7 @@ ColorCursorUseDefault=FALSE
 ColorSelectionUseDefault=FALSE
 ColorSelection=#00003d3c6161
 ColorSelectionBackground=#ffffd3d34342
-FontName=Fira Code weight=450 14
+FontName=JetBrainsMono Nerd Font Mono 12
 MiscRightClickAction=TERMINAL_RIGHT_CLICK_ACTION_CONTEXT_MENU
 FontUseSystem=TRUE
 
