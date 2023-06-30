@@ -1,5 +1,3 @@
-# vim: set ts=2:sw=2:noet:sts=2:
-
 if (( "x${CUSTOMZSHENV}x" == "xx" )); then
 	export CUSTOMZSHENV="X"
 fi
@@ -34,3 +32,5 @@ export LCLR=$(<$ZDOTDIR/colors)
 
 [[ -f "$HOME/.cargo/env" ]] && \
 . "$HOME/.cargo/env"
+
+# vim: set ts=2:sw=2:noet:sts=2:

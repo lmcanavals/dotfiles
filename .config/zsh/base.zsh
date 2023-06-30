@@ -1,11 +1,12 @@
 #!/usr/bin/zsh
-# vim: set ts=2:sw=2:noet:sts=2:
 
 if [[ "$TERM" == "linux" ]]; then
 	# echo -en "\e]P0${LCLR:1:6}" && clear # for background artifacting
 	for i in {1..15}; do
 		echo -en "\e]P$(printf "%x" "$i")${LCLR:$i * 8 + 1:6}"
 	done
+else
+	export TERM="wezterm"
 fi
 
 setopt auto_cd
@@ -70,12 +71,12 @@ beginning-or-end-of-somewhere() {
 zle -N beginning-of-somewhere beginning-or-end-of-somewhere
 zle -N end-of-somewhere beginning-or-end-of-somewhere
 
-bindkey "\eOH" beginning-of-somewhere    # 
-bindkey "\e[H" beginning-of-somewhere    # 
+bindkey "\eOH" beginning-of-somewhere    # home
+bindkey "\e[H" beginning-of-somewhere    # home
 bindkey "\eOF" end-of-somewhere          # end
 bindkey "\e[F" end-of-somewhere          # end
 #if [[ "$TERM" == "linux" ]]; then
-	bindkey "\e[1~" beginning-of-somewhere # 
+	bindkey "\e[1~" beginning-of-somewhere # home
 	bindkey "\e[4~" end-of-somewhere       # end
 #fi
 
@@ -359,3 +360,5 @@ fi'
 [[ -d $ZDOTDIR/cache ]] && \
 	zstyle ":completion:*"           use-cache yes && \
 	zstyle ":completion::complete:*" cache-path $ZDOTDIR/cache/
+
+# vim: set ts=2:sw=2:noet:sts=2:
