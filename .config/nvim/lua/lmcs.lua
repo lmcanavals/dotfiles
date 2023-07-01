@@ -22,103 +22,113 @@ local specials = {
 	"bold",
 	"underline",
 	"undercurl",
+	"underdouble",
+	"underdotted",
+	"underdashed",
+	"strikethrough",
 	"reverse",
 	"italic",
 	"standout",
-	"strikethrough",
+	"altfont",
+	"nocombine",
 	"none",
 	"na"
 }
 
-local BG = 1
-local RE = 2
-local GR = 3
-local YE = 4
-local BL = 5
-local MA = 6
-local CY = 7
-local WH = 8
-local bg = 9
-local re = 10
-local gr = 11
-local ye = 12
-local bl = 13
-local ma = 14
-local cy = 15
-local wh = 16
+local BLA = 1
+local RED = 2
+local GRE = 3
+local YEL = 4
+local BLU = 5
+local MAG = 6
+local CYA = 7
+local WHI = 8
+local bla = 9
+local red = 10
+local gre = 11
+local yel = 12
+local blu = 13
+local mag = 14
+local cya = 15
+local whi = 16
 
-local BO = 17
-local UL = 18
-local UC = 19
-local RV = 20
-local IT = 21
-local SO = 22
-local ST = 23
-local NO = 24
-local NA = 25
+local BLD = 17
+local ULI = 18
+local UCU = 19
+local UDO = 20
+local UDT = 21
+local UDA = 22
+local STH = 23
+local REV = 24
+local ITA = 25
+local SOU = 26
+local AFO = 27
+local NCO = 28
+local NON = 29
+local PAS = 30
 
 local theme = {
-	Normal                             = { ui = NA, bg = NA, fg = NA },
-	Underlined                         = { ui = UL, bg = NA, sp = BL },
-	NonText                            = { ui = NA, bg = NA, fg = BG },
-	Special                            = { ui = NA, bg = NA, fg = MA },
-	SpecialKey                         = { ui = NA, bg = NA, fg = bg },
-	CursorColumn                       = { ui = NA, bg = BG, fg = NA },
-	CursorLine                         = { ui = NA, bg = BG, fg = NA },
-	CursorLineNr                       = { ui = NA, bg = BG, fg = cy },
-	ColorColumn                        = { ui = UC, bg = NA, sp = bg },
-	Conceal                            = { ui = NA, bg = NA, fg = BG },
-	LineNr                             = { ui = NA, bg = NA, fg = bg },
-	FoldColumn                         = { ui = NA, bg = NA, fg = bg },
-	Folded                             = { ui = NA, bg = NA, fg = WH },
-	MatchParen                         = { ui = BO, bg = NA, fg = wh },
-	IncSearch                          = { ui = NA, bg = MA, fg = wh },
-	Search                             = { ui = NA, bg = GR, fg = wh },
-	QuickFixLine                       = { ui = NA, bg = GR, fg = ye },
-	Pmenu                              = { ui = NA, bg = BG, fg = WH },
-	PmenuSel                           = { ui = NA, bg = YE, fg = BG },
-	PmenuSbar                          = { ui = NA, bg = bg, fg = BG },
-	PmenuThumb                         = { ui = NA, bg = WH, fg = BG },
-	VertSplit                          = { ui = NA, bg = NA, fg = bg },
-	StatusLine                         = { ui = NA, bg = bg, fg = wh },
-	StatusLineNC                       = { ui = NA, bg = bg, fg = WH },
-	TabLine                            = { ui = NA, bg = BG, fg = bg },
-	TabLineSel                         = { ui = NA, bg = NA, fg = cy },
-	TabLineFill                        = { ui = NA, bg = BG, fg = bg },
-	SignColumn                         = { ui = NA, bg = NA, fg = re },
-	Visual                             = { ui = NA, bg = ye, fg = BL },
-	VisualNOS                          = { ui = NA, bg = RE, fg = BL },
-	WildMenu                           = { ui = NA, bg = YE, fg = BG },
-	MsgArea                            = { ui = NA, bg = NA, fg = CY },
-	ModeMsg                            = { ui = NA, bg = NA, fg = cy },
-	WarningMsg                         = { ui = NA, bg = NA, fg = YE },
-	ErrorMsg                           = { ui = NA, bg = NA, fg = RE },
-	MoreMsg                            = { ui = NA, bg = NA, fg = GR },
-	Comment                            = { ui = IT, bg = NA, fg = bg },
-	Todo                               = { ui = NA, bg = NA, fg = YE },
-	Error                              = { ui = NA, bg = NA, fg = RE },
-	Identifier                         = { ui = NA, bg = NA, fg = bl },
-	Function                           = { ui = NA, bg = NA, fg = BL },
-	PreProc                            = { ui = NA, bg = NA, fg = ye },
-	Number                             = { ui = NA, bg = NA, fg = gr },
-	Operator                           = { ui = NA, bg = NA, fg = GR },
-	Constant                           = { ui = NA, bg = NA, fg = YE },
-	Type                               = { ui = NA, bg = NA, fg = GR },
-	Statement                          = { ui = NA, bg = NA, fg = ma },
-	Title                              = { ui = NA, bg = NA, fg = ma },
-	Directory                          = { ui = NA, bg = NA, fg = cy },
-	DiffDelete                         = { ui = NA, bg = RE, fg = BG },
-	DiffAdd                            = { ui = NA, bg = GR, fg = BG },
-	DiffChange                         = { ui = NA, bg = YE, fg = BG },
-	DiffText                           = { ui = NA, bg = BL, fg = BG },
-	LspDiagnosticsDefaultError         = { ui = NA, bg = NA, fg = RE },
-	LspDiagnosticsDefaultWarning       = { ui = NA, bg = NA, fg = YE },
-	LspDiagnosticsDefaultInformation   = { ui = NA, bg = NA, fg = CY },
-	LspDiagnosticsDefaultHint          = { ui = NA, bg = NA, fg = ye },
-	LspDiagnosticsUnderlineError       = { ui = UC, bg = NA, sp = RE },
-	LspDiagnosticsUnderlineWarning     = { ui = UC, bg = NA, sp = YE },
-	LspDiagnosticsUnderlineInformation = { ui = UC, bg = NA, sp = CY },
-	LspDiagnosticsUnderlineHint        = { ui = UC, bg = NA, sp = ye },
+	Normal                             = { ui = PAS, bg = PAS, fg = PAS },
+	Underlined                         = { ui = ULI, bg = PAS, sp = BLU },
+	NonText                            = { ui = PAS, bg = PAS, fg = BLA },
+	Special                            = { ui = PAS, bg = PAS, fg = MAG },
+	SpecialKey                         = { ui = PAS, bg = PAS, fg = bla },
+	CursorColumn                       = { ui = PAS, bg = BLA, fg = PAS },
+	CursorLine                         = { ui = PAS, bg = BLA, fg = PAS },
+	CursorLineNr                       = { ui = PAS, bg = BLA, fg = YEL },
+	ColorColumn                        = { ui = UDT, bg = PAS, sp = YEL },
+	Conceal                            = { ui = PAS, bg = PAS, fg = BLA },
+	LineNr                             = { ui = PAS, bg = PAS, fg = bla },
+	FoldColumn                         = { ui = PAS, bg = PAS, fg = bla },
+	Folded                             = { ui = PAS, bg = PAS, fg = WHI },
+	MatchParen                         = { ui = BLD, bg = PAS, fg = whi },
+	IncSearch                          = { ui = UDO, bg = PAS, sp = MAG },
+	Search                             = { ui = UDO, bg = PAS, sp = GRE },
+	QuickFixLine                       = { ui = UDO, bg = PAS, sp = YEL },
+	Pmenu                              = { ui = PAS, bg = BLA, fg = WHI },
+	PmenuSel                           = { ui = PAS, bg = YEL, fg = BLA },
+	PmenuSbar                          = { ui = PAS, bg = bla, fg = BLA },
+	PmenuThumb                         = { ui = PAS, bg = WHI, fg = BLA },
+	VertSplit                          = { ui = PAS, bg = PAS, fg = bla },
+	StatusLine                         = { ui = PAS, bg = CYA, fg = whi },
+	StatusLineNC                       = { ui = PAS, bg = CYA, fg = bla },
+	TabLine                            = { ui = PAS, bg = BLA, fg = bla },
+	TabLineSel                         = { ui = PAS, bg = PAS, fg = cya },
+	TabLineFill                        = { ui = PAS, bg = BLA, fg = bla },
+	SignColumn                         = { ui = PAS, bg = PAS, fg = red },
+	Visual                             = { ui = PAS, bg = yel, fg = BLU },
+	VisualNOS                          = { ui = PAS, bg = RED, fg = BLU },
+	WildMenu                           = { ui = PAS, bg = YEL, fg = BLA },
+	MsgArea                            = { ui = PAS, bg = PAS, fg = CYA },
+	ModeMsg                            = { ui = PAS, bg = PAS, fg = cya },
+	WarningMsg                         = { ui = PAS, bg = PAS, fg = YEL },
+	ErrorMsg                           = { ui = PAS, bg = PAS, fg = RED },
+	MoreMsg                            = { ui = PAS, bg = PAS, fg = GRE },
+	Comment                            = { ui = ITA, bg = PAS, fg = bla },
+	Todo                               = { ui = UDA, bg = PAS, sp = YEL },
+	Error                              = { ui = PAS, bg = PAS, fg = RED },
+	Identifier                         = { ui = PAS, bg = PAS, fg = blu },
+	Function                           = { ui = PAS, bg = PAS, fg = BLU },
+	PreProc                            = { ui = PAS, bg = PAS, fg = yel },
+	Number                             = { ui = PAS, bg = PAS, fg = gre },
+	Operator                           = { ui = PAS, bg = PAS, fg = GRE },
+	Constant                           = { ui = PAS, bg = PAS, fg = YEL },
+	Type                               = { ui = PAS, bg = PAS, fg = GRE },
+	Statement                          = { ui = PAS, bg = PAS, fg = mag },
+	Title                              = { ui = PAS, bg = PAS, fg = mag },
+	Directory                          = { ui = PAS, bg = PAS, fg = cya },
+	DiffDelete                         = { ui = PAS, bg = YEL, fg = BLA },
+	DiffAdd                            = { ui = PAS, bg = GRE, fg = BLA },
+	DiffChange                         = { ui = PAS, bg = YEL, fg = BLA },
+	DiffText                           = { ui = PAS, bg = BLU, fg = BLA },
+	LspDiagnosticsDefaultError         = { ui = PAS, bg = PAS, fg = RED },
+	LspDiagnosticsDefaultWarning       = { ui = PAS, bg = PAS, fg = YEL },
+	LspDiagnosticsDefaultInformation   = { ui = PAS, bg = PAS, fg = CYA },
+	LspDiagnosticsDefaultHint          = { ui = PAS, bg = PAS, fg = yel },
+	LspDiagnosticsUnderlineError       = { ui = UCU, bg = PAS, sp = RED },
+	LspDiagnosticsUnderlineWarning     = { ui = UCU, bg = PAS, sp = YEL },
+	LspDiagnosticsUnderlineInformation = { ui = UCU, bg = PAS, sp = CYA },
+	LspDiagnosticsUnderlineHint        = { ui = UCU, bg = PAS, sp = yel },
 }
 
 local L = {}
@@ -135,7 +145,7 @@ function L.color()
 		local attr = { ui = "", bg = "bg", fg = "fg", sp = gui and "sp" or "fg" }
 		local nonEmpty = false
 		for name, value in pairs(attributes) do
-			if value ~= NA then
+			if value ~= PAS then
 				hi = hi .. " " .. target .. attr[name] .. "="
 						.. (value < 17 and colors[value] or specials[value - 16])
 				nonEmpty = true

@@ -1,42 +1,44 @@
 -- author: lmcanavals
 -- date:   2021-07-26
 
-local cmd        = vim.cmd
-local map        = vim.api.nvim_set_keymap
-local opt        = vim.opt
+local cmd             = vim.cmd
+local map             = vim.api.nvim_set_keymap
+local opt             = vim.opt
 
-opt.background   = "dark"
-opt.colorcolumn  = "81"
-opt.completeopt  = { "menuone", "noselect" }
-opt.cursorcolumn = true
-opt.cursorline   = true
-opt.expandtab    = false
-opt.fillchars    = { fold = " ", vert = "┃" }
-opt.laststatus   = 2
-opt.list         = true
-opt.listchars    = {
+opt.background        = "dark"
+opt.colorcolumn       = "81"
+opt.completeopt       = { "menuone", "noselect" }
+opt.cursorcolumn      = true
+opt.cursorline        = true
+opt.expandtab         = false
+opt.fillchars         = { fold = " ", vert = "┃" }
+opt.laststatus        = 2
+opt.list              = true
+opt.listchars         = {
 	tab = "┼─",
 	trail = "∙",
 	extends = "»",
 	precedes = "«",
 	nbsp = "§"
 }
-opt.mouse        = "a"
-opt.number       = true
-opt.scrolloff    = 5
-opt.shiftwidth   = 2
-opt.showbreak    = "▼ "
-opt.showmatch    = true
-opt.smartindent  = true
-opt.softtabstop  = 2
-opt.statusline   = "%t%M%=%l,%v" --%{&ff},%{&fenc?&fenc:&enc}
-opt.tabstop      = 2
-opt.title        = true
-opt.wildignore   = "*~,*.o,*.tmp"
-opt.wildmode     = { "longest:full", "full" }
+opt.mouse             = "a"
+opt.number            = true
+opt.scrolloff         = 5
+opt.shiftwidth        = 2
+opt.showbreak         = "▼ "
+opt.showmatch         = true
+opt.smartindent       = true
+opt.softtabstop       = 2
+opt.statusline        = "%t%M%=%l,%v" --%{&ff},%{&fenc?&fenc:&enc}
+opt.tabstop           = 2
+opt.title             = true
+opt.wildignore        = "*~,*.o,*.tmp"
+opt.wildmode          = { "longest:full", "full" }
 
-vim.g.mapleader  = " "
-local mappings   = {
+vim.wo.relativenumber = true
+
+vim.g.mapleader       = " "
+local mappings        = {
 	["<space>"] = "noh",
 	["s"]       = "w",
 	["n"]       = "bn",
