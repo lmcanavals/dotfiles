@@ -44,16 +44,6 @@ rust.sh
 .config/zoomus.conf
 .config/zsh/dynamic.zsh
 
-.local/state/
-.local/bin/*
-!.local/bin/local*
-.local/lib/
-.local/share/*
-!.local/share/google-chrome/
-!.local/share/themes/
-!.local/share/konsole/
-
-
 .android/
 .cache/
 .cargo/
@@ -85,7 +75,6 @@ rust.sh
 .config/Unknown\ Organization/
 .config/VirtualBox/
 .config/akonadi/
-.config/asciinema/
 .config/autostart/
 .config/blender/
 .config/bottom/
@@ -144,3 +133,18 @@ git/
 go/
 llvm-project/
 shared/
+
+# exception rules
+
+.config/asciinema/*
+!.config/asciinema/config
+
+.local/state/
+.local/bin/*
+!.local/bin/local*
+.local/lib/
+.local/share/*
+!.local/share/google-chrome/
+!.local/share/themes/
+!.local/share/konsole/
+
