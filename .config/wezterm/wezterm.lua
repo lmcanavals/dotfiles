@@ -9,7 +9,7 @@ if wezterm.config_builder then
 	config = wezterm.config_builder()
 end
 
-config.color_scheme = 'Jason Wryan (terminal.sexy)'
+config.color_scheme = 'BlulocoDark'
 config.enable_tab_bar = false
 config.initial_rows = 30
 config.initial_cols = 130
