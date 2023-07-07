@@ -7,7 +7,8 @@ function printnum() {
 function printcolors() {
 
 	# Basic ansi + brights
-	oline=" +"
+	echo " *** Basic ANSI + Bright colors. Range from 0 to 15"
+	oline="  x"
 	for (( i = 0; i < 16; i++))
 	do
 		oline="$oline$(printnum $i)"
@@ -25,6 +26,7 @@ function printcolors() {
 	echo ""
 
 	# sandwiched colors in the 16..231 range
+	echo " *** 6x6x6 rgb cube. Range from 16 to 231"
 	oline="  +"
 	for i in 0 1 2 3 4 5
 	do
@@ -48,6 +50,7 @@ function printcolors() {
 	done
 
 	# Gray scale
+	echo " *** 24 gray scale colors. Range from 232 to 255"
 	oline="  +"
 	for (( i = 0; i < 24; i++ ))
 	do
