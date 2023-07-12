@@ -3,7 +3,7 @@
 
 local nvim_lsp = require 'lspconfig'
 
-local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr) -- unused param: client
 	local function bsk(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 	local function bso(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -12,25 +12,26 @@ local on_attach = function(client, bufnr)
 
 	-- See `:help vim.lsp.*` for documentation on any of the functions below
 	local mappings = {
-		["<space>wa"] = "buf.add_workspace_folder()",
-		["<space>ca"] = "buf.code_action()",
-		["gD"]        = "buf.declaration()",
-		["gd"]        = "buf.definition()",
-		["<space>f"]  = "buf.format()",
-		["K"]         = "buf.hover()",
-		["gi"]        = "buf.implementation()",
-		["gr"]        = "buf.references()",
-		["<space>wr"] = "buf.remove_workspace_folder()",
-		["<space>rn"] = "buf.rename()",
-		["<C-k>"]     = "buf.signature_help()",
-		["<space>D"]  = "buf.type_definition()",
+		["<space>wa"] = "lsp.buf.add_workspace_folder()",
+		["<space>ca"] = "lsp.buf.code_action()",
+		["gD"]        = "lsp.buf.declaration()",
+		["gd"]        = "lsp.buf.definition()",
+		["<space>f"]  = "lsp.buf.format()",
+		["K"]         = "lsp.buf.hover()",
+		["gi"]        = "lsp.buf.implementation()",
+		["gr"]        = "lsp.buf.references()",
+		["<space>wr"] = "lsp.buf.remove_workspace_folder()",
+		["<space>rn"] = "lsp.buf.rename()",
+		["<C-k>"]     = "lsp.buf.signature_help()",
+		["<space>D"]  = "lsp.buf.type_definition()",
 		["]d"]        = "diagnostic.goto_next()",
 		["[d"]        = "diagnostic.goto_prev()",
 		["<space>q"]  = "diagnostic.set_loclist()",
 		["<space>e"]  = "diagnostic.show_line_diagnostics()",
+		["<space>k"]  = "diagnostic.open_float()",
 	}
 	for m, c in pairs(mappings) do
-		bsk("n", m, "<cmd>lua vim.lsp." .. c .. "<CR>", { noremap = true, silent = true })
+		bsk("n", m, "<cmd>lua vim." .. c .. "<CR>", { noremap = true, silent = true })
 	end
 	--"<space>wl"
 	--"<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))"

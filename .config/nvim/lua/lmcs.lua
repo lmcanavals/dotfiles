@@ -68,67 +68,68 @@ local NON = 29
 local PAS = 30
 
 local theme = {
-	Normal                             = { ui = PAS, bg = PAS, fg = PAS },
-	Underlined                         = { ui = ULI, bg = PAS, sp = BLU },
-	NonText                            = { ui = PAS, bg = PAS, fg = BLA },
-	Special                            = { ui = PAS, bg = PAS, fg = MAG },
-	SpecialKey                         = { ui = PAS, bg = PAS, fg = bla },
-	CursorColumn                       = { ui = PAS, bg = BLA, fg = PAS },
-	CursorLine                         = { ui = PAS, bg = BLA, fg = PAS },
-	CursorLineNr                       = { ui = PAS, bg = BLA, fg = YEL },
-	ColorColumn                        = { ui = UDT, bg = PAS, sp = YEL },
-	Conceal                            = { ui = PAS, bg = PAS, fg = BLA },
-	LineNr                             = { ui = PAS, bg = PAS, fg = bla },
-	FoldColumn                         = { ui = PAS, bg = PAS, fg = bla },
-	Folded                             = { ui = PAS, bg = PAS, fg = WHI },
-	MatchParen                         = { ui = BLD, bg = PAS, fg = whi },
-	IncSearch                          = { ui = UDO, bg = PAS, sp = MAG },
-	Search                             = { ui = UDO, bg = PAS, sp = GRE },
-	QuickFixLine                       = { ui = UDO, bg = PAS, sp = YEL },
-	Pmenu                              = { ui = PAS, bg = BLA, fg = WHI },
-	PmenuSel                           = { ui = PAS, bg = YEL, fg = BLA },
-	PmenuSbar                          = { ui = PAS, bg = bla, fg = BLA },
-	PmenuThumb                         = { ui = PAS, bg = WHI, fg = BLA },
-	VertSplit                          = { ui = PAS, bg = PAS, fg = bla },
-	StatusLine                         = { ui = PAS, bg = CYA, fg = whi },
-	StatusLineNC                       = { ui = PAS, bg = CYA, fg = bla },
-	TabLine                            = { ui = PAS, bg = BLA, fg = bla },
-	TabLineSel                         = { ui = PAS, bg = PAS, fg = cya },
-	TabLineFill                        = { ui = PAS, bg = BLA, fg = bla },
-	SignColumn                         = { ui = PAS, bg = PAS, fg = red },
-	Visual                             = { ui = PAS, bg = yel, fg = BLU },
-	VisualNOS                          = { ui = PAS, bg = RED, fg = BLU },
-	WildMenu                           = { ui = PAS, bg = YEL, fg = BLA },
-	MsgArea                            = { ui = PAS, bg = PAS, fg = CYA },
-	ModeMsg                            = { ui = PAS, bg = PAS, fg = cya },
-	WarningMsg                         = { ui = PAS, bg = PAS, fg = YEL },
-	ErrorMsg                           = { ui = PAS, bg = PAS, fg = RED },
-	MoreMsg                            = { ui = PAS, bg = PAS, fg = GRE },
-	Comment                            = { ui = ITA, bg = PAS, fg = bla },
-	Todo                               = { ui = UDA, bg = PAS, sp = YEL },
-	Error                              = { ui = PAS, bg = PAS, fg = RED },
-	Identifier                         = { ui = PAS, bg = PAS, fg = blu },
-	Function                           = { ui = PAS, bg = PAS, fg = BLU },
-	PreProc                            = { ui = PAS, bg = PAS, fg = yel },
-	Number                             = { ui = PAS, bg = PAS, fg = gre },
-	Operator                           = { ui = PAS, bg = PAS, fg = GRE },
-	Constant                           = { ui = PAS, bg = PAS, fg = YEL },
-	Type                               = { ui = PAS, bg = PAS, fg = GRE },
-	Statement                          = { ui = PAS, bg = PAS, fg = mag },
-	Title                              = { ui = PAS, bg = PAS, fg = mag },
-	Directory                          = { ui = PAS, bg = PAS, fg = cya },
-	DiffDelete                         = { ui = PAS, bg = YEL, fg = BLA },
-	DiffAdd                            = { ui = PAS, bg = GRE, fg = BLA },
-	DiffChange                         = { ui = PAS, bg = YEL, fg = BLA },
-	DiffText                           = { ui = PAS, bg = BLU, fg = BLA },
-	LspDiagnosticsDefaultError         = { ui = PAS, bg = PAS, fg = RED },
-	LspDiagnosticsDefaultWarning       = { ui = PAS, bg = PAS, fg = YEL },
-	LspDiagnosticsDefaultInformation   = { ui = PAS, bg = PAS, fg = CYA },
-	LspDiagnosticsDefaultHint          = { ui = PAS, bg = PAS, fg = yel },
-	LspDiagnosticsUnderlineError       = { ui = UCU, bg = PAS, sp = RED },
-	LspDiagnosticsUnderlineWarning     = { ui = UCU, bg = PAS, sp = YEL },
-	LspDiagnosticsUnderlineInformation = { ui = UCU, bg = PAS, sp = CYA },
-	LspDiagnosticsUnderlineHint        = { ui = UCU, bg = PAS, sp = yel },
+	Normal                   = { ui = PAS, bg = PAS, fg = PAS },
+	Underlined               = { ui = ULI, bg = PAS, sp = BLU },
+	NonText                  = { ui = PAS, bg = PAS, fg = BLA },
+	Special                  = { ui = PAS, bg = PAS, fg = MAG },
+	SpecialKey               = { ui = PAS, bg = PAS, fg = bla },
+	CursorColumn             = { ui = PAS, bg = BLA, fg = PAS },
+	CursorLine               = { ui = PAS, bg = BLA, fg = PAS },
+	CursorLineNr             = { ui = PAS, bg = BLA, fg = YEL },
+	ColorColumn              = { ui = UDT, bg = PAS, sp = YEL },
+	Conceal                  = { ui = PAS, bg = PAS, fg = BLA },
+	LineNr                   = { ui = PAS, bg = PAS, fg = bla },
+	FoldColumn               = { ui = PAS, bg = PAS, fg = bla },
+	Folded                   = { ui = PAS, bg = PAS, fg = WHI },
+	MatchParen               = { ui = UDO, bg = PAS, fg = whi },
+	IncSearch                = { ui = PAS, bg = MAG, fg = whi },
+	Search                   = { ui = PAS, bg = GRE, fg = whi },
+	QuickFixLine             = { ui = PAS, bg = YEL, fg = whi },
+	Pmenu                    = { ui = PAS, bg = BLA, fg = WHI },
+	PmenuSel                 = { ui = PAS, bg = YEL, fg = BLA },
+	PmenuSbar                = { ui = PAS, bg = bla, fg = BLA },
+	PmenuThumb               = { ui = PAS, bg = WHI, fg = BLA },
+	VertSplit                = { ui = PAS, bg = PAS, fg = bla },
+	StatusLine               = { ui = PAS, bg = CYA, fg = whi },
+	StatusLineNC             = { ui = PAS, bg = CYA, fg = bla },
+	TabLine                  = { ui = PAS, bg = BLA, fg = bla },
+	TabLineSel               = { ui = PAS, bg = PAS, fg = cya },
+	TabLineFill              = { ui = PAS, bg = BLA, fg = bla },
+	SignColumn               = { ui = PAS, bg = PAS, fg = red },
+	Visual                   = { ui = PAS, bg = yel, fg = BLU },
+	VisualNOS                = { ui = UDA, bg = RED, fg = BLU },
+	WildMenu                 = { ui = PAS, bg = YEL, fg = BLA },
+	MsgArea                  = { ui = PAS, bg = PAS, fg = CYA },
+	ModeMsg                  = { ui = PAS, bg = PAS, fg = cya },
+	WarningMsg               = { ui = PAS, bg = PAS, fg = YEL },
+	ErrorMsg                 = { ui = PAS, bg = PAS, fg = RED },
+	MoreMsg                  = { ui = PAS, bg = PAS, fg = GRE },
+	Comment                  = { ui = ITA, bg = PAS, fg = bla },
+	Todo                     = { ui = BLD, bg = PAS, sp = YEL },
+	Error                    = { ui = PAS, bg = PAS, fg = RED },
+	Identifier               = { ui = PAS, bg = PAS, fg = blu },
+	Function                 = { ui = PAS, bg = PAS, fg = BLU },
+	PreProc                  = { ui = PAS, bg = PAS, fg = yel },
+	Number                   = { ui = PAS, bg = PAS, fg = gre },
+	Operator                 = { ui = PAS, bg = PAS, fg = GRE },
+	Constant                 = { ui = PAS, bg = PAS, fg = YEL },
+	Type                     = { ui = PAS, bg = PAS, fg = GRE },
+	Statement                = { ui = PAS, bg = PAS, fg = mag },
+	Title                    = { ui = PAS, bg = PAS, fg = mag },
+	Directory                = { ui = PAS, bg = PAS, fg = cya },
+	DiffDelete               = { ui = PAS, bg = RED, fg = BLA },
+	DiffAdd                  = { ui = PAS, bg = GRE, fg = BLA },
+	DiffChange               = { ui = PAS, bg = YEL, fg = BLA },
+	DiffText                 = { ui = PAS, bg = BLU, fg = BLA },
+	DiagnosticDeprecated     = { ui = STH, bg = PAS, sp = bla },
+	DiagnosticError          = { ui = ITA, bg = PAS, fg = RED },
+	DiagnosticHint           = { ui = ITA, bg = PAS, fg = yel },
+	DiagnosticInfo           = { ui = ITA, bg = PAS, fg = CYA },
+	DiagnosticWarn           = { ui = ITA, bg = PAS, fg = YEL },
+	DiagnosticUnderlineError = { ui = UCU, bg = PAS, sp = RED },
+	DiagnosticUnderlineHint  = { ui = UCU, bg = PAS, sp = yel },
+	DiagnosticUnderlineInfo  = { ui = UCU, bg = PAS, sp = CYA },
+	DiagnosticUnderlineWarn  = { ui = UCU, bg = PAS, sp = YEL },
 }
 
 local L = {}
@@ -195,18 +196,18 @@ VisualNC
 debugBreakpoint
 debugPC
 lCursor
-LspDiagnosticsDefaultHint LspDiagnosticsVirtualTextHint
-LspDiagnosticsDefaultHint LspDiagnosticsFloatingHint
-LspDiagnosticsDefaultHint LspDiagnosticsSignHint
-LspDiagnosticsDefaultError LspDiagnosticsVirtualTextError
-LspDiagnosticsDefaultError LspDiagnosticsFloatingError
-LspDiagnosticsDefaultError LspDiagnosticsSignError
-LspDiagnosticsDefaultWarning LspDiagnosticsVirtualTextWarning
-LspDiagnosticsDefaultWarning LspDiagnosticsFloatingWarning
-LspDiagnosticsDefaultWarning LspDiagnosticsSignWarning
-LspDiagnosticsDefaultInformation LspDiagnosticsVirtualTextInformation
-LspDiagnosticsDefaultInformation LspDiagnosticsFloatingInformation
-LspDiagnosticsDefaultInformation LspDiagnosticsSignInformation
+DiagnosticHint DiagnosticVirtualTextHint
+DiagnosticHint DiagnosticFloatingHint
+DiagnosticHint DiagnosticSignHint
+DiagnosticError DiagnosticVirtualTextError
+DiagnosticError DiagnosticFloatingError
+DiagnosticError DiagnosticSignError
+DiagnosticWarn DiagnosticVirtualTextWarn
+DiagnosticWarn DiagnosticFloatingWarn
+DiagnosticWarn DiagnosticSignWarn
+DiagnosticInfo DiagnosticVirtualTextInfo
+DiagnosticInfo DiagnosticFloatingInfo
+DiagnosticInfo DiagnosticSignInfo
 --]]
 
 -- vim: set ts=2:sw=2:noet:sts=2:
