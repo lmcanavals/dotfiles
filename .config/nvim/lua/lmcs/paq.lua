@@ -9,6 +9,8 @@
 --	ray-x/lsp_signature.nvim
 --	https://github.com/rockerBOO/awesome-neovim#snippets
 
+if vim.g.debug then print "lmcsnvim.paq" end
+
 local fn = vim.fn
 
 local path = fn.stdpath("data") .. "/site/pack/paqs/start/paq-nvim"

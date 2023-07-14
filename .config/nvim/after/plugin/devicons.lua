@@ -1,3 +1,9 @@
+-- author:  lmcanavals
+-- date:    2023-06-28
+-- updated: 2023-07-14
+
+if vim.g.debug then print "after.plugin.devicons" end
+
 require 'nvim-web-devicons'.setup {
 	override = {
 		zsh = {

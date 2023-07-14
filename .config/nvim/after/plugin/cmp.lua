@@ -1,8 +1,9 @@
--- author: lmcanavals
--- date:   2021-07-26
+-- author:  lmcanavals
+-- date:    2021-07-26
+-- updated: 2023-07-14
 
-local fn  = vim.fn
-local map = vim.api.nvim_set_keymap
+if vim.g.debug then print "after.plugin.cmp" end
+
 local cmp = require 'cmp'
 
 cmp.setup {

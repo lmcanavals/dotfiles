@@ -3,5 +3,5 @@
 " Version:    3.0
 " Maintainer: lmcanavals
 
-lua require'lmcs'.color()
+lua require'lmcs.lmcs'.color()
 

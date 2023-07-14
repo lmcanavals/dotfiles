@@ -1,14 +1,22 @@
--- author: lmcanavals
--- date:   2021-07-26
+-- author:  lmcanavals
+-- date:    2021-07-26
+-- updated: 2023-07-14
+
+if vim.g.debug then print "after.plugin.treesitter" end
 
 local opt = vim.opt
 
 require 'nvim-treesitter.configs'.setup {
+	ensure_installed = {
+		"bash", "c", "cpp", "go", "html",
+		"javascript", "llvm", "lua", "markdown",
+		"python", "rust",
+	},
+	sync_install = true,
+	auto_install = true,
 	highlight = {
 		enable = true,
-		custom_captures = {
-			["foo.bar"] = "Identifier",
-		},
+		additional_vim_regex_highlighting = false,
 	},
 	incremental_selection = {
 		enable = true,

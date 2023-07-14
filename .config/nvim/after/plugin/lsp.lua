@@ -1,5 +1,8 @@
--- author: lmcanavals
--- date:   2021-07-26
+-- author:  lmcanavals
+-- date:    2021-07-26
+-- updated: 2023-07-14
+
+if vim.g.debug then print "after.plugin.lsp" end
 
 local nvim_lsp = require 'lspconfig'
 
@@ -39,6 +42,8 @@ end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+nvim_lsp.bashls.setup {
+}
 nvim_lsp.clangd.setup {
 	on_attach = on_attach,
 	capabilities = capabilities,

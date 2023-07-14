@@ -1,6 +1,6 @@
 -- Vim color file
 -- Name:				lmcs.lua
--- Version:			4.1
+-- Version:			4.5
 -- Maintainer:	lmcanavals
 
 local gui = vim.env.ISMOSHBRUH ~= "yup"
