@@ -6,12 +6,15 @@ if vim.g.debug then print "lmcsnvim.folds" end
 
 _G.myFoldText    = function()
 	local lineCount = (vim.v.foldend - vim.v.foldstart + 1) .. " lines"
-	local line = vim.fn.getline(vim.v.foldstart)
+	local indents = vim.fn.indents(vim.v.foldstart)
+	local line = string.gsub(vim.fn.getline(vim.v.foldstart), "^%s+", "")
+	line = string.rep("x", indents) .. line
 	local llen = string.len(line)
 	local lclen = string.len(lineCount)
 	local width = 80 -- TODO min(80, window width)
+
 	if llen < width - lclen then
-		line = line .. string.rep("·", width - llen - lclen)
+		line = line .. string.rep(" ", width - llen - lclen)
 	else
 		line = string.sub(line, 1, width - lclen) .. "…"
 	end
