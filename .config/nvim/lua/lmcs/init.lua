@@ -9,7 +9,6 @@ require 'lmcs.set'
 require 'lmcs.remap'
 require 'lmcs.folds'
 
-require 'lspfuzzy'.setup {}
 require 'hologram'.setup {
 	auto_display = true
 }

@@ -19,7 +19,7 @@ local on_attach = function(_, bufnr) -- unused param: client
 		["<space>ca"] = "lsp.buf.code_action()",
 		["gD"]        = "lsp.buf.declaration()",
 		["gd"]        = "lsp.buf.definition()",
-		["<space>f"]  = "lsp.buf.format()",
+		["<space>="]  = "lsp.buf.format()",
 		["K"]         = "lsp.buf.hover()",
 		["gi"]        = "lsp.buf.implementation()",
 		["gr"]        = "lsp.buf.references()",

@@ -4,7 +4,6 @@
 
 if vim.g.debug then print "lmcsnvim.set" end
 
-local cmd          = vim.cmd
 local opt          = vim.opt
 
 opt.background     = "dark"
@@ -39,7 +38,7 @@ opt.undofile       = true
 opt.wildignore     = "*~,*.o,*.tmp"
 opt.wildmode       = { "longest:full", "full" }
 
-cmd 'colorscheme lmcs'
-cmd 'autocmd TermOpen * setlocal nonumber foldcolumn=0'
+vim.cmd 'colorscheme lmcs'
+vim.cmd 'autocmd TermOpen * setlocal nonumber foldcolumn=0'
 
 -- vim: set ts=2:sw=2:noet:sts=2:

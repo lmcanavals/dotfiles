@@ -35,10 +35,10 @@ require 'paq' {
 	"hrsh7th/cmp-nvim-lsp",
 	"L3MON4D3/LuaSnip",
 
-	{ "nvim-treesitter/nvim-treesitter", run = ':TSUpdate' },
-	"ojroques/nvim-lspfuzzy",
+	{ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" },
+	"nvim-lua/plenary.nvim",
+	{ "nvim-telescope/telescope.nvim", branch = "0.1.2" },
 	"kyazdani42/nvim-tree.lua",
-	"beyondmarc/glsl.vim",
 	"chrisbra/csv.vim",
 	"norcalli/nvim-colorizer.lua",
 	"edluffy/hologram.nvim",
