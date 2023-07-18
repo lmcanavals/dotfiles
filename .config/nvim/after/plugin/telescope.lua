@@ -4,17 +4,13 @@
 
 if vim.g.debug then print "after.plugin.telescope" end
 
+local vks = vim.keymap.set
 local builtin  = require('telescope.builtin')
-local mappings = {
-	["f"] = builtin.find_files,
-	["r"] = builtin.git_files,
-	["g"] = builtin.live_grep,
-	["b"] = builtin.buffers,
-	["h"] = builtin.help_tags,
-}
 
-for m, c in pairs(mappings) do
-	vim.keymap.set('n', '<leader>f' .. m, c, {})
-end
+vks("n", "<leader>pf", builtin.find_files, {})
+vks("n", "<leader>pr", builtin.git_files, {})
+vks("n", "<leader>pg", builtin.live_grep, {})
+vks("n", "<leader>pb", builtin.buffers, {})
+vks("n", "<leader>ph", builtin.help_tags, {})
 
 -- vim: set ts=2:sw=2:noet:sts=2:

@@ -4,17 +4,16 @@
 
 if vim.g.debug then print "lmcsnvim.remap" end
 
+local vks       = vim.keymap.set
+local opts      = { noremap = true }
+
 vim.g.mapleader = " "
-local mappings  = {
-	["<space>"] = "noh",
-	["s"]       = "w",
-	["n"]       = "bn",
-	["p"]       = "bp",
-	["d"]       = "bd",
-	["t"]       = "NvimTreeToggle"
-}
-for m, c in pairs(mappings) do
-	vim.keymap.set("n", "<leader>" .. m, ":" .. c .. "<cr>", { noremap = true })
-end
+
+vks("n", "<leader><space>", ":noh<cr>", opts)
+vks("n", "<leader>s", ":w<cr>", opts)
+vks("n", "<leader>n", ":bn<cr>", opts)
+vks("n", "<leader>N", ":bp<cr>", opts)
+vks("n", "<leader>d", ":bd<cr>", opts)
+vks("n", "<leader>t", ":NvimTreeToggle<cr>", opts)
 
 -- vim: set ts=2:sw=2:noet:sts=2:
