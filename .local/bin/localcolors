@@ -32,17 +32,22 @@ function printcolors() {
 	do
 		oline="$oline$(printnum $i)"
 	done
-	echo $oline
-	for i in 0 1 2 3 4 5
+	echo "$oline  $oline  $oline"
+	for i in 0 3
 	do
 		for j in 0 1 2 3 4 5
 		do
-			ccc=$((i*36 + j*6 + 16))
-			oline="$(printnum $ccc) "
-			for k in 0 1 2 3 4 5
+			oline=""
+			for k in 0 36 72
 			do
-				ccc=$((i * 36 + j * 6 + k + 16))
-				oline="$oline[48;5;${ccc}m ■ [0m"
+				ccc=$((i*36 + j*6 + k + 16))
+				oline="$oline$(printnum $ccc) "
+				for l in 0 1 2 3 4 5
+				do
+					ccc=$((i * 36 + j * 6 + k + l + 16))
+					oline="$oline[48;5;${ccc}m ■ [0m"
+				done
+				oline="$oline "
 			done
 			echo $oline
 		done
