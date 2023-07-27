@@ -27,21 +27,6 @@ end
 vim.opt.rtp:prepend(path)
 
 require 'paq' {
-	"savq/paq-nvim",
-	"neovim/nvim-lspconfig",
-	"nvim-tree/nvim-web-devicons",
-
-	"hrsh7th/nvim-cmp",
-	"hrsh7th/cmp-nvim-lsp",
-	"L3MON4D3/LuaSnip",
-
-	{ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" },
-	"nvim-lua/plenary.nvim",
-	{ "nvim-telescope/telescope.nvim", branch = "0.1.2" },
-	"kyazdani42/nvim-tree.lua",
-	"chrisbra/csv.vim",
-	"norcalli/nvim-colorizer.lua",
-	"edluffy/hologram.nvim",
 	-- "github/copilot.vim"
 }
 

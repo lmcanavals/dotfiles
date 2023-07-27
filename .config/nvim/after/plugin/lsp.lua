@@ -1,6 +1,6 @@
 -- author:  lmcanavals
 -- date:    2021-07-26
--- updated: 2023-07-14
+-- updated: 2023-07-26
 
 if vim.g.debug then print "after.plugin.lsp" end
 
@@ -86,7 +86,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		vks('n', '<space>rn', vim.lsp.buf.rename, opts)
 		vks({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
 		vks('n', 'gr', vim.lsp.buf.references, opts)
-		vks('n', '<space>f', function()
+		vks('n', '<space>=', function()
 			vim.lsp.buf.format { async = true }
 		end, opts)
 	end,

@@ -49,6 +49,7 @@ rust.sh
 .cargo/
 .conda/
 .dotfiles.git/
+.gephi/
 .gnome/
 .gnupg/
 .ipynb_checkpoints/

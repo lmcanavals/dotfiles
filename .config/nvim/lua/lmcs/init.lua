@@ -1,12 +1,12 @@
 -- author:  lmcanavals
 -- date:    2021-07-26
--- updated: 2023-07-14
+-- updated: 2023-07-25
 
 if vim.g.debug then print "lmcsnvim.init" end
 
-require 'lmcs.paq'
-require 'lmcs.set'
 require 'lmcs.remap'
+require 'lmcs.set'
+require 'lmcs.lazy'
 require 'lmcs.folds'
 
 require 'hologram'.setup {
