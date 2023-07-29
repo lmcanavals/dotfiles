@@ -1,6 +1,5 @@
 -- author:  lmcanavals
 -- date:    2021-07-26
--- updated: 2023-07-25
 
 if vim.g.debug then print "lmcsnvim.init" end
 

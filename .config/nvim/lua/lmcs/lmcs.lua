@@ -1,7 +1,7 @@
 -- Vim color file
--- Name:				lmcs.lua
--- Version:			4.5
--- Maintainer:	lmcanavals
+-- Name:       lmcs.lua
+-- Version:    4.5
+-- Maintainer: lmcanavals
 
 local gui = vim.env.ISMOSHBRUH ~= "yup"
 
@@ -130,6 +130,8 @@ local theme = {
 	DiagnosticUnderlineHint  = { ui = UCU, bg = PAS, sp = yel },
 	DiagnosticUnderlineInfo  = { ui = UCU, bg = PAS, sp = CYA },
 	DiagnosticUnderlineWarn  = { ui = UCU, bg = PAS, sp = YEL },
+	-- Notify nvim plugin
+	NotifyBackground         = { ui = PAS, bg = BLA, fg = PAS },
 }
 
 local L = {}

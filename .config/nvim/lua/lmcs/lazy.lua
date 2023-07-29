@@ -1,9 +1,7 @@
 -- author:  lmcanavals
 -- date:    2023-07-26
--- updated: 2023-07-27
 
 -- TODO: check:
---	folke/which-key.nvim
 --	kevinhwang91/nvim-hlslens
 --	kevinhwang91/nvim-bqf
 --	rktjmp/lush.nvim -- only if we need to do some low level color cool
@@ -28,6 +26,8 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
 	'tpope/vim-fugitive',
 	'tpope/vim-rhubarb',
+	'chrisbra/csv.vim',
+	'norcalli/nvim-colorizer.lua',
 	{
 		'neovim/nvim-lspconfig',
 		dependencies = {
@@ -47,36 +47,31 @@ require('lazy').setup({
 		-- Autocompletion
 		'hrsh7th/nvim-cmp',
 		dependencies = {
-			-- Snippet Engine & its associated nvim-cmp source
 			'L3MON4D3/LuaSnip',
 			'saadparwaiz1/cmp_luasnip',
-
-			-- Adds LSP completion capabilities
 			'hrsh7th/cmp-nvim-lsp',
-
-			-- Adds a number of user-friendly snippets
 			'rafamadriz/friendly-snippets',
 		},
 	},
-	{ 'folke/which-key.nvim',  opts = {} },
+	{ 'folke/which-key.nvim', opts = {} },
 	{
 		'lewis6991/gitsigns.nvim',
 		opts = {
 			-- See `:help gitsigns.txt`
 			signs = {
-				add = { text = '+' },
-				change = { text = '~' },
-				delete = { text = '_' },
-				topdelete = { text = '‾' },
-				changedelete = { text = '~' },
+				add = { text = "+" },
+				change = { text = "~" },
+				delete = { text = "_" },
+				topdelete = { text = "‾" },
+				changedelete = { text = "~" },
 			},
 			on_attach = function(bufnr)
 				vim.keymap.set('n', '<leader>gp', require('gitsigns').prev_hunk,
-					{ buffer = bufnr, desc = '[G]o to [P]revious Hunk' })
+					{ buffer = bufnr, desc = "[G]o to [P]revious Hunk" })
 				vim.keymap.set('n', '<leader>gn', require('gitsigns').next_hunk,
-					{ buffer = bufnr, desc = '[G]o to [N]ext Hunk' })
+					{ buffer = bufnr, desc = "[G]o to [N]ext Hunk" })
 				vim.keymap.set('n', '<leader>ph', require('gitsigns').preview_hunk,
-					{ buffer = bufnr, desc = '[P]review [H]unk' })
+					{ buffer = bufnr, desc = "[P]review [H]unk" })
 			end,
 		},
 	},
@@ -89,7 +84,7 @@ require('lazy').setup({
 			options = {
 				icons_enabled = false,
 				theme = 'codedark',
-				component_separators = '|',
+				component_separators = '┊',
 				section_separators = '',
 			},
 		},
@@ -120,8 +115,6 @@ require('lazy').setup({
 			"rcarriga/nvim-notify",
 		}
 	},
-	-- "gc" to comment visual regions/lines
-	{ 'numToStr/Comment.nvim', opts = {} },
 	-- Fuzzy Finder (files, lsp, etc)
 	{
 		'nvim-telescope/telescope.nvim',
@@ -149,8 +142,6 @@ require('lazy').setup({
 		build = ':TSUpdate',
 	},
 	'nvim-tree/nvim-web-devicons',
-	'chrisbra/csv.vim',
-	'norcalli/nvim-colorizer.lua',
 }, {})
 
 -- vim: set ts=2:sw=2:noet:sts=2:

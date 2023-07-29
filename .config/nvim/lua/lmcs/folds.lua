@@ -1,6 +1,5 @@
 -- author:  lmcanavals
 -- date:    2023-07-14
--- updated: 2023-07-15
 
 if vim.g.debug then print "lmcsnvim.folds" end
 

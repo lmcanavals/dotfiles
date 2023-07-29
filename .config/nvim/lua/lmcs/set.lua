@@ -1,6 +1,5 @@
 -- author:  lmcanavals
 -- date:    2023-07-14
--- updated: 2023-07-27
 
 if vim.g.debug then print "lmcsnvim.set" end
 
@@ -13,7 +12,6 @@ opt.cursorcolumn   = true
 opt.cursorline     = true
 opt.expandtab      = false
 opt.fillchars      = { fold = ' ' --[[, vert = '┃' ]] }
-opt.laststatus     = 2
 opt.list           = true
 opt.listchars      = {
 	tab = '┼─',

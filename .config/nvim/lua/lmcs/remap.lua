@@ -1,6 +1,5 @@
 -- author:  lmcanavals
 -- created: 2023-07-13
--- updated: 2023-07-13
 
 if vim.g.debug then print "lmcsnvim.remap" end
 

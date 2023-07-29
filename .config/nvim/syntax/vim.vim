@@ -1,7 +1,7 @@
-" Description:	Displays highlight objects color inside colorscheme file
-" Name:					vim.vim
-" Version:			3.0
-" Maintainer:		Luis Canaval (public02@canaval.org)
+" Description: Displays highlight objects color inside colorscheme file
+" Name:        vim.vim
+" Version:     3.0
+" Maintainer:  Luis Canaval (public02@canaval.org)
 "
 
 let s:tokens=[

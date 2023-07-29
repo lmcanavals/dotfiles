@@ -1,7 +1,7 @@
 " ==============================================================================
-" File:					after/syntax/cpp.vim
-" Maintainer:		L M Canaval S
-" Last Change:	2021-05-15
+" File:        after/syntax/cpp.vim
+" Maintainer:  L M Canaval S
+" Last Change: 2021-05-15
 " ==============================================================================
 
 sy keyword cppSTL abort abs accumulate acos adjacent_difference adjacent_find
