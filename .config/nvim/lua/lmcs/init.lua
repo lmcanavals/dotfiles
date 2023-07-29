@@ -9,8 +9,4 @@ require 'lmcs.set'
 require 'lmcs.lazy'
 require 'lmcs.folds'
 
-require 'hologram'.setup {
-	auto_display = true
-}
-
 -- vim: set ts=2:sw=2:noet:sts=2:
