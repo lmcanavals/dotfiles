@@ -81,7 +81,7 @@ local theme = {
 	LineNr                   = { ui = PAS, bg = PAS, fg = bla },
 	FoldColumn               = { ui = PAS, bg = PAS, fg = bla },
 	Folded                   = { ui = UDA, bg = PAS, sp = BLA },
-	MatchParen               = { ui = UDO, bg = PAS, fg = whi },
+	MatchParen               = { ui = UDO, bg = PAS, fg = yel },
 	IncSearch                = { ui = PAS, bg = MAG, fg = whi },
 	Search                   = { ui = PAS, bg = GRE, fg = whi },
 	QuickFixLine             = { ui = PAS, bg = YEL, fg = whi },

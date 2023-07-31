@@ -31,20 +31,13 @@ require('lazy').setup({
 	{
 		'neovim/nvim-lspconfig',
 		dependencies = {
-			-- Automatically install LSPs to stdpath for neovim
 			{ 'williamboman/mason.nvim', config = true },
 			'williamboman/mason-lspconfig.nvim',
-
-			-- Useful status updates for LSP
-			-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
 			{ 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
-
-			-- Additional lua configuration, makes nvim stuff amazing!
 			'folke/neodev.nvim',
 		},
 	},
 	{
-		-- Autocompletion
 		'hrsh7th/nvim-cmp',
 		dependencies = {
 			'L3MON4D3/LuaSnip',
@@ -57,7 +50,6 @@ require('lazy').setup({
 	{
 		'lewis6991/gitsigns.nvim',
 		opts = {
-			-- See `:help gitsigns.txt`
 			signs = {
 				add = { text = "+" },
 				change = { text = "~" },
@@ -103,27 +95,17 @@ require('lazy').setup({
 	{
 		"folke/noice.nvim",
 		event = "VeryLazy",
-		opts = {
-			-- add any options here
-		},
+		opts = {},
 		dependencies = {
-			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
 			"MunifTanjim/nui.nvim",
-			-- OPTIONAL:
-			--   `nvim-notify` is only needed, if you want to use the notification view.
-			--   If not available, we use `mini` as the fallback
 			"rcarriga/nvim-notify",
 		}
 	},
-	-- Fuzzy Finder (files, lsp, etc)
 	{
 		'nvim-telescope/telescope.nvim',
 		branch = '0.1.x',
 		dependencies = { 'nvim-lua/plenary.nvim' }
 	},
-	-- Fuzzy Finder Algorithm which requires local dependencies to be built.
-	-- Only load if `make` is available. Make sure you have the system
-	-- requirements installed.
 	{
 		'nvim-telescope/telescope-fzf-native.nvim',
 		-- NOTE: If you are having trouble with this installation,
@@ -134,7 +116,6 @@ require('lazy').setup({
 		end,
 	},
 	{
-		-- Highlight, edit, and navigate code
 		'nvim-treesitter/nvim-treesitter',
 		dependencies = {
 			'nvim-treesitter/nvim-treesitter-textobjects',

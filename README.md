@@ -229,7 +229,7 @@ gnome-keyring haveged jq okular
 libcanberra # installed by a bunch of packages
 firefox google-chrome opera opera-ffmpeg-codecs
 webp-pixbuf-loader solaar screenkey slop
-cmake clang deno gopls pyright tree-sitter fzf
+cmake clang gopls tree-sitter fzf
 bat exa fd procs sd ripgrep dust tokei bottom
 qt5ct breeze adwaita-qt{5,6} # to make qt 5 and 6 somewhat match the gtk theme
 ```
@@ -265,6 +265,7 @@ xf86-input-wacom
 
 Optional:
 
+* pyright, deno, {lua,bash}-language-server # installed via mason
 * kitty # now using wezterm because it's written in rust
 * qt5ct # this might be needed to control qt styles
 * droidcam # android phone as webcam
