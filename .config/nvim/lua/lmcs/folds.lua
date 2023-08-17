@@ -18,7 +18,7 @@ function LmcsFoldText()
 	if llen < width - lclen then
 		line = line .. string.rep(" ", width - llen - lclen)
 	else
-		line = string.sub(line, 1, width - lclen) .. "…"
+		line = string.sub(line, 1, width - lclen - 1) .. "…"
 	end
 	return line .. lineCount
 end
