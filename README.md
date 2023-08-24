@@ -80,13 +80,13 @@ Installing basic packages:
 
 ```sh
 pacman -S \
-		grub grub-theme-vimix \
-		dosfstools efibootmgr \
-		intel-ucode \
-		zsh starship neovim git github-cli sudo \
-		networkmanager \
-		pacman-contrib \
-		powertop tlp # for better power management
+	grub grub-theme-vimix \
+	dosfstools efibootmgr \
+	intel-ucode \
+	zsh starship neovim git github-cli sudo \
+	networkmanager \
+	pacman-contrib \
+	powertop tlp # for better power management
 ```
 
 Create the user `lmcs`:
@@ -110,7 +110,7 @@ swapon /swapfile
 Generate `fstab`:
 
 ```sh
-exit
+<c-d>
 genfstab -pU /mnt >> /mnt/etc/fstab
 ```
 
@@ -148,7 +148,7 @@ cd ~
 git clone --bare https://github.com/lmcanavals/dotfiles.git .dotfiles.git
 git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME restore --staged .
 git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME restore .
-exit
+<c-d>
 cd /home/lmcs/.root/
 cp etc/hostname /etc/
 cp etc/locale.conf /etc/
@@ -186,7 +186,7 @@ parameters needed for hibernation support:
 
 ```sh
 grub-install --target=x86_64-efi --efi-directory=/boot/efi \
-		--bootloader-id="Arch" --recheck --debug
+	--bootloader-id="Arch" --recheck --debug
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
@@ -210,62 +210,66 @@ Sync, update and install the rest of the good stuff:
 GUI base:
 
 ```sh
-xfce4 xfce4-goodies pulseaudio sox lightdm lightdm-gtk-greeter xcape xsel
-accountsservice xorg-xmodmap xorg-server gvfs wezterm ksnip numlockx
+sudo pacman -S \
+	xfce4 xfce4-goodies pulseaudio sox lightdm lightdm-gtk-greeter xcape xsel \
+	accountsservice xorg-xmodmap xorg-server gvfs wezterm ksnip numlockx cups
 ```
 
 Graphics nvidia:
 
 ```sh
-nvidia nvidia-settings xorg-xrandr
+sudo pacman -S nvidia nvidia-settings xorg-xrandr
 ```
 
 Utilities
 
 ```sh
-papirus-icon-theme file-roller unrar p7zip ntp imagemagick htop
-redshift mosh network-manager-applet pavucontrol
-gnome-keyring haveged jq okular
-libcanberra # installed by a bunch of packages
-firefox google-chrome opera opera-ffmpeg-codecs
-webp-pixbuf-loader solaar screenkey slop
-cmake clang gopls tree-sitter fzf
-bat exa fd procs sd ripgrep dust tokei bottom
-qt5ct breeze adwaita-qt{5,6} # to make qt 5 and 6 somewhat match the gtk theme
+sudo pacman -S \
+	apirus-icon-theme file-roller unrar p7zip ntp imagemagick htop \
+	edshift mosh network-manager-applet pavucontrol \
+	nome-keyring haveged jq okular \
+	irefox opera opera-ffmpeg-codecs \
+	ebp-pixbuf-loader solaar screenkey slop \
+	make clang gopls tree-sitter fzf \
+	at exa fd procs sd ripgrep dust tokei bottom \
+	t5ct breeze adwaita-qt{5,6} \
+	ibcanberra # installed by a bunch of packages
+paru -S google-chrome
 ```
 
 Fonts, utilities, etc:
 
 ```sh
-adobe-source-han-sans-otc-fonts adobe-source-code-pro-fonts # if not present
-ttf-fira-code ttf-roboto ttf-roboto-mono ttf-jetbrains-mono-nerd
-ttf-liberation ttf-dejavu gnu-free-fonts
-noto-fonts-emoji ttf-croscore ttf-carlito ttf-caladea
-ttf-opensans # installed by telegram
-ttf-font-awesome ttf-nerd-fonts-symbols-mono
+sudo pacman -S \
+	dobe-source-han-sans-otc-fonts adobe-source-code-pro-fonts \
+	tf-fira-code ttf-roboto ttf-roboto-mono ttf-jetbrains-mono-nerd \
+	tf-liberation ttf-dejavu gnu-free-fonts \
+	oto-fonts-emoji ttf-croscore ttf-carlito ttf-caladea \
+	tf-font-awesome ttf-nerd-fonts-symbols-mono \
+	tf-opensans # installed by telegram 
 ```
 
 Cloud storage, Goodle Drive, One Drive, etc:
 
 ```sh
-rclone fuse2
+sudo pacman -S rclone fuse2
 ```
 
 Streaming and virtual cam stream:
 
 ```sh
-obs-studio linux-headers v4l2loopback-dkms
+sudo pacman -S obs-studio linux-headers v4l2loopback-dkms
 ```
 
 Use a wacom tablet:
 
 ```sh
-xf86-input-wacom
+sudo pacman -S xf86-input-wacom
 ```
 
 Optional:
 
-* pyright, deno, {lua,bash}-language-server # installed via mason
+* pyright, deno, ccls, {lua,bash}-language-server # installed via mason
 * kitty # now using wezterm because it's written in rust
 * qt5ct # this might be needed to control qt styles
 * droidcam # android phone as webcam
@@ -294,9 +298,6 @@ Not used anymore (maybe, some come as dependencies):
 * aria2 # download everything in style
 * cmus # music player
 
-Important
----------
-
 ### As user
 
 **Screen tearing on xfce**
@@ -304,7 +305,7 @@ Important
 
 Set `vblank_mode` to `glx` on the Xfce settings editor and then,
 
-```
+```sh
 sudo echo "options nvidia-drm modeset=1" > /etc/modprobe.d/nvidia-nomodeset.conf
 sudo mkinitcpio -p linux
 ```
@@ -397,7 +398,7 @@ Run `xdg-user-dirs-update`
 
 **Configure nvidia**, copy the following files:
 
-```sh
+```
 /etc/X11/xorg.conf.d/10-nvidia-drm-outputclass.conf
 /etc/lightdm/display_setup.sh
 ```
@@ -409,9 +410,9 @@ chmod +x /etc/lightdm/display_setup.sh
 ```
 
 Edit `/etc/lightdm/lightdm.conf`, look for `[Seat:*]` then
-`#display-setup-script=` and change to:
+`#display-setup-script=` and change it to:
 
-```sh
+```
 display-setup-script=/etc/lightdm/display_setup.sh
 ```
 
