@@ -1,5 +1,4 @@
-My Arch Linux Installation Guide v5 2021
-========================================
+# My Arch Linux Installation Guide v5 2021
 
 Starting from installation media
 
@@ -10,8 +9,8 @@ setfont LatArCyrHeb-16  # better fonts
 Umask for group permissions
 [Link here](http://unix.stackexchange.com/questions/75972/)
 
-Partitions
-----------
+## Partitions
+
 
 Check multiboot information about having efi and mbr boot for usb drives
 [Link here](https://wiki.archlinux.org/index.php/Multiboot_USB_drive)
@@ -61,8 +60,7 @@ mount -o subvol=var /dev/sdb /mnt/var
 mount -o subvol=Archive /dev/sdb /mnt/home/lmcs/Archive
 ```
 
-Installing and setting the base system
---------------------------------------
+## Installing and setting the base system
 
 Install base system:
 
@@ -196,8 +194,8 @@ Set root password, leave chroot env, unmount and reboot:
 passwd
 ```
 
-After the first reboot
-----------------------
+## After the first reboot
+
 
 Start console session as `lmcs`
 
@@ -212,7 +210,8 @@ GUI base:
 ```sh
 sudo pacman -S \
 	xfce4 xfce4-goodies pulseaudio sox lightdm lightdm-gtk-greeter xcape xsel \
-	accountsservice xorg-xmodmap xorg-server gvfs wezterm ksnip numlockx cups
+	accountsservice xorg-xmodmap xorg-server gvfs wezterm ksnip numlockx \
+	cups system-config-printer gutenprint foomatic-db-gutenprint-ppds
 ```
 
 Graphics nvidia:
@@ -463,8 +462,8 @@ sudo lmcsupdatemirrors
 * .xinitrc needed only for old school desktop managers like slim
 * .xresources needed only when starting stuff by hand (no xfsettingsd)
 
-Tweaks and hacks
-----------------
+## Tweaks and hacks
+
 
 **Caps Lock to control**
 
