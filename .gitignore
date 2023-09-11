@@ -57,6 +57,7 @@ rust.sh
 .java/
 .jupyter/
 .kde4/
+.m2/
 .mozilla/
 .npm/
 .pki/
