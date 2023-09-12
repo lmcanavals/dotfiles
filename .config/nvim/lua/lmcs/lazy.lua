@@ -27,6 +27,7 @@ require('lazy').setup({
 	'tpope/vim-fugitive',
 	'tpope/vim-rhubarb',
 	'chrisbra/csv.vim',
+	'dylon/vim-antlr',
 	'norcalli/nvim-colorizer.lua',
 	{
 		'neovim/nvim-lspconfig',
