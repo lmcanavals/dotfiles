@@ -10,7 +10,7 @@ require 'nvim-treesitter.configs'.setup {
 	ignore_install = {},
 	ensure_installed = {
 		'bash', 'c', 'cpp', 'go', 'html', 'javascript', 'llvm', 'lua',
-		'markdown', 'markdown_inline', 'python', 'regex', 'rust',
+		'markdown', 'markdown_inline', 'python', 'regex', 'rust', 'vim',
 	},
 	sync_install = true,
 	auto_install = true,
