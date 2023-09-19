@@ -31,6 +31,7 @@ nvim_lsp.gopls.setup { -- install via pacman
 		},
 	},
 }
+-- add java lang server
 nvim_lsp.lua_ls.setup { -- install via mason
 	capabilities = capabilities,
 	settings = {
