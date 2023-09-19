@@ -27,3 +27,5 @@ play /home/lmcs/.local/share/sounds/Fresh\ and\ Clean/stereo/desktop-login.ogg &
 # xset s off & # not needed if using presentation mode on xfce power manager
 exec startxfce4
 
+# here will go the spacing info
+
