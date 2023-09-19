@@ -31,7 +31,7 @@ nvim_lsp.gopls.setup { -- install via pacman
 		},
 	},
 }
-nvim_lsp.java_language_server.setup{}
+nvim_lsp.java_language_server.setup{} -- TODO install local server executable
 nvim_lsp.lua_ls.setup { -- install via mason
 	capabilities = capabilities,
 	settings = {
