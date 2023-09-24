@@ -229,6 +229,7 @@ label:focus {
 }
 
 #language {
+	min-width: 20px;
 }
 
 #keyboard-state {

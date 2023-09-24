@@ -8,6 +8,17 @@ if [[ -d /usr/local/go/bin ]]; then
 	PATH=$PATH:/usr/local/go/bin
 fi
 
+# Sway stuff
+if [[ "x${SWAYSOCK}x" == "xx" ]]; then
+#	export QT_QPA_PLATFORMTHEME="qt5ct"
+	export QT_QPA_PLATFORM=wayland
+	export XDG_CURRENT_DESKTOP=sway
+#	export XDG_SESSION_DESKTOP=sway
+	export XDG_CURRENT_SESSION_TYPE=sway
+	export GDK_BACKEND=sway
+	export MOZ_ENABLE_WAYLAND=1
+fi
+
 # Java stuff
 JAVA_HOME=/opt/java
 CLASSPATH=$JAVA_HOME/lib
