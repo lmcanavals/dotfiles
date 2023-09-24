@@ -11,6 +11,7 @@ Umask for group permissions
 
 ## Partitions
 
+
 Check multiboot information about having efi and mbr boot for usb drives
 [Link here](https://wiki.archlinux.org/index.php/Multiboot_USB_drive)
 
@@ -53,8 +54,8 @@ Mount everything te /mnt:
 
 ```sh
 mount -t ext4 /dev/sda2 /mnt
-mkdir -p /mnt/{efi,home/lmcs/Archive/,var}
-mount -t vfat /dev/sda1 /mnt/efi
+mkdir -p /mnt/{boot/efi,home/lmcs/Archive/,var}
+mount -t vfat /dev/sda1 /mnt/boot/efi
 mount -o subvol=var /dev/sdb /mnt/var
 mount -o subvol=Archive /dev/sdb /mnt/home/lmcs/Archive
 ```
@@ -64,7 +65,7 @@ mount -o subvol=Archive /dev/sdb /mnt/home/lmcs/Archive
 Install base system:
 
 ```sh
-pacstrap -K /mnt base linux linux-firmware
+pacstrap /mnt base linux linux-firmware base-devel
 ```
 
 Chrooting into the new system:
@@ -73,21 +74,15 @@ Chrooting into the new system:
 arch-chroot /mnt
 ```
 
-Installing base devel and the microdoces depeding on processor:
-
-```sh
-pacman -S base-devel {amd or intel}-ucode
-```
-
-Installing some important stuff:
+Installing basic packages:
 
 ```sh
 pacman -S \
 	grub grub-theme-vimix \
 	dosfstools efibootmgr \
-	zsh starship neovim git github-cli \
+	intel-ucode \
+	zsh starship neovim git github-cli sudo \
 	networkmanager \
-    openssh \
 	pacman-contrib \
 	powertop tlp # for better power management
 ```
@@ -95,7 +90,7 @@ pacman -S \
 Create the user `lmcs`:
 
 ```sh
-useradd -m -s $(which zsh) lmcs
+useradd -m -s /bin/zsh lmcs
 chfn lmcs
 passwd lmcs
 chown -R lmcs:users /home/lmcs/Archive
@@ -125,6 +120,13 @@ Copy files and Chroot into the fresh installation:
 arch-chroot /mnt
 ```
 
+Set zsh as the default shell for root:
+
+```sh
+chsh -s $(which zsh)
+zsh
+```
+
 Set locales, uncomment `en_DK.UTF8` `en_US.UTF8` `es_PE.UTF8` on
 `/etc/locale.gen`:
 
@@ -142,6 +144,8 @@ ln -s /usr/share/zoneinfo/America/Lima /etc/localtime
 su - lmcs
 cd ~
 git clone --bare https://github.com/lmcanavals/dotfiles.git .dotfiles.git
+#git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME restore --staged .
+#git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME restore .
 git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME checkout
 <c-d>
 cd /home/lmcs/.root/
@@ -163,7 +167,7 @@ Configure `sudoers` with `visudo`, add:
 
 ```sh
 export EDITOR=nvim
-lmcs ALL= /usr/bin/pacman
+lmcs stella= /usr/bin/pacman
 ```
 
 Install an aur helper as user, clone the repo from aur.archlinux.org then run:
@@ -180,7 +184,7 @@ Configure grub, copy the `/etc/default/grub` from arch-conf.git which adds the
 parameters needed for hibernation support:
 
 ```sh
-grub-install --target=x86_64-efi --efi-directory=/efi \
+grub-install --target=x86_64-efi --efi-directory=/boot/efi \
 	--bootloader-id="Arch" --recheck --debug
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
@@ -189,12 +193,6 @@ Set root password, leave chroot env, unmount and reboot:
 
 ```sh
 passwd
-```
-
-Set zsh as the default shell for root:
-
-```sh
-chsh -s $(which zsh)
 ```
 
 ## After the first reboot
@@ -210,36 +208,32 @@ Sync, update and install the rest of the good stuff:
 
 GUI base:
 
-Prefer pipewire based stuff and wireplumer.
-
 ```sh
 sudo pacman -S \
-    sway swaybg polkit wofi waybar mako \
-
-	pulseaudio sox lightdm lightdm-gtk-greeter \
-	accountsservice gvfs wezterm ksnip \
+	xfce4 xfce4-goodies pulseaudio sox lightdm lightdm-gtk-greeter xcape xsel \
+	accountsservice xorg-xmodmap xorg-server gvfs wezterm ksnip numlockx \
 	cups system-config-printer gutenprint foomatic-db-gutenprint-ppds
 ```
 
 Graphics nvidia:
 
 ```sh
-sudo pacman -S nvidia nvidia-settings
+sudo pacman -S nvidia nvidia-settings xorg-xrandr
 ```
 
 Utilities
 
 ```sh
 sudo pacman -S \
-	papirus-icon-theme file-roller unrar p7zip ntp imagemagick htop \
-	pedshift mosh network-manager-applet pavucontrol \
-	gnome-keyring haveged jq okular \
-	firefox opera opera-ffmpeg-codecs \
-	webp-pixbuf-loader solaar screenkey slop \
-	cmake clang gopls tree-sitter fzf \
-	bat exa fd procs sd ripgrep dust tokei bottom \
-	qt5ct breeze adwaita-qt{5,6} \
-	libcanberra # installed by a bunch of packages
+	apirus-icon-theme file-roller unrar p7zip ntp imagemagick htop \
+	edshift mosh network-manager-applet pavucontrol \
+	nome-keyring haveged jq okular \
+	irefox opera opera-ffmpeg-codecs \
+	ebp-pixbuf-loader solaar screenkey slop \
+	make clang gopls tree-sitter fzf \
+	at exa fd procs sd ripgrep dust tokei bottom \
+	t5ct breeze adwaita-qt{5,6} \
+	ibcanberra # installed by a bunch of packages
 paru -S google-chrome
 ```
 
@@ -247,12 +241,12 @@ Fonts, utilities, etc:
 
 ```sh
 sudo pacman -S \
-	adobe-source-han-sans-otc-fonts adobe-source-code-pro-fonts \
-	ttf-fira-code ttf-roboto ttf-roboto-mono ttf-jetbrains-mono-nerd \
-	ttf-liberation ttf-dejavu gnu-free-fonts \
-	noto-fonts-emoji ttf-croscore ttf-carlito ttf-caladea \
-	ttf-font-awesome ttf-nerd-fonts-symbols-mono \
-	ttf-opensans # installed by telegram 
+	dobe-source-han-sans-otc-fonts adobe-source-code-pro-fonts \
+	tf-fira-code ttf-roboto ttf-roboto-mono ttf-jetbrains-mono-nerd \
+	tf-liberation ttf-dejavu gnu-free-fonts \
+	oto-fonts-emoji ttf-croscore ttf-carlito ttf-caladea \
+	tf-font-awesome ttf-nerd-fonts-symbols-mono \
+	tf-opensans # installed by telegram 
 ```
 
 Cloud storage, Goodle Drive, One Drive, etc:
