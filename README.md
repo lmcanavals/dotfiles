@@ -233,7 +233,7 @@ firefox \
 solaar screenkey \
 cmake clang *gopls \
 bat eza fd procs sd ripgrep dust tokei bottom \
-qt5-wayland qt5ct \
+qt6-wayland qt5ct \
 ```
 
 Fonts, utilities, etc:
