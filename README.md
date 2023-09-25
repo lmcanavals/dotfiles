@@ -358,37 +358,6 @@ Run `xdg-user-dirs-update`
 
 ### As super user
 
-**Configure nvidia**, copy the following files:
-
-```
-/etc/X11/xorg.conf.d/10-nvidia-drm-outputclass.conf
-/etc/lightdm/display_setup.sh
-```
-
-Make the `display_setup.sh` executable:
-
-```sh
-chmod +x /etc/lightdm/display_setup.sh
-```
-
-Edit `/etc/lightdm/lightdm.conf`, look for `[Seat:*]` then
-`#display-setup-script=` and change it to:
-
-```
-display-setup-script=/etc/lightdm/display_setup.sh
-```
-
-**Numpad on on lightdm**
-
-```
-[Seat:*]
-greeter-setup-script=/usr/bin/numlockx on
-```
-
-More info about nvidia can be found
-[here for optimus](ihttps://wiki.archlinux.org/index.php/NVIDIA_Optimus)
-and [here](https://wiki.archlinux.org/index.php/NVIDIA)
-
 Avatar on lightdm follow instructions on this 
 [link](https://wiki.archlinux.org/index.php/LightDM#The_AccountsService_way)
 (xfce4 rotating wallpapers overwrites `/var/lib/AccountsService/users/lmcs`,
@@ -422,30 +391,21 @@ sudo lmcsupdatemirrors
 
 **Notes**
 
-* .xinitrc needed only for old school desktop managers like slim
-* .xresources needed only when starting stuff by hand (no xfsettingsd)
-
 ## Tweaks and hacks
-
-
-**Caps Lock to control**
-
-Taken care by dotfiles.git
 
 **Fix fonts for some applications**:
 
 ```sh
 gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 # the next 2 are synced with xfce appearance
-gsettings set org.gnome.desktop.interface font-name 'Noto Sans 10'
+gsettings set org.gnome.desktop.interface font-name 'Carlito 10'
 gsettings set org.gnome.desktop.interface monospace-font-name \
-	'Cascadia Code PL Semi-Light 14'
+'JetBrains Mono Regular 14'
 ```
 
 **Java**
 
-Install preferably on `~/Archive/usr`, rename from `jdk-x.x.x` to `java`
-then as root:
+Install preferably on `~/Apps`, rename from `jdk-x.x.x` to `java` then as root:
 
 ```sh
 ln -s /home/lmcs/Archive/usr/java /opt/java
