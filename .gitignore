@@ -88,7 +88,6 @@ rust.sh
 .config/github-copilot/
 .config/go/
 .config/google-chrome/
-.config/gtk-3.0/
 .config/gtk-4.0/
 .config/higan/
 .config/hiro/

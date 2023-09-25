@@ -3,6 +3,7 @@ exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 exec eval $(gnome-keyring-daemon --start)
 exec export SSH_AUTH_SOCK
+exec gammastep-indicator
 
 default_border pixel 1
 for_window [app_id="nm-connection-editor"] floating enable
