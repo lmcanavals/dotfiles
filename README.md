@@ -1,9 +1,9 @@
-# My Arch Linux Installation Guide v5 2021
+# My Arch Linux Installation Guide v7 Sway edition
 
 Starting from installation media
 
 ```sh
-loadkeys us             # in case we need to change the keyboard settings
+loadkeys dvorak         # in case we need to change the keyboard settings
 setfont LatArCyrHeb-16  # better fonts
 ```
 Umask for group permissions
@@ -83,13 +83,11 @@ Installing some important stuff:
 
 ```sh
 pacman -S \
-	grub grub-theme-vimix \
-	dosfstools efibootmgr \
-	zsh starship neovim git github-cli \
-	networkmanager \
-    openssh \
-	pacman-contrib \
-	powertop tlp # for better power management
+grub grub-theme-vimix dosfstools efibootmgr \
+zsh starship neovim git github-cli \
+networkmanager openssh \
+pacman-contrib \
+powertop tlp # for better power management
 ```
 
 Create the user `lmcs`:
@@ -104,7 +102,7 @@ chown -R lmcs:users /home/lmcs/Archive
 Create swapfile:
 
 ```sh
-fallocate -l 5G /swapfile
+fallocate -l 32G /swapfile
 chmod 600 /swapfile
 mkswap /swapfile
 swapon /swapfile
@@ -181,7 +179,7 @@ parameters needed for hibernation support:
 
 ```sh
 grub-install --target=x86_64-efi --efi-directory=/efi \
-	--bootloader-id="Arch" --recheck --debug
+    --bootloader-id="Arch" --recheck --debug
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
@@ -199,7 +197,6 @@ chsh -s $(which zsh)
 
 ## After the first reboot
 
-
 Start console session as `lmcs`
 
 Sync, update and install the rest of the good stuff:
@@ -214,45 +211,41 @@ Prefer pipewire based stuff and wireplumer.
 
 ```sh
 sudo pacman -S \
-    sway swaybg polkit wofi waybar mako \
-
-	pulseaudio sox lightdm lightdm-gtk-greeter \
-	accountsservice gvfs wezterm ksnip \
-	cups system-config-printer gutenprint foomatic-db-gutenprint-ppds
-```
-
-Graphics nvidia:
-
-```sh
-sudo pacman -S nvidia nvidia-settings
+sway swaybg polkit wofi waybar mako swayidle \
+xdg-desktop-portal-wlr pipewire-pulse brightnessctl \
+slurp grim wl-clipboard \
+accountsservice gvfs wezterm xdg-user-dirs \
+*thunar \
+*cups system-config-printer gutenprint foomatic-db-gutenprint-ppds
 ```
 
 Utilities
 
 ```sh
 sudo pacman -S \
-	papirus-icon-theme file-roller unrar p7zip ntp imagemagick htop \
-	pedshift mosh network-manager-applet pavucontrol \
-	gnome-keyring haveged jq okular \
-	firefox opera opera-ffmpeg-codecs \
-	webp-pixbuf-loader solaar screenkey slop \
-	cmake clang gopls tree-sitter fzf \
-	bat exa fd procs sd ripgrep dust tokei bottom \
-	qt5ct breeze adwaita-qt{5,6} \
-	libcanberra # installed by a bunch of packages
-paru -S google-chrome
+*papirus-icon-theme \
+file-roller unrar p7zip ntp imagemagick \
+redshift mosh network-manager-applet pavucontrol \
+gnome-keyring haveged jq \
+*okular \
+firefox \
+*webp-pixbuf-loader \
+solaar screenkey \
+cmake clang *gopls \
+bat eza fd procs sd ripgrep dust tokei bottom \
+qt5-wayland qt5ct \
 ```
 
 Fonts, utilities, etc:
 
 ```sh
 sudo pacman -S \
-	adobe-source-han-sans-otc-fonts adobe-source-code-pro-fonts \
-	ttf-fira-code ttf-roboto ttf-roboto-mono ttf-jetbrains-mono-nerd \
-	ttf-liberation ttf-dejavu gnu-free-fonts \
-	noto-fonts-emoji ttf-croscore ttf-carlito ttf-caladea \
-	ttf-font-awesome ttf-nerd-fonts-symbols-mono \
-	ttf-opensans # installed by telegram 
+adobe-source-han-sans-otc-fonts adobe-source-code-pro-fonts \
+ttf-fira-code ttf-roboto ttf-roboto-mono ttf-jetbrains-mono-nerd \
+ttf-liberation ttf-dejavu gnu-free-fonts ttf-victor-mono-nerd \
+noto-fonts-emoji ttf-croscore ttf-carlito ttf-caladea \
+ttf-font-awesome ttf-nerd-fonts-symbols-mono \
+ttf-opensans # installed by telegram 
 ```
 
 Cloud storage, Goodle Drive, One Drive, etc:
@@ -267,36 +260,25 @@ Streaming and virtual cam stream:
 sudo pacman -S obs-studio linux-headers v4l2loopback-dkms
 ```
 
-Use a wacom tablet:
-
-```sh
-sudo pacman -S xf86-input-wacom
-```
 
 Optional:
 
 * pyright, deno, ccls, {lua,bash}-language-server # installed via mason
 * kitty # now using wezterm because it's written in rust
-* qt5ct # this might be needed to control qt styles
 * droidcam # android phone as webcam
 * arc-solid-gtk-theme
-* adobe-source-sans-pro-fonts
-* adobe-source-serif-pro-fonts
 * noto-fonts ttf-fira-mono ttf-fira-sans
 * inkscape # for svg awesome
 * krita # super awesome drawing tool to be used with wacom tablets
 * dropbox thunar-dropbox
-* steam openssh vlc
-* xf86-input-synaptics # duh
+* steam vlc
 * xf86-video-intel libva-intel-driver
+* xf86-input-wacom
+* nvidia nvidia-settings
 * cdrkit # mkisofs, wodim and stuff
-* glew glfw glm # for the opengl experience
 
 Not used anymore (maybe, some come as dependencies):
 
-* wqy-microhei wqy-zenhei wqy-bitmapsong-beta
-* ttf-wqy-microhei-ibx ttf-roboto-ibx ttf-dejavu
-* haveged # random number generator, can't remember what for
 * livestreamer # to stream in VLC from twitch.tv and others
 * mupen64plus # nintendo 64 emulator
 * easytag # mp3 metadata editor
@@ -316,11 +298,11 @@ sudo echo "options nvidia-drm modeset=1" > /etc/modprobe.d/nvidia-nomodeset.conf
 sudo mkinitcpio -p linux
 ```
 
-Make **redshift-gtk** start on login:
+Make **gamastep** start on login:
 
 ```sh
-systemctl --user start redshift-gtk.service
-systemctl --user enable redshift-gtk.service
+systemctl --user start gammastep-indicator.service
+systemctl --user enable gammastep-indicator.service
 ```
 
 Setup remotes with rclone:
@@ -358,35 +340,9 @@ There are also a couple files on `/etc/modprobe.d` and `/etc/modules-load.d`
 sudo modprobe v4l2loopback exclusive_caps=1 video_nr=3 card_label="OBS Stream"
 ```
 
-When using a wacom tablet with a dual monitor setup, this commands help:
-
-```sh
-xsetwacom list devices
-```
-
-The most beautiful command I just figured out is using `slop` to select a custom
-region anywhere in the screen. I like binding it to `Super+1`:
-
-```sh
-xsetwacom set "Wacom Intuos S Pen stylus" MapToOutput $(slop)
-```
-
-To rotate between displays and full screen, useful to bing to `Super+2`:
-
-```sh
-xsetwacom set "Wacom Intuos S Pen stylus" MapToOutput next
-```
-
-This next one is an old command, is a hassle, left here just in case...
-
-Then use the name or id of the `stylus` to set the area on 1 monitor only, for
-most drivers using the monitor's name shown by `xrandr` works, for nvidia 
-`HEAD-0` or `HEAD-1` might work instead, in the next example 10 is the ID of the
-`stylus`. More information can be found on the Archlinux wiki entry for Wacom.
-
-```sh
-xsetwacom set 10 MapToOutput HEAD-0
-```
+The most beautiful command I just figured out is using `slurp` to select a
+custom region anywhere in the screen. I like binding it to `Super+1`.
+Check the arch wiki for it.
 
 **npm stuff** some stuff is needed for autocomplete, link etc in neovim:
 
