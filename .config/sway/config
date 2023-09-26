@@ -8,6 +8,8 @@ exec gammastep-indicator
 default_border pixel 1
 for_window [app_id="nm-connection-editor"] floating enable
 for_window [app_id="pavucontrol"] floating enable
+for_window [title="Save File"] floating enable
+for_window [title="Open File"] floating enable
 
 set $mod Mod4
 
