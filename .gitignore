@@ -120,6 +120,9 @@ rust.sh
 .config/xsettingsd/
 .config/zsh/plugins/
 
+.local/lib/
+.local/state/
+
 Apps/
 Desktop/
 Documents/
@@ -141,10 +144,8 @@ shared/
 .config/asciinema/*
 !.config/asciinema/config
 
-.local/state/
 .local/bin/*
 !.local/bin/local*
-.local/lib/
 .local/share/*
 !.local/share/google-chrome/
 !.local/share/themes/

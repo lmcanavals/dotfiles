@@ -1,0 +1,9 @@
+font=Carlito 11
+background-color=#12345688
+text-color=#fca741
+padding=6
+border-color=#123456aa
+border-radius=10
+default-timeout=4500
+max-visible=8
+
