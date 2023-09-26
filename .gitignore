@@ -71,6 +71,7 @@ rust.sh
 
 .config/Bitwarden/
 .config/Bitwarden\ CLI/
+.config/chromium/
 .config/JetBrains/
 .config/KDE/
 .config/Thunar/
