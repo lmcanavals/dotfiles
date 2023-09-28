@@ -27,13 +27,13 @@ export JAVA_HOME
 export CLASSPATH
 
 # Maven
-#M2_HOME=/home/lmcs/Documents/Apps/maven
-#M2=$M2_HOME/bin
-#MAVEN_OPTS="-Xms256m -Xmx512m"
-#PATH=$M2:$PATH
-#export M2_HOME
-#export M2
-#export MAVEN_OPTS
+M2_HOME=/opt/maven
+M2=$M2_HOME/bin
+MAVEN_OPTS="-Xms256m -Xmx512m"
+PATH=$M2:$PATH
+export M2_HOME
+export M2
+export MAVEN_OPTS
 
 PATH=/home/lmcs/.local/bin:$PATH
 typeset -U PATH
