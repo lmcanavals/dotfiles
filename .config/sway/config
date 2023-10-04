@@ -190,6 +190,7 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 ## Screenshots
+bindsym Shift+Print exec grim -g "$(slurp)" - | wl-copy
 bindsym Print exec grim -g "$(slurp)" -t png \
  "Downloads/screenshot_$(date '+%Y%m%d%H%M%S')_$RANDOM.png"
 
