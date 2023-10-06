@@ -22,7 +22,7 @@ set $term wezterm
 set $menu wofi -iIS run | xargs swaymsg exec --
 
 ### Output configuration
-output * bg ~/Pictures/Dark\ Wallpapers/wallhaven-57vp63.png fill
+output * bg ~/Pictures/Dark\ Wallpapers/wallhaven-pkx2dm.jpg fill
 #output eDP-1 resolution 1920x1080 position 0,0
 #output eDP-1 bg ~/Pictures/Dark\ Wallpapers/wallhaven-j32poq.png fill
 #output HDMI-A-1 resolution 1920x1080 position 1920,0

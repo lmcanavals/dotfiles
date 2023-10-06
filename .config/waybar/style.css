@@ -1,15 +1,15 @@
 * {
-	border-radius: 5px;
+	border-radius: 10px;
 	/* `otf-font-awesome` is required to be installed for icons */
 	font-family: "Roboto Condensed", FontAwesome, Helvetica, Arial, sans-serif;
 	font-size: 16px;
-
 }
 
 window#waybar {
-	background-color: rgba(43, 48, 59, 0.8);
-	border-bottom: 1px solid rgba(100, 114, 125, 0.8);
+	background-color: rgba(43, 48, 59, 0.5);
+	border-radius: 0;
 	color: #dfdfdf;
+	text-shadow: 2px 2px 2px #202020;
 	transition-property: background-color;
 	transition-duration: .5s;
 }
@@ -38,16 +38,11 @@ window#waybar.chromium {
 
 button {
 	/* Use box-shadow instead of border so the text isn't offset */
-	box-shadow: inset 0 -3px transparent;
-	/* Avoid rounded borders under each button name */
-	border: none;
-	border-radius: 0;
+	margin: 3px;
 }
 
-/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
 button:hover {
 	background: inherit;
-	box-shadow: inset 0 -3px #ffffff;
 }
 
 #workspaces button {
@@ -61,8 +56,8 @@ button:hover {
 }
 
 #workspaces button.focused {
-	background-color: #123456;
-	box-shadow: inset 0 -3px #ffffff;
+	background-color: rgba(208, 208, 208, 0.8);
+	color: #202020;
 }
 
 #workspaces button.urgent {
@@ -91,8 +86,8 @@ button:hover {
 #temperature,
 #tray,
 #wireplumber {
-	background-color: #123456;
-	margin: 5px;
+	background-color: rgba(32, 32, 32, 0.8);
+	margin: 3px;
 	padding: 0 10px;
 	color: #dfdfdf;
 }
@@ -140,7 +135,7 @@ to {
 }
 
 label:focus {
-	background-color: #123456;
+	background-color: #202020;
 }
 
 #cpu {
@@ -229,7 +224,6 @@ label:focus {
 }
 
 #language {
-	min-width: 20px;
 }
 
 #keyboard-state {
@@ -239,11 +233,11 @@ label:focus {
 }
 
 #keyboard-state > label.locked {
-	background: rgba(0, 0, 0, 0.2);
+	background: rgba(32, 32, 32, 0.8);
 }
 
 #scratchpad {
-	background: rgba(0, 0, 0, 0.2);
+	background: rgba(32, 32, 32, 0.8);
 }
 
 #scratchpad.empty {
