@@ -211,7 +211,7 @@ Prefer pipewire based stuff and wireplumer.
 
 ```sh
 sudo pacman -S \
-sway swaybg polkit wofi waybar mako swayidle \
+sway swaybg polkit wofi waybar mako swayidle swaylock \
 xdg-desktop-portal-wlr pipewire-pulse brightnessctl \
 slurp grim wl-clipboard \
 accountsservice gvfs wezterm xdg-user-dirs \
@@ -223,7 +223,7 @@ Utilities
 
 ```sh
 sudo pacman -S \
-*papirus-icon-theme \
+papirus-icon-theme \
 file-roller unrar p7zip ntp imagemagick \
 redshift mosh network-manager-applet pavucontrol \
 gnome-keyring haveged jq \
@@ -233,7 +233,7 @@ firefox \
 solaar screenkey \
 cmake clang *gopls \
 bat eza fd procs sd ripgrep dust tokei bottom \
-qt6-wayland qt5ct \
+qt6-wayland qt6ct \
 ```
 
 Fonts, utilities, etc:
@@ -397,7 +397,8 @@ sudo lmcsupdatemirrors
 
 ```sh
 gsettings set org.gnome.desktop.interface color-scheme prefer-dark
-# the next 2 are synced with xfce appearance
+# the next few are synced with xfce appearance
+gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
 gsettings set org.gnome.desktop.interface font-name 'Carlito 10'
 gsettings set org.gnome.desktop.interface monospace-font-name \
 'JetBrains Mono Regular 14'

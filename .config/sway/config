@@ -33,21 +33,15 @@ output * bg ~/Pictures/Dark\ Wallpapers/wallhaven-57vp63.png fill
 ### Idle configuration
 exec swayidle -w \
 	timeout 300 'swaylock -f -c 000000' \
-	timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
-	before-sleep 'swaylock -f -c 000000'
+	timeout 600 'swaymsg "output * power off"' \
+	resume 'swaymsg "output * power on"' before-sleep 'swaylock -f -c 000000'
 
 ### Input configuration
-input * {
+input type:keyboard {
 	xkb_layout "us"
 	xkb_variant "dvorak-alt-intl"
 }
-input "2:7:SynPS/2_Synaptics_TouchPad" {
-	dwt enabled
-	tap enabled
-	natural_scroll enabled
-	middle_emulation enabled
-}
-input "1267:12671:ELAN06FA:00_04F3:317F_Touchpad" {
+input type:touchpad {
 	dwt enabled
 	tap enabled
 	natural_scroll enabled
@@ -197,8 +191,9 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 ## Screenshots
-bindsym Print exec grim -g "$(slurp)" -t png
-# "Downloads/screenshot_$(date '+%Y%m%d%H%M%S')_$RANDOM.png"
+bindsym Shift+Print exec grim -g "$(slurp)" - | wl-copy
+bindsym Print exec grim -g "$(slurp)" -t png \
+ "Downloads/screenshot_$(date '+%Y%m%d%H%M%S')_$RANDOM.png"
 
 ## Special keys
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
