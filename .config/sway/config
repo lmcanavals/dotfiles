@@ -10,6 +10,7 @@ default_border pixel 1
 
 for_window [app_id="nm-connection-editor"] floating enable
 for_window [app_id="pavucontrol"] floating enable
+for_window [app_id="file-roller"] floating enable
 for_window [title="Save File"] floating enable
 for_window [title="Open File"] floating enable
 
@@ -40,6 +41,7 @@ exec swayidle -w \
 input type:keyboard {
 	xkb_layout "us"
 	xkb_variant "dvorak-alt-intl"
+	xkb_numlock enabled
 }
 input type:touchpad {
 	dwt enabled

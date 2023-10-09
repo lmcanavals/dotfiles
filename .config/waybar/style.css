@@ -6,10 +6,10 @@
 }
 
 window#waybar {
-	background-color: rgba(43, 48, 59, 0.5);
+	background-color: rgba(32, 32, 32, 0.5);
 	border-radius: 0;
 	color: #dfdfdf;
-	text-shadow: 2px 2px 2px #202020;
+	text-shadow: 2px 2px 2px black;
 	transition-property: background-color;
 	transition-duration: .5s;
 }
@@ -38,7 +38,12 @@ window#waybar.chromium {
 
 button {
 	/* Use box-shadow instead of border so the text isn't offset */
-	margin: 3px;
+	background-color: rgba(32, 32, 32, 0.3);
+	border-radius: 0;
+	color: #afafaf;
+	min-width: 40px;
+	padding: 0 10px;
+	text-shadow: 2px 2px 2px black;
 }
 
 button:hover {
@@ -46,9 +51,6 @@ button:hover {
 }
 
 #workspaces button {
-	padding: 0 5px;
-	background-color: transparent;
-	color: #dfdfdf;
 }
 
 #workspaces button:hover {
@@ -56,8 +58,8 @@ button:hover {
 }
 
 #workspaces button.focused {
-	background-color: rgba(208, 208, 208, 0.8);
-	color: #202020;
+	background-color: rgba(32, 32, 32, 0.6);
+	color: #dfdfdf;
 }
 
 #workspaces button.urgent {
@@ -86,9 +88,9 @@ button:hover {
 #temperature,
 #tray,
 #wireplumber {
-	background-color: rgba(32, 32, 32, 0.8);
-	margin: 3px;
-	padding: 0 10px;
+	/*background-color: rgba(32, 32, 32, 0.8);*/
+	margin: 1px;
+	padding: 0 5px;
 	color: #dfdfdf;
 }
 
@@ -108,25 +110,27 @@ button:hover {
 }
 
 #clock {
+
 }
 
 #battery {
 }
 
 #battery.charging, #battery.plugged {
-	background-color: #16764B;
+	/*background-color: #16764B;*/
+	color: #16764B;
 }
 
 @keyframes blink {
 to {
-	background-color: #ffffff;
-	color: #000000;
+	background-color: #dfdfdf;
+	color: #202020;
 }
 }
 
 #battery.critical:not(.charging) {
 	background-color: #f53c3c;
-	color: #ffffff;
+	color: #dfdfdf;
 	animation-name: blink;
 	animation-duration: 1.0s;
 	animation-timing-function: linear;
@@ -183,8 +187,8 @@ label:focus {
 }
 
 #temperature.critical {
-	background-color: #eb4d4b;
-	color: #ffffff;
+	/*background-color: #eb4d4b;*/
+	color: #f53c3c;
 }
 
 #tray {
