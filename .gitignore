@@ -57,6 +57,7 @@ rust.sh
 .java/
 .jupyter/
 .kde4/
+.lldb/
 .m2/
 .mozilla/
 .npm/
@@ -74,6 +75,7 @@ rust.sh
 .config/chromium/
 .config/JetBrains/
 .config/KDE/
+.config/Kitware/
 .config/Thunar/
 .config/Unknown\ Organization/
 .config/VirtualBox/
