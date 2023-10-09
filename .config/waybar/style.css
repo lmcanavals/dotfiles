@@ -1,7 +1,7 @@
 * {
 	border-radius: 10px;
 	/* `otf-font-awesome` is required to be installed for icons */
-	font-family: "Roboto Condensed", FontAwesome, Helvetica, Arial, sans-serif;
+	font-family: Carlito, FontAwesome, Helvetica, Arial, sans-serif;
 	font-size: 16px;
 }
 

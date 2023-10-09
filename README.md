@@ -211,7 +211,8 @@ Prefer pipewire based stuff and wireplumer.
 
 ```sh
 sudo pacman -S \
-sway swaybg polkit wofi waybar mako swayidle swaylock \
+sway swaybg polkit wofi waybar mako \
+swayidle swaylock swayimg \
 xdg-desktop-portal-wlr pipewire-pulse brightnessctl \
 slurp grim wl-clipboard \
 accountsservice gvfs wezterm xdg-user-dirs \

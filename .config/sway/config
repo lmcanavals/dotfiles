@@ -5,7 +5,9 @@ exec eval $(gnome-keyring-daemon --start)
 exec export SSH_AUTH_SOCK
 exec gammastep-indicator
 
+font pango: Carlito Regular 9
 default_border pixel 1
+
 for_window [app_id="nm-connection-editor"] floating enable
 for_window [app_id="pavucontrol"] floating enable
 for_window [title="Save File"] floating enable
