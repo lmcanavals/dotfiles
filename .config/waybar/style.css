@@ -1,5 +1,4 @@
 * {
-	border-radius: 10px;
 	/* `otf-font-awesome` is required to be installed for icons */
 	font-family: Carlito, FontAwesome, Helvetica, Arial, sans-serif;
 	font-size: 16px;
@@ -7,7 +6,6 @@
 
 window#waybar {
 	background-color: rgba(32, 32, 32, 0.5);
-	border-radius: 0;
 	color: #dfdfdf;
 	text-shadow: 2px 2px 2px black;
 	transition-property: background-color;
@@ -20,10 +18,10 @@ window#waybar.hidden {
 
 /*
 window#waybar.empty {
-background-color: transparent;
+	background-color: transparent;
 }
 window#waybar.solo {
-background-color: #FFFFFF;
+	background-color: #FFFFFF;
 }
 */
 
@@ -59,12 +57,12 @@ button:hover {
 
 #workspaces button.focused {
 	background-color: rgba(32, 32, 32, 0.6);
-	color: gold;
+	color: Gold;
 	box-shadow: inset 0 1px gold;
 }
 
 #workspaces button.urgent {
-	background-color: #eb4d4b;
+	background-color: Crimson;
 }
 
 #mode {
@@ -89,7 +87,7 @@ button:hover {
 #temperature,
 #tray,
 #wireplumber {
-	/*background-color: rgba(32, 32, 32, 0.8);*/
+	border-left: 2px solid rgba(32, 32, 32, 0.5);
 	margin: 1px;
 	padding: 0 5px;
 	color: #dfdfdf;
@@ -111,27 +109,28 @@ button:hover {
 }
 
 #clock {
-
+	font-size: 20px;
+	font-weight: bold;
 }
 
 #battery {
 }
 
 #battery.charging, #battery.plugged {
-	/*background-color: #16764B;*/
-	color: #16764B;
+	color: GreenYellow;
+}
+
+#temperature {
 }
 
 @keyframes blink {
 to {
-	background-color: #dfdfdf;
-	color: #202020;
+	background-color: transparent;
 }
 }
 
-#battery.critical:not(.charging) {
-	background-color: #f53c3c;
-	color: #dfdfdf;
+#battery.critical:not(.charging), #temperature.critical {
+	background-color: Crimson;
 	animation-name: blink;
 	animation-duration: 1.0s;
 	animation-timing-function: linear;
@@ -159,14 +158,14 @@ label:focus {
 }
 
 #network.disconnected {
-	color: gray;
+	color: LightSlateGray;
 }
 
 #pulseaudio {
 }
 
 #pulseaudio.muted {
-	color: gray;
+	color: LightSlateGray;
 }
 
 #wireplumber {
@@ -184,14 +183,6 @@ label:focus {
 #custom-media.custom-vlc {
 }
 
-#temperature {
-}
-
-#temperature.critical {
-	/*background-color: #eb4d4b;*/
-	color: #f53c3c;
-}
-
 #tray {
 }
 
@@ -201,12 +192,12 @@ label:focus {
 
 #tray > .needs-attention {
 	-gtk-icon-effect: highlight;
-	background-color: #dfdfdf;
-	color: black
+	background-color: Gold;
+	color: #dfdfdf;
 }
 
 #idle_inhibitor {
-	color: gray;
+	color: LightSlateGray;
 }
 
 #idle_inhibitor.activated {
@@ -217,15 +208,15 @@ label:focus {
 }
 
 #mpd.disconnected {
-	color: darkgray;
+	color: SlateGray;
 }
 
 #mpd.stopped {
-	color: gray;
+	color: LightSlateGray;
 }
 
 #mpd.paused {
-	color: gray;
+	color: LightSlateGray;
 }
 
 #language {
