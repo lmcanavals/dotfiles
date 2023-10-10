@@ -1,0 +1,40 @@
+/* https://cloudninja.pw/docs/wofi.html */
+
+window {
+	border: 1px solid #202020;
+	border-radius: 10px;
+	background-color: rgba(32, 32, 32, 0.5);
+}
+
+#input {
+	border-radius: 10px;
+	background-color: #555555;
+	font-size: 18px;
+	border-radius: 4px;
+}
+
+#inner-box {}
+
+#outer-box {
+	margin: 10px;
+}
+
+#scroll {
+	margin: 5px 0px;
+	font-size: 16px;
+	color: #ccc;
+}
+
+#scroll label {
+	margin: 2px 0px;
+}
+
+#entry:selected {
+	border-radius: 4px;
+	background-color: rgb(105, 105, 105);
+	color: black;
+}
+
+#text {
+	border: 0px;
+}
