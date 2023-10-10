@@ -37,13 +37,6 @@ window#waybar.chromium {
 }
 
 button {
-	/* Use box-shadow instead of border so the text isn't offset */
-	background-color: rgba(32, 32, 32, 0.3);
-	border-radius: 0;
-	color: #afafaf;
-	min-width: 40px;
-	padding: 0 10px;
-	text-shadow: 2px 2px 2px black;
 }
 
 button:hover {
@@ -51,15 +44,23 @@ button:hover {
 }
 
 #workspaces button {
+	/* Use box-shadow instead of border so the text isn't offset */
+	background-color: rgba(32, 32, 32, 0.3);
+	border-radius: 0;
+	color: #dfdfdf;
+	min-width: 40px;
+	padding: 0 10px;
+	text-shadow: 2px 2px 2px black;
 }
 
 #workspaces button:hover {
-	background: rgba(0, 0, 0, 0.2);
+	box-shadow: inset 0 1px gold;
 }
 
 #workspaces button.focused {
 	background-color: rgba(32, 32, 32, 0.6);
-	color: #dfdfdf;
+	color: gold;
+	box-shadow: inset 0 1px gold;
 }
 
 #workspaces button.urgent {
