@@ -1,40 +1,37 @@
 /* https://cloudninja.pw/docs/wofi.html */
 
 window {
-	border: 1px solid #202020;
+	border: 1px solid Gainsboro;
 	border-radius: 10px;
-	background-color: rgba(32, 32, 32, 0.5);
+	background-color: rgba(32, 32, 32, 0.7);
+	font-size: 24px;
 }
 
 #input {
-	border-radius: 10px;
-	background-color: #555555;
-	font-size: 18px;
-	border-radius: 4px;
+	background-color: rgba(64, 0, 0, 0.7);
 }
 
-#inner-box {}
+#inner-box {
+	color: Gainsboro;
+}
 
 #outer-box {
 	margin: 10px;
 }
 
 #scroll {
-	margin: 5px 0px;
-	font-size: 16px;
-	color: #ccc;
+	margin: 5px 0;
 }
 
 #scroll label {
-	margin: 2px 0px;
+	margin: 5px;
 }
 
 #entry:selected {
-	border-radius: 4px;
-	background-color: rgb(105, 105, 105);
-	color: black;
+	background-color: rgba(64, 64, 64, 0.7);
+	color: Gold;
 }
 
-#text {
-	border: 0px;
+#entry:selected #text {
+	color: Gold;
 }
