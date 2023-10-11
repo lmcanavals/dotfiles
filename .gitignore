@@ -150,7 +150,9 @@ shared/
 .local/bin/*
 !.local/bin/local*
 .local/share/*
+!.local/share/applications/
+.local/share/applications/mimeinfo.cache
 !.local/share/google-chrome/
-!.local/share/themes/
 !.local/share/konsole/
+!.local/share/themes/
 
