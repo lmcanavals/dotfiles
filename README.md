@@ -150,6 +150,13 @@ cp etc/mkinitcpio.conf /etc/
 cp etc/default/grub /etc/default/
 ```
 
+Set some config files for root
+
+```sh
+mkrid /root/.config
+ln -s /home/lmcs/.config/starship.toml /root/.config/
+```
+
 Building the kernel image, don't forget copy the `mkinitcpio.conf` from
 arch-conf.git which has the hook to support hibernation:
 
@@ -226,15 +233,13 @@ Utilities
 sudo pacman -S \
 papirus-icon-theme \
 file-roller unrar p7zip ntp imagemagick \
-redshift mosh network-manager-applet pavucontrol \
+gammastep mosh network-manager-applet pavucontrol \
 gnome-keyring haveged jq \
-*okular \
-firefox \
-*webp-pixbuf-loader \
-solaar screenkey \
-cmake clang *gopls \
+firefox solaar \
 bat eza fd procs sd ripgrep dust tokei bottom \
 qt6-wayland qt6ct \
+cmake clang \
+*okular *gopls *webp-pixbuf-loader \
 ```
 
 Fonts, utilities, etc:
