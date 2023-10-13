@@ -42,6 +42,7 @@ config.font_rules = {
 }
 config.initial_rows = 30
 config.initial_cols = 130
+config.term = 'wezterm'
 config.window_background_opacity = 0.8
 config.window_padding = {
 	left = 1,

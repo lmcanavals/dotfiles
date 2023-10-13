@@ -20,20 +20,24 @@ if [[ "x${SWAYSOCK}x" != "xx" ]]; then
 fi
 
 # Java stuff
-JAVA_HOME=/opt/java
-CLASSPATH=$JAVA_HOME/lib
-PATH=$JAVA_HOME/bin:$PATH
-export JAVA_HOME
-export CLASSPATH
+if [[ -d /opt/java ]]; then
+	JAVA_HOME=/opt/java
+	CLASSPATH=$JAVA_HOME/lib
+	PATH=$JAVA_HOME/bin:$PATH
+	export JAVA_HOME
+	export CLASSPATH
+fi
 
 # Maven
-M2_HOME=/opt/maven
-M2=$M2_HOME/bin
-MAVEN_OPTS="-Xms256m -Xmx512m"
-PATH=$M2:$PATH
-export M2_HOME
-export M2
-export MAVEN_OPTS
+if [[ -d /opt/maven ]]; then
+	M2_HOME=/opt/maven
+	M2=$M2_HOME/bin
+	MAVEN_OPTS="-Xms256m -Xmx512m"
+	PATH=$M2:$PATH
+	export M2_HOME
+	export M2
+	export MAVEN_OPTS
+fi
 
 PATH=/home/lmcs/.local/bin:$PATH
 typeset -U PATH

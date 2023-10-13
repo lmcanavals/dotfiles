@@ -5,8 +5,6 @@ if [[ "$TERM" == "linux" ]]; then
 	for i in {1..15}; do
 		echo -en "\e]P$(printf "%x" "$i")${LCLR:$i * 8 + 1:6}"
 	done
-else
-	export TERM="wezterm"
 fi
 
 setopt auto_cd
