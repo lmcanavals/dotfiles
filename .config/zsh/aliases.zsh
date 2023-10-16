@@ -22,6 +22,7 @@ abk=(
 	"co"  "./configure && make && sudo make install"
 	"j"   "| jq"
 	"n"   " nvim "
+	"p"   " ps -e f"
 	"qd"  " pacman -Qdt"
 	"qe"  " pacman -Qet"
 	"qi"  " pacman -Qi "
