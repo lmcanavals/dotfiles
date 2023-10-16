@@ -14,5 +14,5 @@ export QT_QPA_PLATFORMTHEME=qt5ct
 xset -b
 [[ -s $HOME/.cargo/env ]] && source "$HOME/.cargo/env"
 
-play "$XDG_DATA_HOME/sounds/Smooth/stereo/desktop-login.oga" &
-
+#play "$XDG_DATA_HOME/sounds/Smooth/stereo/desktop-login.oga" & 
+w-cat -p "/usr/share/sounds/deepin/stereo/desktop-login.wav" &
