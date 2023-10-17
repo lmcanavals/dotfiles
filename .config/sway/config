@@ -1,10 +1,12 @@
-exec pw-cat -p /usr/share/sounds/deepin/stereo/desktop-login.wav
-exec nm-applet --indicator
-exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
-exec eval $(gnome-keyring-daemon --start)
-exec export SSH_AUTH_SOCK
-exec gammastep-indicator
+exec {
+	pw-cat -p /usr/share/sounds/deepin/stereo/desktop-login.wav
+	nm-applet --indicator
+	systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+	dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+	eval $(gnome-keyring-daemon --start)
+	export SSH_AUTH_SOCK
+	gammastep-indicator
+}
 
 font pango: Carlito Regular 9
 default_border pixel 1
@@ -15,19 +17,21 @@ for_window [app_id="file-roller"] floating enable
 for_window [title="Save File"] floating enable
 for_window [title="Open File"] floating enable
 
-set $mod Mod4
+set {
+	$mod Mod4
 
-set $left h
-set $down j
-set $up k
-set $right l
+	$left h
+	$down j
+	$up k
+	$right l
 
-set $term wezterm
-set $menu wofi -iIS run | xargs swaymsg exec --
+	$term wezterm
+	$menu wofi -iIS run | xargs swaymsg exec --
 
-set $wacom 1386:884:Wacom_Intuos_S_Pen
-set $output0 $(swaymsg -t get_outputs | jq '.[0].name')
-set $output1 $(swaymsg -t get_outputs | jq '.[1].name')
+	$wacom 1386:884:Wacom_Intuos_S_Pen
+	$output0 $(swaymsg -t get_outputs | jq '.[0].name')
+	$output1 $(swaymsg -t get_outputs | jq '.[1].name')
+}
 
 ### Output configuration
 output * bg ~/Pictures/Dark\ Wallpapers/wallhaven-pkx2dm.jpg fill
