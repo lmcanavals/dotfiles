@@ -1,84 +1,95 @@
 ### Key bindings
 
-# Drag floating windows by holding down $mod and left mouse button.
-# Resize them with right mouse button + $mod.
-# Despite the name, also works for non-floating windows.
-# Change normal to inverse to use left mouse button for resizing and right
-# mouse button for dragging.
 floating_modifier $mod normal
 
-#
-# Resizing containers:
-#
-mode "resize" {
+mode $mode_grim {
 	bindsym {
-# left will shrink the containers width
-# right will grow the containers width
-# up will shrink the containers height
-# down will grow the containers height
+		a exec grimshot --notify save active $ssfile && swaymsg mode "default"
+		s exec grimshot --notify save screen $ssfile && swaymsg mode "default"
+		o exec grimshot --notify save output $ssfile && swaymsg mode "default"
+		r exec grimshot --notify save area $ssfile && swaymsg mode "default"
+		w exec grimshot --notify save window $ssfile && swaymsg mode "default"
+		Shift+a exec grimshot --notify copy active && swaymsg mode "default"
+		Shift+s exec grimshot --notify copy screen && swaymsg mode "default"
+		Shift+o exec grimshot --notify copy output && swaymsg mode "default"
+		Shift+r exec grimshot --notify copy area && swaymsg mode "default"
+		Shift+w exec grimshot --notify copy window && swaymsg mode "default"
+
+		F1 exec zenity --info --title="Grimshot" --text=$help_grimshot
+		Question exec zenity --info --title="Grimshot" --text=$help_grimshot
+
+		Escape mode "default"
+	}
+}
+mode $mode_wacom {
+	bindsym {
+		1 exec swaymsg input $wacom map_to_output $output0 && swaymsg mode "default"
+		2 exec swaymsg input $wacom map_to_output $output1 && swaymsg mode "default"
+
+		F1 exec zenity --info --title="Wacom helper" --text=$help_wacom
+		Question exec zenity --info --title="Wacom helper" --text=$help_wacom
+
+		Escape mode "default"
+		Return mode "default"
+	}
+}
+# Resizing containers:
+mode $mode_resize {
+	bindsym {
 		$left resize shrink width 10px
 		$down resize grow height 10px
 		$up resize shrink height 10px
 		$right resize grow width 10px
 
-# Ditto, with arrow keys
 		Left resize shrink width 10px
 		Down resize grow height 10px
 		Up resize shrink height 10px
 		Right resize grow width 10px
 
-# Return to default mode
-		Return mode "default"
 		Escape mode "default"
+		Return mode "default"
 	}
 }
-#
+
 # Basics:
-#
 bindsym {
-# Start a terminal
-	$mod+Return exec $term
-
-# Kill focused window
-	$mod+Shift+q kill
-
-# Start your launcher
-	$mod+d exec $menu
-
-
-# Reload the configuration file
-	$mod+Shift+c reload
-
-# Exit sway (logs you out of your Wayland session)
-	$mod+Shift+e exec swaynag -t warning -m 'Quit?' -B 'Yeah' 'swaymsg exit'
-#
-# Moving around:
-#
-# Move your focus around
 	$mod+$left focus left
 	$mod+$down focus down
 	$mod+$up focus up
 	$mod+$right focus right
-# Or use $mod+[up|down|left|right]
+
 	$mod+Left focus left
 	$mod+Down focus down
 	$mod+Up focus up
 	$mod+Right focus right
-
-# Move the focused window with the same, but add Shift
+	
 	$mod+Shift+$left move left
 	$mod+Shift+$down move down
 	$mod+Shift+$up move up
 	$mod+Shift+$right move right
-# Ditto, with arrow keys
+	
 	$mod+Shift+Left move left
 	$mod+Shift+Down move down
 	$mod+Shift+Up move up
 	$mod+Shift+Right move right
-#
-# Workspaces:
-#
-# Switch to workspace
+
+	$mod+Return exec $term
+	$mod+Space focus mode_toggle
+
+	$mod+a focus parent
+	$mod+b splith
+	$mod+d exec $menu
+	$mod+e layout toggle split
+	$mod+f fullscreen
+	$mod+g mode $mode_grim
+	$mod+i mode $mode_wacom
+	$mod+r mode $mode_resize
+	$mod+s layout stacking
+	$mod+t exec $term
+	$mod+v splitv
+	$mod+w layout tabbed
+
+	$mod+0 workspace number x
 	$mod+1 workspace number 1
 	$mod+2 workspace number 2
 	$mod+3 workspace number 3
@@ -88,8 +99,8 @@ bindsym {
 	$mod+7 workspace number 7
 	$mod+8 workspace number 8
 	$mod+9 workspace number 9
-	$mod+0 workspace number 10
-# Move focused container to workspace
+
+	$mod+Shift+0 move container to workspace number x
 	$mod+Shift+1 move container to workspace number 1
 	$mod+Shift+2 move container to workspace number 2
 	$mod+Shift+3 move container to workspace number 3
@@ -99,55 +110,18 @@ bindsym {
 	$mod+Shift+7 move container to workspace number 7
 	$mod+Shift+8 move container to workspace number 8
 	$mod+Shift+9 move container to workspace number 9
-	$mod+Shift+0 move container to workspace number 10
-# Note: workspaces can have any name you want, not just numbers.
-# We just use 1-10 as the default.
-#
-# Layout stuff:
-#
-# You can "split" the current object of your focus with
-# $mod+b or $mod+v, for horizontal and vertical splits
-# respectively.
-	$mod+b splith
-	$mod+v splitv
+	
+	$mod+Shift+Space floating toggle
 
-# Switch the current container between different layout styles
-	$mod+s layout stacking
-	$mod+w layout tabbed
-	$mod+e layout toggle split
+	$mod+Shift+c reload
+	$mod+Shift+e exec swaynag -t warning -m 'Quit?' -B 'Yeah' 'swaymsg exit'
+	$mod+Shift+q kill
 
-# Make the current focus fullscreen
-	$mod+f fullscreen
+	$mod+Shift+Minus move scratchpad
 
-# Toggle the current focus between tiling and floating mode
-	$mod+Shift+space floating toggle
+	$mod+Minus scratchpad show
 
-# Swap focus between the tiling area and the floating area
-	$mod+space focus mode_toggle
-
-# Move focus to the parent container
-	$mod+a focus parent
-#
-# Scratchpad:
-#
-# Sway has a "scratchpad", which is a bag of holding for windows.
-# You can send windows there and get them back later.
-
-# Move the currently focused window to the scratchpad
-	$mod+Shift+minus move scratchpad
-
-# Show the next scratchpad window or hide the focused scratchpad window.
-# If there are multiple scratchpad windows, this command cycles through them.
-	$mod+minus scratchpad show
-	$mod+r mode "resize"
-	#$mod+t mode "Grim: [A]ctive [S]creen [O]utput A[r]ea [W]indow - [S]ave [C]opy"
-
-## Screenshots
-	Shift+Print exec grim -g "$(slurp)" - | wl-copy
-	Print exec grim -g "$(slurp)" -t png
-# "Downloads/screenshot_$(date '+%Y%m%d%H%M%S')_$RANDOM.png"
-
-## Special keys
+	## Special keys
 	XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 	XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
 	XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
@@ -158,8 +132,4 @@ bindsym {
 	XF86AudioNext exec playerctl next
 	XF86AudioPrev exec playerctl previous
 	XF86Search exec wofi -iIS run
-
-## Special stuff
-	$mod+Ctrl+1 exec swaymsg input $wacom map_to_output $output0
-	$mod+Ctrl+2 exec swaymsg input $wacom map_to_output $output1
-
+}

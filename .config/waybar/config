@@ -34,7 +34,7 @@
 		}
 	},
 	"sway/mode": {
-		"format": "{} "
+		"format": "mode: {}"
 	},
 	"sway/scratchpad": {
 		"format": "{icon} {count}",

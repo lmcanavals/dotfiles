@@ -1,3 +1,28 @@
+set {
+	$mod Mod4
+
+	$left h
+	$down j
+	$up k
+	$right l
+
+	$term wezterm
+	$menu wofi -iIS run | xargs swaymsg exec --
+	
+	$help_grimshot "$(cat ~/.config/sway/help_grimshot)"
+	$help_wacom "$(cat ~/.config/sway/help_wacom)"
+
+	$ssfile "Pictures/Screenshots/screenshot_$(date '+%Y%m%d_%H%M%S_%N').png"
+	
+	$mode_grim "grimshot"
+	$mode_wacom "wacom"
+	$mode_resize "resize"
+
+	$output0 $(swaymsg -t get_outputs | jq '.[0].name')
+	$output1 $(swaymsg -t get_outputs | jq '.[1].name')
+	$wacom 1386:884:Wacom_Intuos_S_Pen
+}
+
 exec {
 	pw-cat -p /usr/share/sounds/deepin/stereo/desktop-login.wav
 	nm-applet --indicator
@@ -14,28 +39,12 @@ default_border pixel 1
 for_window [app_id="nm-connection-editor"] floating enable
 for_window [app_id="pavucontrol"] floating enable
 for_window [app_id="file-roller"] floating enable
+for_window [app_id="zenity"] floating enable
 for_window [title="Save File"] floating enable
 for_window [title="Open File"] floating enable
 
-set {
-	$mod Mod4
-
-	$left h
-	$down j
-	$up k
-	$right l
-
-	$term wezterm
-	$menu wofi -iIS run | xargs swaymsg exec --
-
-	$wacom 1386:884:Wacom_Intuos_S_Pen
-	$output0 $(swaymsg -t get_outputs | jq '.[0].name')
-	$output1 $(swaymsg -t get_outputs | jq '.[1].name')
-}
-
 ### Output configuration
 output * bg ~/Pictures/Dark\ Wallpapers/wallhaven-pkx2dm.jpg fill
-#
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
 ### Input configuration
@@ -50,7 +59,6 @@ input type:touchpad {
 	natural_scroll enabled
 	middle_emulation enabled
 }
-#
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
 
