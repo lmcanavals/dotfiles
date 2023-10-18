@@ -131,5 +131,5 @@ bindsym {
 	XF86AudioPlay exec playerctl play-pause
 	XF86AudioNext exec playerctl next
 	XF86AudioPrev exec playerctl previous
-	XF86Search exec wofi -iIS run
+	XF86Search exec $menu
 }
