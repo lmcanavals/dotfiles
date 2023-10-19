@@ -119,6 +119,7 @@ rust.sh
 .config/xfce4/desktop/
 .config/xfce4/panel/
 .config/xfce4/xfconf/xfce-perchannel-xml/
+.config/xournalpp/metadata/
 .config/xsettingsd/
 .config/zsh/plugins/
 
