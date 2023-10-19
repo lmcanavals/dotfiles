@@ -133,7 +133,7 @@
   <property name="latexSettings.sourceViewAutoIndent" value="true"/>
   <property name="latexSettings.sourceViewSyntaxHighlight" value="true"/>
   <property name="latexSettings.sourceViewShowLineNumbers" value="false"/>
-  <property name="font" font="Sans" size="12"/>
+  <property name="font" font="Nothing You Could Do" size="16"/>
   <data name="buttonConfig">
     <data name="default">
       <attribute name="color" type="hex" value="ff000000"/>
@@ -195,6 +195,10 @@
       <attribute name="deviceClass" type="int" value="4"/>
       <attribute name="deviceSource" type="int" value="5"/>
     </data>
+    <data name="Wayland Wheel Scrolling">
+      <attribute name="deviceClass" type="int" value="1"/>
+      <attribute name="deviceSource" type="int" value="0"/>
+    </data>
   </data>
   <data name="lastUsedPageBgColor">
     <attribute name="color00" type="hex" value="ff000000"/>
@@ -237,7 +241,7 @@
       <attribute name="drawingType" type="string" value="default"/>
     </data>
     <data name="highlighter">
-      <attribute name="color" type="hex" value="ffffff00"/>
+      <attribute name="color" type="hex" value="01c0ff88"/>
       <attribute name="drawingType" type="string" value="default"/>
       <attribute name="fill" type="int" value="0"/>
       <attribute name="fillAlpha" type="int" value="128"/>
@@ -284,7 +288,7 @@
       <attribute name="drawingType" type="string" value="default"/>
     </data>
     <data name="text">
-      <attribute name="color" type="hex" value="ff000000"/>
+      <attribute name="color" type="hex" value="ffff8000"/>
       <attribute name="drawingType" type="string" value="default"/>
     </data>
     <data name="verticalSpace">

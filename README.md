@@ -254,6 +254,13 @@ ttf-font-awesome ttf-nerd-fonts-symbols-mono terminus-fon \
 ttf-opensans # installed by telegram 
 ```
 
+Fonts from aur
+
+```sh
+<aur helper> -S \
+ttf-architects-daughter ttf-indieflower ttf-nothingyoucoulddo ttf-pacifico
+```
+
 Cloud storage, Goodle Drive, One Drive, etc:
 
 ```sh
