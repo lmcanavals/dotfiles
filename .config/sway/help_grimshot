@@ -1,7 +1,0 @@
-a	Currently active window.
-s	All visible outputs.
-o	Currently active output.
-r	Manually select a region.
-w	Manually select a window.
-
-* Add Shift to copy the screenshot to the clipboard.

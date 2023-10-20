@@ -9,13 +9,12 @@ set {
 	$term wezterm
 	$menu wofi -iIS drun | xargs swaymsg exec -- &
 	
-	$help_grimshot "$(cat ~/.config/sway/help_grimshot)"
-	$help_wacom "$(cat ~/.config/sway/help_wacom)"
-
 	$ssfile "Pictures/Screenshots/screenshot_$(date '+%Y%m%d_%H%M%S_%N').png"
 	
-	$mode_grim "grimshot"
-	$mode_wacom "wacom"
+	$mode_grim "grimshot: [c]opy [s]ave"
+	$mode_grim_copy "grimshot copy: [a]ctive [o]utput a[r]ea [s]creen [w]indow"
+	$mode_grim_save "grimshot save: [a]ctive [o]utput a[r]ea [s]creen [w]indow"
+	$mode_wacom "wacom: to output [1] [2]"
 	$mode_resize "resize"
 
 	$output0 $(swaymsg -t get_outputs | jq '.[0].name')
