@@ -4,16 +4,16 @@ floating_modifier $mod normal
 
 mode $mode_grim {
 	bindsym {
-		a exec grimshot --notify save active $ssfile && swaymsg mode "default"
-		s exec grimshot --notify save screen $ssfile && swaymsg mode "default"
-		o exec grimshot --notify save output $ssfile && swaymsg mode "default"
-		r exec grimshot --notify save area $ssfile && swaymsg mode "default"
-		w exec grimshot --notify save window $ssfile && swaymsg mode "default"
-		Shift+a exec grimshot --notify copy active && swaymsg mode "default"
-		Shift+s exec grimshot --notify copy screen && swaymsg mode "default"
-		Shift+o exec grimshot --notify copy output && swaymsg mode "default"
-		Shift+r exec grimshot --notify copy area && swaymsg mode "default"
-		Shift+w exec grimshot --notify copy window && swaymsg mode "default"
+		a exec grimshot --notify save active $ssfile ; mode "default"
+		s exec grimshot --notify save screen $ssfile ; mode "default"
+		o exec grimshot --notify save output $ssfile ; mode "default"
+		r exec grimshot --notify save area $ssfile   ; mode "default"
+		w exec grimshot --notify save window $ssfile ; mode "default"
+		Shift+a exec grimshot --notify copy active ; mode "default"
+		Shift+s exec grimshot --notify copy screen ; mode "default"
+		Shift+o exec grimshot --notify copy output ; mode "default"
+		Shift+r exec grimshot --notify copy area   ; mode "default"
+		Shift+w exec grimshot --notify copy window ; mode "default"
 
 		F1 exec zenity --info --title="Grimshot" --text=$help_grimshot
 		Question exec zenity --info --title="Grimshot" --text=$help_grimshot
@@ -23,8 +23,8 @@ mode $mode_grim {
 }
 mode $mode_wacom {
 	bindsym {
-		1 exec swaymsg input $wacom map_to_output $output0 && swaymsg mode "default"
-		2 exec swaymsg input $wacom map_to_output $output1 && swaymsg mode "default"
+		1 exec swaymsg input $wacom map_to_output $output0 ; mode "default"
+		2 exec swaymsg input $wacom map_to_output $output1 ; mode "default"
 
 		F1 exec zenity --info --title="Wacom helper" --text=$help_wacom
 		Question exec zenity --info --title="Wacom helper" --text=$help_wacom
