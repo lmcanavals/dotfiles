@@ -241,7 +241,7 @@
       <attribute name="drawingType" type="string" value="default"/>
     </data>
     <data name="highlighter">
-      <attribute name="color" type="hex" value="01c0ff88"/>
+      <attribute name="color" type="hex" value="00c0ff"/>
       <attribute name="drawingType" type="string" value="default"/>
       <attribute name="fill" type="int" value="0"/>
       <attribute name="fillAlpha" type="int" value="128"/>
