@@ -11,10 +11,10 @@ set {
 	
 	$ssfile "Pictures/Screenshots/screenshot_$(date '+%Y%m%d_%H%M%S_%N').png"
 	
-	$mode_grim "grimshot: [c]opy [s]ave"
-	$mode_grim_copy "grimshot copy: [a]ctive [o]utput a[r]ea [s]creen [w]indow"
-	$mode_grim_save "grimshot save: [a]ctive [o]utput a[r]ea [s]creen [w]indow"
-	$mode_wacom "wacom: to output [1] [2]"
+	$mode_grim "grimshot 󰹑 : 1:󰆏  2:󰆓 "
+	$mode_grim_copy "grimshot 󰆏 : 1:󰊓  2:󱣴  3:  4:  5:󰩭 "
+	$mode_grim_save "grimshot 󰆓 : 1:󰊓  2:󱣴  3:  4:  5:󰩭 "
+	$mode_wacom "wacom: map to output [1] [2]"
 	$mode_resize "resize"
 
 	$output0 $(swaymsg -t get_outputs | jq '.[0].name')

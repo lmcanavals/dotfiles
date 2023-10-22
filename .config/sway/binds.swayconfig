@@ -4,8 +4,8 @@ floating_modifier $mod normal
 
 mode $mode_grim {
 	bindsym {
-		c mode $mode_grim_copy
-		s mode $mode_grim_save
+		1 mode $mode_grim_copy
+		2 mode $mode_grim_save
 
 		Escape mode "default"
 	}
@@ -13,11 +13,11 @@ mode $mode_grim {
 
 mode $mode_grim_copy {
 	bindsym {
-		a exec grimshot --notify copy active ; mode "default"
-		o exec grimshot --notify copy output ; mode "default"
-		r exec grimshot --notify copy area   ; mode "default"
-		s exec grimshot --notify copy screen ; mode "default"
-		w exec grimshot --notify copy window ; mode "default"
+		1 exec grimshot --notify copy screen ; mode "default"
+		2 exec grimshot --notify copy output ; mode "default"
+		3 exec grimshot --notify copy active ; mode "default"
+		4 exec grimshot --notify copy window ; mode "default"
+		5 exec grimshot --notify copy area   ; mode "default"
 
 		Escape mode "default"
 	}
@@ -25,11 +25,11 @@ mode $mode_grim_copy {
 
 mode $mode_grim_save {
 	bindsym {
-		a exec grimshot --notify save active $ssfile ; mode "default"
-		o exec grimshot --notify save output $ssfile ; mode "default"
-		r exec grimshot --notify save area $ssfile   ; mode "default"
-		s exec grimshot --notify save screen $ssfile ; mode "default"
-		w exec grimshot --notify save window $ssfile ; mode "default"
+		1 exec grimshot --notify save screen $ssfile ; mode "default"
+		2 exec grimshot --notify save output $ssfile ; mode "default"
+		3 exec grimshot --notify save active $ssfile ; mode "default"
+		4 exec grimshot --notify save window $ssfile ; mode "default"
+		5 exec grimshot --notify save area $ssfile   ; mode "default"
 
 		Escape mode "default"
 	}
@@ -145,3 +145,14 @@ bindsym {
 	XF86AudioPrev exec playerctl previous
 	XF86Search exec $menu
 }
+
+bindgesture {
+  swipe:3:left  exec gestures backward
+  swipe:3:down  focus right
+  swipe:3:up    focus left
+  swipe:3:right exec gestures forward
+  swipe:4:up    exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+  swipe:4:down  exec pactl set-sink-mute   @DEFAULT_SINK@   toggle
+}
+
+# vim: set ts=2:sw=2:noet:sts=2:
