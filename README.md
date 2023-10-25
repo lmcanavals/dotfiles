@@ -219,7 +219,7 @@ Prefer pipewire based stuff and wireplumer.
 ```sh
 sudo pacman -S \
 sway swaybg polkit wofi waybar mako \
-swayidle swaylock swayimg \
+swayidle swaylock swayimg kanshi zenity \
 xdg-desktop-portal-wlr pipewire-pulse brightnessctl \
 slurp grim wl-clipboard \
 accountsservice gvfs wezterm xdg-user-dirs \
@@ -239,7 +239,7 @@ firefox solaar \
 bat eza fd procs sd ripgrep dust tokei bottom \
 qt6-wayland qt6ct \
 cmake clang \
-*okular *gopls *webp-pixbuf-loader \
+xournalpp *gopls *webp-pixbuf-loader
 ```
 
 Fonts, utilities, etc:
