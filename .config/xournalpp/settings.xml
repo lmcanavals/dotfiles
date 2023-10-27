@@ -6,7 +6,7 @@
   <property name="pressureMultiplier" value="1"/>
   <property name="zoomGesturesEnabled" value="true"/>
   <property name="selectedToolbar" value="Dracula"/>
-  <property name="lastSavePath" value="/home/lmcs/Documents"/>
+  <property name="lastSavePath" value="/home/lmcs/Downloads"/>
   <property name="lastOpenPath" value="/home/lmcs/Downloads"/>
   <property name="lastImagePath" value=""/>
   <property name="edgePanSpeed" value="20"/>
@@ -259,7 +259,7 @@
       <attribute name="drawingType" type="string" value="default"/>
     </data>
     <data name="pen">
-      <attribute name="color" type="hex" value="fc2f52"/>
+      <attribute name="color" type="hex" value="ff936a"/>
       <attribute name="drawingType" type="string" value="default"/>
       <attribute name="fill" type="int" value="0"/>
       <attribute name="fillAlpha" type="int" value="128"/>
