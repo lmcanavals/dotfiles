@@ -6,3 +6,8 @@ profile lenovo_home {
 profile hp_solo {
 	output eDP-1 mode 1920x1080@60Hz position 0,0
 }
+
+profile h40 {
+	output HDMI-A-4 mode 1024x768@60Hz position 0,0
+	output DP-4 mode 1920x1080@60Hz position 1024,0
+}

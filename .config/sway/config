@@ -43,6 +43,7 @@ for_window [title="Save File"] floating enable
 output * bg $wp0 fill
 output {
 	eDP-1 bg $wp0 fill
+	DP-4 bg $wp0 fill
 	HDMI-A-1 bg $wp1 fill
 	HDMI-A-4 bg $wp1 fill
 }
