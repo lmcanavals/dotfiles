@@ -149,6 +149,7 @@ shared/
 !.config/asciinema/config
 
 .local/bin/*
+!.local/bin/ix
 !.local/bin/local*
 .local/share/*
 !.local/share/applications/
