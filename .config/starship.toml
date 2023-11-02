@@ -1,7 +1,7 @@
 add_newline = false
 format = """
-$character\
 $status\
+$character\
 $jobs\
 $cmd_duration\
 $conda\
@@ -12,6 +12,7 @@ $git_status\
 $cmake\
 $deno\
 $golang\
+$java\
 $julia\
 $python\
 $rust\
@@ -22,9 +23,9 @@ $directory"""
 
 [character]
 format = "$symbol "
-error_symbol = "[•](red)"
+error_symbol = "[‼](red)"
 success_symbol = "[•](green)"
-vicmd_symbol = "[•](yellow)"
+vicmd_symbol = "[:](yellow)"
 
 [cmake]
 format = "[$symbol($version )]($style)"
@@ -40,19 +41,19 @@ style = "yellow"
 [conda]
 format = "[$symbol$environment]($style) "
 style = "purple"
-symbol = "○ "
+symbol = " "
 
 [deno]
 detect_extensions = ["js"]
 detect_folders = ["js"]
 format = "[$symbol($version )]($style)"
-style = "cyan"
+style = "bright-cyan"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [directory]
 format = "[$path]($style)[$read_only]($read_only_style)"
-home_symbol = "⌂"
+home_symbol = "󱂵 "
 read_only = " "
 style = "bright-blue"
 truncation_length = 1
@@ -72,7 +73,7 @@ format = "([$all_status$ahead_behind]($style) )"
 
 [golang]
 format = "[$symbol($version )]($style)"
-style = "cyan"
+style = "bright-cyan"
 symbol = " "
 version_format = "${major}.${minor}"
 
@@ -80,36 +81,43 @@ version_format = "${major}.${minor}"
 format = "[$hostname]($style):"
 style = "yellow"
 
+[java]
+format = "[$symbol($version )]($style)"
+style = "bright-cyan"
+symbol = " "
+version_format = "${major}.${minor}"
+
 [jobs]
-style = "blue"
+style = "bright-blue"
+symbol = " "
 
 [julia]
 format = "[$symbol($version )]($style)"
-style = "cyan"
+style = "bright-cyan"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [lua]
 format = "[$symbol($version )]($style)"
-style = "cyan"
+style = "bright-cyan"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [python]
-format = "[${symbol}${pyenv_prefix}(${version} )(󱓼 $virtualenv )]($style)"
-style = "cyan"
+format = "[(󱁿 $virtualenv )](purple)[${symbol}(${version} )]($style)"
+style = "bright-cyan"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [rust]
 format = "[$symbol($version )]($style)"
-style = "cyan"
+style = "bright-cyan"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [status]
 disabled = false
-format = "[$status]($style) "
+format = "[$status]($style)"
 
 [username]
 format = "[$user ]($style)"
@@ -145,8 +153,6 @@ disabled = true
 [gcloud]
 disabled = true
 [helm]
-disabled = true
-[java]
 disabled = true
 [hg_branch]
 disabled = true
