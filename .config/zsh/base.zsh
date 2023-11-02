@@ -270,7 +270,7 @@ function info_print() {
 
 function set_title() {
 	case $TERM in
-		(xterm*|rxvt*)
+		(xterm*|rxvt*|wezterm)
 			info_print  $'\e]0;' $'\a' "$@"
 			;;
 	esac
