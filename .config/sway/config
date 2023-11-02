@@ -11,31 +11,25 @@ set {
 	
 	$ssfile "Pictures/Screenshots/screenshot_$(date '+%Y%m%d_%H%M%S_%N').png"
 	
-	$mode_grim "grimshot 󰹑 : 1:󰆏  2:󰆓 "
-	$mode_grim_copy "grimshot 󰆏 : 1:󰊓  2:󱣴  3:  4:  5:󰩭 "
-	$mode_grim_save "grimshot 󰆓 : 1:󰊓  2:󱣴  3:  4:  5:󰩭 "
+	$mode_grim "grimshot 󰹑  -> 1:󰆏  2:󰆓 "
+	$mode_grim_copy "grimshot 󰆏  -> 1:󰊓  2:󱣴  3:  4:  5:󰩭 "
+	$mode_grim_save "grimshot 󰆓  -> 1:󰊓  2:󱣴  3:  4:  5:󰩭 "
+	$mode_power "power 󰤁  -> 1:󱅞  2:󰗼  3:󰤄  4:󰜉  5: "
 	$mode_resize "resize"
-	$mode_wacom "wacom: map to output [1] [2]"
+	$mode_wacom "wacom 󱦹  -> map to output [1] [2]"
 
 	$output0 $(swaymsg -t get_outputs | jq '.[0].name')
 	$output1 $(swaymsg -t get_outputs | jq '.[1].name')
 	#$wacom 1386:884:Wacom_Intuos_S_Pen
 	$wacom 1386:891:Wacom_One_by_Wacom_M_Pen
-}
 
-exec {
-	pw-cat -p /usr/share/sounds/deepin/stereo/desktop-login.wav
-	nm-applet --indicator
-	systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-	dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
-	eval $(gnome-keyring-daemon --start)
-	export SSH_AUTH_SOCK
-	gammastep-indicator
-	kanshi
+	$wp0 ~/Pictures/Dark\ Wallpapers/wallhaven-4x1wwd.png
+	$wp1 ~/Pictures/Dark\ Wallpapers/wallhaven-n6xrgx.jpg
+	$wplock ~/Pictures/Dark\ Wallpapers/wallhaven-5dvp21.jpg
 }
 
 font pango: Carlito Regular 9
-default_border pixel 1
+default_border pixel 0
 
 for_window [app_id="file-roller"] floating enable
 for_window [app_id="nm-connection-editor"] floating enable
@@ -46,11 +40,11 @@ for_window [title="Open File"] floating enable
 for_window [title="Save File"] floating enable
 
 ### Output configuration
-output * bg ~/Pictures/Dark\ Wallpapers/wallhaven-4x1wwd.png fill
+output * bg $wp0 fill
 output {
-	eDP-1 bg ~/Pictures/Dark\ Wallpapers/wallhaven-4x1wwd.png fill
-	HDMI-A-1 bg ~/Pictures/Dark\ Wallpapers/wallhaven-n6xrgx.jpg fill
-	HDMI-A-4 bg ~/Pictures/Dark\ Wallpapers/wallhaven-n6xrgx.jpg fill
+	eDP-1 bg $wp0 fill
+	HDMI-A-1 bg $wp1 fill
+	HDMI-A-4 bg $wp1 fill
 }
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
@@ -69,12 +63,6 @@ input type:touchpad {
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
 
-### Idle configuration
-exec swayidle -w \
-	timeout 300 'swaylock -f -c 000000' \
-	timeout 600 'swaymsg "output * power off"' \
-	resume 'swaymsg "output * power on"' before-sleep 'swaylock -f -c 000000'
-
 include binds.swayconfig
 
 #
@@ -82,5 +70,22 @@ include binds.swayconfig
 bar {
 	swaybar_command waybar 
 }
+
+exec {
+	swayidle -w \
+		timeout 300 'swaylock -f -i $wplock' \
+		timeout 600 'swaymsg "output * power off"' \
+		resume 'swaymsg "output * power on"' \
+		before-sleep 'swaylock -f -i $wplock'
+	nm-applet --indicator
+	systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+	dbus-update-activation-environment \
+		--systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+	eval $(gnome-keyring-daemon --start)
+	export SSH_AUTH_SOCK
+	gammastep-indicator
+	pw-cat -p /usr/share/sounds/deepin/stereo/desktop-login.wav
+}
+exec_always pkill kanshi; exec kanshi
 
 include /etc/sway/config.d/*

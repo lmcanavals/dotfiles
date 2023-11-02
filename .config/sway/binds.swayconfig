@@ -35,10 +35,13 @@ mode $mode_grim_save {
 	}
 }
 
-mode $mode_wacom {
+mode $mode_power {
 	bindsym {
-		1 exec swaymsg input $wacom map_to_output $output0 ; mode "default"
-		2 exec swaymsg input $wacom map_to_output $output1 ; mode "default"
+		1 exec swaylock -f -i $wplock ; mode "default"
+		2 exit
+		3 exec systemctl -i suspend
+		4 exec systemctl -i reboot
+		5 exec systemctl -i poweroff
 
 		Escape mode "default"
 		Return mode "default"
@@ -57,6 +60,16 @@ mode $mode_resize {
 		Down resize grow height 10px
 		Up resize shrink height 10px
 		Right resize grow width 10px
+
+		Escape mode "default"
+		Return mode "default"
+	}
+}
+
+mode $mode_wacom {
+	bindsym {
+		1 exec swaymsg input $wacom map_to_output $output0 ; mode "default"
+		2 exec swaymsg input $wacom map_to_output $output1 ; mode "default"
 
 		Escape mode "default"
 		Return mode "default"
@@ -126,7 +139,8 @@ bindsym {
 	$mod+Shift+Space floating toggle
 
 	$mod+Shift+c reload
-	$mod+Shift+e exec swaynag -t warning -m 'Quit?' -B 'Yeah' 'swaymsg exit'
+	#$mod+Shift+e exec swaynag -t warning -m 'Quit?' -B 'Yeah' 'swaymsg exit'
+	$mod+Shift+e mode $mode_power
 	$mod+Shift+q kill
 
 	$mod+Shift+Minus move scratchpad
