@@ -1,5 +1,6 @@
 add_newline = false
-format = """
+format = """$character"""
+right_format = """
 $status\
 $character\
 $jobs\

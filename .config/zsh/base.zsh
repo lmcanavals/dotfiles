@@ -232,31 +232,29 @@ chpwd_functions=( $chpwd_functions chpwd_profiles )
 
 #setopt transient_rprompt
 autoload -U colors && colors
-function left_prompt() {
+function prompt_color() {
 	local c
-	local s
 	[[ EUID -eq 0 ]] && c="red" || c="green"
-	if [[ $KEYMAP == vicmd ]]; then
-		s=":"
-		c="yellow"
-	else
-		s=" "
-	fi
-	print "%{$bg[$c]$fg[black]%} %#$s%{$reset_color%} "
+	[[ $KEYMAP == vicmd ]] && c="yellow"
+	print "%{$bg[$c]$fg[black]%}"
+}
+function left_prompt() {
+	local s
+	[[ $KEYMAP == vicmd ]] && s=":" || s=" "
+	print "$(prompt_color) %#$s%{$reset_color%} "
 }
 # /home/user/folder/stuff/tra/cool --> ~/f/s/t/cool
 # echo ${PWD/$HOME/\~} | sed -e "s/\(\w\)\(\w\+\)\//\1\//g"
 if command -v starship &> /dev/null; then
 	eval "$(starship init zsh)"
 else
-	[[ EUID -eq 0 ]] && PROMPT="%{$fg[red]%}" || PROMPT="%{$fg[green]%}"
-	PROMPT+="%n%{$fg[yellow]%}@%{$fg[cyan]%}%m:%{$fg[blue]%}%~%{$reset_color%}"
+	[[ EUID -eq 0 ]] && RPROMPT="%{$fg[red]%}" || RPROMPT="%{$fg[green]%}"
+	RPROMPT+="%n%{$fg[yellow]%}@%{$fg[cyan]%}%m:%{$fg[blue]%}%~%{$reset_color%}"
 fi
-RPROMPT=$PROMPT
 PROMPT="$(left_prompt)"
-PS2='%{$bg[blue]%}%_%{$reset_color%} '
-PS3='%{$bg[blue]%}?#%{$reset_color%} '
-PS4='%{$bg[blue]%}+%N:%i:%_%{$reset_color%} '
+PS2='$(prompt_color) %_ %{$reset_color%} '
+PS3='$(prompt_color) ?# %{$reset_color%} '
+PS4='$(prompt_color) +%N:%i:%_ %{$reset_color%} '
 
 function info_print() {
 	local esc_begin esc_end
