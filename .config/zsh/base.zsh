@@ -55,16 +55,16 @@ bindkey -v
 ## beginning-of-line OR beginning-of-buffer OR beginning of history
 ## by: Bart Schaefer <schaefer@brasslantern.com>, Bernhard Tittelbach
 beginning-or-end-of-somewhere() {
-	local hno=$HISTNO
-	if [[ ( "${LBUFFER[-1]}" == $'\n' && "$WIDGET" == beginning-of* ) || \
-				( "${RBUFFER[1]}" == $'\n' && "$WIDGET" == end-of* ) ]]; then
+local hno=$HISTNO
+if [[ ( "${LBUFFER[-1]}" == $'\n' && "$WIDGET" == beginning-of* ) || \
+	( "${RBUFFER[1]}" == $'\n' && "$WIDGET" == end-of* ) ]]; then
+	zle .${WIDGET:s/somewhere/buffer-or-history/} "$@"
+else
+	zle .${WIDGET:s/somewhere/line-hist/} "$@"
+	if (( HISTNO != hno )); then
 		zle .${WIDGET:s/somewhere/buffer-or-history/} "$@"
-	else
-		zle .${WIDGET:s/somewhere/line-hist/} "$@"
-		if (( HISTNO != hno )); then
-			zle .${WIDGET:s/somewhere/buffer-or-history/} "$@"
-		fi
 	fi
+fi
 }
 zle -N beginning-of-somewhere beginning-or-end-of-somewhere
 zle -N end-of-somewhere beginning-or-end-of-somewhere
@@ -74,8 +74,8 @@ bindkey "\e[H" beginning-of-somewhere    # home
 bindkey "\eOF" end-of-somewhere          # end
 bindkey "\e[F" end-of-somewhere          # end
 #if [[ "$TERM" == "linux" ]]; then
-	bindkey "\e[1~" beginning-of-somewhere # home
-	bindkey "\e[4~" end-of-somewhere       # end
+bindkey "\e[1~" beginning-of-somewhere # home
+bindkey "\e[4~" end-of-somewhere       # end
 #fi
 
 bindkey "\e[A"  up-line-or-search        # ↑
@@ -100,16 +100,16 @@ bindkey "\e[6~" history-beginning-search-forward-end  # Pg↓
 bindkey "$terminfo[kcbt]" reverse-menu-complete
 
 commit-to-history() {
-	print -s ${(z)BUFFER}
-	zle send-break
+print -s ${(z)BUFFER}
+zle send-break
 }
 zle -N commit-to-history
 bindkey "^x^h" commit-to-history
 
 # only slash should be considered as a word separator:
 slash-backward-kill-word() {
-	local WORDCHARS="${WORDCHARS:s@/@}"
-	zle backward-kill-word
+local WORDCHARS="${WORDCHARS:s@/@}"
+zle backward-kill-word
 }
 zle -N slash-backward-kill-word
 
@@ -165,14 +165,14 @@ zle -N insert-last-typed-word;
 bindkey "\em" insert-last-typed-word
 
 function grml-zsh-fg() {
-	if (( ${#jobstates} )); then
-		zle .push-input
-		[[ -o hist_ignore_space ]] && BUFFER=" " || BUFFER=""
-		BUFFER="${BUFFER}fg"
-		zle .accept-line
-	else
-		zle -M "No background jobs. Doing nothing."
-	fi
+if (( ${#jobstates} )); then
+	zle .push-input
+	[[ -o hist_ignore_space ]] && BUFFER=" " || BUFFER=""
+	BUFFER="${BUFFER}fg"
+	zle .accept-line
+else
+	zle -M "No background jobs. Doing nothing."
+fi
 }
 zle -N grml-zsh-fg
 bindkey "^z" grml-zsh-fg
@@ -240,7 +240,7 @@ function prompt_color() {
 }
 function left_prompt() {
 	local s
-	[[ $KEYMAP == vicmd ]] && s=":" || s=" "
+	[[ $KEYMAP == vicmd ]] && s=":" || s="_"
 	print "$(prompt_color) %#$s%{$reset_color%} "
 }
 # /home/user/folder/stuff/tra/cool --> ~/f/s/t/cool
