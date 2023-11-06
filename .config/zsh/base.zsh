@@ -100,16 +100,16 @@ bindkey "\e[6~" history-beginning-search-forward-end  # Pg↓
 bindkey "$terminfo[kcbt]" reverse-menu-complete
 
 commit-to-history() {
-print -s ${(z)BUFFER}
-zle send-break
+	print -s ${(z)BUFFER}
+	zle send-break
 }
 zle -N commit-to-history
 bindkey "^x^h" commit-to-history
 
 # only slash should be considered as a word separator:
 slash-backward-kill-word() {
-local WORDCHARS="${WORDCHARS:s@/@}"
-zle backward-kill-word
+	local WORDCHARS="${WORDCHARS:s@/@}"
+	zle backward-kill-word
 }
 zle -N slash-backward-kill-word
 
@@ -234,9 +234,9 @@ chpwd_functions=( $chpwd_functions chpwd_profiles )
 autoload -U colors && colors
 function prompt_color() {
 	local c
-	[[ EUID -eq 0 ]] && c="red" || c="green"
-	[[ $KEYMAP == vicmd ]] && c="yellow"
-	print "%{$bg[$c]$fg[black]%}"
+	[[ EUID -eq 0 ]] && c="1" || c="10"
+	[[ $KEYMAP == vicmd ]] && c="3"
+	print "%{%F{$c}%}"
 }
 function left_prompt() {
 	local s
