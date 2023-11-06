@@ -54,17 +54,17 @@ bindkey -v
 
 ## beginning-of-line OR beginning-of-buffer OR beginning of history
 ## by: Bart Schaefer <schaefer@brasslantern.com>, Bernhard Tittelbach
-beginning-or-end-of-somewhere() {
-local hno=$HISTNO
-if [[ ( "${LBUFFER[-1]}" == $'\n' && "$WIDGET" == beginning-of* ) || \
-	( "${RBUFFER[1]}" == $'\n' && "$WIDGET" == end-of* ) ]]; then
-	zle .${WIDGET:s/somewhere/buffer-or-history/} "$@"
-else
-	zle .${WIDGET:s/somewhere/line-hist/} "$@"
-	if (( HISTNO != hno )); then
+function beginning-or-end-of-somewhere() {
+	local hno=$HISTNO
+	if [[ ( "${LBUFFER[-1]}" == $'\n' && "$WIDGET" == beginning-of* ) || \
+		( "${RBUFFER[1]}" == $'\n' && "$WIDGET" == end-of* ) ]]; then
 		zle .${WIDGET:s/somewhere/buffer-or-history/} "$@"
+	else
+		zle .${WIDGET:s/somewhere/line-hist/} "$@"
+		if (( HISTNO != hno )); then
+			zle .${WIDGET:s/somewhere/buffer-or-history/} "$@"
+		fi
 	fi
-fi
 }
 zle -N beginning-of-somewhere beginning-or-end-of-somewhere
 zle -N end-of-somewhere beginning-or-end-of-somewhere
@@ -99,7 +99,7 @@ bindkey "\e[6~" history-beginning-search-forward-end  # Pg↓
 
 bindkey "$terminfo[kcbt]" reverse-menu-complete
 
-commit-to-history() {
+function commit-to-history() {
 	print -s ${(z)BUFFER}
 	zle send-break
 }
@@ -107,7 +107,7 @@ zle -N commit-to-history
 bindkey "^x^h" commit-to-history
 
 # only slash should be considered as a word separator:
-slash-backward-kill-word() {
+function slash-backward-kill-word() {
 	local WORDCHARS="${WORDCHARS:s@/@}"
 	zle backward-kill-word
 }
@@ -156,23 +156,23 @@ if [[ -n ${(k)modules[zsh/complist]} ]]; then
 	bindkey -M menuselect "^o" accept-and-infer-next-history
 fi
 
-insert-datestamp() { LBUFFER+=${(%):-"%D{%Y-%m-%d}"}; }
+function insert-datestamp() { LBUFFER+=${(%):-"%D{%Y-%m-%d}"}; }
 zle -N insert-datestamp
 bindkey "^ed" insert-datestamp
 
-insert-last-typed-word() { zle insert-last-word -- 0 -1 };
+function insert-last-typed-word() { zle insert-last-word -- 0 -1 };
 zle -N insert-last-typed-word;
 bindkey "\em" insert-last-typed-word
 
 function grml-zsh-fg() {
-if (( ${#jobstates} )); then
-	zle .push-input
-	[[ -o hist_ignore_space ]] && BUFFER=" " || BUFFER=""
-	BUFFER="${BUFFER}fg"
-	zle .accept-line
-else
-	zle -M "No background jobs. Doing nothing."
-fi
+	if (( ${#jobstates} )); then
+		zle .push-input
+		[[ -o hist_ignore_space ]] && BUFFER=" " || BUFFER=""
+		BUFFER="${BUFFER}fg"
+		zle .accept-line
+	else
+		zle -M "No background jobs. Doing nothing."
+	fi
 }
 zle -N grml-zsh-fg
 bindkey "^z" grml-zsh-fg
@@ -200,7 +200,7 @@ if [[ -f $DIRSTACKFILE ]] && [[ ${#dirstack[*]} -eq 0 ]]; then
 	[[ -d $dirstack[1] ]] && cd $dirstack[1] && cd $OLDPWD
 fi
 
-chpwd() {
+function chpwd() {
 	local -ax my_stack
 	my_stack=( $PWD $dirstack )
 	builtin print -l ${(u)my_stack} >! $DIRSTACKFILE
@@ -234,9 +234,9 @@ chpwd_functions=( $chpwd_functions chpwd_profiles )
 autoload -U colors && colors
 function prompt_color() {
 	local c
-	[[ EUID -eq 0 ]] && c="1" || c="10"
-	[[ $KEYMAP == vicmd ]] && c="3"
-	print "%{%F{$c}%}"
+	[[ EUID -eq 0 ]] && c="red" || c="green"
+	[[ $KEYMAP == vicmd ]] && c="yellow"
+	print "%{$fg_bold[$c]%}"
 }
 function left_prompt() {
 	local s
@@ -248,13 +248,13 @@ function left_prompt() {
 if command -v starship &> /dev/null; then
 	eval "$(starship init zsh)"
 else
-	[[ EUID -eq 0 ]] && RPROMPT="%{$fg[red]%}" || RPROMPT="%{$fg[green]%}"
+	RPROMPT="$(prompt_color)"
 	RPROMPT+="%n%{$fg[yellow]%}@%{$fg[cyan]%}%m:%{$fg[blue]%}%~%{$reset_color%}"
 fi
 PROMPT="$(left_prompt)"
-PS2='$(prompt_color) %_ %{$reset_color%} '
-PS3='$(prompt_color) ?# %{$reset_color%} '
-PS4='$(prompt_color) +%N:%i:%_ %{$reset_color%} '
+PS2='$(prompt_color) %_%{$reset_color%} '
+PS3='$(prompt_color) ?#%{$reset_color%} '
+PS4='$(prompt_color) +%N:%i:%_%{$reset_color%} '
 
 function info_print() {
 	local esc_begin esc_end
@@ -302,56 +302,79 @@ unlimit
 limit stack 8192
 limit -s
 
-zstyle ":completion:*:approximate:"    max-errors \
-       "reply=( $((($#PREFIX+$#SUFFIX)/3 )) numeric )"
-zstyle ":completion:*:correct:*"       insert-unambiguous true
-zstyle ":completion:*:corrections"     format "%{$fg9%}%d, errors: %e%{$vend%}"
-zstyle ":completion:*:correct:*"       original true
-zstyle ":completion:*:default"         list-colors ${(s.:.)LS_COLORS}
-zstyle ":completion:*:descriptions"    format "%{$fgb%}%d%{$vend%}"
-zstyle ":completion:*:expand:*"        tag-order all-expansions
-zstyle ":completion:*:history-words"   list false
-zstyle ":completion:*:history-words"   menu yes
-zstyle ":completion:*:history-words"   remove-all-dups yes
-zstyle ":completion:*:history-words"   stop yes
-zstyle ":completion:*"                 matcher-list "m:{a-z}={A-Z}"
-zstyle ":completion:*:matches"         group "yes"
-zstyle ":completion:*"                 group-name ""
-zstyle ":completion:*"                 menu select=5
-zstyle ":completion:*:messages"        format "%{$fgd%}%d%{$vend%}"
-zstyle ":completion:*:options"         auto-description "%{$fga%}%d%{$vend%}"
-zstyle ":completion:*:options"         description "yes"
-zstyle ":completion:*:processes"       command "ps -au$USER"
-zstyle ":completion:*:*:-subscript-:*" tag-order indexes parameters
-zstyle ":completion:*"                 verbose true
-zstyle ":completion:*:-command-:*:"    verbose false
-zstyle ":completion:*:warnings"        format "%{$fg9%}No matches:%{$vend%} %d"
-zstyle ":completion:*:*:zcompile:*"    ignored-patterns "(*~|*.zwc)"
-zstyle ":completion:correct:"          prompt "correct to: %e"
-zstyle ":completion::(^approximate*):*:functions" ignored-patterns "_*"
-zstyle ":completion:*:processes-names" command "ps c -u $USER -o command|uniq"
-zstyle ":completion:*:manuals"         separate-sections true
-zstyle ":completion:*:manuals.*"       insert-sections true
-zstyle ":completion:*:man:*"           menu yes select
-zstyle ":completion:*"                 special-dirs ..
+zstyle ':completion:*:approximate:'    max-errors 'reply=( $((($#PREFIX+$#SUFFIX)/3 )) numeric )'
+zstyle ':completion:*:complete:-command-::commands' ignored-patterns '(aptitude-*|*\~)'
+zstyle ':completion:*:correct:*'       insert-unambiguous true
+zstyle ':completion:*:corrections'     format $'%{\e[0;31m%}%d (errors: %e)%{\e[0m%}'
+zstyle ':completion:*:correct:*'       original true
+zstyle ':completion:*:default'         list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:descriptions'    format $'%{\e[0;31m%}completing %B%d%b%{\e[0m%}'
+zstyle ':completion:*:expand:*'        tag-order all-expansions
+zstyle ':completion:*:history-words'   list false
+zstyle ':completion:*:history-words'   menu yes
+zstyle ':completion:*:history-words'   remove-all-dups yes
+zstyle ':completion:*:history-words'   stop yes
+zstyle ':completion:*'                 matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*:matches'         group 'yes'
+zstyle ':completion:*'                 group-name ''
+if [[ "$NOMENU" -eq 0 ]] ; then
+	zstyle ':completion:*'               menu select=5
+else
+	setopt no_auto_menu
+fi
+zstyle ':completion:*:messages'        format '%d'
+zstyle ':completion:*:options'         auto-description '%d'
+zstyle ':completion:*:options'         description 'yes'
+zstyle ':completion:*:processes'       command 'ps -au$USER'
+zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
+zstyle ':completion:*'                 verbose true
+zstyle ':completion:*:-command-:*:'    verbose false
+zstyle ':completion:*:warnings'        format $'%{\e[0;31m%}No matches for:%{\e[0m%} %d'
+zstyle ':completion:*:*:zcompile:*'    ignored-patterns '(*~|*.zwc)'
+zstyle ':completion:correct:'          prompt 'correct to: %e'
+zstyle ':completion::(^approximate*):*:functions' ignored-patterns '_*'
+zstyle ':completion:*:processes-names' command 'ps c -u ${USER} -o command | uniq'
+zstyle ':completion:*:manuals'         separate-sections true
+zstyle ':completion:*:manuals.*'       insert-sections true
+zstyle ':completion:*:man:*'           menu yes select
+zstyle ':completion:*:sudo:*'          command-path \
+	/usr/local/sbin \
+	/usr/local/bin  \
+	/usr/sbin       \
+	/usr/bin        \
+	/sbin           \
+	/bin            \
+	/usr/X11R6/bin
+zstyle ':completion:*'                 special-dirs ..
 
 # run rehash on completion so new installed program are found automatically:
-_force_rehash() {
+function _force_rehash() {
 	(( CURRENT == 1 )) && rehash
 	return 1
 }
 
-setopt correct
-zstyle -e ":completion:*" completer '
-if [[ $_last_try != "$HISTNO$BUFFER$CURSOR" ]]; then
-	_last_try="$HISTNO$BUFFER$CURSOR"
-	reply=(_complete _match _ignored _prefix _files)
-elif [[ $words[1] == (rm|mv) ]]; then
-	reply=(_complete _files)
+## correction
+# some people don't like the automatic correction - so run 'NOCOR=1 zsh' to deactivate it
+if [[ "$NOCOR" -gt 0 ]] ; then
+	zstyle ':completion:*' completer _oldlist _expand _force_rehash _complete _files _ignored
+	setopt nocorrect
 else
-	reply=(_oldlist _expand _force_rehash _complete \
-				 _ignored _correct _approximate _files)
-fi'
+	# try to be smart about when to use what completer...
+	setopt correct
+	zstyle -e ':completion:*' completer '
+		if [[ $_last_try != "$HISTNO$BUFFER$CURSOR" ]] ; then
+			_last_try="$HISTNO$BUFFER$CURSOR"
+			reply=(_complete _match _ignored _prefix _files)
+		else
+			if [[ $words[1] == (rm|mv) ]] ; then
+				reply=(_complete _files)
+			else
+				reply=(_oldlist _expand _force_rehash _complete _ignored _correct _approximate _files)
+			fi
+		fi'
+fi
+# command for process lists, the local web server details and host completion
+zstyle ':completion:*:urls' local 'www' '/var/www/' 'public_html'
 
 [[ -d $ZDOTDIR/cache ]] && \
 	zstyle ":completion:*"           use-cache yes && \
