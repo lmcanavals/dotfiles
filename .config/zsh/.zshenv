@@ -2,21 +2,18 @@ if (( "x${CUSTOMZSHENV}x" == "xx" )); then
 	export CUSTOMZSHENV="X"
 fi
 
-export ZDOTDIR=/home/lmcs/.config/zsh
+export ZDOTDIR=$HOME/.config/zsh
 
 if [[ -d /usr/local/go/bin ]]; then
 	PATH=$PATH:/usr/local/go/bin
 fi
 
 # Sway stuff
+export XDG_CURRENT_DESKTOP=sway
 if [[ "x${SWAYSOCK}x" != "xx" ]]; then
 	export MOZ_ENABLE_WAYLAND=1
 	export QT_QPA_PLATFORM=wayland
-	export XDG_CURRENT_DESKTOP=sway
 	export XDG_CURRENT_SESSION_TYPE=sway
-#	export GDK_BACKEND=sway
-#	export QT_QPA_PLATFORMTHEME="qt5ct"
-#	export XDG_SESSION_DESKTOP=sway
 fi
 if [[ -d /usr/share/sway/scripts ]]; then
 	PATH=/usr/share/sway/scripts:$PATH
