@@ -1,0 +1,5 @@
+setopt vi
+
+[[ -s $ZDOTDIR/dynamic.zsh ]] && source $ZDOTDIR/dynamic.zsh
+
+# vim: set ts=2:sw=2:noet:sts=2:
