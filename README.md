@@ -221,7 +221,7 @@ sudo pacman -S \
 sway swaybg polkit wofi waybar mako \
 swayidle swaylock swayimg kanshi zenity \
 xdg-desktop-portal-wlr pipewire-pulse brightnessctl \
-slurp grim wl-clipboard \
+slurp grim wl-clipboard qpwgraph \
 accountsservice gvfs wezterm xdg-user-dirs \
 *thunar \
 *cups system-config-printer gutenprint foomatic-db-gutenprint-ppds
