@@ -1,5 +1,141 @@
+#
+# Override stuff
+#
 setopt vi
+#setopt hist_ignore_dups
+#setopt hist_ignore_all_dups
+#setopt hist_reduce_blanks
 
+#
+# Prompt stuff
+#
+prompt off
+
+autoload -U colors && colors
+function prompt_color() {
+	local c
+	[[ EUID -eq 0 ]] && c="red" || c="green"
+	[[ $KEYMAP == vicmd ]] && c="yellow"
+	print "%{$fg_bold[$c]%} "
+}
+function left_prompt() {
+	local s
+	[[ $KEYMAP == vicmd ]] && s=":" || s="_"
+	print "$(prompt_color)%#$s%{$reset_color%} "
+}
+
+ZLE_RPROMPT_INDENT=0 # not buggy anymore
+function prompt_lmcs_setup() {
+	PS2='$(prompt_color)%_┊%{$reset_color%} '
+	PS3='$(prompt_color)?#┊%{$reset_color%} '
+	PS4='$(prompt_color)+%N:%i:%_┊%{$reset_color%} '
+
+	add-zsh-hook precmd prompt_lmcs_precmd
+}
+function prompt_lmcs_precmd() {
+	PS1="$(left_prompt)"
+}
+function prompt_lmcs_help() {
+	<<__EOF0__
+  prompt lmcs
+
+    My prompt it's super cool and uses starship to easily add stuff to the right
+
+        - left: a simple %#_ green for users and red for root
+        - right: starship stuff configured at $HOME/.config/starship.toml
+__EOF0__
+}
+function zle-keymap-select() {
+	PROMPT="$(left_prompt)"
+	() { return $__prompt_status }
+	zle reset-prompt
+}
+zle-line-init() {
+	typeset -g __prompt_status="$?"
+}
+zle -N zle-keymap-select
+zle -N zle-line-init
+
+prompt_themes+=( lmcs )
+prompt_themes=( "${(@on)prompt_themes}" )
+
+prompt lmcs
+
+# /home/user/folder/stuff/tra/cool --> ~/f/s/t/cool
+# echo ${PWD/$HOME/\~} | sed -e "s/\(\w\)\(\w\+\)\//\1\//g"
+if command -v starship &> /dev/null; then
+	eval "$(starship init zsh)"
+else
+	RPS1="$(prompt_color)"
+	RPS1+="%n%{$fg[yellow]%}@%{$fg[cyan]%}%m:%{$fg[blue]%}%~%{$reset_color%}"
+fi
+
+#
+# Shortcuts and aliases
+#
+abk+=(
+	"j"   "| jq"
+	"n"   " nvim "
+	"p"   " ps -e f"
+	"qd"  " pacman -Qdt"
+	"qe"  " pacman -Qet"
+	"qi"  " pacman -Qi "
+	"ql"  " pacman -Ql "
+	"qm"  " pacman -Qm"
+	"qo"  " pacman -Qo "
+	"qs"  " pacman -Qs "
+	"rs"  "sudo pacman -Rncs "
+	"s"   "sudo pacman -S "
+	"sc"  " sudo pacman -Sc"
+	"si"  " pacman -Si "
+	"ss"  " pacman -Ss "
+	"sy"  "sudo pacman -Syu"
+	"x"   "| xsel -ib"
+)
+
+alias eza="eza -F --icons --colour=auto --group-directories-first "
+alias ea="eza -la "
+alias eaa="eza -a .*(.)"
+alias ead="eza -d .*(/)"
+alias ebig="eza -l *(.OL[1,10])"
+alias ee="eza -lb "
+alias eed="eza -d *(/)"
+alias eee="eza -d *(/^F)"
+alias enew="eza -rtl *(D.om[1,10])"
+alias enewdir="eza -rtdl *(/om[1,10]) .*(D/om[1,10])"
+alias eold="eza -rtl *(D.Om[1,10])"
+alias eolddir="eza -rtdl *(/Om[1,10]) .*(D/Om[1,10])"
+alias esmall="eza -rl *(.oL[1,10])"
+alias dotfiles="git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME "
+
+#
+# some extra sources
+#
 [[ -s $ZDOTDIR/dynamic.zsh ]] && source $ZDOTDIR/dynamic.zsh
+
+#
+# plugin manager
+#
+function lmcs-plugman() {
+	local __url
+	local plugname
+	for fullname in $lmcs_plugins
+	do
+		plugname=$(basename $fullname)
+		if [[ ! -d $ZDOTDIR/plugins/$plugname ]]; then
+			__url="https://github.com/$fullname.git"
+			git clone --depth 1 $__url $ZDOTDIR/plugins/$plugname
+		fi
+		source $ZDOTDIR/plugins/$plugname/$plugname.zsh
+	done
+}
+
+lmcs_plugins=(
+	zsh-users/zsh-autosuggestions
+	# zsh syntax highlighting recommends loading it last
+	zsh-users/zsh-syntax-highlighting
+)
+lmcs-plugman install
+#ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 
 # vim: set ts=2:sw=2:noet:sts=2:
