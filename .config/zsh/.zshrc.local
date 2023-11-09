@@ -124,7 +124,7 @@ function lmcs-plugman() {
 	for fullname in $lmcs_plugins; do
 		plug_name=$(basename $fullname)
 		plug_gh_url="https://github.com/$fullname.git"
-		prugindir="$ZDOTDIR/plugins/$plug_name"
+		plug_folder="$ZDOTDIR/plugins/$plug_name"
 		case $@ in
 			install)
 				if [[ ! -d $ZDOTDIR/plugins/$plug_name ]]; then
