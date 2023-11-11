@@ -113,6 +113,7 @@ rust.sh
 .config/pulse/
 .config/rclone/
 .config/ristretto/
+.config/rncbc.org/
 .config/session/
 .config/solaar/
 .config/systemd/

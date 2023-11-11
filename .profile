@@ -12,8 +12,4 @@ export NO_AT_BRIDGE=1
 
 #xset -b
 
-[[ -s $HOME/.cargo/env ]] && source "$HOME/.cargo/env"
-
-pw-cat -p "/usr/share/sounds/deepin/stereo/desktop-login.wav" &
-
 # vim: set ts=2:sw=2:noet:sts=2:
