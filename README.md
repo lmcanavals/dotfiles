@@ -250,7 +250,7 @@ adobe-source-han-sans-otc-fonts adobe-source-code-pro-fonts \
 ttf-fira-code ttf-roboto ttf-roboto-mono ttf-jetbrains-mono-nerd \
 ttf-liberation ttf-dejavu gnu-free-fonts ttf-victor-mono-nerd \
 noto-fonts-emoji ttf-croscore ttf-carlito ttf-caladea ttf-droid \
-ttf-font-awesome ttf-nerd-fonts-symbols-mono terminus-fon \
+ttf-font-awesome ttf-nerd-fonts-symbols-mono terminus-font \
 ttf-opensans # installed by telegram 
 ```
 
