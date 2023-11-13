@@ -28,7 +28,7 @@ config.font_rules = {
 		italic = true,
 		intensity = 'Half',
 		font = wezterm.font {
-			--family = 'VictorMono Nerd Font', 
+			--family = 'VictorMono Nerd Font',
 			family = 'Monaspace Radon',
 			weight = 'DemiBold',
 			style = 'Italic',
@@ -43,6 +43,11 @@ config.font_rules = {
 			style = 'Italic',
 		},
 	},
+}
+config.harfbuzz_features = {
+	'ss01', 'ss02', 'ss03', 'ss04',
+	'ss05', 'ss06', 'ss07', 'ss08',
+	'calt', 'dlig'
 }
 config.initial_rows = 30
 config.initial_cols = 130
