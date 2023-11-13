@@ -11,13 +11,15 @@ end
 
 config.color_scheme = 'BlulocoDark'
 config.enable_tab_bar = false
-config.font = wezterm.font { family = 'JetBrains Mono' }
+--config.font = wezterm.font { family = 'JetBrains Mono' }
+config.font = wezterm.font { family = 'Monaspace Krypton' }
 config.font_rules = {
 	{
-		intensity = 'Bold',
 		italic = true,
+		intensity = 'Bold',
 		font = wezterm.font {
-			family = 'VictorMono Nerd Font',
+			--family = 'VictorMono Nerd Font',
+			family = 'Monaspace Radon',
 			weight = 'Bold',
 			style = 'Italic',
 		},
@@ -26,7 +28,8 @@ config.font_rules = {
 		italic = true,
 		intensity = 'Half',
 		font = wezterm.font {
-			family = 'VictorMono Nerd Font',
+			--family = 'VictorMono Nerd Font', 
+			family = 'Monaspace Radon',
 			weight = 'DemiBold',
 			style = 'Italic',
 		},
@@ -35,7 +38,8 @@ config.font_rules = {
 		italic = true,
 		intensity = 'Normal',
 		font = wezterm.font {
-			family = 'VictorMono Nerd Font',
+			--family = 'VictorMono Nerd Font',
+			family = 'Monaspace Radon',
 			style = 'Italic',
 		},
 	},
