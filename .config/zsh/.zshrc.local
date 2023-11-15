@@ -50,7 +50,7 @@ function zle-keymap-select() {
 	() { return $__prompt_status }
 	zle reset-prompt
 }
-zle-line-init() {
+function zle-line-init() {
 	typeset -g __prompt_status="$?"
 }
 zle -N zle-keymap-select

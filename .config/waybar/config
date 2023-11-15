@@ -13,14 +13,14 @@
 		"warp-on-scroll": true,
 		"format": "{name}: {icon}",
 		"format-icons": {
-			"1": "",
-			"2": "",
-			"3": "",
-			"4": "",
+			"1": "󰈹",
+			"2": "󰈹",
+			"3": "",
+			"4": "",
 			"5": "󱝉",
 			"6": "󱌢",
 			"urgent": "",
-			"focused": "",
+			//"focused": "",
 			"default": ""
 		}
 	},
@@ -86,16 +86,16 @@
 	},
 	"clock": {
 		// "timezone": "America/New_York",
-		"format": "{:%H:%M} ",
-		"format-alt": "{:%a, %d %b, %Y (%R)} 󱛡",
-		"tooltip-format": "<span size='10pt' font='monospace'>{calendar}</span>",
+		"format": "{:%R}  ",
+		"format-alt": "{:%a, %d %b, %Y %R} 󱛡 ",
+		"tooltip-format": "<span size='11pt' font='monospace'>{calendar}</span>",
 		"calendar": {
 			"mode"          : "year",
 			"mode-mon-col"  : 3,
 			"on-scroll"     : 1,
 			"on-click-right": "mode",
 			"format": {
-				"today":      "<span color='Gold'><b><u>{}</u></b></span>"
+				"today": "<span background='Gold' color='Black'><b>{}</b></span>"
 			}
 		},
 		"actions": {
@@ -138,7 +138,7 @@
 		"format-alt": "{time} {icon}",
 		"format-good": "{capacity}%", // An empty format will hide the module
 		"format-full": "",
-		"format-icons": ["", "", "", "", ""]
+		"format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
 	},
 	"network": {
 		// "interface": "wlp2*", // (Optional) To force the use of this interface
