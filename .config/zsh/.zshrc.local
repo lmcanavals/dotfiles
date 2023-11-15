@@ -12,6 +12,9 @@ setopt vi
 prompt off
 
 autoload -U colors && colors
+function cool_folder() {
+	print $(echo ${PWD/$HOME/󰋜 } | sed -e "s/\(\w\)\(\w\+\)\//\1\//g")
+}
 function prompt_color() {
 	local c
 	[[ EUID -eq 0 ]] && c="red" || c="green"
@@ -34,6 +37,7 @@ function prompt_lmcs_setup() {
 }
 function prompt_lmcs_precmd() {
 	PS1="$(left_prompt)"
+	set_title ${(%):-"%n@%m:$(cool_folder)"}
 }
 function prompt_lmcs_help() {
 	<<__EOF0__
