@@ -1,4 +1,9 @@
-require("noice").setup({
+-- author:  lmcanavals
+-- date:    2023-07-26
+
+if vim.g.debug then print "after.plugin.noice" end
+
+require 'noice'.setup {
 	lsp = {
 		-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
 		override = {
@@ -9,10 +14,12 @@ require("noice").setup({
 	},
 	-- you can enable a preset for easier configuration
 	presets = {
-		bottom_search = true,         -- use a classic bottom cmdline for search
-		command_palette = true,       -- position the cmdline and popupmenu together
+		bottom_search = true,       -- use a classic bottom cmdline for search
+		command_palette = true,     -- position the cmdline and popupmenu together
 		long_message_to_split = true, -- long messages will be sent to a split
-		inc_rename = false,           -- enables an input dialog for inc-rename.nvim
-		lsp_doc_border = false,       -- add a border to hover docs and signature help
+		inc_rename = false,         -- enables an input dialog for inc-rename.nvim
+		lsp_doc_border = false,     -- add a border to hover docs and signature help
 	},
-})
+}
+
+-- vim: set ts=2:sw=2:noet:sts=2:
