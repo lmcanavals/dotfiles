@@ -37,7 +37,13 @@ require 'lazy'.setup({
 				config = true,
 				opts = {
 					ensure_installed = {
-						"pyright",
+						"python-lsp-server",
+						"bash-language-server",
+						"black",
+						"deno",
+						"isort",
+						"jdtls",
+						"lua-language-server",
 					}
 				},
 			},
@@ -85,8 +91,8 @@ require 'lazy'.setup({
 		opts = {
 			options = {
 				theme = 'codedark',
-        component_separators = { left = '•', right = '•'},
-        section_separators = { left = '', right = ''},
+				component_separators = { left = '•', right = '•' },
+				section_separators = { left = '', right = '' },
 			},
 		},
 	},

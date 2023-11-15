@@ -7,14 +7,14 @@ local nvim_lsp = require 'lspconfig'
 local vks = vim.keymap.set
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-nvim_lsp.bashls.setup { -- install via mason
+nvim_lsp.bashls.setup {
 	capabilities = capabilities,
 	filetypes = { 'sh', 'bash', 'zsh' }
 }
 nvim_lsp.clangd.setup { -- installs along with clang
 	capabilities = capabilities,
 }
-nvim_lsp.denols.setup { -- install via mason
+nvim_lsp.denols.setup {
 	capabilities = capabilities,
 	init_options = {
 		lint = true
@@ -31,8 +31,8 @@ nvim_lsp.gopls.setup { -- install via pacman
 		},
 	},
 }
-nvim_lsp.jdtls.setup {} -- install via mason
-nvim_lsp.lua_ls.setup { -- install via mason
+nvim_lsp.jdtls.setup {}
+nvim_lsp.lua_ls.setup {
 	capabilities = capabilities,
 	settings = {
 		Lua = {
@@ -52,8 +52,17 @@ nvim_lsp.lua_ls.setup { -- install via mason
 		},
 	},
 }
-nvim_lsp.pyright.setup { -- install via mason
-	capabilities = capabilities,
+require 'lspconfig'.pylsp.setup {
+	settings = {
+		pylsp = {
+			plugins = {
+				pycodestyle = {
+					ignore = { 'W391' },
+					maxLineLength = 80,
+				}
+			}
+		}
+	}
 }
 
 -- Global mappings.
