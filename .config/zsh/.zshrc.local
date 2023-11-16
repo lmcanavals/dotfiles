@@ -12,6 +12,8 @@ setopt vi
 prompt off
 
 autoload -U colors && colors
+
+# /home/user/folder/stuff/tra/cool --> ~/f/s/t/cool
 function cool_folder() {
 	print $(echo ${PWD/$HOME/󰋜 } | sed -e "s/\(\w\)\(\w\+\)\//\1\//g")
 }
@@ -65,8 +67,6 @@ prompt_themes=( "${(@on)prompt_themes}" )
 
 prompt lmcs
 
-# /home/user/folder/stuff/tra/cool --> ~/f/s/t/cool
-# echo ${PWD/$HOME/\~} | sed -e "s/\(\w\)\(\w\+\)\//\1\//g"
 if command -v starship &> /dev/null; then
 	eval "$(starship init zsh)"
 else
