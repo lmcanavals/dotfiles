@@ -12,7 +12,7 @@ end
 config.color_scheme = 'BlulocoDark'
 config.enable_tab_bar = false
 --config.font = wezterm.font { family = 'JetBrains Mono' }
-config.font = wezterm.font { family = 'Monaspace Krypton' }
+config.font = wezterm.font { family = 'Monaspace Neon' }
 config.font_rules = {
 	{
 		italic = true,
