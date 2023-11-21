@@ -68,7 +68,7 @@ local NON = 29
 local PAS = 30
 
 local theme = {
-	Normal                   = { ui = PAS, bg = PAS, fg = PAS },
+	Normal                   = { ui = NON, bg = PAS, fg = PAS },
 	Underlined               = { ui = ULI, bg = PAS, sp = BLU },
 	NonText                  = { ui = PAS, bg = PAS, fg = BLA },
 	Special                  = { ui = PAS, bg = PAS, fg = MAG },
@@ -78,14 +78,14 @@ local theme = {
 	CursorLineNr             = { ui = PAS, bg = BLA, fg = YEL },
 	ColorColumn              = { ui = UDT, bg = PAS, sp = YEL },
 	Conceal                  = { ui = PAS, bg = PAS, fg = BLA },
-	LineNr                   = { ui = PAS, bg = PAS, fg = bla },
+	LineNr                   = { ui = { ITA, BLD }, bg = PAS, fg = bla },
 	FoldColumn               = { ui = PAS, bg = PAS, fg = bla },
 	Folded                   = { ui = UDA, bg = PAS, sp = BLA },
-	MatchParen               = { ui = UDO, bg = PAS, fg = yel },
+	MatchParen               = { ui = REV, bg = PAS, fg = yel },
 	IncSearch                = { ui = PAS, bg = MAG, fg = whi },
 	Search                   = { ui = PAS, bg = GRE, fg = whi },
 	QuickFixLine             = { ui = PAS, bg = YEL, fg = whi },
-	Pmenu                    = { ui = PAS, bg = BLA, fg = WHI },
+	Pmenu                    = { ui = { ITA, BLD }, bg = BLA, fg = WHI },
 	PmenuSel                 = { ui = PAS, bg = YEL, fg = BLA },
 	PmenuSbar                = { ui = PAS, bg = bla, fg = BLA },
 	PmenuThumb               = { ui = PAS, bg = WHI, fg = BLA },
@@ -97,7 +97,7 @@ local theme = {
 	TabLineFill              = { ui = PAS, bg = BLA, fg = bla },
 	SignColumn               = { ui = PAS, bg = PAS, fg = red },
 	Visual                   = { ui = PAS, bg = yel, fg = BLU },
-	VisualNOS                = { ui = UDA, bg = RED, fg = BLU },
+	VisualNOS                = { ui = UDO, bg = RED, fg = BLU },
 	WildMenu                 = { ui = PAS, bg = YEL, fg = BLA },
 	MsgArea                  = { ui = PAS, bg = PAS, fg = CYA },
 	ModeMsg                  = { ui = PAS, bg = PAS, fg = cya },
@@ -105,7 +105,7 @@ local theme = {
 	ErrorMsg                 = { ui = PAS, bg = PAS, fg = RED },
 	MoreMsg                  = { ui = PAS, bg = PAS, fg = GRE },
 	Comment                  = { ui = ITA, bg = PAS, fg = bla },
-	Todo                     = { ui = BLD, bg = PAS, sp = YEL },
+	Todo                     = { ui = SOU, bg = PAS, sp = YEL },
 	Error                    = { ui = PAS, bg = PAS, fg = RED },
 	Identifier               = { ui = PAS, bg = PAS, fg = blu },
 	Function                 = { ui = PAS, bg = PAS, fg = BLU },
@@ -113,6 +113,7 @@ local theme = {
 	Number                   = { ui = PAS, bg = PAS, fg = gre },
 	Operator                 = { ui = PAS, bg = PAS, fg = GRE },
 	Constant                 = { ui = PAS, bg = PAS, fg = YEL },
+	String                   = { ui = BLD, bg = PAS, fg = YEL },
 	Type                     = { ui = PAS, bg = PAS, fg = GRE },
 	Statement                = { ui = PAS, bg = PAS, fg = mag },
 	Title                    = { ui = PAS, bg = PAS, fg = mag },
@@ -121,17 +122,17 @@ local theme = {
 	DiffAdd                  = { ui = PAS, bg = GRE, fg = BLA },
 	DiffChange               = { ui = PAS, bg = YEL, fg = BLA },
 	DiffText                 = { ui = PAS, bg = BLU, fg = BLA },
-	DiagnosticDeprecated     = { ui = STH, bg = PAS, sp = bla },
-	DiagnosticError          = { ui = ITA, bg = PAS, fg = RED },
-	DiagnosticHint           = { ui = ITA, bg = PAS, fg = yel },
-	DiagnosticInfo           = { ui = ITA, bg = PAS, fg = CYA },
-	DiagnosticWarn           = { ui = ITA, bg = PAS, fg = YEL },
+	DiagnosticDeprecated     = { ui = { STH, ITA, BLD }, bg = PAS, sp = bla },
+	DiagnosticError          = { ui = { ITA, BLD }, bg = PAS, fg = RED },
+	DiagnosticHint           = { ui = { ITA, BLD }, bg = PAS, fg = yel },
+	DiagnosticInfo           = { ui = { ITA, BLD }, bg = PAS, fg = CYA },
+	DiagnosticWarn           = { ui = { ITA, BLD }, bg = PAS, fg = YEL },
 	DiagnosticUnderlineError = { ui = UCU, bg = PAS, sp = RED },
 	DiagnosticUnderlineHint  = { ui = UCU, bg = PAS, sp = yel },
 	DiagnosticUnderlineInfo  = { ui = UCU, bg = PAS, sp = CYA },
 	DiagnosticUnderlineWarn  = { ui = UCU, bg = PAS, sp = YEL },
 	-- Notify nvim plugin
-	NotifyBackground         = { ui = PAS, bg = BLA, fg = PAS },
+	NotifyBackground         = { ui = { ITA, BLD }, bg = BLA, fg = PAS },
 }
 
 local L = {}
@@ -148,9 +149,18 @@ function L.color()
 		local attr = { ui = "", bg = "bg", fg = "fg", sp = gui and "sp" or "fg" }
 		local nonEmpty = false
 		for name, value in pairs(attributes) do
+			-- TODO there is a limitation, table type is valid only for ui element
+			local theval = ""
+			if type(value) == 'table' then
+				theval = ""
+				for i, vali in pairs(value) do
+					theval = theval .. (i > 1 and "," or "") .. specials[vali - 16]
+				end
+			else
+				theval = value < 17 and tostring(colors[value]) or specials[value - 16]
+			end
 			if value ~= PAS then
-				hi = hi .. " " .. target .. attr[name] .. "="
-						.. (value < 17 and colors[value] or specials[value - 16])
+				hi = hi .. " " .. target .. attr[name] .. "=" .. theval
 				nonEmpty = true
 			end
 		end
