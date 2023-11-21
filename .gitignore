@@ -77,6 +77,7 @@ rust.sh
 .config/JetBrains/
 .config/KDE/
 .config/Kitware/
+.config/microsoft-edge-dev/
 .config/Thunar/
 .config/Unknown\ Organization/
 .config/VirtualBox/
@@ -155,6 +156,7 @@ shared/
 .local/share/*
 !.local/share/applications/
 .local/share/applications/mimeinfo.cache
+.local/share/applications/mimeapps.list
 !.local/share/google-chrome/
 !.local/share/konsole/
 !.local/share/themes/
