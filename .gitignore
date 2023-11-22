@@ -106,6 +106,7 @@ rust.sh
 .config/ksnip/
 .config/libaccounts-glib/
 .config/lutris/
+.config/mc/
 .config/menus/
 .config/mypaint/
 .config/nvim/plugged/
@@ -125,6 +126,7 @@ rust.sh
 .config/xournalpp/metadata/
 .config/xsettingsd/
 .config/zsh/plugins/
+.config/zsh/.zcompcache/
 
 .local/lib/
 .local/state/
