@@ -9,6 +9,8 @@ if [[ -d /usr/local/go/bin ]]; then
 fi
 
 # Sway stuff
+export WLR_RENDERER=vulkan
+export WLR_NO_HARDWARE_CURSORS=1
 export XDG_CURRENT_DESKTOP=sway
 if [[ "x${SWAYSOCK}x" != "xx" ]]; then
 	export MOZ_ENABLE_WAYLAND=1
