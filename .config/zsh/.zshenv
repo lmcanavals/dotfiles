@@ -21,6 +21,10 @@ if [[ -d /usr/share/sway/scripts ]]; then
 	PATH=/usr/share/sway/scripts:$PATH
 fi
 
+# C/C++ stuff
+export CC=/usr/bin/clang
+export CXX=/usr/bin/clang++
+
 # Java stuff
 if [[ -d /opt/java ]]; then
 	JAVA_HOME=/opt/java

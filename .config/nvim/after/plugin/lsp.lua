@@ -11,6 +11,7 @@ nvim_lsp.bashls.setup {
 	capabilities = capabilities,
 	filetypes = { 'sh', 'bash', 'zsh' }
 }
+nvim_lsp.cmake.setup{}
 nvim_lsp.clangd.setup { -- installs along with clang
 	capabilities = capabilities,
 }

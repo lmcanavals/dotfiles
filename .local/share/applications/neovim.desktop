@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=Neovim
+Name=Neovim from wezterm
 GenericName=Text Editor
 Comment=Edit text files
 TryExec=nvim
