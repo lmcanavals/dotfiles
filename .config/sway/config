@@ -26,19 +26,43 @@ set {
 	$wp0 ~/Pictures/Dark\ Wallpapers/wallhaven-4x1wwd.png
 	$wp1 ~/Pictures/Dark\ Wallpapers/wallhaven-n6xrgx.jpg
 	$wplock ~/Pictures/Dark\ Wallpapers/wallhaven-5dvp21.jpg
+
+	$gnome_schema org.gnome.desktop.interface
+
+	$color_scheme prefer-dark
+	$icon_theme 'Papirus-Dark'
+	$gtk_theme 'Adwaita-dark'
+	$font_name 'Carlito Regular 18'
+	$monospace_font_name 'Maple Mono Regular 14'
 }
 
-font pango: Carlito Regular 9
+### Appereance
+font pango: $font_name
+
+client.focused #41444dff #282c34cc #dfdfdf
+client.focused_inactive #41444dff #282c34cc #8f9aae
+client.focused_tab_title #41444dff #41444dcc #dfdfdf
+client.unfocused #41444dff #41444dcc #8f9aae
+client.urgent #dc143cff #282c34cc #dc143c
+
 default_border pixel 0
 
-for_window [app_id="file-roller"] floating enable
-for_window [app_id="nm-connection-editor"] floating enable
-for_window [app_id="pavucontrol"] floating enable
-for_window [app_id="python3"] floating enable
-for_window [app_id="swayimg*"] floating enable
-for_window [app_id="zenity"] floating enable
-for_window [title="Open File"] floating enable
-for_window [title="Save File"] floating enable
+for_window {
+	[app_id="file-roller"] floating enable
+	[app_id="nm-connection-editor"] floating enable
+	[app_id="mousepad"] floating enable
+	[app_id="pavucontrol"] floating enable
+	[app_id="python3"] floating enable
+	[app_id="swayimg*"] floating enable
+	[app_id="zenity"] floating enable
+	[title="(?:Open|Save) (?:File|Folder|As)"] floating enable, resize set 800 600
+	[window_role="pop-up"] floating enable
+	[window_role="bubble"] floating enable
+	[window_role="task_dialog"] floating enable
+	[window_role="Preferences"] floating enable
+	[window_type="dialog"] floating enable
+	[window_type="menu"] floating enable
+}
 
 ### Output configuration
 output * bg $wp0 fill
@@ -88,6 +112,14 @@ exec {
 	gammastep-indicator
 	pw-cat -p /usr/share/sounds/deepin/stereo/desktop-login.wav
 }
-exec_always pkill kanshi; exec kanshi
+
+exec_always {
+	gsettings set $gnome-schema color-scheme $color_scheme
+	gsettings set $gnome-schema icon-theme $icon_theme
+	gsettings set $gnome-schema gtk-theme $gtk_theme
+	gsettings set $gnome-schema font-name $font_name
+	gsettings set $gnome-schema monospace-font-name $monospace_font_name
+	pkill kanshi; exec kanshi
+}
 
 include /etc/sway/config.d/*

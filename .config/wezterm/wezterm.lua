@@ -11,13 +11,14 @@ end
 
 config.color_scheme = 'BlulocoDark'
 config.enable_tab_bar = false
-config.font = wezterm.font { family = 'Monaspace Neon' }
+config.font = wezterm.font { family = 'Maple Mono' }
+--[==[
 config.font_rules = {
 	{
 		italic = false,
 		intensity = 'Bold',
 		font = wezterm.font {
-			family = 'Monaspace Xenon',
+			family = 'FiraCode Nerd Font',
 			weight = 'DemiBold',
 		}
 	},
@@ -25,32 +26,46 @@ config.font_rules = {
 		italic = true,
 		intensity = 'Bold',
 		font = wezterm.font {
-			family = 'Monaspace Krypton',
-			weight = 'Light',
+			family = 'FiraCode Nerd Font',
+			style = 'Italic',
+			weight = 'DemiBold',
 		}
 	},
 	{
 		italic = true,
 		intensity = 'Half',
 		font = wezterm.font {
-			family = 'Monaspace Radon',
-			style = 'Italic',
-			weight = 'DemiBold',
+			family = 'VictorMono Nerd Font', -- null false
+			weight = 'Medium',
 		},
 	},
 	{
 		italic = true,
 		intensity = 'Normal',
 		font = wezterm.font {
-			family = 'Monaspace Radon',
+			family = 'VictorMono Nerd Font',
+			style = 'Italic',
 			weight = 'Light',
 		},
 	},
 }
+--]==]
+config.font_size = 14
 config.harfbuzz_features = {
-	'ss01', 'ss02', 'ss03', 'ss04',
-	'ss05', 'ss06', 'ss07', 'ss08',
-	'calt', 'dlig'
+	-- 'cv01',
+	'cv02',
+	-- 'cv03',
+	-- 'cv04',
+	'ss01',
+	'ss02',
+	'ss03',
+	'ss04',
+	'ss05',
+	-- 'ss06',
+	-- 'ss07',
+	-- 'ss08',
+	-- 'calt',
+	-- 'dlig'
 }
 config.initial_rows = 30
 config.initial_cols = 130

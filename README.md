@@ -223,7 +223,7 @@ swayidle swaylock swayimg kanshi zenity \
 xdg-desktop-portal-wlr pipewire-pulse brightnessctl \
 slurp grim wl-clipboard qpwgraph \
 accountsservice gvfs wezterm xdg-user-dirs \
-*thunar \
+thunar tumbler thunar-archive-plugin thunar-volman \
 *cups system-config-printer gutenprint foomatic-db-gutenprint-ppds
 ```
 
@@ -231,7 +231,7 @@ Utilities
 
 ```sh
 sudo pacman -S \
-papirus-icon-theme \
+papirus-icon-theme gnome-themes-extra \
 file-roller unrar p7zip ntp imagemagick \
 gammastep mosh network-manager-applet pavucontrol \
 gnome-keyring haveged jq \
@@ -239,10 +239,10 @@ firefox solaar \
 bat eza fd procs sd ripgrep dust tokei bottom \
 qt6-wayland qt6ct \
 cmake clang \
-xournalpp *gopls *webp-pixbuf-loader
+xournalpp mousepad *gopls *webp-pixbuf-loader
 ```
 
-Fonts, utilities, etc:
+Fonts, etc:
 
 ```sh
 sudo pacman -S \
@@ -251,14 +251,15 @@ ttf-fira-code ttf-roboto ttf-roboto-mono ttf-jetbrains-mono-nerd \
 ttf-liberation ttf-dejavu gnu-free-fonts ttf-victor-mono-nerd \
 noto-fonts-emoji ttf-croscore ttf-carlito ttf-caladea ttf-droid \
 ttf-font-awesome ttf-nerd-fonts-symbols-mono terminus-font \
-ttf-opensans # installed by telegram 
+ttf-opensans otf-monaspace # installed by telegram 
 ```
 
 Fonts from aur
 
 ```sh
 <aur helper> -S \
-ttf-architects-daughter ttf-indieflower ttf-nothingyoucoulddo ttf-pacifico
+ttf-architects-daughter ttf-indieflower ttf-nothingyoucoulddo ttf-pacifico \
+ttf-maple
 ```
 
 Cloud storage, Goodle Drive, One Drive, etc:
@@ -412,9 +413,9 @@ sudo lmcsupdatemirrors
 gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 # the next few are synced with xfce appearance
 gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
+gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
 gsettings set org.gnome.desktop.interface font-name 'Carlito 10'
-gsettings set org.gnome.desktop.interface monospace-font-name \
-'JetBrains Mono Regular 14'
+gsettings set org.gnome.desktop.interface monospace-font-name 'Maple Mono 14'
 ```
 
 **Java**

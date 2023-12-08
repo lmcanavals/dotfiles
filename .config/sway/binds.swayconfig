@@ -61,6 +61,16 @@ mode $mode_resize {
 		Up resize shrink height 10px
 		Right resize grow width 10px
 
+		Shift+$left resize shrink width 1px
+		Shift+$down resize grow height 1px
+		Shift+$up resize shrink height 1px
+		Shift+$right resize grow width 1px
+
+		Shift+Left resize shrink width 1px
+		Shift+Down resize grow height 1px
+		Shift+Up resize shrink height 1px
+		Shift+Right resize grow width 1px
+
 		Escape mode "default"
 		Return mode "default"
 	}
