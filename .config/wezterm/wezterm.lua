@@ -3,54 +3,61 @@
 
 local wezterm = require 'wezterm'
 
+local base_font = 'Maple Mono'
+local string_font = 'FiraCode Nerd Font'
+local comment_font = 'Maple Mono'
+local diagnostics_font = 'Monaspace Krypton'
+
 local config = {}
 
 if wezterm.config_builder then
 	config = wezterm.config_builder()
 end
-
+-- Regular
 config.color_scheme = 'BlulocoDark'
 config.enable_tab_bar = false
-config.font = wezterm.font { family = 'Maple Mono' }
---[==[
+config.font = wezterm.font {
+	family = base_font,
+	weight = "Regular",
+}
 config.font_rules = {
 	{
 		italic = false,
 		intensity = 'Bold',
 		font = wezterm.font {
-			family = 'FiraCode Nerd Font',
-			weight = 'DemiBold',
+			family = string_font,
+			weight = 'Regular',
 		}
 	},
 	{
 		italic = true,
 		intensity = 'Bold',
 		font = wezterm.font {
-			family = 'FiraCode Nerd Font',
-			style = 'Italic',
-			weight = 'DemiBold',
+			family = diagnostics_font,
+			style = 'Normal',
+			weight = 'Light',
 		}
 	},
 	{
 		italic = true,
 		intensity = 'Half',
 		font = wezterm.font {
-			family = 'VictorMono Nerd Font', -- null false
-			weight = 'Medium',
+			family = comment_font,
+			weight = 'DemiBold',
 		},
 	},
 	{
 		italic = true,
 		intensity = 'Normal',
 		font = wezterm.font {
-			family = 'VictorMono Nerd Font',
+			family = comment_font,
 			style = 'Italic',
 			weight = 'Light',
 		},
 	},
 }
---]==]
-config.font_size = 14
+
+config.font_size = 12
 config.harfbuzz_features = {
 	-- 'cv01',
 	'cv02',
