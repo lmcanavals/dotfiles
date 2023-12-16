@@ -4,7 +4,7 @@
 	// "width": 1280, // Waybar width
 	"height": 30,
 	"spacing": 4, // Gaps between modules (4px)
-	"modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad", "custom/media"],
+	"modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad"],
 	"modules-center": ["sway/window"],
 	"modules-right": ["idle_inhibitor", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "sway/language", "battery", "tray", "clock"],
 	// Modules configuration
@@ -137,7 +137,7 @@
 		"format-plugged": "{capacity}% ",
 		"format-alt": "{time} {icon}",
 		"format-good": "{capacity}%", // An empty format will hide the module
-		"format-full": "",
+		"format-full": "{capacity}% {icon}",
 		"format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
 	},
 	"network": {
