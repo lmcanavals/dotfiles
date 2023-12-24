@@ -11,12 +11,12 @@ set {
 	
 	$ssfile "Pictures/Screenshots/screenshot_$(date '+%Y%m%d_%H%M%S_%N').png"
 	
-	$mode_grim "grimshot 󰹑  -> 1:󰆏  2:󰆓 "
-	$mode_grim_copy "grimshot 󰆏  -> 1:󰊓  2:󱣴  3:  4:  5:󰩭 "
-	$mode_grim_save "grimshot 󰆓  -> 1:󰊓  2:󱣴  3:  4:  5:󰩭 "
-	$mode_power "power 󰤁  -> 1:󱅞  2:󰗼  3:󰤄  4:󰜉  5: "
-	$mode_resize "resize"
-	$mode_wacom "wacom 󱦹  -> map to output [1] [2]"
+	$mode_grim "grimshot 󰹑 : 1:󰆏  2:󰆓 "
+	$mode_grim_copy "grimshot 󰆏 : 1:󰊓  2:󱣴  3:  4:  5:󰩭 "
+	$mode_grim_save "grimshot 󰆓 : 1:󰊓  2:󱣴  3:  4:  5:󰩭 "
+	$mode_power "power 󰤁 : 1:󱅞  2:󰗼  3:󰤄  4:󰜉  5: "
+	$mode_resize "resize 󰩨 "
+	$mode_wacom "wacom 󱦹 : map to output [1] [2]"
 
 	$output0 $(swaymsg -t get_outputs | jq '.[0].name')
 	$output1 $(swaymsg -t get_outputs | jq '.[1].name')
@@ -76,8 +76,9 @@ output {
 
 ### Input configuration
 input type:keyboard {
-	xkb_layout "us"
-	xkb_variant "dvorak-alt-intl"
+	xkb_layout "us,latam"
+	xkb_variant "dvorak-alt-intl,"
+	xkb_options "grp:alts_toggle"
 	xkb_numlock enabled
 }
 input type:touchpad {
