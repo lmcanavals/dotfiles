@@ -14,6 +14,8 @@ rust.sh
 .steampath
 .steampid
 .sudo_as_admin_successful
+.sway.log
+.sway1.log
 .wget-hsts
 .xsession-*
 .zcompdump
