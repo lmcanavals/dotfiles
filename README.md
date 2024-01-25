@@ -274,6 +274,10 @@ Streaming and virtual cam stream:
 sudo pacman -S obs-studio linux-headers v4l2loopback-dkms
 ```
 
+Check if new versions work on wayland:
+
+* ksnip, flameshot
+
 
 Optional:
 
