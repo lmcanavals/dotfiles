@@ -33,6 +33,7 @@ rust.sh
 .config/kwallet
 .config/mailtransports
 .config/mimeapps.list
+.config/nvim/lazy-lock.json
 .config/okular.kmessagebox
 .config/pavucontrol.ini
 .config/user-dirs.dirs
@@ -124,7 +125,6 @@ rust.sh
 .config/vlc/
 .config/xfce4/desktop/
 .config/xfce4/panel/
-.config/xfce4/xfconf/xfce-perchannel-xml/
 .config/xournalpp/metadata/
 .config/xsettingsd/
 .config/zsh/plugins/
