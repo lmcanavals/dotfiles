@@ -43,6 +43,7 @@ rust.sh
 .config/xfce4/helpers.rc
 .config/xfce4/terminal/accels.scm
 .config/xfce4/xfce4-taskmanager.rc
+.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
 .config/zoom.conf
 .config/zoomus.conf
 .config/zsh/dynamic.zsh
