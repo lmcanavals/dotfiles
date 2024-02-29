@@ -167,6 +167,10 @@
     </data>
   </data>
   <data name="deviceClasses">
+    <data name="ELAN06FA:00 04F3:317F Touchpad">
+      <attribute name="deviceClass" type="int" value="1"/>
+      <attribute name="deviceSource" type="int" value="6"/>
+    </data>
     <data name="ELAN2514:00 04F3:2714 Stylus">
       <attribute name="deviceClass" type="int" value="2"/>
       <attribute name="deviceSource" type="int" value="1"/>
@@ -174,6 +178,10 @@
     <data name="ELAN2514:00 04F3:2714 Stylus (Eraser)">
       <attribute name="deviceClass" type="int" value="3"/>
       <attribute name="deviceSource" type="int" value="2"/>
+    </data>
+    <data name="Microsoft Microsoft® Nano Transceiver v2.0 Mouse">
+      <attribute name="deviceClass" type="int" value="1"/>
+      <attribute name="deviceSource" type="int" value="0"/>
     </data>
     <data name="Wacom Intuos S Pen">
       <attribute name="deviceClass" type="int" value="2"/>
@@ -190,6 +198,10 @@
     <data name="Wacom One by Wacom M Pen (Eraser)">
       <attribute name="deviceClass" type="int" value="3"/>
       <attribute name="deviceSource" type="int" value="2"/>
+    </data>
+    <data name="Wacom One by Wacom M Pen stylus">
+      <attribute name="deviceClass" type="int" value="2"/>
+      <attribute name="deviceSource" type="int" value="1"/>
     </data>
     <data name="Wayland Finger Scrolling">
       <attribute name="deviceClass" type="int" value="1"/>
