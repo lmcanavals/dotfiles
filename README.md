@@ -234,7 +234,7 @@ sudo pacman -S \
 papirus-icon-theme gnome-themes-extra \
 file-roller unrar p7zip ntp imagemagick \
 gammastep mosh network-manager-applet pavucontrol \
-gnome-keyring haveged jq \
+keepassxc haveged jq \
 firefox solaar \
 bat eza fd procs sd ripgrep dust tokei bottom \
 qt6-wayland qt6ct \
