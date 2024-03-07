@@ -254,6 +254,14 @@ ttf-font-awesome ttf-nerd-fonts-symbols-mono terminus-font \
 ttf-opensans otf-monaspace # installed by telegram 
 ```
 
+Stuff in case of XFCE
+
+```sh
+sudo pacman -S \
+dconf-editor numlockx lightdm lightdm-slick-greeter \
+slop xf86-input-wacom redshift xsel
+```
+
 Fonts from aur
 
 ```sh
