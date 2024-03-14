@@ -57,6 +57,7 @@ rust.sh
 .gephi/
 .gnome/
 .gnupg/
+.gphoto/
 .ipynb_checkpoints/
 .ipython/
 .java/
