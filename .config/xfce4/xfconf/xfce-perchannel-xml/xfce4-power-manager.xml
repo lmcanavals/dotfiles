@@ -18,5 +18,7 @@
     <property name="brightness-level-on-battery" type="uint" value="30"/>
     <property name="dpms-on-ac-off" type="uint" value="20"/>
     <property name="dpms-enabled" type="bool" value="true"/>
+    <property name="inactivity-on-ac" type="uint" value="25"/>
+    <property name="inactivity-on-battery" type="uint" value="30"/>
   </property>
 </channel>
