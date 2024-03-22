@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<channel name="xfce4-terminal" version="1.0">
+  <property name="background-mode" type="string" value="TERMINAL_BACKGROUND_TRANSPARENT"/>
+  <property name="background-darkness" type="double" value="0.84999999999999998"/>
+  <property name="color-foreground" type="string" value="#dbdbd1d1b9b9"/>
+  <property name="color-cursor-foreground" type="string" value="#000000000000"/>
+  <property name="color-cursor" type="string" value="#9999c1c1f1f1"/>
+  <property name="color-cursor-use-default" type="bool" value="false"/>
+  <property name="color-selection" type="string" value="#00003d3c6161"/>
+  <property name="color-selection-background" type="string" value="#ffffd3d34342"/>
+  <property name="color-selection-use-default" type="bool" value="false"/>
+  <property name="color-palette" type="string" value="rgb(8,0,46);rgb(100,0,44);rgb(93,115,26);rgb(205,117,28);rgb(29,109,161);rgb(183,7,126);rgb(66,163,140);rgb(243,224,184);rgb(51,30,77);rgb(208,32,99);rgb(180,206,89);rgb(250,195,87);rgb(64,164,207);rgb(241,42,174);rgb(98,202,168);rgb(255,245,219)"/>
+  <property name="color-bold-is-bright" type="bool" value="false"/>
+  <property name="dropdown-animation-time" type="uint" value="250"/>
+  <property name="dropdown-keep-open-default" type="bool" value="true"/>
+  <property name="dropdown-width" type="uint" value="100"/>
+  <property name="dropdown-height" type="uint" value="60"/>
+  <property name="dropdown-always-show-tabs" type="bool" value="false"/>
+  <property name="font-name" type="string" value="JetBrainsMono Nerd Font Mono 12"/>
+  <property name="font-use-system" type="bool" value="true"/>
+  <property name="misc-always-show-tabs" type="bool" value="false"/>
+  <property name="misc-bell" type="bool" value="false"/>
+  <property name="misc-bell-urgent" type="bool" value="false"/>
+  <property name="misc-borders-default" type="bool" value="true"/>
+  <property name="misc-cursor-blinks" type="bool" value="false"/>
+  <property name="misc-cursor-shape" type="string" value="TERMINAL_CURSOR_SHAPE_BLOCK"/>
+  <property name="misc-default-geometry" type="string" value="130x30"/>
+  <property name="misc-inherit-geometry" type="bool" value="false"/>
+  <property name="misc-menubar-default" type="bool" value="false"/>
+  <property name="misc-mouse-autohide" type="bool" value="false"/>
+  <property name="misc-mouse-wheel-zoom" type="bool" value="true"/>
+  <property name="misc-toolbar-default" type="bool" value="false"/>
+  <property name="misc-confirm-close" type="bool" value="true"/>
+  <property name="misc-cycle-tabs" type="bool" value="true"/>
+  <property name="misc-tab-close-buttons" type="bool" value="true"/>
+  <property name="misc-tab-close-middle-click" type="bool" value="true"/>
+  <property name="misc-tab-position" type="string" value="GTK_POS_TOP"/>
+  <property name="misc-highlight-urls" type="bool" value="true"/>
+  <property name="misc-middle-click-opens-uri" type="bool" value="false"/>
+  <property name="misc-copy-on-select" type="bool" value="false"/>
+  <property name="misc-show-relaunch-dialog" type="bool" value="true"/>
+  <property name="misc-rewrap-on-resize" type="bool" value="true"/>
+  <property name="misc-slim-tabs" type="bool" value="true"/>
+  <property name="misc-new-tab-adjacent" type="bool" value="false"/>
+  <property name="misc-search-dialog-opacity" type="uint" value="100"/>
+  <property name="misc-show-unsafe-paste-dialog" type="bool" value="true"/>
+  <property name="misc-right-click-action" type="string" value="TERMINAL_RIGHT_CLICK_ACTION_CONTEXT_MENU"/>
+  <property name="scrolling-bar" type="string" value="TERMINAL_SCROLLBAR_NONE"/>
+  <property name="scrolling-unlimited" type="bool" value="true"/>
+</channel>

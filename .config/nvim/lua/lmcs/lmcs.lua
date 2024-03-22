@@ -75,7 +75,7 @@ local theme = {
 	SpecialKey               = { ui = PAS, bg = PAS, fg = bla },
 	CursorColumn             = { ui = PAS, bg = BLA, fg = PAS },
 	CursorLine               = { ui = PAS, bg = BLA, fg = PAS },
-	CursorLineNr             = { ui = PAS, bg = BLA, fg = YEL },
+	CursorLineNr             = { ui = { ITA, BLD }, bg = BLA, fg = YEL },
 	ColorColumn              = { ui = UDT, bg = PAS, sp = YEL },
 	Conceal                  = { ui = PAS, bg = PAS, fg = BLA },
 	LineNr                   = { ui = { ITA, BLD }, bg = PAS, fg = bla },
