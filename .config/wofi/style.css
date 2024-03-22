@@ -1,15 +1,17 @@
 /* https://cloudninja.pw/docs/wofi.html */
 
 window {
-	border: 1px solid Gainsboro;
-	border-radius: 10px;
 	background-color: rgba(40, 44, 52, 0.8);
+	border: 1px solid rgba(65, 68, 77, 1.0);
+	border-radius: 5px;
 	font-size: 24px;
 }
 
 #input {
-	color: #dfdfdf;
 	background-color: rgba(65, 68, 77, 1.0);
+	border: 1px solid rgba(65, 68, 77, 1.0);
+	border-radius: 5px;
+	color: #dfdfdf;
 }
 
 #inner-box {
