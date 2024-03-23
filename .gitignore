@@ -49,6 +49,8 @@ rust.sh
 .config/zsh/dynamic.zsh
 .config/zsh/.zsh_history
 
+.local/share/applications/userapp-Thunderbird*
+
 .android/
 .cache/
 .cargo/
@@ -71,6 +73,7 @@ rust.sh
 .rustup/
 .ssh/
 .steam/
+.thunderbird/
 .var/
 .vscode-server/
 .wine/
