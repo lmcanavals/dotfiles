@@ -1,0 +1,26 @@
+#!/usr/bin/zsh
+#define the filename to use as output
+motd="/etc/motd"
+# Collect useful information about your system
+# $USER is automatically defined
+HOSTNAME=$(uname -n)
+KERNEL=$(uname -r)
+ARCH=$(uname -m)
+CPU=$(uname -p)
+# The different colours as variables
+R="\033[01;31m"
+Y="\033[01;33m"
+B="\033[01;36m" 
+W="\033[01;37m"
+X="\033[00;37m"
+clear > $motd # to clear the screen when showing up
+echo -e "$B        ." >> $motd
+echo -e "$B       /#\\" >> $motd
+echo -e "$B      /###\\     $W                #    $B | o" >> $motd
+echo -e "$B     /p^###\\    $W  a##e #%\" a#\"e 6##% $B | | |-^-. |   | \\ /" >> $motd
+echo -e "$B    /##P^q##\\   $W .oOo# #   #    #  # $B | | |   | |   |  X" >> $motd
+echo -e "$B   /##(   )##\\  $W %OoO# #   %#e\" #  # $B | | |   | ^._.| / \\ ${X}TM" >> $motd
+echo -e "$B  /###P   q#,^\\" >> $motd
+echo -e "$B /P^         ^q\\ ${X}TM\t$R$HOSTNAME $KERNEL $ARCH" >> $motd
+echo -e "$X" >> $motd
+

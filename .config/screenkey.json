@@ -1,0 +1,32 @@
+{
+    "no_systray": false,
+    "timeout": 2.5,
+    "recent_thr": 0.1,
+    "compr_cnt": 3,
+    "ignore": [],
+    "position": "fixed",
+    "persist": false,
+    "font_desc": "FiraCode Nerd Font weight=450 10",
+    "font_size": "small",
+    "font_color": "#ffffa3a34848",
+    "bg_color": "black",
+    "opacity": 0.6,
+    "key_mode": "composed",
+    "bak_mode": "baked",
+    "mods_mode": "normal",
+    "mods_only": true,
+    "multiline": false,
+    "vis_shift": false,
+    "vis_space": true,
+    "geometry": [
+        0,
+        1030,
+        1920,
+        50
+    ],
+    "screen": 0,
+    "start_disabled": false,
+    "mouse": true,
+    "button_hide_duration": 1.0,
+    "window": null
+}

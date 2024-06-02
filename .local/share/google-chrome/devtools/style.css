@@ -1,0 +1,25 @@
+:host-context(.platform-linux) .cm-line,
+:host-context(.platform-linux) .monospace,
+:host-context(.platform-linux) .source-code,
+.platform-linux .cm-line,
+.platform-linux .monospace, 
+.platform-linux .source-code {
+    font-family: monospace !important;
+}
+
+.cm-line,
+.monospace,
+.source-code {
+    font-family: monospace !important;
+}
+
+::shadow .cm-line,
+::shadow .monospace,
+::shadow .source-code {
+    font-family: monospace !important;
+}
+
+.platform-linux, :host-context(.platform-linux) {
+    --monospace-font-family: monospace !important;
+    --source-code-font-family: monospace !important;
+}

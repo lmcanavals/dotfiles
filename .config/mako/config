@@ -1,0 +1,11 @@
+background-color=#282c34cc
+border-color=#41444dff
+border-radius=10
+border-size=2
+default-timeout=4500
+font=Carlito 12
+icon-path=/usr/share/icons/Papirus-Dark/
+icons=1
+max-visible=8
+padding=10
+text-color=#dfdfdf

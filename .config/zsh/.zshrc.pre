@@ -1,0 +1,17 @@
+if [[ "$TERM" == "linux" ]]; then
+	# echo -en "\e]P0${LCLR:1:6}" && clear # for background artifacting
+	for i in {1..15}; do
+		echo -en "\e]P$(printf "%x" "$i")${LCLR:$i * 8 + 1:6}"
+	done
+fi
+
+export EDITOR=nvim
+
+# pacdiff stuff
+export DIFFPROG='nvim -d'
+#export DIFFSEARCHPATH='/etc' # override the search path (only when using find)
+#export MERGEPROG='diff3 -m'  # override the 3-way merge program
+
+localismosh && export ISMOSHBRUH="yup"
+
+# vim: set ts=2:sw=2:noet:sts=2:
