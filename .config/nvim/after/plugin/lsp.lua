@@ -68,10 +68,10 @@ require 'lspconfig'.pylsp.setup {
 
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-vks('n', '<space>]', vim.diagnostic.goto_next, { desc = "next diagnostic" })
-vks('n', '<space>[', vim.diagnostic.goto_prev, { desc = "previous diagnostic" })
-vks('n', '<space>k', vim.diagnostic.open_float, { desc = "expand diagnostic" })
-vks('n', '<space>q', vim.diagnostic.setloclist, { desc = "set loclist" })
+vks('n', '<space>]', vim.diagnostic.goto_next, { desc = "Next diagnostic" })
+vks('n', '<space>[', vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
+vks('n', '<space>k', vim.diagnostic.open_float, { desc = "Expand diagnostic" })
+vks('n', '<space>q', vim.diagnostic.setloclist, { desc = "Set loclist" })
 
 vim.api.nvim_create_autocmd('LspAttach', {
 	group = vim.api.nvim_create_augroup('UserLspConfig', {}),
@@ -82,15 +82,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		-- Buffer local mappings.
 		-- See `:help vim.lsp.*` for documentation on any of the below functions
 		vks('n', 'gD', vim.lsp.buf.declaration,
-			{ buffer = ev.buf, desc = "[g]o to [D]eclaration" })
+			{ buffer = ev.buf, desc = "Go to Declaration" })
 		vks('n', 'gd', vim.lsp.buf.definition,
-			{ buffer = ev.buf, desc = "[g]o to [d]efinition" })
+			{ buffer = ev.buf, desc = "Go to definition" })
 		vks('n', 'K', vim.lsp.buf.hover,
-			{ buffer = ev.buf, desc = "[K] hover" })
+			{ buffer = ev.buf, desc = "Hover" })
 		vks('n', 'gi', vim.lsp.buf.implementation,
-			{ buffer = ev.buf, desc = "[g]o to [i]plementation" })
+			{ buffer = ev.buf, desc = "Go to iplementation" })
 		vks('n', '<C-k>', vim.lsp.buf.signature_help,
-			{ buffer = ev.buf, desc = "[C-k] signature_help" })
+			{ buffer = ev.buf, desc = "Signature help" })
 		vks('n', '<space>wa', vim.lsp.buf.add_workspace_folder,
 			{ buffer = ev.buf, desc = "Add workspace folder" })
 		vks('n', '<space>wr', vim.lsp.buf.remove_workspace_folder,
@@ -99,13 +99,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
 			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 		end, { buffer = ev.buf, desc = "List workspace folders" })
 		vks('n', '<space>D', vim.lsp.buf.type_definition,
-			{ buffer = ev.buf, desc = "Type [D]efinition" })
+			{ buffer = ev.buf, desc = "Type Definition" })
 		vks('n', '<space>rn', vim.lsp.buf.rename,
-			{ buffer = ev.buf, desc = "[r]e[n]ame" })
+			{ buffer = ev.buf, desc = "Rename" })
 		vks({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action,
-			{ buffer = ev.buf, desc = "[c]ode [a]ction" })
+			{ buffer = ev.buf, desc = "Code action" })
 		vks('n', 'gr', vim.lsp.buf.references,
-			{ buffer = ev.buf, desc = "[g]o to [r]eferences" })
+			{ buffer = ev.buf, desc = "Go to references" })
 		vks('n', '<space>=', function()
 				vim.lsp.buf.format { async = true }
 			end,

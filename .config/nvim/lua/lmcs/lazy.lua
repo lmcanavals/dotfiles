@@ -23,13 +23,10 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local vks = vim.keymap.set
+
 require 'lazy'.setup({
-	'tpope/vim-fugitive',
-	'tpope/vim-rhubarb',
-	'chrisbra/csv.vim',
-	'dylon/vim-antlr',
-	'norcalli/nvim-colorizer.lua',
-	{
+	{ -- neovim/nvim-lspconfig
 		'neovim/nvim-lspconfig',
 		dependencies = {
 			{
@@ -56,7 +53,7 @@ require 'lazy'.setup({
 			'folke/neodev.nvim',
 		},
 	},
-	{
+	{ -- hrsh7th/nvim-cmp
 		'hrsh7th/nvim-cmp',
 		dependencies = {
 			'L3MON4D3/LuaSnip',
@@ -65,7 +62,7 @@ require 'lazy'.setup({
 			'rafamadriz/friendly-snippets',
 		},
 	},
-	{
+	{ -- folke/which-key.nvim
 		'folke/which-key.nvim',
 		event = "VeryLazy",
 		init = function()
@@ -74,28 +71,7 @@ require 'lazy'.setup({
 		end,
 		opts = {}
 	},
-	{
-		'lewis6991/gitsigns.nvim',
-		opts = {
-			on_attach = function(bufnr)
-				vim.keymap.set('n', '<leader>gp', require('gitsigns').prev_hunk,
-					{ buffer = bufnr, desc = "[G]o to [P]revious Hunk" })
-				vim.keymap.set('n', '<leader>gn', require('gitsigns').next_hunk,
-					{ buffer = bufnr, desc = "[G]o to [N]ext Hunk" })
-				vim.keymap.set('n', '<leader>ph', require('gitsigns').preview_hunk,
-					{ buffer = bufnr, desc = "[P]review [H]unk" })
-			end,
-		},
-	},
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		main = "ibl",
-		opts = {
-			indent = { char = '┆' },
-			scope = { show_start = false, show_end = false },
-		},
-	},
-	{
+	{ -- folke/noice.nvim
 		"folke/noice.nvim",
 		event = "VeryLazy",
 		opts = {},
@@ -104,12 +80,40 @@ require 'lazy'.setup({
 			"rcarriga/nvim-notify",
 		}
 	},
-	{
+	{ -- lewis6991/gitsigns.nvim
+		'lewis6991/gitsigns.nvim',
+		opts = {
+			on_attach = function(bufnr)
+				local gs = require 'gitsigns'
+				vks('n', '<leader>gp', gs.prev_hunk, {
+					buffer = bufnr,
+					desc = "Go to Previous Hunk",
+				})
+				vks('n', '<leader>gn', gs.next_hunk, {
+					buffer = bufnr,
+					desc = "Go to Next Hunk",
+				})
+				vks('n', '<leader>ph', gs.preview_hunk, {
+					buffer = bufnr,
+					desc = "Preview Hunk",
+				})
+			end,
+		},
+	},
+	{ -- lukas-reineke/indent-blankline.nvim
+		"lukas-reineke/indent-blankline.nvim",
+		main = "ibl",
+		opts = {
+			indent = { char = '┆' },
+			scope = { show_start = false, show_end = false },
+		},
+	},
+	{ -- nvim-telescope/telescope.nvim
 		'nvim-telescope/telescope.nvim',
 		branch = '0.1.x',
 		dependencies = { 'nvim-lua/plenary.nvim' }
 	},
-	{
+	{ -- nvim-telescope/telescope-fzf-native.nvim
 		'nvim-telescope/telescope-fzf-native.nvim',
 		-- NOTE: If you are having trouble with this installation,
 		--       refer to the README for telescope-fzf-native for more instructions.
@@ -118,14 +122,14 @@ require 'lazy'.setup({
 			return vim.fn.executable 'make' == 1
 		end,
 	},
-	{
+	{ -- nvim-treesitter/nvim-treesitter
 		'nvim-treesitter/nvim-treesitter',
 		dependencies = {
 			'nvim-treesitter/nvim-treesitter-textobjects',
 		},
 		build = ':TSUpdate',
 	},
-	{
+	{ -- mfussenegger/nvim-dap
 		'mfussenegger/nvim-dap',
 		dependencies = {
 			'rcarriga/nvim-dap-ui',
@@ -136,6 +140,11 @@ require 'lazy'.setup({
 			'mfussenegger/nvim-jdtls',
 		},
 	},
+	'tpope/vim-fugitive',
+	'tpope/vim-rhubarb',
+	'chrisbra/csv.vim',
+	'dylon/vim-antlr',
+	'norcalli/nvim-colorizer.lua',
 	'nvim-tree/nvim-web-devicons',
 	'nvim-lualine/lualine.nvim',
 }, {})
