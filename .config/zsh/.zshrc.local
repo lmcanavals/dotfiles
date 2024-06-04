@@ -20,9 +20,10 @@ function cool_folder() {
 }
 function prompt_color() {
 	local c
-	[[ EUID -eq 0 ]] && c="red" || c="green"
-	[[ $KEYMAP == vicmd ]] && c="yellow"
-	print "%{$fg_bold[$c]%} "
+	[[ EUID -eq 0 ]] && c="red" || c="yellow"
+	[[ $KEYMAP == vicmd ]] && c="blue"
+	print "%{$fg[$c]%} "
+	#print "%{$fg_bold[$c]%} "
 }
 function left_prompt() {
 	local s
@@ -88,7 +89,16 @@ export LCSTARTSHIP
 # Shortcuts and aliases
 #
 abk+=(
-	"j"   "| jq"
+	"d"   " dotfiles "
+	"da"  " dotfiles add ."
+	"dc"  " dotfiles commit -a -m \"\""
+	"dd"  " dotfiles difftool"
+	"dp"  " dotfiles push"
+	"dl"  " dotfiles pull"
+	"dr"  " dotfiles restore "
+	"drm" " dotfiles rm --cached "
+	"ds"  " dotfiles status -u"
+	"j"   "| jq -r '.[].name' "
 	"n"   " nvim "
 	"p"   " ps -e f"
 	"qd"  " pacman -Qdt"
