@@ -5,6 +5,6 @@ if vim.g.debug then print "after.ftplugin.cpp" end
 
 local vks = vim.keymap.set
 
-vks('n', '<leader>b', ':!clang++ -std=c++23 -g %<cr>', { desc = "clang++" })
+vks('n', '<leader>b', ':!clang++ -std=c++20 -g %<cr>', { desc = "clang++" })
 
 -- vim: set ts=2:sw=2:noet:sts=2:

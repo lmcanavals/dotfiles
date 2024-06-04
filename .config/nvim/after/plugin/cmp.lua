@@ -8,7 +8,7 @@ local cmp = require 'cmp'
 cmp.setup {
 	snippet = {
 		expand = function(args)
-			require('luasnip').lsp_expand(args.body)
+			require 'luasnip'.lsp_expand(args.body)
 		end,
 	},
 	window = {
@@ -30,5 +30,7 @@ cmp.setup {
 		{ name = 'buffer' },
 	}
 }
+
+require 'luasnip.loaders.from_vscode'.lazy_load()
 
 -- vim: set ts=2:sw=2:noet:sts=2:

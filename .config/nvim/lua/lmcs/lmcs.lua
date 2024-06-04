@@ -80,7 +80,7 @@ local theme = {
 	Conceal                  = { bg = PAS, fg = BLA, ui = PAS },
 	LineNr                   = { bg = PAS, fg = bla, ui = { ITA, BLD } },
 	FoldColumn               = { bg = PAS, fg = bla, ui = PAS },
-	Folded                   = { bg = PAS, fg = CYA, sp = bla, ui = UDA },
+	Folded                   = { bg = PAS, fg = CYA, sp = BLA, ui = UDA },
 	MatchParen               = { bg = PAS, fg = MAG, ui = REV },
 	IncSearch                = { bg = MAG, fg = whi, ui = PAS },
 	Search                   = { bg = GRE, fg = whi, ui = PAS },

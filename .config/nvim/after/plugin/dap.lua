@@ -58,6 +58,9 @@ dap.listeners.before.event_exited.dapui_config = function()
 	dapui.close()
 end
 
+-- TODO many things left, add condition/expression based breakpoint
+-- inspect var under cursor, etc
+
 vks('n', '<F12>b', dap.toggle_breakpoint, { desc = "DAP toggle breakpoint" })
 vks('n', '<F12>u', dap.run_to_cursor, { desc = "DAP run to cursor" })
 vks('n', '<F12>c', dap.continue, { desc = "DAP continue" })

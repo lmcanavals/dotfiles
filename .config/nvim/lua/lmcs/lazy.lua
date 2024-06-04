@@ -26,7 +26,7 @@ vim.opt.rtp:prepend(lazypath)
 local vks = vim.keymap.set
 
 require 'lazy'.setup({
-	{ -- neovim/nvim-lspconfig
+	{
 		'neovim/nvim-lspconfig',
 		dependencies = {
 			{
@@ -34,13 +34,13 @@ require 'lazy'.setup({
 				config = true,
 				opts = {
 					ensure_installed = {
-						"python-lsp-server",
-						"bash-language-server",
-						"black",
-						"deno",
-						"isort",
-						"jdtls",
-						"lua-language-server",
+						'python-lsp-server',
+						'bash-language-server',
+						'black',
+						'deno',
+						'isort',
+						'jdtls',
+						'lua-language-server',
 					}
 				},
 			},
@@ -50,37 +50,56 @@ require 'lazy'.setup({
 				tag = 'legacy',
 				opts = {},
 			},
-			'folke/neodev.nvim',
+			{
+				'folke/lazydev.nvim',
+				ft = 'lua',
+				opts = {
+					library = {
+						-- See the configuration section for more details
+						-- Load luvit types when the `vim.uv` word is found
+						{ path = 'luvit-meta/library', words = { 'vim%.uv' } },
+					},
+				},
+			},
 		},
 	},
-	{ -- hrsh7th/nvim-cmp
-		'hrsh7th/nvim-cmp',
-		dependencies = {
-			'L3MON4D3/LuaSnip',
-			'saadparwaiz1/cmp_luasnip',
-			'hrsh7th/cmp-nvim-lsp',
-			'rafamadriz/friendly-snippets',
-		},
-	},
-	{ -- folke/which-key.nvim
+	{
 		'folke/which-key.nvim',
-		event = "VeryLazy",
+		event = 'VeryLazy',
 		init = function()
 			vim.o.timeout = true
 			vim.o.timeoutlen = 300
 		end,
 		opts = {}
 	},
-	{ -- folke/noice.nvim
-		"folke/noice.nvim",
-		event = "VeryLazy",
+	{
+		'folke/noice.nvim',
+		event = 'VeryLazy',
 		opts = {},
 		dependencies = {
-			"MunifTanjim/nui.nvim",
-			"rcarriga/nvim-notify",
+			'MunifTanjim/nui.nvim',
+			'rcarriga/nvim-notify',
 		}
 	},
-	{ -- lewis6991/gitsigns.nvim
+	{
+		'hrsh7th/nvim-cmp',
+		dependencies = {
+			{
+				'L3MON4D3/LuaSnip',
+				dependencies = { 'rafamadriz/friendly-snippets' }
+			},
+			'saadparwaiz1/cmp_luasnip',
+			'hrsh7th/cmp-nvim-lsp',
+		},
+		opts = function(_, opts)
+			opts.sources = opts.sources or {}
+			table.insert(opts.sources, {
+				name = 'lazydev',
+				group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+			})
+		end,
+	},
+	{
 		'lewis6991/gitsigns.nvim',
 		opts = {
 			on_attach = function(bufnr)
@@ -100,20 +119,20 @@ require 'lazy'.setup({
 			end,
 		},
 	},
-	{ -- lukas-reineke/indent-blankline.nvim
-		"lukas-reineke/indent-blankline.nvim",
-		main = "ibl",
+	{
+		'lukas-reineke/indent-blankline.nvim',
+		main = 'ibl',
 		opts = {
 			indent = { char = '┆' },
 			scope = { show_start = false, show_end = false },
 		},
 	},
-	{ -- nvim-telescope/telescope.nvim
+	{
 		'nvim-telescope/telescope.nvim',
 		branch = '0.1.x',
 		dependencies = { 'nvim-lua/plenary.nvim' }
 	},
-	{ -- nvim-telescope/telescope-fzf-native.nvim
+	{
 		'nvim-telescope/telescope-fzf-native.nvim',
 		-- NOTE: If you are having trouble with this installation,
 		--       refer to the README for telescope-fzf-native for more instructions.
@@ -122,29 +141,31 @@ require 'lazy'.setup({
 			return vim.fn.executable 'make' == 1
 		end,
 	},
-	{ -- nvim-treesitter/nvim-treesitter
+	{
 		'nvim-treesitter/nvim-treesitter',
 		dependencies = {
 			'nvim-treesitter/nvim-treesitter-textobjects',
 		},
 		build = ':TSUpdate',
 	},
-	{ -- mfussenegger/nvim-dap
+	{
 		'mfussenegger/nvim-dap',
 		dependencies = {
+			{ 'sigmasd/deno-nvim',       ft = 'js' },
+			{ 'mfussenegger/nvim-jdtls', ft = 'java' },
 			'rcarriga/nvim-dap-ui',
 			'theHamsta/nvim-dap-virtual-text',
 			'nvim-neotest/nvim-nio',
 			'williamboman/mason.nvim',
-			'sigmasd/deno-nvim',
-			'mfussenegger/nvim-jdtls',
 		},
 	},
+	{ 'Bilal2453/luvit-meta',        lazy = true },
+	{ 'chrisbra/csv.vim',            ft = 'csv' },
+	{ 'dylon/vim-antlr',             ft = { 'g', 'g4' } },
+	{ 'norcalli/nvim-colorizer.lua', event = 'VeryLazy' },
+	'folke/lazy.nvim',
 	'tpope/vim-fugitive',
 	'tpope/vim-rhubarb',
-	'chrisbra/csv.vim',
-	'dylon/vim-antlr',
-	'norcalli/nvim-colorizer.lua',
 	'nvim-tree/nvim-web-devicons',
 	'nvim-lualine/lualine.nvim',
 }, {})

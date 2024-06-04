@@ -11,7 +11,9 @@ nvim_lsp.bashls.setup {
 	capabilities = capabilities,
 	filetypes = { 'sh', 'bash', 'zsh' }
 }
-nvim_lsp.cmake.setup{}
+nvim_lsp.cmake.setup{
+	capabilities = capabilities,
+}
 nvim_lsp.clangd.setup { -- installs along with clang
 	capabilities = capabilities,
 }
@@ -32,7 +34,9 @@ nvim_lsp.gopls.setup { -- install via pacman
 		},
 	},
 }
-nvim_lsp.jdtls.setup {}
+nvim_lsp.jdtls.setup {
+	capabilities = capabilities,
+}
 nvim_lsp.lua_ls.setup {
 	capabilities = capabilities,
 	settings = {
@@ -54,6 +58,7 @@ nvim_lsp.lua_ls.setup {
 	},
 }
 require 'lspconfig'.pylsp.setup {
+	capabilities = capabilities,
 	settings = {
 		pylsp = {
 			plugins = {
