@@ -75,14 +75,15 @@ config.harfbuzz_features = {
 	-- 'dlig'
 }
 config.initial_rows = 30
-config.initial_cols = 130
+config.initial_cols = 120
 config.term = 'wezterm'
-config.window_background_opacity = 0.8
+-- config.window_decorations = "TITLE | RESIZE"
+config.window_background_opacity = 0.9
 config.window_padding = {
-	left = 1,
-	right = 1,
-	top = 1,
-	bottom = 1,
+	left = 10,
+	right = 10,
+	top = 10,
+	bottom = 10,
 }
 
 return config

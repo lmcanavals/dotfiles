@@ -31,6 +31,4 @@ cmp.setup {
 	}
 }
 
-require 'luasnip.loaders.from_vscode'.lazy_load()
-
 -- vim: set ts=2:sw=2:noet:sts=2:

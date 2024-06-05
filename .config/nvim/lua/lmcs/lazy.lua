@@ -152,7 +152,7 @@ require 'lazy'.setup({
 	{
 		'mfussenegger/nvim-dap',
 		dependencies = {
-			{ 'sigmasd/deno-nvim',       ft = 'js' },
+			{ 'sigmasd/deno-nvim',       ft = 'javascript' },
 			{ 'mfussenegger/nvim-jdtls', ft = 'java' },
 			'rcarriga/nvim-dap-ui',
 			'theHamsta/nvim-dap-virtual-text',
