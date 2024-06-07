@@ -162,7 +162,7 @@ require 'lazy'.setup({
 	},
 	{ 'Bilal2453/luvit-meta',        lazy = true },
 	{ 'chrisbra/csv.vim',            ft = 'csv' },
-	{ 'dylon/vim-antlr',             ft = { 'g', 'g4' } },
+	{ 'dylon/vim-antlr',             ft = { 'antlr3', 'antlr4' } },
 	{ 'norcalli/nvim-colorizer.lua', event = 'VeryLazy' },
 	'folke/lazy.nvim',
 	'tpope/vim-fugitive',
