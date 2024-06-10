@@ -8,7 +8,7 @@ require 'catppuccin'.setup {
 		return {
 			ColorColumn  = { style = { 'underdotted' }, bg = 'none' },
 			CursorLineNr = { style = { 'italic', 'bold' }, bg = colors.surface0 },
-			Folded       = { style = { 'underdashed', }, bg = 'none' },
+			Folded       = { style = { 'underdashed' }, bg = 'none' },
 			LineNr       = { style = { 'italic', 'bold' } },
 			NormalFloat  = { style = { 'italic', 'bold' } },
 			Pmenu        = { style = { 'italic', 'bold' } },

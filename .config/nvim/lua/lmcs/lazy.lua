@@ -197,8 +197,8 @@ require 'lazy'.setup({
 		'norcalli/nvim-colorizer.lua', event = 'VeryLazy',
 	},
 	'folke/lazy.nvim',
+	'pwntester/octo.nvim',
 	'tpope/vim-fugitive',
-	'tpope/vim-rhubarb',
 	'nvim-tree/nvim-web-devicons',
 	'nvim-lualine/lualine.nvim',
 }, {})
