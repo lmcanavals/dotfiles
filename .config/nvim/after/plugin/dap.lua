@@ -6,6 +6,7 @@ if vim.g.debug then print "after.plugin.dap" end
 local dap = require 'dap'
 local dapui = require 'dapui'
 local vks = vim.keymap.set
+local sign = vim.fn.sign_define
 
 dapui.setup()
 --require 'dap-go'.setup()
@@ -69,5 +70,15 @@ vks('n', '<F12>l', dap.step_over, { desc = "DAP step over" })
 vks('n', '<F12>j', dap.step_into, { desc = "DAP step into" })
 vks('n', '<F12>k', dap.step_out, { desc = "DAP step out" })
 vks('n', '<F12>h', dap.step_back, { desc = "DAP step back" })
+
+sign("DapBreakpoint", {
+	text = "●", texthl = "DapBreakpoint", linehl = "", numhl = "",
+})
+sign("DapBreakpointCondition", {
+	text = "●", texthl = "DapBreakpointCondition", linehl = "", numhl = "",
+})
+sign("DapLogPoint", {
+	text = "◆", texthl = "DapLogPoint", linehl = "", numhl = "",
+})
 
 -- vim: set ts=2:sw=2:noet:sts=2:

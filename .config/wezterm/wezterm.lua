@@ -8,13 +8,10 @@ local string_font = 'FiraCode Nerd Font'
 local comment_font = 'Maple Mono'
 local diagnostics_font = 'Monaspace Krypton'
 
-local config = {}
+local config = wezterm.config_builder()
 
-if wezterm.config_builder then
-	config = wezterm.config_builder()
-end
 -- Regular
-config.color_scheme = 'BlulocoDark'
+config.color_scheme = 'Catppuccin Mocha'
 config.enable_tab_bar = false
 config.font = wezterm.font {
 	family = base_font,
@@ -82,7 +79,7 @@ config.window_background_opacity = 0.9
 config.window_padding = {
 	left = 10,
 	right = 10,
-	top = 10,
+	top = 20,
 	bottom = 10,
 }
 

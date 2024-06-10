@@ -39,7 +39,6 @@ opt.wildmode       = { 'longest:full', 'full' }
 opt.ignorecase     = true
 opt.smartcase      = true
 
-vim.cmd 'colorscheme lmcs'
 vim.cmd 'autocmd TermOpen * setlocal nonumber foldcolumn=0'
 
 -- vim: set ts=2:sw=2:noet:sts=2:

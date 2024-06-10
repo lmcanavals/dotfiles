@@ -11,7 +11,7 @@ require 'lualine'.setup {
 	options = {
 		component_separators = '',
 		section_separators = '',
-		theme = 'codedark',
+		theme = 'catppuccin-mocha',
 	},
 	sections = {
 		lualine_b = {
@@ -47,7 +47,7 @@ require 'lualine'.setup {
 		lualine_x = {
 			{
 				function()
-					local msg = require('noice').api.statusline.mode.get()
+					local msg = require 'noice'.api.status.mode.get()
 					local _, endindex = string.find(msg, 'recording @')
 					if endindex ~= nil then
 						return '󰑊 ' .. string.sub(msg, endindex, endindex + 1)
@@ -55,7 +55,7 @@ require 'lualine'.setup {
 						return ''
 					end
 				end,
-				cond = require('noice').api.statusline.mode.has,
+				cond = require 'noice'.api.status.mode.has,
 				color = { fg = 'tomato' },
 			},
 			'encoding',

@@ -75,7 +75,26 @@ require 'lazy'.setup({
 	{
 		'folke/noice.nvim',
 		event = 'VeryLazy',
-		opts = {},
+		opts = {
+			lsp = {
+				override = {
+					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+					["vim.lsp.util.stylize_markdown"] = true,
+					["cmp.entry.get_documentation"] = true,
+				},
+			},
+			presets = {
+				bottom_search = true,
+				command_palette = true,
+				long_message_to_split = true,
+				inc_rename = false,
+				lsp_doc_border = false,
+			},
+			status = {
+				'ruler', -- TODO what the hell does this do?
+				'mode',
+			},
+		},
 		dependencies = {
 			'MunifTanjim/nui.nvim',
 			'rcarriga/nvim-notify',
@@ -160,10 +179,23 @@ require 'lazy'.setup({
 			'williamboman/mason.nvim',
 		},
 	},
-	{ 'Bilal2453/luvit-meta',        lazy = true },
-	{ 'chrisbra/csv.vim',            ft = 'csv' },
-	{ 'dylon/vim-antlr',             ft = { 'antlr3', 'antlr4' } },
-	{ 'norcalli/nvim-colorizer.lua', event = 'VeryLazy' },
+	{
+		'catppuccin/nvim',
+		name = 'catppuccin',
+		priority = 1000,
+	},
+	{
+		'Bilal2453/luvit-meta', lazy = true,
+	},
+	{
+		'chrisbra/csv.vim', ft = 'csv',
+	},
+	{
+		'dylon/vim-antlr', ft = { 'antlr3', 'antlr4' },
+	},
+	{
+		'norcalli/nvim-colorizer.lua', event = 'VeryLazy',
+	},
 	'folke/lazy.nvim',
 	'tpope/vim-fugitive',
 	'tpope/vim-rhubarb',
