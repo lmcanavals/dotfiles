@@ -19,6 +19,10 @@
     <property name="dpms-on-ac-off" type="uint" value="20"/>
     <property name="dpms-enabled" type="bool" value="true"/>
     <property name="inactivity-on-ac" type="uint" value="25"/>
-    <property name="inactivity-on-battery" type="uint" value="30"/>
+    <property name="inactivity-on-battery" type="uint" value="25"/>
+    <property name="power-button-action" type="uint" value="3"/>
+    <property name="sleep-button-action" type="uint" value="3"/>
+    <property name="hibernate-button-action" type="uint" value="3"/>
+    <property name="battery-button-action" type="uint" value="3"/>
   </property>
 </channel>
