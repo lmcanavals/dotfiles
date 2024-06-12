@@ -314,6 +314,15 @@ Not used anymore (maybe, some come as dependencies):
 
 ### As user
 
+#### Colors themes and cheese
+
+* Bat: there is an environment variable on .zshrc.pre `BAT_THEME`, themes are on
+.config/bat/themes they may need an update from time to time!
+* Wezterm, stuff is in the config file
+* neovim, there is a catppuccin file in after/plugin and the lazy line
+
+#### Other classic stuff to take care of
+
 **Screen tearing on xfce**
 [Source](https://techstop.github.io/fix-screen-tearing-xfce/), in short do this:
 

@@ -83,7 +83,7 @@ if command -v starship &> /dev/null; then
 	eval "$(starship init zsh)"
 	LCSTARSHIP=1
 fi
-export LCSTARTSHIP
+export LCSTARSHIP
 
 #
 # Shortcuts and aliases

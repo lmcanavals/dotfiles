@@ -12,6 +12,8 @@ export DIFFPROG='nvim -d'
 #export DIFFSEARCHPATH='/etc' # override the search path (only when using find)
 #export MERGEPROG='diff3 -m'  # override the 3-way merge program
 
+export BAT_THEME="Catppuccin $([[ $LCTHEME == "dark" ]] && echo Mocha || Latte)"
+
 localismosh && export ISMOSHBRUH="yup"
 
 # vim: set ts=2:sw=2:noet:sts=2:
