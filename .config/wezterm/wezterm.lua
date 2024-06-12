@@ -10,9 +10,13 @@ local diagnostics_font = 'Monaspace Krypton'
 
 local config = wezterm.config_builder()
 
--- Regular
+-- color theme stuff
 config.color_scheme = 'Catppuccin Mocha'
-config.enable_tab_bar = false
+config.set_environment_variables = {
+	LCTHEME = 'dark' -- set it to have apps match the theme light or dark
+}
+
+-- fonts
 config.font = wezterm.font {
 	family = base_font,
 	weight = "Regular",
@@ -53,7 +57,6 @@ config.font_rules = {
 		},
 	},
 }
-
 config.font_size = 12
 config.harfbuzz_features = {
 	-- 'cv01',
@@ -71,9 +74,12 @@ config.harfbuzz_features = {
 	-- 'calt',
 	-- 'dlig'
 }
+
+-- window
 config.initial_rows = 30
 config.initial_cols = 120
---config.term = 'wezterm'
+config.enable_tab_bar = false
+-- config.term = 'wezterm'
 -- config.window_decorations = "TITLE | RESIZE"
 config.window_background_opacity = 0.9
 config.window_padding = {

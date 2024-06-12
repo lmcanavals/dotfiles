@@ -5,7 +5,7 @@ if vim.g.debug then print "lmcsnvim.set" end
 
 local opt          = vim.opt
 
-opt.background     = 'dark'
+opt.background     = vim.env.LCTHEME or 'dark'
 opt.colorcolumn    = '81'
 opt.completeopt    = { 'menuone', 'noselect' }
 opt.cursorcolumn   = true
