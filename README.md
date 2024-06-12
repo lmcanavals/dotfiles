@@ -141,6 +141,7 @@ su - lmcs
 cd ~
 git clone --bare https://github.com/lmcanavals/dotfiles.git .dotfiles.git
 git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME checkout
+dotfiles config --local core.worktree $HOME
 <c-d>
 cd /home/lmcs/.root/
 cp etc/hostname /etc/
@@ -320,6 +321,7 @@ Not used anymore (maybe, some come as dependencies):
 .config/bat/themes they may need an update from time to time!
 * Wezterm, stuff is in the config file
 * neovim, there is a catppuccin file in after/plugin and the lazy line
+* bottom is set on it's config file directly
 
 #### Other classic stuff to take care of
 

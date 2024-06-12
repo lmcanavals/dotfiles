@@ -94,7 +94,6 @@ rust.sh
 .config/akonadi/
 .config/autostart/
 .config/blender/
-.config/bottom/
 .config/cef_user_data/
 .config/coc/
 .config/configstore/

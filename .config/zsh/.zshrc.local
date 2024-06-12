@@ -93,6 +93,7 @@ abk+=(
 	"da"  " dotfiles add ."
 	"dc"  " dotfiles commit -a -m \"\""
 	"dd"  " dotfiles difftool"
+	"de"  " GIT_DIR=$HOME/.dotfiles.git GIT_WORK_TREE=$HOME nvim "
 	"dp"  " dotfiles push"
 	"dl"  " dotfiles pull"
 	"dr"  " dotfiles restore "
