@@ -24,7 +24,7 @@
     <property name="CanChangeAccels" type="empty"/>
     <property name="ColorPalette" type="empty"/>
     <property name="FontName" type="string" value="Carlito 10"/>
-    <property name="MonospaceFontName" type="string" value="Maple Mono Light 12"/>
+    <property name="MonospaceFontName" type="string" value="Maple Mono NF 14"/>
     <property name="IconSizes" type="empty"/>
     <property name="KeyThemeName" type="empty"/>
     <property name="ToolbarStyle" type="empty"/>

@@ -1,73 +1,74 @@
 -- my own cool config
 -- @author lmcs
 
-local wezterm = require 'wezterm'
+local wezterm = require("wezterm")
 
-local base_font = 'Maple Mono'
-local string_font = 'FiraCode Nerd Font'
-local comment_font = 'Maple Mono'
-local diagnostics_font = 'Monaspace Krypton'
+local base_font = "Maple Mono NF"
+local string_font = "FiraCode Nerd Font"
+local comment_font = "Maple Mono NF"
+local halfitalic_font = "Victor Mono Nerd Font"
+local diagnostics_font = "Monaspace Krypton"
 
 local config = wezterm.config_builder()
 
 -- color theme stuff
-config.color_scheme = 'Catppuccin Mocha'
+config.color_scheme = "Catppuccin Mocha"
 config.set_environment_variables = {
-	LCTHEME = 'dark' -- set it to have apps match the theme light or dark
+	LCTHEME = "dark", -- set it to have apps match the theme light or dark
 }
 
 -- fonts
-config.font = wezterm.font {
+config.font = wezterm.font({
 	family = base_font,
 	weight = "Regular",
-}
+})
 config.font_rules = {
 	{
 		italic = false,
-		intensity = 'Bold',
-		font = wezterm.font {
+		intensity = "Bold",
+		font = wezterm.font({
 			family = string_font,
-			weight = 'Regular',
-		}
+			weight = "Regular",
+		}),
 	},
 	{
 		italic = true,
-		intensity = 'Bold',
-		font = wezterm.font {
+		intensity = "Bold",
+		font = wezterm.font({
 			family = diagnostics_font,
-			style = 'Normal',
-			weight = 'Light',
-		}
+			style = "Normal",
+			weight = "Light",
+		}),
 	},
 	{
 		italic = true,
-		intensity = 'Half',
-		font = wezterm.font {
-			family = comment_font,
-			weight = 'DemiBold',
-		},
+		intensity = "Half",
+		font = wezterm.font({
+			family = halfitalic_font,
+			weight = "DemiBold",
+		}),
 	},
 	{
 		italic = true,
-		intensity = 'Normal',
-		font = wezterm.font {
+		intensity = "Normal",
+		font = wezterm.font({
 			family = comment_font,
-			style = 'Italic',
-			weight = 'Light',
-		},
+			style = "Italic",
+			weight = "Light",
+		}),
 	},
 }
 config.font_size = 12
 config.harfbuzz_features = {
 	-- 'cv01',
-	'cv02',
+	"cv02",
 	-- 'cv03',
 	-- 'cv04',
-	'ss01',
-	'ss02',
-	'ss03',
-	'ss04',
-	'ss05',
+	"ss01",
+	"ss02",
+	"ss03",
+	"ss04",
+	"ss05",
 	-- 'ss06',
 	-- 'ss07',
 	-- 'ss08',

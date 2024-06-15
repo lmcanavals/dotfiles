@@ -1,8 +1,7 @@
--- author:  lmcanavals
--- date:    2023-07-14
-
-if vim.g.debug then print "lmcsnvim.folds" end
-
+-- Options are automatically loaded before lazy.nvim startup
+-- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
+-- Add any additional options here
+--
 local v = vim.v
 local fn = vim.fn
 
@@ -16,13 +15,13 @@ function LmcsFoldText()
 	repeat
 		line = string.gsub(fn.getline(v.foldstart + i), "^%s+", newindent)
 		i = i + 1
-		if string.gsub(line, '%s+', '') ~= '{' then
+		if string.gsub(line, "%s+", "") ~= "{" then
 			goodline = true
 		end
 	until goodline or v.foldstart + i > v.foldend
-	local llen = string.len(line)      -- line length
+	local llen = string.len(line) -- line length
 	local lclen = string.len(lineCount) -- line count length
-	local width = 78                   -- TODO min(78, window width)
+	local width = 78 -- TODO min(78, window width)
 
 	if llen < width - lclen then
 		line = line .. string.rep(" ", width - llen - lclen)
@@ -32,6 +31,6 @@ function LmcsFoldText()
 	return line .. lineCount .. " "
 end
 
-vim.opt.foldtext = 'v:lua.LmcsFoldText()'
-
--- vim: set ts=2:sw=2:noet:sts=2:
+vim.opt.colorcolumn = "81"
+vim.opt.background = vim.env.LCTHEME or "dark"
+vim.opt.foldtext = "v:lua.LmcsFoldText()"
