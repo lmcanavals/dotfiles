@@ -21,113 +21,123 @@ $lua\
 $username\
 $hostname\
 $directory"""
-continuation_prompt = " [󰘍_](bright-purple) "
+continuation_prompt = "[ 󰘍_ ](bg:surface2 yellow) "
+palette = "catppuccin_mocha"
 
 [character]
-format = "$symbol "
-error_symbol = "[☼](red)"
-success_symbol = "[♪](green)"
-vimcmd_symbol = "[:](bright-yellow)"
-vimcmd_replace_one_symbol = "[:](bright-purple)"
-vimcmd_replace_symbol = "[:](yellow)"
-vimcmd_visual_symbol = "[:](cyan)"
+format = "$symbol"
+error_symbol = "[  ](bg:surface1 red)"
+success_symbol = "[  ](bg:surface1 peach)"
+vimcmd_symbol = "[ : ](bg:surface1 teal)"
+vimcmd_replace_one_symbol = "[ : ](bg:surface1 sky)"
+vimcmd_replace_symbol = "[ : ](bg:surface1 sapphire)"
+vimcmd_visual_symbol = "[ : ](bg:surface1 blue)"
 
 [cmake]
-format = "[$symbol($version )]($style)"
-style = "blue"
+format = "[$symbol($version•)]($style)"
+style = "bg:surface1 blue"
 version_format = "${major}.${minor}"
 
 [cmd_duration]
-format = "[$duration]($style) "
+format = "[($duration•)]($style)"
 min_time = 10_000
 show_notifications = true
-style = "yellow"
+style = "bg:surface1 peach"
 
 [conda]
-format = "[$symbol$environment]($style) "
-style = "purple"
+format = "[$symbol($environment•)]($style) "
+style = "bg:surface1 lavander"
 symbol = " "
 
 [deno]
 detect_extensions = ["js"]
 detect_folders = ["js"]
-format = "[$symbol($version )]($style)"
-style = "bright-cyan"
+format = "[$symbol($version•)]($style)"
+style = "bg:surface1 teal"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [directory]
 format = "[$path]($style)[$read_only]($read_only_style)"
 home_symbol = "󱂵 "
-read_only = " "
-style = "bright-blue"
+read_only = "󰉐 "
+style = "bg:surface1 sapphire"
+read_only_style = "bg:peach crust"
 truncation_length = 1
 truncation_symbol = "…"
 fish_style_pwd_dir_length = 1
 
 [git_branch]
-format = "[$symbol$branch]($style) "
-style = "bright-yellow"
+format = "[$symbol($branch•)]($style)"
+style = "bg:surface1 mauve"
+symbol = ""
 
 [git_commit]
+format = "[($hash$tag)]($style)"
+style = "bg:surface1 green"
 
 [git_state]
+format = "[$state($progress_current/$progress_total)]($style)"
+style = "bg:surface1 yellow"
 
 [git_status]
-format = "([$all_status$ahead_behind]($style) )"
+format = "([$all_status$ahead_behind]($style))"
+style = "bg:surface1 red"
 
 [golang]
-format = "[$symbol($version )]($style)"
-style = "bright-cyan"
+format = "[$symbol($version•)]($style)"
+style = "bg:surface1 teal"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [hostname]
 format = "[$hostname]($style):"
-style = "yellow"
+style = "bg:surface1 yellow"
 
 [java]
-format = "[$symbol($version )]($style)"
-style = "bright-cyan"
+format = "[$symbol($version•)]($style)"
+style = "bg:surface1 teal"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [jobs]
-style = "bright-blue"
-symbol = " "
+format = "[$symbol$number]($style)"
+style = "bg:surface1 bright-blue"
+symbol = "󱀝 "
 
 [julia]
-format = "[$symbol($version )]($style)"
-style = "bright-cyan"
+format = "[$symbol($version•)]($style)"
+style = "bg:surface1 teal"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [lua]
-format = "[$symbol($version )]($style)"
-style = "bright-cyan"
+format = "[$symbol($version•)]($style)"
+style = "bg:surface1 teal"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [python]
-format = "[(󱧶 $virtualenv )](purple)[${symbol}(${version} )]($style)"
-style = "bright-cyan"
-symbol = " "
+format = "[$symbol(\\($virtualenv\\))($version•)]($style)"
+style = "bg:surface1 teal"
+symbol = " "
 version_format = "${major}.${minor}"
 
 [rust]
-format = "[$symbol($version )]($style)"
-style = "bright-cyan"
+format = "[$symbol($version•)]($style)"
+style = "bg:surface1 teal"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [status]
 disabled = false
-format = "[$status]($style)"
+format = "[ $status ]($style)"
+style = "bg:red mantle"
 
 [username]
-format = "[$user ]($style)"
-style_root = "red"
-style_user = "green"
+format = "[($user•)]($style)"
+style_root = "bg:surface1 red"
+style_user = "bg:surface1 green"
 
 [kotlin]
 disabled = true
@@ -205,4 +215,32 @@ disabled = true
 disabled = true
 [zig]
 disabled = true
+
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"
 

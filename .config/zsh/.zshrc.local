@@ -28,7 +28,7 @@ function prompt_color() {
 function left_prompt() {
 	local s
 	[[ $KEYMAP == vicmd ]] && s=":" || s="_"
-	print "$(prompt_color)%#$s%{$reset_color%} "
+	print "$(prompt_color)┏━━━󰧞\n ┗󰧞 %#$s%{$reset_color%} "
 }
 function right_prompt() {
 	local s
