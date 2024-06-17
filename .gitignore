@@ -158,6 +158,10 @@ go/
 llvm-project/
 shared/
 
+# Multifolder stuff
+
+**/a.out
+
 # exception rules
 
 .config/asciinema/*
