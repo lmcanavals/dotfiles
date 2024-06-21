@@ -16,6 +16,7 @@ return {
 					NormalFloat = { style = { "italic", "bold" } },
 					VisualNOS = { style = { "underdouble" } },
 					String = { style = { "bold" } },
+					IblScope = { fg = colors.overlay0 },
 				}
 			end,
 			dim_inactive = {
