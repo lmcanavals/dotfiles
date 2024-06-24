@@ -5,23 +5,31 @@ return {
 		opts = function(_, opts)
 			opts.options.component_separators = ""
 			opts.options.section_separators = ""
-			table.insert(opts.sections.lualine_b, {
-				function()
-					local msg = ""
-					local clients = vim.lsp.get_clients()
-					if next(clients) == nil then
-						return msg
-					end
-					for _, client in ipairs(clients) do
-						if not client.is_stopped() then
-							msg = msg .. client.name .. " "
+			opts.sections.lualine_y = {
+				{
+					function()
+						local msg = ""
+						local i = 0
+						local clients = vim.lsp.get_clients()
+						if next(clients) == nil then
+							return msg
 						end
-					end
-					return msg
-				end,
-				color = { fg = "peru", gui = "bold" },
-				icon = "",
-			})
+						for _, client in ipairs(clients) do
+							if not client.is_stopped() then
+								msg = (i == 0 and "" or ",") .. msg .. client.name
+								i = i + 1
+							end
+						end
+						return msg
+					end,
+					color = { fg = "gold", gui = "italic,bold" },
+					icon = "",
+				},
+			}
+			opts.sections.lualine_z = {
+				{ "progress", padding = { left = 1, right = 0 } },
+				{ "location", padding = { left = 0, right = 1 } },
+			}
 		end,
 	},
 }
