@@ -12,6 +12,7 @@ export DIFFPROG='nvim -d'
 #export DIFFSEARCHPATH='/etc' # override the search path (only when using find)
 #export MERGEPROG='diff3 -m'  # override the 3-way merge program
 
+# Theme stuff
 export BAT_THEME="Catppuccin $([[ $LCTHEME == "dark" ]] && echo Mocha || Latte)"
 
 localismosh && export ISMOSHBRUH="yup"

@@ -191,6 +191,5 @@ lmcs_plugins=(
 	zdharma-continuum/fast-syntax-highlighting
 )
 lmcs-plugman load
-#ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 
 # vim: set ts=2:sw=2:noet:sts=2:
