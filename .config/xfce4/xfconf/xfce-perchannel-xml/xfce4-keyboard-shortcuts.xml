@@ -152,7 +152,6 @@
       <property name="&lt;Primary&gt;&lt;Alt&gt;KP_5" type="string" value="move_window_workspace_5_key"/>
       <property name="&lt;Primary&gt;F11" type="string" value="workspace_11_key"/>
       <property name="&lt;Alt&gt;F10" type="string" value="maximize_window_key"/>
-      <property name="&lt;Alt&gt;Delete" type="string" value="del_workspace_key"/>
       <property name="&lt;Super&gt;Tab" type="string" value="switch_window_key"/>
       <property name="&lt;Primary&gt;&lt;Alt&gt;d" type="string" value="show_desktop_key"/>
       <property name="&lt;Super&gt;KP_Page_Up" type="string" value="tile_up_right_key"/>
@@ -178,7 +177,6 @@
       <property name="&lt;Alt&gt;F9" type="string" value="hide_window_key"/>
       <property name="Left" type="string" value="left_key"/>
       <property name="&lt;Primary&gt;&lt;Alt&gt;KP_8" type="string" value="move_window_workspace_8_key"/>
-      <property name="&lt;Alt&gt;Insert" type="string" value="add_workspace_key"/>
       <property name="override" type="bool" value="true"/>
       <property name="&lt;Super&gt;1" type="string" value="workspace_1_key"/>
       <property name="&lt;Super&gt;2" type="string" value="workspace_2_key"/>
