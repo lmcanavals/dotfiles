@@ -1,11 +1,24 @@
 # My Arch Linux Installation Guide v7 Sway edition
 
+<!--toc:start-->
+- [My Arch Linux Installation Guide v7 Sway edition](#my-arch-linux-installation-guide-v7-sway-edition)
+  - [Partitions](#partitions)
+  - [Installing and setting the base system](#installing-and-setting-the-base-system)
+  - [After the first reboot](#after-the-first-reboot)
+    - [As user](#as-user)
+      - [Colors themes and cheese](#colors-themes-and-cheese)
+      - [Other classic stuff to take care of](#other-classic-stuff-to-take-care-of)
+    - [As super user](#as-super-user)
+  - [Tweaks and hacks](#tweaks-and-hacks)
+<!--toc:end-->
+
 Starting from installation media
 
 ```sh
 loadkeys dvorak         # in case we need to change the keyboard settings
 setfont LatArCyrHeb-16  # better fonts
 ```
+
 Umask for group permissions
 [Link here](http://unix.stackexchange.com/questions/75972/)
 
@@ -26,7 +39,7 @@ gdisk /dev/sda
 Inside gdisk, `o` creates a GPT, `n` to create new partitions `+xxG` is
 the format where xx is the size.
 
-**BIOS Partition table**
+### BIOS Partition table
 
  Dev |  Size | Mount point              | File system | gdisk type code
 :---:|------:|--------------------------|:-----------:|-----------------
@@ -235,11 +248,11 @@ sudo pacman -S \
 papirus-icon-theme gnome-themes-extra \
 file-roller unrar p7zip ntp imagemagick \
 gammastep mosh network-manager-applet pavucontrol \
-keepassxc haveged jq \
+keepassxc haveged jq lazygit bluez bluez-utils blueman \
 firefox solaar \
-bat eza fd procs sd ripgrep dust tokei bottom \
+bat eza fd procs sd ripgrep dust tokei bottom fzf \
 qt6-wayland qt6ct \
-cmake clang \
+cmake clang deno \
 xournalpp mousepad *gopls *webp-pixbuf-loader
 ```
 
@@ -285,43 +298,42 @@ sudo pacman -S obs-studio linux-headers v4l2loopback-dkms
 
 Check if new versions work on wayland:
 
-* ksnip, flameshot
-
+- ksnip, flameshot
 
 Optional:
 
-* pyright, deno, ccls, {lua,bash}-language-server # installed via mason
-* kitty # now using wezterm because it's written in rust
-* droidcam # android phone as webcam
-* arc-solid-gtk-theme
-* noto-fonts ttf-fira-mono ttf-fira-sans
-* inkscape # for svg awesome
-* krita # super awesome drawing tool to be used with wacom tablets
-* dropbox thunar-dropbox
-* steam vlc
-* xf86-video-intel libva-intel-driver
-* xf86-input-wacom
-* nvidia nvidia-settings
-* cdrkit # mkisofs, wodim and stuff
+- pyright, deno, ccls, {lua,bash}-language-server # installed via mason
+- kitty # now using wezterm because it's written in rust
+- droidcam # android phone as webcam
+- arc-solid-gtk-theme
+- noto-fonts ttf-fira-mono ttf-fira-sans
+- inkscape # for svg awesome
+- krita # super awesome drawing tool to be used with wacom tablets
+- dropbox thunar-dropbox
+- steam vlc
+- xf86-video-intel libva-intel-driver
+- xf86-input-wacom
+- nvidia nvidia-settings
+- cdrkit # mkisofs, wodim and stuff
 
 Not used anymore (maybe, some come as dependencies):
 
-* livestreamer # to stream in VLC from twitch.tv and others
-* mupen64plus # nintendo 64 emulator
-* easytag # mp3 metadata editor
-* hexedit # aoeu
-* aria2 # download everything in style
-* cmus # music player
+- livestreamer # to stream in VLC from twitch.tv and others
+- mupen64plus # nintendo 64 emulator
+- easytag # mp3 metadata editor
+- hexedit # aoeu
+- aria2 # download everything in style
+- cmus # music player
 
 ### As user
 
 #### Colors themes and cheese
 
-* Bat: there is an environment variable on .zshrc.pre `BAT_THEME`, themes are on
+- Bat: there is an environment variable on .zshrc.pre `BAT_THEME`, themes are on
 .config/bat/themes they may need an update from time to time!
-* Wezterm, stuff is in the config file
-* neovim, there is a catppuccin file in after/plugin and the lazy line
-* bottom is set on it's config file directly
+- Wezterm, stuff is in the config file
+- neovim, there is a catppuccin file in after/plugin and the lazy line
+- bottom is set on it's config file directly
 
 #### Other classic stuff to take care of
 
@@ -363,7 +375,6 @@ Then to mount the cloud remote, here `googledrive` is the remote's name:
 rclone --vfs-cache-mode writes mount googledrive: ~/GoogleDrive
 ```
 
-
 To use **droidcam** activate usb debugging on the android device developer
 settings, connect the phone, open the app droidcamx (paid version for better
 resolution), then open droidcam. do `adb devices` to start the server. Now you
@@ -386,18 +397,18 @@ Check the arch wiki for it.
 ```sh
 npm config set prefix '~/.local/'
 npm install -g typescript typescript-language-server \
-	diagnostic-languageserver eslint_d
+ diagnostic-languageserver eslint_d
 ```
 
-**User home directories**
+User home directories:
 
 Run `xdg-user-dirs-update`
 
 ### As super user
 
-Avatar on lightdm follow instructions on this 
+Avatar on lightdm follow instructions on this
 [link](https://wiki.archlinux.org/index.php/LightDM#The_AccountsService_way)
-(xfce4 rotating wallpapers overwrites `/var/lib/AccountsService/users/lmcs`,
+(Xfce4 rotating wallpapers overwrites `/var/lib/AccountsService/users/lmcs`,
 messing up the avatar setting)
 
 To change base configuration files:
@@ -415,18 +426,18 @@ systemctl disable remote-fs.target
 timedatectl set-ntp 1
 systemctl enable NetworkManager.service
 systemctl enable tlp
-systemctl enable haveged # entrophy daemon for cryptographic awesome.
+systemctl enable haveged # entropy daemon for cryptographic awesome.
 ```
 
-**Updating mirrorlists**
+#### Updating mirror lists
 
-When Pacman mirrorlist is updated, re-generate `/etc/pacmand.d/mirrorlist`:
+When Pacman mirror list is updated, re-generate `/etc/pacmand.d/mirrorlist`:
 
 ```sh
 sudo lmcsupdatemirrors
 ```
 
-**Notes**
+Notes: Nothing for now I guess...
 
 ## Tweaks and hacks
 
@@ -434,14 +445,14 @@ sudo lmcsupdatemirrors
 
 ```sh
 gsettings set org.gnome.desktop.interface color-scheme prefer-dark
-# the next few are synced with xfce appearance
+# the next few are synced with Xfce appearance
 gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
 gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
 gsettings set org.gnome.desktop.interface font-name 'Carlito 10'
 gsettings set org.gnome.desktop.interface monospace-font-name 'Maple Mono 14'
 ```
 
-**Java**
+Java:
 
 Install preferably on `~/Apps`, rename from `jdk-x.x.x` to `java` then as root:
 

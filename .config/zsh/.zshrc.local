@@ -137,6 +137,7 @@ alias dotfiles="git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME "
 # some extra sources
 #
 [[ -s $ZDOTDIR/dynamic.zsh ]] && source $ZDOTDIR/dynamic.zsh
+source <(fzf --zsh)
 
 #
 # plugin manager
