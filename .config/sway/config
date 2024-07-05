@@ -79,8 +79,9 @@ output {
 ### Input configuration
 input type:keyboard {
 	xkb_layout "us,us,latam"
-	xkb_variant "dvorak-alt-intl,dvorak-intl,"
-	xkb_options "grp:alt_altgr_toggle"
+	#xkb_variant "dvorak-alt-intl,dvorak-intl,"
+  xkb_variant "altgr-intl,intl,"
+	xkb_options "grp:alt_altgr_toggle,caps:escape_shifted_capslock"
 	xkb_numlock enabled
 }
 input type:touchpad {
@@ -112,14 +113,15 @@ exec {
 	#dbus-update-activation-environment \
 	#	--systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 	dbus-update-activation-environment --all
-	gnome-keyring-daemon --start --components=pkcs11,secrets,ssh
+	#gnome-keyring-daemon --start --components=pkcs11,secrets,ssh
 	export SSH_AUTH_SOCK
 
 	nm-applet --indicator
 	gammastep-indicator
 
 	kanshi
-	paplay /usr/share/sounds/deepin/stereo/desktop-login.wav
+  mplayer /usr/share/sounds/Smooth/stereo/desktop-login.oga &
+	#paplay /usr/share/sounds/deepin/stereo/desktop-login.wav
 }
 
 exec_always {

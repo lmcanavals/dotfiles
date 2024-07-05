@@ -102,6 +102,7 @@ rust.sh
 .config/github-copilot/
 .config/go/
 .config/google-chrome/
+.config/gthumb/
 .config/gtk-4.0/
 .config/higan/
 .config/hiro/
