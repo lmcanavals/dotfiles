@@ -42,6 +42,7 @@ rust.sh
 .config/xfce4/help.rc
 .config/xfce4/helpers.rc
 .config/xfce4/terminal/accels.scm
+.config/xfce4/xfce4-screenshooter
 .config/xfce4/xfce4-taskmanager.rc
 .config/xfce4/xfconf/xfce-perchannel-xml/displays.xml
 .config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml

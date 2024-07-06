@@ -11,9 +11,10 @@ config.set_environment_variables = {
 }
 
 -- background awesome
-local dimmer = { hue = 0.01, brightness = 0.1 }
+local dimmer = { hue = 0.99, brightness = 0.05 }
 
 local bgfolder = ".local/share/backgrounds/"
+local bgsolid = bgfolder .. "bg000000cd.png"
 local bg0 = bgfolder .. "bg0tr.png"
 local bg1 = bgfolder .. "bg1tr.png"
 local bg2 = bgfolder .. "bg2tr.png"
@@ -26,10 +27,7 @@ local bg3 = bgfolder .. "bg3tr.png"
 --}
 config.background = {
 	{
-		width = "100%",
-		height = "100%",
-		hsb = { brightness = 0.05 },
-		source = { Color = "darkred" },
+		source = { File = bgsolid },
 	},
 	{
 		attachment = { Parallax = 0.1 },

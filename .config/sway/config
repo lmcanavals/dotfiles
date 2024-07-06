@@ -98,7 +98,7 @@ include binds.swayconfig
 #
 # Status Bar:
 bar {
-	swaybar_command waybar 
+	swaybar_command waybar
 }
 
 exec {
