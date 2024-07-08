@@ -1,174 +1,322 @@
 {
-	// "layer": "top", // Waybar at top layer
-	// "position": "bottom", // Waybar position (top|bottom|left|right)
-	// "width": 1280, // Waybar width
-	"height": 30,
-	"spacing": 4, // Gaps between modules (4px)
-	"modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad"],
-	"modules-center": ["sway/window"],
-	"modules-right": [
-		"sway/language",
-		"pulseaudio",
-		"temperature",
-		"cpu",
-		"memory",
-		"backlight",
-		"battery",
-		"network",
-		"tray",
-		"clock",
-		"idle_inhibitor"
-	],
-	// Modules configuration
-	"sway/language": {
-		"format": "{short}󰌌 ",
-		"tooltip-format": "{flag} {long}",
-	},
-	"sway/mode": {
-		"format": "󰮫 {}"
-	},
-	"sway/scratchpad": {
-		"format": "{icon}",
-		"show-empty": false,
-		"format-icons": ["", "󰖲"],
-		"tooltip": true,
-		"tooltip-format": "{app}: {title}"
-	},
-	"sway/window": {
-		"icon": true,
-		"max-length": 75,
-		"rewrite": {
-			"(.*) - Mozilla Firefox": "$1",
-			"(.*) and \\d+ more page(.*)": "$1",
-			"(.*) - Personal - Microsoft(.*)": "$1"
-		}
-	},
-	"sway/workspaces": {
-		"disable-scroll": true,
-		"warp-on-scroll": true,
-		"format": "{name}: {icon}",
-		"format-icons": {
-			"1": "",
-			"2": "󰇧",
-			"3": "",
-			"4": "󱌢",
-			"5": "󱝉",
-			"urgent": "",
-			"focused": "󰓾",
-			"default": ""
-		}
-	},
-	"backlight": {
-		// "device": "acpi_video1",
-		"format": "{icon}",
-		"format-icons": ["", "", "", "", "", "", "", "", ""],
-		"tooltip-format": "{percent}% {icon}"
-	},
-	"battery": {
-		"states": {
-			"good": 95,
-			"warning": 30,
-			"critical": 15
-		},
-		"format": "{icon}",
-		"format-charging": "{icon}󱐋",
-		"format-plugged": "{icon}󰚥",
-		"format-alt": "{time} {icon}",
-		"format-good": "{icon}", // An empty format will hide the module
-		"format-full": "{icon}",
-		"format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
-		"format-time": "{H} h {M} min",
-		"full-at": 95
-	},
-	"clock": {
-		// "timezone": "America/Lima",
-		"format": "{:%R}",
-		"format-alt": "{:%a, %d %b, %Y %R}",
-		"tooltip-format": "<span size='11pt' font='monospace'>{calendar}</span>",
-		"calendar": {
-			"mode"          : "year",
-			"mode-mon-col"  : 3,
-			"on-scroll"     : 1,
-			"on-click-right": "mode",
-			"format": {
-				"today": "<span background='Gold' color='Black'><b>{}</b></span>"
-			}
-		},
-		"actions": {
-			"on-click-right": "mode",
-			"on-click-forward": "tz_up",
-			"on-click-backward": "tz_down",
-			"on-scroll-up": "shift_up",
-			"on-scroll-down": "shift_down"
-		}
-	},
-	"cpu": {
-		"format": "{icon}",
-		"format-icons": ["󰋙", "󰫃", "󰫄", "󰫅", "󰫆", "󰪢", "󰫈"]
-	},
-	"idle_inhibitor": {
-		"format": "{icon}",
-		"format-icons": {
-			"activated": "󰒳 ",
-			"deactivated": "󰒲 "
-		}
-	},
-	"keyboard-state": {
-		"numlock": true,
-		"capslock": true,
-		"format": "{name} {icon}",
-		"format-icons": {
-			"locked": "",
-			"unlocked": ""
-		}
-	},
-	"memory": {
-		"format": "{icon}",
-		"format-icons": ["󰋙", "󰫃", "󰫄", "󰫅", "󰫆", "󰪢", "󰫈"]
-	},
-	"network": {
-		// "interface": "wlp2*", // (Optional) To force the use of this interface
-		"format": "󰛳",
-		"tooltip-format-ethernet": "Interface:\t\t{ifname}\nIP:\t\t\t{ipaddr}\nMask:\t\t{cidr}\nGateway:\t\t{gwaddr}",
-		"tooltip-format-wifi": "SSID:\t\t{essid}\nSignal strength:\t{signalStrength}% {icon}\nInterface:\t\t{ifname}\nIP:\t\t\t{ipaddr}\nMask:\t\t{cidr}\nGateway:\t\t{gwaddr}",
-		"format-linked": "{ifname} (No IP) 󰌙",
-		"format-disconnected": "{ifname} 󰲛",
-		"format-alt": "{ifname}: {ipaddr}/{cidr}",
-		"format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"]
-	},
-	"pulseaudio": {
-		"scroll-step": 5, // %, can be a float
-		"format": "{icon} {format_source}",
-		"format-headphones": "{icon} {format_source}",
-		"format-headphones-muted": "󰝛 󰝟 {format_source}",
-		"format-muted": "󰝛 󰝟 {format_source}",
-		"format-source": "",
-		"format-source-muted": "",
-		"format-icons": {
-			"default": ["󰕾 󰝦", "󰕾 󰪞", "󰕾 󰪟", "󰕾 󰪠", "󰕾 󰪡", "󰕾 󰪢", "󰕾 󰪣", "󰕾 󰪤", "󰕾 󰪥"],
-			"headphone": ["󰋋 󰝦", "󰋋 󰪞", "󰋋 󰪟", "󰋋 󰪠", "󰋋 󰪡", "󰋋 󰪢", "󰋋 󰪣", "󰋋 󰪤", "󰋋 󰪥"],
-			"speaker": ["󰓃 󰝦", "󰓃 󰪞", "󰓃 󰪟", "󰓃 󰪠", "󰓃 󰪡", "󰓃 󰪢", "󰓃 󰪣", "󰓃 󰪤", "󰓃 󰪥"],
-			"hdmi": ["󰡁 󰝦", "󰡁 󰪞", "󰡁 󰪟", "󰡁 󰪠", "󰡁 󰪡", "󰡁 󰪢", "󰡁 󰪣", "󰡁 󰪤", "󰡁 󰪥"],
-			"headset": ["󰋎 󰝦", "󰋎 󰪞", "󰋎 󰪟", "󰋎 󰪠", "󰋎 󰪡", "󰋎 󰪢", "󰋎 󰪣", "󰋎 󰪤", "󰋎 󰪥"],
-			"hands-free": ["󱡏 󰝦", "󱡏 󰪞", "󱡏 󰪟", "󱡏 󰪠", "󱡏 󰪡", "󱡏 󰪢", "󱡏 󰪣", "󱡏 󰪤", "󱡏 󰪥"],
-			"portable": ["󰲑 󰝦", "󰲑 󰪞", "󰲑 󰪟", "󰲑 󰪠", "󰲑 󰪡", "󰲑 󰪢", "󰲑 󰪣", "󰲑 󰪤", "󰲑 󰪥"],
-			"car": ["󰄋 󰝦", "󰄋 󰪞", "󰄋 󰪟", "󰄋 󰪠", "󰄋 󰪡", "󰄋 󰪢", "󰄋 󰪣", "󰄋 󰪤", "󰄋 󰪥"],
-			"hifi": ["󰴸 󰝦", "󰴸 󰪞", "󰴸 󰪟", "󰴸 󰪠", "󰴸 󰪡", "󰴸 󰪢", "󰴸 󰪣", "󰴸 󰪤", "󰴸 󰪥"],
-			"phone": ["󰏲 󰝦", "󰏲 󰪞", "󰏲 󰪟", "󰏲 󰪠", "󰏲 󰪡", "󰏲 󰪢", "󰏲 󰪣", "󰏲 󰪤", "󰏲 󰪥"],
-		},
-		"on-click": "pavucontrol"
-	},
-	"temperature": {
-		// "thermal-zone": 2,
-		// "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-		"critical-threshold": 85,
-		"format-critical": "{temperatureC}°C {icon}",
-		"format": "{icon}",
-		"format-icons": ["", "", "", "", ""]
-	},
-	"tray": {
-		"icon-size": 24,
-		"spacing": 0
-	},
+  "height": 30,
+  "spacing": 4,
+  "modules-left": [
+    "hyprland/workspaces",
+    "hyprland/submap"
+  ],
+  "modules-center": [
+    "hyprland/window"
+  ],
+  "modules-right": [
+    "hyprland/language",
+    "pulseaudio",
+    "temperature",
+    "cpu",
+    "memory",
+    "backlight",
+    "battery",
+    "network",
+    "tray",
+    "clock",
+    "idle_inhibitor"
+  ],
+  "hyprland/language": {
+    "format": "{}",
+    "format-en": "🇺🇸",
+    "format-es": "🇵🇪"
+  },
+  "hyprland/submap": {
+    "format": "{}"
+  },
+  "sway/scratchpad": {
+    "format": "{icon}",
+    "show-empty": false,
+    "format-icons": [
+      "",
+      "󰖲"
+    ],
+    "tooltip": true,
+    "tooltip-format": "{app}: {title}"
+  },
+  "hyprland/window": {
+    "icon": true,
+    "max-length": 75,
+    "rewrite": {
+      "(.*) — Mozilla Firefox": "$1",
+      "(.*) and \\d+ more page(.*)": "$1",
+      "(.*) - Personal - Microsoft(.*)": "$1"
+    }
+  },
+  "hyprland/workspaces": {
+    "format": "{name}: {windows}",
+    "format-window-separator": " ",
+    "window-rewrite-default": "",
+    "window-rewrite": {
+      "title<.*youtube.*>": "",
+      "class<firefox>": "",
+      "class<firefox> title<.*github.*>": "",
+      "class<org.wezfurlong.wezterm>": "",
+      "class<org.wezfurlong.wezterm> title<.*nvim.*>": "",
+    },
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1"
+  },
+  "backlight": {
+    "format": "{icon}",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "tooltip-format": "{percent}% {icon}"
+  },
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon}",
+    "format-charging": "{icon}󱐋",
+    "format-plugged": "{icon}󰚥",
+    "format-alt": "{time} {icon}",
+    "format-good": "{icon}",
+    "format-full": "{icon}",
+    "format-icons": [
+      "󰂎",
+      "󰁺",
+      "󰁻",
+      "󰁼",
+      "󰁽",
+      "󰁾",
+      "󰁿",
+      "󰂀",
+      "󰂁",
+      "󰂂",
+      "󰁹"
+    ],
+    "format-time": "{H} h {M} min",
+    "full-at": 95
+  },
+  "clock": {
+    "format": "{:%R}",
+    "format-alt": "{:%a, %d %b, %Y %R}",
+    "tooltip-format": "<span size='11pt' font='monospace'>{calendar}</span>",
+    "calendar": {
+      "mode": "year",
+      "mode-mon-col": 3,
+      "on-scroll": 1,
+      "on-click-right": "mode",
+      "format": {
+        "today": "<span background='Gold' color='Black'><b>{}</b></span>"
+      }
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-click-forward": "tz_up",
+      "on-click-backward": "tz_down",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    }
+  },
+  "cpu": {
+    "format": "{icon}",
+    "format-icons": [
+      "󰋙",
+      "󰫃",
+      "󰫄",
+      "󰫅",
+      "󰫆",
+      "󰪢",
+      "󰫈"
+    ]
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "󰒳 ",
+      "deactivated": "󰒲 "
+    }
+  },
+  "keyboard-state": {
+    "numlock": true,
+    "capslock": true,
+    "format": "{name} {icon}",
+    "format-icons": {
+      "locked": "",
+      "unlocked": ""
+    }
+  },
+  "memory": {
+    "format": "{icon}",
+    "format-icons": [
+      "󰋙",
+      "󰫃",
+      "󰫄",
+      "󰫅",
+      "󰫆",
+      "󰪢",
+      "󰫈"
+    ]
+  },
+  "network": {
+    "format": "󰛳",
+    "tooltip-format-ethernet": "Interface:\t\t{ifname}\nIP:\t\t\t{ipaddr}\nMask:\t\t{cidr}\nGateway:\t\t{gwaddr}",
+    "tooltip-format-wifi": "SSID:\t\t{essid}\nSignal strength:\t{signalStrength}% {icon}\nInterface:\t\t{ifname}\nIP:\t\t\t{ipaddr}\nMask:\t\t{cidr}\nGateway:\t\t{gwaddr}",
+    "format-linked": "{ifname} (No IP) 󰌙",
+    "format-disconnected": "{ifname} 󰲛",
+    "format-alt": "{ifname}: {ipaddr}/{cidr}",
+    "format-icons": [
+      "󰤯",
+      "󰤟",
+      "󰤢",
+      "󰤥",
+      "󰤨"
+    ]
+  },
+  "pulseaudio": {
+    "scroll-step": 5,
+    "format": "{format_source} {icon}",
+    "format-headphones": "{format_source} {icon}",
+    "format-headphones-muted": "{format_source} 󰝛 󰝟",
+    "format-muted": "{format_source} 󰝛 󰝟",
+    "format-source": "",
+    "format-source-muted": "",
+    "format-icons": {
+      "default": [
+        "󰕾 󰝦",
+        "󰕾 󰪞",
+        "󰕾 󰪟",
+        "󰕾 󰪠",
+        "󰕾 󰪡",
+        "󰕾 󰪢",
+        "󰕾 󰪣",
+        "󰕾 󰪤",
+        "󰕾 󰪥"
+      ],
+      "headphone": [
+        "󰋋 󰝦",
+        "󰋋 󰪞",
+        "󰋋 󰪟",
+        "󰋋 󰪠",
+        "󰋋 󰪡",
+        "󰋋 󰪢",
+        "󰋋 󰪣",
+        "󰋋 󰪤",
+        "󰋋 󰪥"
+      ],
+      "speaker": [
+        "󰓃 󰝦",
+        "󰓃 󰪞",
+        "󰓃 󰪟",
+        "󰓃 󰪠",
+        "󰓃 󰪡",
+        "󰓃 󰪢",
+        "󰓃 󰪣",
+        "󰓃 󰪤",
+        "󰓃 󰪥"
+      ],
+      "hdmi": [
+        "󰡁 󰝦",
+        "󰡁 󰪞",
+        "󰡁 󰪟",
+        "󰡁 󰪠",
+        "󰡁 󰪡",
+        "󰡁 󰪢",
+        "󰡁 󰪣",
+        "󰡁 󰪤",
+        "󰡁 󰪥"
+      ],
+      "headset": [
+        "󰋎 󰝦",
+        "󰋎 󰪞",
+        "󰋎 󰪟",
+        "󰋎 󰪠",
+        "󰋎 󰪡",
+        "󰋎 󰪢",
+        "󰋎 󰪣",
+        "󰋎 󰪤",
+        "󰋎 󰪥"
+      ],
+      "hands-free": [
+        "󱡏 󰝦",
+        "󱡏 󰪞",
+        "󱡏 󰪟",
+        "󱡏 󰪠",
+        "󱡏 󰪡",
+        "󱡏 󰪢",
+        "󱡏 󰪣",
+        "󱡏 󰪤",
+        "󱡏 󰪥"
+      ],
+      "portable": [
+        "󰲑 󰝦",
+        "󰲑 󰪞",
+        "󰲑 󰪟",
+        "󰲑 󰪠",
+        "󰲑 󰪡",
+        "󰲑 󰪢",
+        "󰲑 󰪣",
+        "󰲑 󰪤",
+        "󰲑 󰪥"
+      ],
+      "car": [
+        "󰄋 󰝦",
+        "󰄋 󰪞",
+        "󰄋 󰪟",
+        "󰄋 󰪠",
+        "󰄋 󰪡",
+        "󰄋 󰪢",
+        "󰄋 󰪣",
+        "󰄋 󰪤",
+        "󰄋 󰪥"
+      ],
+      "hifi": [
+        "󰴸 󰝦",
+        "󰴸 󰪞",
+        "󰴸 󰪟",
+        "󰴸 󰪠",
+        "󰴸 󰪡",
+        "󰴸 󰪢",
+        "󰴸 󰪣",
+        "󰴸 󰪤",
+        "󰴸 󰪥"
+      ],
+      "phone": [
+        "󰏲 󰝦",
+        "󰏲 󰪞",
+        "󰏲 󰪟",
+        "󰏲 󰪠",
+        "󰏲 󰪡",
+        "󰏲 󰪢",
+        "󰏲 󰪣",
+        "󰏲 󰪤",
+        "󰏲 󰪥"
+      ]
+    },
+    "on-click": "pavucontrol"
+  },
+  "temperature": {
+    "critical-threshold": 85,
+    "format-critical": "{temperatureC}°C {icon}",
+    "format": "{icon}",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
+  },
+  "tray": {
+    "icon-size": 24,
+    "spacing": 0
+  }
 }
-

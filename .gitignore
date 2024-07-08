@@ -27,6 +27,8 @@ rust.sh
 .config/Trolltech.conf
 .config/emaildefaults
 .config/emailidentities
+.config/font-manager/Sources.xml
+.config/fontconfig/conf.d/09-Directories.conf
 .config/gh/hosts.yml
 .config/gtkrc-2.0
 .config/kdeglobals
