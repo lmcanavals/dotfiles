@@ -124,11 +124,25 @@ config.enable_tab_bar = false
 -- config.term = 'wezterm'
 -- config.window_decorations = "TITLE | RESIZE"
 -- config.window_background_opacity = 0.9
-config.window_padding = {
-	left = 10,
-	right = 10,
-	top = 20,
-	bottom = 10,
-}
+function Recompute_padding(window)
+	local overrides = window:get_config_overrides() or {}
+	local win_dims = window:get_dimensions()
+	local pane_dims = window:active_pane():get_dimensions()
+
+	local new_padding = {
+		left = math.floor((win_dims.pixel_width - pane_dims.pixel_width) / 2),
+		top = math.floor((win_dims.pixel_height - pane_dims.pixel_height) / 2),
+	}
+	overrides.window_padding = new_padding
+	window:set_config_overrides(overrides)
+end
+
+wezterm.on("window-resized", function(window, _)
+	Recompute_padding(window)
+end)
+
+wezterm.on("window-config-reloaded", function(window)
+	Recompute_padding(window)
+end)
 
 return config

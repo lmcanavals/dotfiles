@@ -51,12 +51,15 @@
   "hyprland/workspaces": {
     "format": "{name}: {windows}",
     "format-window-separator": " ",
-    "window-rewrite-default": "",
+    "window-rewrite-default": "",
     "window-rewrite": {
       "title<.*youtube.*>": "",
       "class<firefox>": "",
-      "class<firefox> title<.*github.*>": "",
-      "class<org.wezfurlong.wezterm>": "",
+      "class<firefox> title<.*github.*>": "",
+      "class<firefox> title<.*reddit.*>": "",
+      "class<firefox> title<.*twitter.*>": "",
+      "class<firefox> title<.*whatsapp.*>": "",
+      "class<org.wezfurlong.wezterm>": "",
       "class<org.wezfurlong.wezterm> title<.*nvim.*>": "",
     },
     "on-scroll-up": "hyprctl dispatch workspace e+1",
