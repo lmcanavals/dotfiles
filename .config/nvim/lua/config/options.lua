@@ -4,6 +4,7 @@
 --
 local v = vim.v
 local fn = vim.fn
+local opt = vim.opt
 
 function LmcsFoldText()
 	local lineCount = (v.foldend - v.foldstart + 1)
@@ -31,6 +32,13 @@ function LmcsFoldText()
 	return line .. lineCount .. " "
 end
 
-vim.opt.colorcolumn = "81"
-vim.opt.background = vim.env.LCTHEME or "dark"
-vim.opt.foldtext = "v:lua.LmcsFoldText()"
+opt.listchars = {
+	tab = "┼ ",
+	trail = "∙",
+	extends = "»",
+	precedes = "«",
+	nbsp = "§",
+}
+opt.colorcolumn = { "81", "101" }
+opt.background = vim.env.LCTHEME or "dark"
+opt.foldtext = "v:lua.LmcsFoldText()"

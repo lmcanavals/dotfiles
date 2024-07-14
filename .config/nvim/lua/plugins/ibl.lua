@@ -4,8 +4,8 @@ return {
 		main = "ibl",
 		opts = function(_, opts)
 			opts.indent.char = "┊"
-			opts.indent.tab_char = "┆"
-			opts.scope.char = "╎"
+			opts.indent.tab_char = "╎"
+			opts.scope.char = "┆"
 		end,
 	},
 }

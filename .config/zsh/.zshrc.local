@@ -7,14 +7,29 @@ setopt hist_ignore_all_dups
 setopt hist_reduce_blanks
 
 #
+# Extra keymaps because home and end stopped working properly
+#
+bind2maps emacs             -- -s '\eOH' beginning-of-somewhere
+bind2maps       viins vicmd -- -s '\eOH' vi-beginning-of-line
+bind2maps emacs             -- -s '\e[H' beginning-of-somewhere
+bind2maps       viins vicmd -- -s '\e[H' vi-beginning-of-line
+bind2maps emacs             -- -s '\e[1~' beginning-of-somewhere
+bind2maps       viins vicmd -- -s '\e[1~' vi-beginning-of-line
+bind2maps emacs             -- -s '\eOF' end-of-somewhere
+bind2maps       viins vicmd -- -s '\eOF' vi-end-of-line
+bind2maps emacs             -- -s '\e[F' end-of-somewhere
+bind2maps       viins vicmd -- -s '\e[F' vi-end-of-line
+bind2maps emacs             -- -s '\e[4~' end-of-somewhere
+bind2maps       viins vicmd -- -s '\e[4~' vi-end-of-line
+
+#
 # Prompt stuff
 #
 prompt off
-
 autoload -U colors && colors
 
 # /home/user/folder/stuff/tra/cool --> ~/f/s/t/cool
-# cooler thank %~
+# cooler than %~
 function cool_folder() {
 	print $(echo ${PWD/$HOME/󱂵 } | sed -e "s/\(\w\)\(\w\+\)\//\1\//g")
 }
@@ -22,13 +37,24 @@ function prompt_color() {
 	local c
 	[[ EUID -eq 0 ]] && c="red" || c="yellow"
 	[[ $KEYMAP == vicmd ]] && c="blue"
-	print "%{$fg[$c]%} "
+	print "%{$fg[$c]%}"
 	#print "%{$fg_bold[$c]%} "
+}
+function rnd_adorn() {
+  local base="🬀🬁🬂🬃🬄🬅🬆🬇🬈🬉🬊🬋🬌🬍🬎🬏🬐🬑🬒🬓▌🬔🬕🬖🬗🬘🬙🬚🬛🬜🬝🬞🬟🬠🬡🬢🬣🬤🬥🬦🬧▐🬨🬩🬪🬫🬬🬭🬮🬯🬰🬱🬲🬳🬴🬵🬶🬷🬸🬹🬺🬻█"
+  local adorn=""
+  local pos
+  RANDOM=$(date +"%N")
+  for i in {1..6}; do
+    pos=$((RANDOM % 63 + 1))
+    adorn+="${base[pos]}"
+  done
+  print "$adorn"
 }
 function left_prompt() {
 	local s
 	[[ $KEYMAP == vicmd ]] && s=":" || s="_"
-	print "$(prompt_color)┏━━━󰧞\n ┗󰧞 %#$s%{$reset_color%} "
+  print "$(prompt_color)$(rnd_adorn) %#$s%{$reset_color%} "
 }
 function right_prompt() {
 	local s
@@ -39,9 +65,9 @@ function right_prompt() {
 
 ZLE_RPROMPT_INDENT=0 # not buggy anymore
 function prompt_lmcs_setup() {
-	PS2="$(prompt_color)%_┊%{$reset_color%} "
-	PS3="$(prompt_color)?#┊%{$reset_color%} "
-	PS4="$(prompt_color)+%N:%i:%_┊%{$reset_color%} "
+	PS2="$(prompt_color)$(rnd_adorn) %_┊%{$reset_color%} "
+	PS3="$(prompt_color)$(rnd_adorn) ?#┊%{$reset_color%} "
+	PS4="$(prompt_color)$(rnd_adorn) +%N:%i:%_┊%{$reset_color%} "
 
 	add-zsh-hook precmd prompt_lmcs_precmd
 }
