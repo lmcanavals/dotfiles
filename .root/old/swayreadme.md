@@ -1,7 +1,7 @@
-# My Arch Linux Installation Guide v8 Hyprland edition
+# My Arch Linux Installation Guide v7 Sway edition
 
 <!--toc:start-->
-- [My Arch Linux Installation Guide v8 Hyprland edition](#my-arch-linux-installation-guide-v8-hyprland-edition)
+- [My Arch Linux Installation Guide v7 Sway edition](#my-arch-linux-installation-guide-v7-sway-edition)
   - [Partitions](#partitions)
   - [Installing and setting the base system](#installing-and-setting-the-base-system)
   - [After the first reboot](#after-the-first-reboot)
@@ -62,7 +62,7 @@ btrfs subvolume create var
 btrfs subvolume create Archive
 ```
 
-Mount everything to /mnt:
+Mount everything te /mnt:
 
 ```sh
 mount -t ext4 /dev/sda2 /mnt
@@ -80,13 +80,13 @@ Install base system:
 pacstrap -K /mnt base linux linux-firmware
 ```
 
-chrooting into the new system:
+Chrooting into the new system:
 
 ```sh
 arch-chroot /mnt
 ```
 
-Installing base devel and the microcodes depending on processor:
+Installing base devel and the microdoces depeding on processor:
 
 ```sh
 pacman -S base-devel {amd or intel}-ucode
@@ -164,15 +164,15 @@ cp etc/mkinitcpio.conf /etc/
 cp etc/default/grub /etc/default/
 ```
 
-Set some configuration files for root
+Set some config files for root
 
 ```sh
-mkdir /root/.config
+mkrid /root/.config
 ln -s /home/lmcs/.config/starship.toml /root/.config/
 ```
 
 Building the kernel image, don't forget copy the `mkinitcpio.conf` from
-dotfiles.git which has the hook to support hibernation:
+arch-conf.git which has the hook to support hibernation:
 
 ```sh
 mkinitcpio -p linux
@@ -189,7 +189,7 @@ Install an aur helper as user, clone the repo from aur.archlinux.org then run:
 
 ```sh
 su - lmcs
-# cloning repo and cd-ing into the repo folder
+# cloning repo and cding into the repo folder
 git clone https://aur.archlinux.org/paru-bin.git
 makepkg -Acsi
 # delete the repo folder
@@ -232,9 +232,9 @@ Prefer pipewire based stuff and wireplumer.
 
 ```sh
 sudo pacman -S \
-hyprland hyprpaper polkit wofi waybar mako \
-hypridle hyprlock hyprpicker gthumb kanshi zenity \
-xdg-desktop-portal-hyperland pipewire-pulse brightnessctl \
+sway swaybg polkit wofi waybar mako \
+swayidle swaylock swayimg kanshi zenity \
+xdg-desktop-portal-wlr pipewire-pulse brightnessctl \
 slurp grim wl-clipboard qpwgraph \
 accountsservice gvfs wezterm xdg-user-dirs \
 thunar tumbler thunar-archive-plugin thunar-volman \
@@ -252,7 +252,7 @@ keepassxc haveged jq lazygit bluez bluez-utils blueman \
 firefox solaar \
 bat eza fd procs sd ripgrep dust tokei bottom fzf \
 qt6-wayland qt6ct \
-cmake clang \
+cmake clang deno \
 xournalpp mousepad *gopls *webp-pixbuf-loader
 ```
 
@@ -272,7 +272,7 @@ Stuff in case of XFCE
 
 ```sh
 sudo pacman -S \
-dconf-editor numlockx sddm lightdm lightdm-slick-greeter \
+dconf-editor numlockx lightdm lightdm-slick-greeter \
 slop xf86-input-wacom redshift xsel
 ```
 
@@ -284,7 +284,7 @@ ttf-architects-daughter ttf-indieflower ttf-nothingyoucoulddo ttf-pacifico \
 ttf-maple
 ```
 
-Cloud storage, Google Drive, One Drive, etc:
+Cloud storage, Goodle Drive, One Drive, etc:
 
 ```sh
 sudo pacman -S rclone fuse2

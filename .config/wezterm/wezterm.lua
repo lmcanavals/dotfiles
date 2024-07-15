@@ -121,7 +121,7 @@ config.font_size = 12
 config.initial_rows = 30
 config.initial_cols = 120
 config.enable_tab_bar = false
--- config.term = 'wezterm'
+config.term = "wezterm"
 -- config.window_decorations = "TITLE | RESIZE"
 -- config.window_background_opacity = 0.9
 function Recompute_padding(window)
