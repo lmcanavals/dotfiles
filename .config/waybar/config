@@ -63,7 +63,7 @@
       "class<firefox> title<.*whatsapp.*>": "",
       "class<mousepad>": "",
       "class<org.gnome.FileRoller>": "󰗄",
-      "class<org.wezfurlong.wezterm>": "",
+      "class<org.wezfurlong.wezterm>": " ",
       "class<org.wezfurlong.wezterm> title<.*nvim.*>": "",
       "class<thunar>": "󰥨",
       "class<thunar> title<.*lmcs.*>": "󱂵",

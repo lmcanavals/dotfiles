@@ -9,14 +9,15 @@ return {
 			},
 			custom_highlights = function(colors)
 				return {
-					ColorColumn = { style = { "underdotted" }, bg = "none" },
+					-- ColorColumn = { style = { "underdotted" }, bg = "none" },
 					CursorLineNr = { style = { "italic", "bold" }, bg = colors.surface0 },
-					-- Folded = { style = { "underdashed" }, bg = "none" },
+					Folded = { style = { "italic", "bold" }, fg = colors.blue },
 					LineNr = { style = { "italic", "bold" } },
 					NormalFloat = { style = { "italic", "bold" } },
 					VisualNOS = { style = { "underdouble" } },
 					String = { style = { "bold" } },
 					IblScope = { fg = colors.overlay0 },
+					-- RenderMarkdownCode = { bg = colors.surface1 },
 				}
 			end,
 			dim_inactive = {

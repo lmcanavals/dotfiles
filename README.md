@@ -3,12 +3,14 @@
 <!--toc:start-->
 - [My Arch Linux Installation Guide v8 Hyprland edition](#my-arch-linux-installation-guide-v8-hyprland-edition)
   - [Partitions](#partitions)
+    - [BIOS Partition table](#bios-partition-table)
   - [Installing and setting the base system](#installing-and-setting-the-base-system)
   - [After the first reboot](#after-the-first-reboot)
     - [As user](#as-user)
       - [Colors themes and cheese](#colors-themes-and-cheese)
       - [Other classic stuff to take care of](#other-classic-stuff-to-take-care-of)
     - [As super user](#as-super-user)
+      - [Updating mirror lists](#updating-mirror-lists)
   - [Tweaks and hacks](#tweaks-and-hacks)
 <!--toc:end-->
 
@@ -237,6 +239,7 @@ hypridle hyprlock hyprpicker gthumb kanshi zenity \
 xdg-desktop-portal-hyperland pipewire-pulse brightnessctl \
 slurp grim wl-clipboard qpwgraph \
 accountsservice gvfs wezterm xdg-user-dirs \
+yazi unarchiver ffmpegthumbnailer zoxide \
 thunar tumbler thunar-archive-plugin thunar-volman \
 *cups system-config-printer gutenprint foomatic-db-gutenprint-ppds
 ```
