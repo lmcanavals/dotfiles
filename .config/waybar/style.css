@@ -5,12 +5,12 @@
 
 @keyframes blink {
 to {
-	color: #dfdfdf;
+	color: #f38ba8;
 }
 }
 @keyframes blink2 {
 to {
-	background-color: rgba(65, 68, 77, 0.1);
+	background-color: rgba(249, 226, 175, 0.6);
 }
 }
 
@@ -21,9 +21,9 @@ label:focus {
 	background-color: #202020;
 }
 window#waybar {
-	background-color: rgba(40, 44, 52, 0.2);
-	color: #dfdfdf;
-	text-shadow: 4px 4px 4px #41444d;
+	background-color: rgba(30, 30, 46, 0.2);
+	color: #cdd6f4;
+	text-shadow: 4px 4px 4px #45475a;
 	transition-property: background-color;
 	transition-duration: .5s;
 }
@@ -37,28 +37,28 @@ window#waybar.somerandomapp {
 
 #workspaces button {
 	border-radius: 10px;
-	color: #dfdfdf;
+	color: #cdd6f4;
+  margin: 0 3px;
 	min-width: 40px;
 	padding: 0 10px;
-	text-shadow: 4px 4px 4px #41444d;
-  margin: 0 3px;
+	text-shadow: 4px 4px 4px #45475a;
 }
 #workspaces button:hover {
-	background-color: rgba(255, 231, 0, 0.4);
-	color: #41444d;
+	background-color: rgba(249, 226, 175, 0.4);
+	color: #1e1e2e;
 }
 
 #workspaces button.active {
-	background-color: rgba(255, 231, 0, 0.8);
-	color: #41444d;
+	background-color: rgba(250, 179, 135, 0.8);
+	color: #181825;
 }
 #workspaces button.urgent {
-	background-color: rgba(255, 231, 0, 0.4);
 	animation-name: blink2;
 	animation-duration: 0.75s;
 	animation-timing-function: linear;
 	animation-iteration-count: infinite;
 	animation-direction: alternate;
+	background-color: rgba(69, 71, 90, 0.1);
 }
 
 #backlight,
@@ -84,13 +84,18 @@ window#waybar.somerandomapp {
 }
 
 #submap {
-	background-color: rgba(238, 238, 238, 0.8);
-	color: #41444d;
+	animation-name: blink2;
+	animation-duration: 0.75s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	background-color: rgba(180, 190, 254, 0.8);
+  border-radius: 10px;
+	color: #181825;
+  margin: 0 3px;
 	min-width: 40px;
 	padding: 0 10px;
-	text-shadow: 4px 4px 4px #41444d;
-  border-radius: 10px;
-  margin: 0 3px;
+	text-shadow: 4px 4px 4px #45475a;
 }
 
 #window,
@@ -99,7 +104,7 @@ window#waybar.somerandomapp {
 }
 
 #battery.charging, #battery.plugged {
-	color: GreenYellow;
+	color: #a6e3a1;
 }
 
 #clock {
@@ -109,20 +114,20 @@ window#waybar.somerandomapp {
 
 #battery.critical:not(.charging),
 #temperature.critical {
-	color: Crimson;
 	animation-name: blink;
 	animation-duration: 0.75s;
 	animation-timing-function: linear;
 	animation-iteration-count: infinite;
 	animation-direction: alternate;
+	color: #b4befe;
 }
 
 #keyboard-state > label.locked {
-	background: rgba(40, 44, 52, 0.8);
+	color: #eba9ac;
 }
 
 #network.disconnected {
-	color: LightSlateGray;
+	color: #7f849c;
 }
 
 #tray > .passive {
@@ -130,6 +135,6 @@ window#waybar.somerandomapp {
 }
 #tray > .needs-attention {
 	-gtk-icon-effect: highlight;
-	color: #ffd700;
+	color: #fab387;
 }
 

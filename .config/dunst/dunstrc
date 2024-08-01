@@ -1,0 +1,120 @@
+[global]
+frame_width = 1
+frame_color = "#fab387"
+
+font = Carlito 10
+markup = yes
+format = "%s %p\n%b"
+sort = yes
+indicate_hidden = yes
+alignment = left
+bounce_freq = 5
+show_age_threshold = 60
+word_wrap = no
+ignore_newline = no
+geometry = "0x4-25+25"
+shrink = yes
+transparency = 15
+idle_threshold = 120 
+monitor = 0
+follow = mouse
+sticky_history = yes
+history_length = 20
+show_indicators = yes
+line_height = 0
+separator_height = 1
+padding = 8
+horizontal_padding = 10
+separator_color = "#585b70"
+startup_notification = false
+
+# dmenu pat
+dmenu = /usr/bin/dmenu -p dunst:
+browser = firefox
+icon_position = left
+icon_path = /usr/share/icons/Papirus/24x24/status/:/usr/share/icons/Papirus/24x24/devices/
+max_icon_size=128
+
+[shortcuts]
+close = mod1+space
+close_all = ctrl+mod1+space
+history = ctrl+mod4+h 
+context = ctrl+mod1+c
+
+[urgency_low]
+background = "#313244"
+foreground = "#6c7086"
+timeout = 10
+
+[urgency_normal]
+background = "#313244"
+foreground = "#cdd6f4"
+timeout = 10
+
+[urgency_critical]
+background = "#313244"
+foreground = "#f38ba8"
+timeout = 0
+
+
+# Every section that isn't one of the above is interpreted as a rules to
+# override settings for certain messages.
+# Messages can be matched by "appname", "summary", "body", "icon", "category",
+# "msg_urgency" and you can override the "timeout", "urgency", "foreground",
+# "background", "new_icon" and "format".
+# Shell-like globbing will get expanded.
+#
+# SCRIPTING
+# You can specify a script that gets run when the rule matches by
+# setting the "script" option.
+# The script will be called as follows:
+#   script appname summary body icon urgency
+# where urgency can be "LOW", "NORMAL" or "CRITICAL".
+# 
+# NOTE: if you don't want a notification to be displayed, set the format
+# to "".
+# NOTE: It might be helpful to run dunst -print in a terminal in order
+# to find fitting options for rules.
+
+#[espeak]
+#    summary = "*"
+#    script = dunst_espeak.sh
+
+#[script-test]
+#    summary = "*script*"
+#    script = dunst_test.sh
+
+#[ignore]
+#    # This notification will not be displayed
+#    summary = "foobar"
+#    format = ""
+
+#[signed_on]
+#    appname = Pidgin
+#    summary = "*signed on*"
+#    urgency = low
+#
+#[signed_off]
+#    appname = Pidgin
+#    summary = *signed off*
+#    urgency = low
+#
+#[says]
+#    appname = Pidgin
+#    summary = *says*
+#    urgency = critical
+#
+#[twitter]
+#    appname = Pidgin
+#    summary = *twitter.com*
+#    urgency = normal
+#
+#[mute.sh]
+#     appname = mute
+#     category = mute.sound
+#     script = mute.sh
+#
+
+[speech]
+summary = "*"
+script = dunst-notify-speech.sh

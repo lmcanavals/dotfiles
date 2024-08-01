@@ -47,7 +47,8 @@
       "(.*) and \\d+ more page(.*)": "$1",
       "(.*) - Personal - Microsoft(.*)": "$1",
       "(.*) - (.*)": "$1"
-    }
+    },
+    "separate-outputs": true
   },
   "hyprland/workspaces": {
     "format": "{name}: {windows}",

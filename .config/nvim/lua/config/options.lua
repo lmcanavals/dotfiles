@@ -46,6 +46,6 @@ opt.listchars = {
 	precedes = "«",
 	nbsp = "§",
 }
-opt.colorcolumn = { "81", "101" }
+opt.colorcolumn = "81"
 opt.background = vim.env.LCTHEME or "dark"
 opt.foldtext = "v:lua.LmcsFoldText()"
