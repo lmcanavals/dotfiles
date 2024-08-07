@@ -172,6 +172,7 @@ shared/
 !.config/asciinema/config
 
 .local/bin/*
+!.local/bin/grimblast
 !.local/bin/ix
 !.local/bin/local*
 .local/share/*
