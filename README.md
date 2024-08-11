@@ -275,7 +275,7 @@ Stuff in case of XFCE
 
 ```sh
 sudo pacman -S \
-dconf-editor numlockx sddm lightdm lightdm-slick-greeter \
+dconf-editor numlockx sddm \
 slop xf86-input-wacom redshift xsel
 ```
 
