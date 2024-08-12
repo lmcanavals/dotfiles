@@ -179,6 +179,10 @@
       <attribute name="deviceClass" type="int" value="3"/>
       <attribute name="deviceSource" type="int" value="2"/>
     </data>
+    <data name="Genius Wireless Device">
+      <attribute name="deviceClass" type="int" value="1"/>
+      <attribute name="deviceSource" type="int" value="0"/>
+    </data>
     <data name="Microsoft Microsoft® Nano Transceiver v2.0 Mouse">
       <attribute name="deviceClass" type="int" value="1"/>
       <attribute name="deviceSource" type="int" value="0"/>
