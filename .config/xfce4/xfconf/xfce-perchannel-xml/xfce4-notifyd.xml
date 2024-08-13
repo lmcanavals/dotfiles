@@ -21,4 +21,5 @@
       <value type="string" value="xfce4-xkb-plugin"/>
     </property>
   </property>
+  <property name="do-not-disturb" type="bool" value="false"/>
 </channel>
