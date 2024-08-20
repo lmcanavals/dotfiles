@@ -102,6 +102,7 @@ grub grub-theme-vimix dosfstools efibootmgr \
 zsh starship neovim git github-cli \
 networkmanager openssh \
 pacman-contrib \
+terminus-font \
 powertop tlp # for better power management
 ```
 
@@ -154,8 +155,13 @@ Set basic configuration files:
 ln -s /usr/share/zoneinfo/America/Lima /etc/localtime
 su - lmcs
 cd ~
+gh auth login
 git clone --bare https://github.com/lmcanavals/dotfiles.git .dotfiles.git
+rm .gitconfig
+rm .config/gh/config.yml
 git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME checkout
+<c-d>
+su - lmcs
 dotfiles config --local core.worktree $HOME
 <c-d>
 cd /home/lmcs/.root/
@@ -192,7 +198,10 @@ Install an aur helper as user, clone the repo from aur.archlinux.org then run:
 ```sh
 su - lmcs
 # cloning repo and cd-ing into the repo folder
+mkdir -p Documents/git
+cd Documents/git
 git clone https://aur.archlinux.org/paru-bin.git
+cd paru-bin
 makepkg -Acsi
 # delete the repo folder
 ```
@@ -205,6 +214,9 @@ grub-install --target=x86_64-efi --efi-directory=/efi \
     --bootloader-id="Arch" --recheck --debug
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
+
+Check for *hybrid uefi mbr*
+[this link](https://wiki.archlinux.org/title/Multiboot_USB_drive)
 
 Set root password, leave chroot env, unmount and reboot:
 
@@ -233,10 +245,12 @@ GUI base:
 Prefer pipewire based stuff and wireplumer.
 
 ```sh
+# check if polkit is already installed, install it otherwise
+# pick pipewire-jack as engine
 sudo pacman -S \
-hyprland hyprpaper polkit wofi waybar mako \
-hypridle hyprlock hyprpicker gthumb kanshi zenity \
-xdg-desktop-portal-hyperland pipewire-pulse brightnessctl \
+hyprland hyprpaper wofi waybar dunst \
+xdg-desktop-portal-hyprland hypridle hyprlock gthumb kanshi zenity \
+pipewire-pulse brightnessctl \
 slurp grim wl-clipboard qpwgraph \
 accountsservice gvfs wezterm xdg-user-dirs \
 yazi unarchiver ffmpegthumbnailer zoxide \
@@ -254,20 +268,25 @@ gammastep mosh network-manager-applet pavucontrol \
 keepassxc haveged jq lazygit bluez bluez-utils blueman \
 firefox solaar \
 bat eza fd procs sd ripgrep dust tokei bottom fzf \
-qt6-wayland qt6ct \
+qt6ct \
 cmake clang \
 xournalpp mousepad *gopls *webp-pixbuf-loader
 ```
 
 Fonts, etc:
+Check if these are already installed.
+
+- adobe-source-code-pro-fonts
+- ttf-roboto
+- gnu-free-fonts
 
 ```sh
 sudo pacman -S \
-adobe-source-han-sans-otc-fonts adobe-source-code-pro-fonts \
-ttf-fira-code ttf-roboto ttf-roboto-mono ttf-jetbrains-mono-nerd \
-ttf-liberation ttf-dejavu gnu-free-fonts ttf-victor-mono-nerd \
+adobe-source-han-sans-otc-fonts \
+ttf-fira-code ttf-roboto-mono ttf-jetbrains-mono-nerd \
+ttf-liberation ttf-dejavu ttf-victor-mono-nerd \
 noto-fonts-emoji ttf-croscore ttf-carlito ttf-caladea ttf-droid \
-ttf-font-awesome ttf-nerd-fonts-symbols-mono terminus-font font-manager \
+ttf-font-awesome ttf-nerd-fonts-symbols-mono font-manager \
 ttf-opensans otf-monaspace # installed by telegram 
 ```
 
@@ -277,6 +296,13 @@ Stuff in case of XFCE
 sudo pacman -S \
 dconf-editor numlockx sddm \
 slop xf86-input-wacom redshift xsel
+```
+
+Other stuff from aur
+
+```sh
+<aur helper> -S \
+sound-theme-smooth
 ```
 
 Fonts from aur
