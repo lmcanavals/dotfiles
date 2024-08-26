@@ -99,7 +99,7 @@ Installing some important stuff:
 ```sh
 pacman -S \
 grub grub-theme-vimix dosfstools efibootmgr \
-zsh starship neovim git github-cli \
+zsh grml-zsh-config starship neovim git github-cli \
 networkmanager openssh \
 pacman-contrib \
 terminus-font \
