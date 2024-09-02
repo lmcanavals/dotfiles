@@ -283,7 +283,7 @@ Check if these are already installed.
 ```sh
 sudo pacman -S \
 adobe-source-han-sans-otc-fonts \
-ttf-fira-code ttf-roboto-mono ttf-jetbrains-mono-nerd \
+ttf-fira-code ttf-firacode-nerd ttf-roboto-mono ttf-jetbrains-mono-nerd \
 ttf-liberation ttf-dejavu ttf-victor-mono-nerd \
 noto-fonts-emoji ttf-croscore ttf-carlito ttf-caladea ttf-droid \
 ttf-font-awesome ttf-nerd-fonts-symbols-mono font-manager \
