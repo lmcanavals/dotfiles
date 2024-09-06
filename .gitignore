@@ -25,6 +25,7 @@ rust.sh
 .config/Mousepad/accels.scm
 .config/QtProject.conf
 .config/Trolltech.conf
+.config/background
 .config/emaildefaults
 .config/emailidentities
 .config/font-manager/Sources.xml
@@ -53,6 +54,9 @@ rust.sh
 .config/zoomus.conf
 .config/zsh/dynamic.zsh
 .config/zsh/.zsh_history
+
+.local/share/recently-used.xbel
+.local/share/mimeapps.list
 
 .android/
 .cache/
@@ -143,6 +147,18 @@ rust.sh
 .config/zsh/plugins/
 .config/zsh/.zcompcache/
 
+.local/share/flatpak/
+.local/share/gvfs-metadata/
+.local/share/jupyter/
+.local/share/keyrings/
+.local/share/kxmlgui5/
+.local/share/mc/
+.local/share/mime/
+.local/share/okular/
+.local/share/sddm/
+.local/share/vlc/
+.local/share/xfce4/helpers/
+.local/share/xorg/
 .local/lib/
 .local/state/
 
@@ -176,14 +192,18 @@ shared/
 !.local/bin/grimblast
 !.local/bin/ix
 !.local/bin/local*
-.local/share/*
+
+.local/share/nvim/
+.local/share/fonts/
+
+.local/bin/*
+!.local/bin/grimblast
+!.local/bin/ix
+!.local/bin/local*
 !.local/share/applications/
 .local/share/applications/chrome-*
 .local/share/applications/mimeinfo.cache
 .local/share/applications/mimeapps.list
 .local/share/applications/userapp-Telegram*
 .local/share/applications/userapp-Thunderbird*
-!.local/share/google-chrome/
-!.local/share/konsole/
-!.local/share/themes/
 

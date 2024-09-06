@@ -4,6 +4,9 @@ export QT_STYLE_OVERRIDE=gtk
 export GTK_THEME=Adwaita-dark
 export ADW_DISABLE_PORTAL=1
 export ADW_DEBUG_COLOR_SCHEME=prefer-dark
+if [[ -z $LCTHEME ]]; then
+  export LCTHEME=dark
+fi
 
 mplayer /usr/share/sounds/Smooth/stereo/desktop-login.oga &
 
