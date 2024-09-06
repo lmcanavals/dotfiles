@@ -79,7 +79,7 @@ mount -o subvol=Archive /dev/sdb /mnt/home/lmcs/Archive
 Install base system:
 
 ```sh
-pacstrap -K /mnt base linux linux-firmware
+pacstrap -KP /mnt base linux linux-firmware
 ```
 
 chrooting into the new system:
@@ -445,6 +445,8 @@ To change base configuration files:
 ```sh
 hostnamectl set-hostname fia
 localectl set-locale LANG="en_US.utf8" LC_COLLATE="C" LC_TIME="en_DK.utf8"
+localectl set-x11-keymap us pc105 altgr-intl \
+  grp:alt_altgr_toggle,caps:escape_shifted_capslock
 timedatectl set-timezone America/Lima
 ```
 
