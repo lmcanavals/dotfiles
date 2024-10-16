@@ -11,11 +11,13 @@
   <property name="misc-date-style" type="string" value="THUNAR_DATE_STYLE_SHORT"/>
   <property name="misc-text-beside-icons" type="bool" value="false"/>
   <property name="last-details-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_38_PERCENT"/>
-  <property name="last-details-view-column-widths" type="string" value="50,50,138,50,50,50,50,50,163,50,50,59,50,126"/>
+  <property name="last-details-view-column-widths" type="string" value="50,50,138,50,50,76,50,50,346,50,50,61,50,168"/>
   <property name="last-sort-column" type="string" value="THUNAR_COLUMN_TYPE"/>
   <property name="last-sort-order" type="string" value="GTK_SORT_ASCENDING"/>
   <property name="last-window-width" type="int" value="960"/>
   <property name="last-window-height" type="int" value="480"/>
   <property name="last-location-bar" type="string" value="ThunarLocationButtons"/>
   <property name="last-splitview-separator-position" type="int" value="398"/>
+  <property name="last-show-hidden" type="bool" value="false"/>
+  <property name="last-details-view-visible-columns" type="string" value="THUNAR_COLUMN_DATE_MODIFIED,THUNAR_COLUMN_NAME,THUNAR_COLUMN_SIZE,THUNAR_COLUMN_TYPE"/>
 </channel>

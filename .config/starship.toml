@@ -1,6 +1,7 @@
 add_newline = false
 format = "$character"
 right_format = """
+$sudo\
 $status\
 $character\
 $jobs\
@@ -133,6 +134,11 @@ version_format = "${major}.${minor}"
 disabled = false
 format = "[ $status ]($style)"
 style = "bg:red mantle"
+
+[sudo]
+disabled = false
+format = "[ $symbol]($style)"
+style = "bg:surface1 teal"
 
 [username]
 format = "[($user•)]($style)"
