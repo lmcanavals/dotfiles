@@ -270,7 +270,7 @@ firefox solaar \
 bat eza fd procs sd ripgrep dust tokei bottom fzf \
 qt6ct \
 cmake clang \
-xournalpp mousepad *gopls *webp-pixbuf-loader
+xournalpp drawing mousepad *gopls *webp-pixbuf-loader
 ```
 
 Fonts, etc:
