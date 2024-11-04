@@ -13,10 +13,10 @@ config.set_environment_variables = {
 -- background awesome
 local bgfolder = ".local/share/backgrounds/"
 local bgsolid = bgfolder .. "bg000000cd.png"
-local bg0 = bgfolder .. "bg0tr.png"
-local bg1 = bgfolder .. "bg1tr.png"
-local bg2 = bgfolder .. "bg2tr.png"
-local bg3 = bgfolder .. "bg3tr.png"
+local bg0 = bgfolder .. "bg0b.png"
+local bg1 = bgfolder .. "bg1b.png"
+local bg2 = bgfolder .. "bg2b.png"
+local bg3 = bgfolder .. "bg3b.png"
 
 --config.enable_scroll_bar = true
 --config.min_scroll_bar_height = "2cell"
@@ -28,23 +28,23 @@ config.background = {
 		source = { File = bgsolid },
 	},
 	{
-		attachment = { Parallax = 0.1 },
-		hsb = { hue = 0.8, brightness = 0.025 },
+		attachment = { Parallax = 0.01 },
+		hsb = { hue = 0.8, brightness = 0.08 },
 		source = { File = bg0 },
 	},
 	{
-		attachment = { Parallax = 0.2 },
-		hsb = { hue = 0.6, brightness = 0.02 },
+		attachment = { Parallax = 0.02 },
+		hsb = { hue = 0.6, brightness = 0.07 },
 		source = { File = bg1 },
 	},
 	{
-		attachment = { Parallax = 0.3 },
-		hsb = { hue = 0.4, brightness = 0.015 },
+		attachment = { Parallax = 0.03 },
+		hsb = { hue = 0.4, brightness = 0.06 },
 		source = { File = bg2 },
 	},
 	{
-		attachment = { Parallax = 0.4 },
-		hsb = { hue = 0.2, brightness = 0.01 },
+		attachment = { Parallax = 0.04 },
+		hsb = { hue = 0.2, brightness = 0.05 },
 		source = { File = bg3 },
 	},
 }
@@ -52,8 +52,8 @@ config.background = {
 -- fonts
 local base_font = "Maple Mono NF"
 local str_font = "FiraCode Nerd Font"
-local cmnt_font = "Maple Mono NF"
-local half_font = "Victor Mono Nerd Font"
+local cmnt_font = "Victor Mono Nerd Font"
+local half_font = "Fairfax HD"
 local diag_font = "Monaspace Krypton"
 
 local base_hb = { "cv02", "ss01", "ss02", "ss03", "ss04", "ss05" }
@@ -82,7 +82,7 @@ config.font_rules = {
 		intensity = "Bold",
 		font = wezterm.font({
 			family = str_font,
-			weight = "Regular",
+			weight = "Bold",
 		}),
 	},
 	{
@@ -109,7 +109,7 @@ config.font_rules = {
 		font = wezterm.font({
 			family = cmnt_font,
 			style = "Italic",
-			weight = "Light",
+			weight = "Medium",
 		}),
 	},
 }
