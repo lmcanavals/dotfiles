@@ -50,14 +50,14 @@ config.background = {
 }
 
 -- fonts
-local base_font = "Maple Mono NF"
-local str_font = "FiraCode Nerd Font"
-local cmnt_font = "Victor Mono Nerd Font"
-local half_font = "Fairfax HD"
+local base_font = "Monaspace Argon" -- "Maple Mono NF"
+local str_font = "Monaspace Xenon" -- "FiraCode Nerd Font"
+local cmnt_font = "Monaspace Radon" -- "Victor Mono Nerd Font"
+local half_font = "Monaspace Neon" -- "Fairfax HD"
 local diag_font = "Monaspace Krypton"
 
-local base_hb = { "cv02", "ss01", "ss02", "ss03", "ss04", "ss05" }
-local diag_hb = {
+-- local maple_hb = { "cv02", "ss01", "ss02", "ss03", "ss04", "ss05" }
+local monaspace_hb = {
 	"calt",
 	"ss01",
 	"ss02",
@@ -70,11 +70,16 @@ local diag_hb = {
 	"ss09",
 	"liga",
 }
+local base_hb = monaspace_hb
+local str_hb = monaspace_hb
+local cmnt_hb = monaspace_hb
+local half_hb = monaspace_hb
+local diag_hb = monaspace_hb
 
 config.font = wezterm.font({
 	family = base_font,
-	weight = "Regular",
 	harfbuzz_features = base_hb,
+	weight = "Regular",
 })
 config.font_rules = {
 	{
@@ -82,6 +87,7 @@ config.font_rules = {
 		intensity = "Bold",
 		font = wezterm.font({
 			family = str_font,
+			harfbuzz_features = str_hb,
 			weight = "Bold",
 		}),
 	},
@@ -90,9 +96,9 @@ config.font_rules = {
 		intensity = "Bold",
 		font = wezterm.font({
 			family = diag_font,
+			harfbuzz_features = diag_hb,
 			style = "Normal",
 			weight = "Light",
-			harfbuzz_features = diag_hb,
 		}),
 	},
 	{
@@ -100,6 +106,7 @@ config.font_rules = {
 		intensity = "Half",
 		font = wezterm.font({
 			family = half_font,
+			harfbuzz_features = half_hb,
 			weight = "DemiBold",
 		}),
 	},
@@ -108,6 +115,7 @@ config.font_rules = {
 		intensity = "Normal",
 		font = wezterm.font({
 			family = cmnt_font,
+			harfbuzz_features = cmnt_hb,
 			style = "Italic",
 			weight = "Medium",
 		}),

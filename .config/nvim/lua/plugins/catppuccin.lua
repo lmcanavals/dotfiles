@@ -16,7 +16,7 @@ return {
 					LineNr = { style = { "italic", "bold" } },
 					NormalFloat = { style = { "italic", "bold" } },
 					VisualNOS = { style = { "underdouble" } },
-					String = { style = { "italic" } },
+					String = { style = { "bold" } },
 					IblScope = { fg = colors.overlay0 },
 					LspInlayHint = { fg = colors.surface1, style = { "italic", "bold" } },
 					-- RenderMarkdownCode = { bg = colors.surface1 },
