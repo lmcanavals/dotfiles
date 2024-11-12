@@ -58,6 +58,7 @@ rust.sh
 
 .local/share/recently-used.xbel
 .local/share/mimeapps.list
+.local/share/wezterm/check_update
 
 .android/
 .cache/
