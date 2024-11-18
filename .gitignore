@@ -58,7 +58,6 @@ rust.sh
 
 .local/share/recently-used.xbel
 .local/share/mimeapps.list
-.local/share/wezterm/check_update
 
 .android/
 .cache/
@@ -159,6 +158,7 @@ rust.sh
 .local/share/okular/
 .local/share/sddm/
 .local/share/vlc/
+.local/share/wezterm/
 .local/share/xfce4/helpers/
 .local/share/xorg/
 .local/lib/

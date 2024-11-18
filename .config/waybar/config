@@ -16,7 +16,6 @@
     "memory",
     "backlight",
     "battery",
-    "network",
     "tray",
     "clock",
     "idle_inhibitor"
@@ -28,16 +27,6 @@
   },
   "hyprland/submap": {
     "format": "{}"
-  },
-  "sway/scratchpad": {
-    "format": "{icon}",
-    "show-empty": false,
-    "format-icons": [
-      "",
-      "󰖲"
-    ],
-    "tooltip": true,
-    "tooltip-format": "{app}: {title}"
   },
   "hyprland/window": {
     "icon": true,
@@ -53,7 +42,7 @@
   "hyprland/workspaces": {
     "format": "{name}: {windows}",
     "format-window-separator": " ",
-    "window-rewrite-default": "",
+    "window-rewrite-default": "󰣆 ",
     "window-rewrite": {
       "class<[Bb]rave-browser.*>": "󰖟",
       "class<firefox>": "",
@@ -65,12 +54,11 @@
       "class<thunar> title<.*lmcs.*>": "󱂵",
       "class<thunderbird>": "",
       "title<.*github.*>": "",
-      "title<.*Picture-in-Picture.*>": " ",
-      "title<Picture in Picture>": " ",
+      "title<.*Picture.in.Picture.*>": "󰹗 ",
       "title<.*reddit.*>": "",
       "title<.*twitter.*>": "",
       "title<.*youtube.*>": "",
-      "title<.*whatsapp.*>": "",
+      "title<.*whatsapp.*>": ""
     },
     "on-scroll-up": "hyprctl dispatch workspace e+1",
     "on-scroll-down": "hyprctl dispatch workspace e-1"

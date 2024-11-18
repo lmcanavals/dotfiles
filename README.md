@@ -249,7 +249,7 @@ Prefer pipewire based stuff and wireplumer.
 # pick pipewire-jack as engine
 sudo pacman -S \
 hyprland hyprpaper wofi waybar dunst \
-swww hyprpicker wf-recorder swappy \
+hyprpicker wf-recorder swappy \
 xdg-desktop-portal-hyprland hypridle hyprlock gthumb kanshi zenity \
 pipewire-pulse brightnessctl \
 slurp grim wl-clipboard qpwgraph \
