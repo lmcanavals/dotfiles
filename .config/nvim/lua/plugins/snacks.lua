@@ -1,17 +1,17 @@
 return {
 	{
-		"nvimdev/dashboard-nvim",
-		opts = function(_, opts)
-			local logo = [[
-
-
+		"folke/snacks.nvim",
+		opts = {
+			dashboard = {
+				preset = {
+					header = [[
         •                   ┓  ┓     ┏  ┓┓   ╹   ┓      ┓┏•   
 ┏┓┏┓┏┓┓┏┓┏┳┓  ┏┓┏┓┓┏┏┏┓┏┓┏┓┏┫  ┣┓┓┏  ╋┏┓┃┃┏┏┓ ┏  ┃ ┏┓┓┓┏┃┃┓┏┳┓
 ┛┗┗ ┗┛┗┛┗┛┗┗  ┣┛┗┛┗┻┛┗ ┛ ┗ ┗┻  ┗┛┗┫  ┛┗┛┗┛┗┗  ┛  ┗┛┗┻┗┗┫┗┛┗┛┗┗
               ┛                   ┛                    ┛      
- neovim 
-      ]]
-			opts.config.header = vim.split(logo, "\n")
-		end,
+ neovim]],
+				},
+			},
+		},
 	},
 }

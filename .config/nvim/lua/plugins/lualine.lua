@@ -23,7 +23,7 @@ return {
 						return msg
 					end,
 					color = { fg = "gold", gui = "italic,bold" },
-					icon = "",
+					icon = "󰒋",
 				},
 			}
 			opts.sections.lualine_z = {
