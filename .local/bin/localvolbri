@@ -97,7 +97,7 @@ function get_album_art {
 
     album_art="/tmp/$filename"
   else
-    album_art=""
+    album_art="audio-speakers"
   fi
 }
 

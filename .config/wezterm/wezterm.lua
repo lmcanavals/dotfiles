@@ -5,7 +5,7 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 -- color theme stuff
-config.color_scheme = "Catppuccin Mocha"
+config.color_scheme = "Tokyo Night Moon"
 config.set_environment_variables = {
 	LCTHEME = "dark", -- set it to have apps match the theme light or dark
 }
@@ -127,7 +127,7 @@ config.font_size = 12
 config.initial_rows = 30
 config.initial_cols = 120
 config.enable_tab_bar = false
--- config.term = "wezterm"
+config.term = "wezterm"
 -- config.window_decorations = "TITLE | RESIZE"
 -- config.window_background_opacity = 0.9
 function Recompute_padding(window)

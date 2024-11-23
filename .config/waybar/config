@@ -53,6 +53,7 @@
       "class<thunar>": "󰥨",
       "class<thunar> title<.*lmcs.*>": "󱂵",
       "class<thunderbird>": "",
+      "class<vivaldi.*>": "󰖟",
       "title<.*github.*>": "",
       "title<.*Picture.in.Picture.*>": "󰹗 ",
       "title<.*reddit.*>": "",
