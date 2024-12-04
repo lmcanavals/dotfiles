@@ -1,5 +1,8 @@
 return {
 	{ "chrisbra/csv.vim", ft = "csv" },
 	{ "dylon/vim-antlr", ft = { "antlr3", "antlr4" } },
-	{ "norcalli/nvim-colorizer.lua", keys = "<leader>C" },
+	{
+		"norcalli/nvim-colorizer.lua",
+		keys = { { "<leader>Xc", ":ColorizerToggle<cr>", desc = "Colorizer" } },
+	},
 }

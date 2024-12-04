@@ -8,11 +8,11 @@ KERNEL=$(uname -r)
 ARCH=$(uname -m)
 CPU=$(uname -p)
 # The different colours as variables
-R="\033[01;31m"
-Y="\033[01;33m"
-B="\033[01;36m" 
-W="\033[01;37m"
-X="\033[00;37m"
+R="\033[1;31m"
+Y="\033[1;33m"
+B="\033[1;36m" 
+W="\033[1;37m"
+X="\033[0;37m"
 clear > $motd # to clear the screen when showing up
 echo -e "$B        ." >> $motd
 echo -e "$B       /#\\" >> $motd
@@ -22,5 +22,5 @@ echo -e "$B    /##P^q##\\   $W .oOo# #   #    #  # $B | | |   | |   |  X" >> $mo
 echo -e "$B   /##(   )##\\  $W %OoO# #   %#e\" #  # $B | | |   | ^._.| / \\ ${X}TM" >> $motd
 echo -e "$B  /###P   q#,^\\" >> $motd
 echo -e "$B /P^         ^q\\ ${X}TM\t$R$HOSTNAME $KERNEL $ARCH" >> $motd
-echo -e "$X" >> $motd
+echo -e "\033[0m" >> $motd
 

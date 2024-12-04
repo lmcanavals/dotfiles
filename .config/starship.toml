@@ -22,39 +22,38 @@ $lua\
 $username\
 $hostname\
 $directory"""
-continuation_prompt = "[ 󰘍_ ](bg:surface2 yellow) "
-palette = "catppuccin_mocha"
+continuation_prompt = "[ 󰘍_ ](bg:bright-black cyan) "
 
 [character]
 format = "$symbol"
-error_symbol = "[  ](bg:surface1 red)"
-success_symbol = "[  ](bg:surface1 peach)"
-vimcmd_symbol = "[ : ](bg:surface1 teal)"
-vimcmd_replace_one_symbol = "[ : ](bg:surface1 sky)"
-vimcmd_replace_symbol = "[ : ](bg:surface1 sapphire)"
-vimcmd_visual_symbol = "[ : ](bg:surface1 blue)"
+error_symbol = "[  ](bg:bright-black red)"
+success_symbol = "[  ](bg:bright-black yellow)"
+vimcmd_symbol = "[ : ](bg:bright-black bright-green)"
+vimcmd_replace_one_symbol = "[ : ](bg:bright-black cyan)"
+vimcmd_replace_symbol = "[ : ](bg:bright-black bright-cyan)"
+vimcmd_visual_symbol = "[ : ](bg:bright-black blue)"
 
 [cmake]
 format = "[$symbol($version•)]($style)"
-style = "bg:surface1 blue"
+style = "bg:bright-black blue"
 version_format = "${major}.${minor}"
 
 [cmd_duration]
 format = "[($duration•)]($style)"
 min_time = 10_000
 show_notifications = true
-style = "bg:surface1 peach"
+style = "bg:bright-black yellow"
 
 [conda]
 format = "[$symbol($environment•)]($style) "
-style = "bg:surface1 lavander"
+style = "bg:bright-black bright-blue"
 symbol = " "
 
 [deno]
 detect_extensions = ["js"]
 detect_folders = ["js"]
 format = "[$symbol($version•)]($style)"
-style = "bg:surface1 teal"
+style = "bg:bright-black bright-green"
 symbol = " "
 version_format = "${major}.${minor}"
 
@@ -62,88 +61,88 @@ version_format = "${major}.${minor}"
 format = "[$path]($style)[$read_only]($read_only_style)"
 home_symbol = "󱂵 "
 read_only = "󰉐 "
-style = "bg:surface1 sapphire"
-read_only_style = "bg:peach crust"
+style = "bg:bright-black bright-cyan"
+read_only_style = "bg:yellow blue"
 truncation_length = 1
 truncation_symbol = "…"
 fish_style_pwd_dir_length = 1
 
 [git_branch]
 format = "[$symbol($branch•)]($style)"
-style = "bg:surface1 mauve"
+style = "bg:bright-black bright-magenta"
 symbol = ""
 
 [git_commit]
 format = "[($hash$tag)]($style)"
-style = "bg:surface1 green"
+style = "bg:bright-black green"
 
 [git_state]
 format = "[$state($progress_current/$progress_total)]($style)"
-style = "bg:surface1 yellow"
+style = "bg:bright-black bright-yellow"
 
 [git_status]
 format = "([$all_status$ahead_behind]($style))"
-style = "bg:surface1 red"
+style = "bg:bright-black red"
 
 [golang]
 format = "[$symbol($version•)]($style)"
-style = "bg:surface1 teal"
+style = "bg:bright-black bright-green"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [hostname]
 format = "[$hostname]($style):"
-style = "bg:surface1 yellow"
+style = "bg:bright-black bright-yellow"
 
 [java]
 format = "[$symbol($version•)]($style)"
-style = "bg:surface1 teal"
+style = "bg:bright-black bright-green"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [jobs]
 format = "[$symbol$number]($style)"
-style = "bg:surface1 bright-blue"
+style = "bg:bright-black bright-blue"
 symbol = "󱀝 "
 
 [julia]
 format = "[$symbol($version•)]($style)"
-style = "bg:surface1 teal"
+style = "bg:bright-black bright-green"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [lua]
 format = "[$symbol($version•)]($style)"
-style = "bg:surface1 teal"
+style = "bg:bright-black bright-green"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [python]
 format = "[$symbol(\\($virtualenv\\))($version•)]($style)"
-style = "bg:surface1 teal"
+style = "bg:bright-black bright-green"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [rust]
 format = "[$symbol($version•)]($style)"
-style = "bg:surface1 teal"
+style = "bg:bright-black bright-green"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [status]
 disabled = false
 format = "[ $status ]($style)"
-style = "bg:red mantle"
+style = "bg:red black"
 
 [sudo]
 disabled = false
 format = "[ $symbol]($style)"
-style = "bg:surface1 teal"
+style = "bg:bright-black bright-green"
 
 [username]
 format = "[($user•)]($style)"
-style_root = "bg:surface1 red"
-style_user = "bg:surface1 green"
+style_root = "bg:bright-black red"
+style_user = "bg:bright-black green"
 
 [kotlin]
 disabled = true
@@ -221,32 +220,4 @@ disabled = true
 disabled = true
 [zig]
 disabled = true
-
-[palettes.catppuccin_mocha]
-rosewater = "#f5e0dc"
-flamingo = "#f2cdcd"
-pink = "#f5c2e7"
-mauve = "#cba6f7"
-red = "#f38ba8"
-maroon = "#eba0ac"
-peach = "#fab387"
-yellow = "#f9e2af"
-green = "#a6e3a1"
-teal = "#94e2d5"
-sky = "#89dceb"
-sapphire = "#74c7ec"
-blue = "#89b4fa"
-lavender = "#b4befe"
-text = "#cdd6f4"
-subtext1 = "#bac2de"
-subtext0 = "#a6adc8"
-overlay2 = "#9399b2"
-overlay1 = "#7f849c"
-overlay0 = "#6c7086"
-surface2 = "#585b70"
-surface1 = "#45475a"
-surface0 = "#313244"
-base = "#1e1e2e"
-mantle = "#181825"
-crust = "#11111b"
 
