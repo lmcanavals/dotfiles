@@ -57,8 +57,9 @@ rust.sh
 .config/zsh/.zsh_history
 
 .local/share/.vivaldi_reporting_data
-.local/share/recently-used.xbel
+.local/share/hyprland/lastVersion
 .local/share/mimeapps.list
+.local/share/recently-used.xbel
 
 .android/
 .cache/
