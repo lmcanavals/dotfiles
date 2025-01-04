@@ -40,7 +40,7 @@ function LmcsFoldText()
 end
 
 opt.listchars = {
-	tab = "┼ ",
+	tab = "╎ ",
 	trail = "∙",
 	extends = "»",
 	precedes = "«",
