@@ -9,6 +9,7 @@
       <value type="string" value="google-chrome"/>
       <value type="string" value="KeePassXC"/>
       <value type="string" value="microsoft-edge-dev"/>
+      <value type="string" value="notify-send"/>
       <value type="string" value="org.freedesktop.network-manager-applet"/>
       <value type="string" value="org.xfce.Thunar"/>
       <value type="string" value="starship"/>
