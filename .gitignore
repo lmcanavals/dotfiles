@@ -80,6 +80,7 @@ rust.sh
 .mplayer/
 .npm/
 .pki/
+.putty/
 .rustup/
 .ssh/
 .steam/
@@ -154,6 +155,7 @@ rust.sh
 .local/share/gvfs-metadata/
 .local/share/hyprland/
 .local/share/jupyter/
+.local/share/icons/
 .local/share/keyrings/
 .local/share/kxmlgui5/
 .local/share/mc/

@@ -263,7 +263,7 @@ Utilities
 
 ```sh
 sudo pacman -S \
-papirus-icon-theme gnome-themes-extra \
+nwg-look tela-circle-icon-theme-orange gnome-themes-extra \
 file-roller unrar p7zip ntp imagemagick \
 gammastep mosh network-manager-applet pavucontrol \
 keepassxc haveged jq lazygit bluez bluez-utils blueman \
@@ -311,7 +311,7 @@ Fonts from aur
 ```sh
 <aur helper> -S \
 ttf-architects-daughter ttf-indieflower ttf-nothingyoucoulddo ttf-pacifico \
-ttf-maple
+maplemono-nf maplemono-ttf
 ```
 
 Cloud storage, Google Drive, One Drive, etc:
