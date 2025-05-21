@@ -7,7 +7,7 @@ font = "Electrolize Regular 10, Font Awesome 5 Free Regular 10"
 format = "<span foreground='#74c7ec'>%s</span>\n%b"
 frame_color = "#6c7086"
 frame_width = 1
-icon_theme = Papirus-Dark
+icon_theme = Tela-circle-orange-dark
 idle_threshold = 120 
 markup = full
 monitor = 1

@@ -89,6 +89,7 @@ rust.sh
 .var/
 .vscode-server/
 .wine/
+.zen/
 .zoom/
 
 .config/Bitwarden/

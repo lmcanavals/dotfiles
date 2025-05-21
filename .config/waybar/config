@@ -22,8 +22,8 @@
   ],
   "hyprland/language": {
     "format": "{}",
-    "format-en": "🇺🇸",
-    "format-es": "🇵🇪"
+    "format-en": "EN",
+    "format-es": "ES"
   },
   "hyprland/submap": {
     "format": "{}"
@@ -32,7 +32,7 @@
     "icon": true,
     "max-length": 75,
     "rewrite": {
-      "(.*) — Mozilla Firefox": "$1",
+      "(.*) — (Mozilla Firefox|Zen Browser)": "$1",
       "(.*) and \\d+ more page(.*)": "$1",
       "(.*) - Personal - Microsoft(.*)": "$1",
       "(.*) - (.*)": "$1"
@@ -53,11 +53,12 @@
       "class<thunar>": "󰥨",
       "class<thunar> title<.*lmcs.*>": "󱂵",
       "class<thunderbird>": "",
-      "class<vivaldi.*>": "󰖟",
+      "class<vivaldi.*>": "",
+      "class<zen.*>": "󰗝",
       "title<.*github.*>": "",
       "title<.*Picture.in.Picture.*>": "󰹗 ",
       "title<.*reddit.*>": "",
-      "title<.*twitter.*>": "",
+      "title<.*x.com.*>": "",
       "title<.*youtube.*>": "",
       "title<.*whatsapp.*>": ""
     },
