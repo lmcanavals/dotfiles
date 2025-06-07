@@ -110,14 +110,19 @@
   },
   "clock": {
     "format": "{:%R}",
-    "format-alt": "{:%a, %d %b, %Y %R}",
+    "format-alt": "{:%a %Y-%m-%d %R}",
     "tooltip-format": "<span size='11pt' font='monospace'>{calendar}</span>",
     "calendar": {
       "mode": "year",
       "mode-mon-col": 3,
+      "weeks-pos": "right",
       "on-scroll": 1,
       "on-click-right": "mode",
       "format": {
+        "months": "<span color='LightSteelBlue'><b>{}</b></span>",
+        "days": "<span color='White'>{}</span>",
+        "weeks": "<span color='Thistle'>{}</span>",
+        "weekdays": "<span color='Moccasin'><b>{}</b></span>",
         "today": "<span background='Gold' color='Black'><b>{}</b></span>"
       }
     },
