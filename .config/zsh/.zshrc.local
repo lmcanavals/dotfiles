@@ -115,7 +115,9 @@ export LCSTARSHIP
 # Shortcuts and aliases
 #
 abk+=(
-	"d"   " GIT_DIR=$HOME/.dotfiles.git GIT_WORK_TREE=$HOME "
+  "c"   " clang -std=c23 -o prog.app -g "
+  "cc"  " clang++ -std=c++23 -o prog.app -g "
+	"d"   " GIT_DIR=$HOME/.dotfiles.git GIT_WORK_TREE=$HOME g"
 	"ga"  " git add ."
 	"gc"  " git commit -a -m \"\""
 	"gd"  " git difftool"

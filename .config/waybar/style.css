@@ -21,7 +21,7 @@ label:focus {
 	background-color: #202020;
 }
 window#waybar {
-	background-color: rgba(30, 30, 46, 0.2);
+	background-color: rgba(30, 30, 46, 0.6);
 	color: #cdd6f4;
 	text-shadow: 4px 4px 4px #45475a;
 	transition-property: background-color;

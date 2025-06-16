@@ -190,6 +190,7 @@ shared/
 # Multifolder stuff
 
 **/a.out
+**/*.app
 
 # exception rules
 
