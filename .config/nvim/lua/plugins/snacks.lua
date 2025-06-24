@@ -14,6 +14,17 @@ return {
  neovim]],
 				},
 			},
+			indent = {
+				indent = {
+					char = "┆",
+				},
+				chunk = {
+					enabled = true,
+					char = {
+						arrow = "╼",
+					},
+				},
+			},
 		},
 	},
 }

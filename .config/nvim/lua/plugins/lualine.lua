@@ -18,7 +18,7 @@ return {
 								return msg
 							end
 							for _, client in ipairs(clients) do
-								if not client.is_stopped() then
+								if not client.is_stopped(client) then
 									msg = msg .. (i == 0 and "" or " ") .. client.name
 									i = i + 1
 								end
