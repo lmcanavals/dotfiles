@@ -1,29 +1,54 @@
+@import url("colors.css");
+
 * {
 	font-family: Electrolize, 'Nimbus Sans Narrow', FontAwesome, sans-serif;
-	font-size: 20px;
+	font-size: 1.045em;
 }
 
-@keyframes blink {
+@keyframes fg_blink {
 to {
-	color: #f38ba8;
+	color: @redish;
+	text-shadow: .05em .05em @shadow2, 0 0 .25em @shadow1;
 }
 }
-@keyframes blink2 {
+@keyframes bg_blink {
 to {
-	background-color: rgba(249, 226, 175, 0.6);
+	background-color: @alert;
 }
 }
 
+button {
+	border-radius: .5em;
+	color: @text;
+  margin: 0 .35em;
+	padding: 0 1em;
+}
+button.active {
+	background-color: @alert;
+	color: @textLight;
+}
+button.urgent {
+	animation-name: bg_blink;
+	animation-duration: 0.75s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	background-color: @grayish;
+}
 button:hover {
-	background: inherit;
+  background: inherit;
+	background-color: @alert;
+	color: @textLight;
 }
+
 label:focus {
-	background-color: #202020;
+	background-color: @redish;
 }
+
 window#waybar {
-	background-color: rgba(30, 30, 46, 0.6);
-	color: #cdd6f4;
-	text-shadow: 4px 4px 4px #45475a;
+	background-color: @background;
+	color: @text;
+	text-shadow: .05em .05em @shadow1, 0 0 .25em @shadow2;
 	transition-property: background-color;
 	transition-duration: .5s;
 }
@@ -33,32 +58,6 @@ window#waybar.hidden {
 window#waybar.somerandomapp {
 	background-color: red;
 	border: none;
-}
-
-#workspaces button {
-	border-radius: 10px;
-	color: #cdd6f4;
-  margin: 0 3px;
-	min-width: 40px;
-	padding: 0 10px;
-	text-shadow: 4px 4px 4px #45475a;
-}
-#workspaces button:hover {
-	background-color: rgba(249, 226, 175, 0.4);
-	color: #1e1e2e;
-}
-
-#workspaces button.active {
-	background-color: rgba(250, 179, 135, 0.8);
-	color: #181825;
-}
-#workspaces button.urgent {
-	animation-name: blink2;
-	animation-duration: 0.75s;
-	animation-timing-function: linear;
-	animation-iteration-count: infinite;
-	animation-direction: alternate;
-	background-color: rgba(69, 71, 90, 0.1);
 }
 
 #backlight,
@@ -75,66 +74,78 @@ window#waybar.somerandomapp {
 #mpd,
 #network,
 #pulseaudio,
-#scratchpad,
 #temperature,
 #tray,
+#window,
 #wireplumber {
-	margin: 0 5px;
+  /* border: solid 1px red; */
+	margin: 0 .35em;
 	padding: 0;
 }
 
-#submap {
-	animation-name: blink2;
-	animation-duration: 0.75s;
-	animation-timing-function: linear;
-	animation-iteration-count: infinite;
-	animation-direction: alternate;
-	background-color: rgba(180, 190, 254, 0.8);
-  border-radius: 10px;
-	color: #181825;
-  margin: 0 3px;
-	min-width: 40px;
-	padding: 0 10px;
-	text-shadow: 4px 4px 4px #45475a;
-}
-
-#window,
-#workspaces {
-	margin: 0 3px;
-}
-
 #battery.charging, #battery.plugged {
-	color: #a6e3a1;
-}
-
-#clock {
-	font-family: 'Monaspace Krypton';
-	font-size: 26px;
+	color: @greenish;
 }
 
 #battery.critical:not(.charging),
 #temperature.critical {
-	animation-name: blink;
+	animation-name: fg_blink;
 	animation-duration: 0.75s;
 	animation-timing-function: linear;
 	animation-iteration-count: infinite;
 	animation-direction: alternate;
-	color: #b4befe;
+	color: @text;
+}
+
+#clock,
+#pulseaudio {
+	font-family: 'Monaspace Krypton';
+	font-size: 1em;
+}
+
+#custom-binary_clock {
 }
 
 #keyboard-state > label.locked {
-	color: #eba9ac;
+	color: @redish;
 }
 
 #network.disconnected {
-	color: #7f849c;
+	color: @grayish;
 }
 
-#tray > .passive {
-	-gtk-icon-effect: dim;
+#submap {
+	animation-name: bg_blink;
+	animation-duration: 0.75s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	background-color: @submapBg;
+  border-radius: .5em;
+	color: @textLight;
+  margin: 0 .35em;
+	min-width: 2em;
+	padding: 0 1em;
+}
+
+
+#tray {
+}
+#tray > .active {
 }
 #tray > .needs-attention {
 	-gtk-icon-effect: highlight;
-	color: #fab387;
+	color: @alert;
+}
+#tray > .passive {
+	-gtk-icon-effect: dim;
+}
+
+#workspaces {
+	margin: 0 .35em 0 0;
+}
+#workspaces button {
+	text-shadow: inherit;
+  /* in case we need special style for specific buttons */
 }
 

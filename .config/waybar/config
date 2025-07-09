@@ -1,6 +1,4 @@
 {
-  "height": 28,
-  "spacing": 4,
   "modules-left": [
     "hyprland/workspaces",
     "hyprland/submap"
@@ -17,54 +15,10 @@
     "backlight",
     "battery",
     "tray",
+    "custom/binary_clock",
     "clock",
     "idle_inhibitor"
   ],
-  "hyprland/language": {
-    "format": "{}",
-    "format-en": "EN",
-    "format-es": "ES"
-  },
-  "hyprland/submap": {
-    "format": "{}"
-  },
-  "hyprland/window": {
-    "icon": true,
-    "max-length": 75,
-    "rewrite": {
-      "(.*) — (Mozilla Firefox|Zen Browser)": "$1",
-      "(.*) and \\d+ more page(.*)": "$1",
-      "(.*) - Personal - Microsoft(.*)": "$1",
-      "(.*) - (.*)": "$1"
-    },
-    "separate-outputs": true
-  },
-  "hyprland/workspaces": {
-    "format": "{name}: {windows}",
-    "format-window-separator": " ",
-    "window-rewrite-default": "󰣆 ",
-    "window-rewrite": {
-      "class<[Bb]rave-browser.*>": "󰖟",
-      "class<firefox>": "",
-      "class<mousepad>": "",
-      "class<org.gnome.FileRoller>": "󰗄",
-      "class<org.wezfurlong.wezterm>": " ",
-      "class<org.wezfurlong.wezterm> title<.*nvim.*>": "",
-      "class<thunar>": "󰥨",
-      "class<thunar> title<.*lmcs.*>": "󱂵",
-      "class<thunderbird>": "",
-      "class<vivaldi.*>": "",
-      "class<zen.*>": "󰗝",
-      "title<.*github.*>": "",
-      "title<.*Picture.in.Picture.*>": "󰹗 ",
-      "title<.*reddit.*>": "",
-      "title<.*x.com.*>": "",
-      "title<.*youtube.*>": "",
-      "title<.*whatsapp.*>": ""
-    },
-    "on-scroll-up": "hyprctl dispatch workspace e+1",
-    "on-scroll-down": "hyprctl dispatch workspace e-1"
-  },
   "backlight": {
     "format": "{icon}",
     "format-icons": [
@@ -81,17 +35,11 @@
     "tooltip-format": "{percent}% {icon}"
   },
   "battery": {
-    "states": {
-      "good": 95,
-      "warning": 30,
-      "critical": 15
-    },
     "format": "{icon}",
-    "format-charging": "{icon}󱐋",
-    "format-plugged": "{icon}󰚥",
     "format-alt": "{time} {icon}",
-    "format-good": "{icon}",
+    "format-charging": "{icon}󱐋",
     "format-full": "{icon}",
+    "format-good": "{icon}",
     "format-icons": [
       "󰂎",
       "󰁺",
@@ -105,13 +53,23 @@
       "󰂂",
       "󰁹"
     ],
+    "format-plugged": "{icon}󰚥",
     "format-time": "{H} h {M} min",
-    "full-at": 95
+    "full-at": 95,
+    "states": {
+      "good": 70,
+      "warning": 35,
+      "critical": 15
+    }
   },
   "clock": {
-    "format": "{:%R}",
-    "format-alt": "{:%a %Y-%m-%d %R}",
-    "tooltip-format": "<span size='11pt' font='monospace'>{calendar}</span>",
+    "actions": {
+      "on-click-right": "mode",
+      "on-click-forward": "tz_up",
+      "on-click-backward": "tz_down",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    },
     "calendar": {
       "mode": "year",
       "mode-mon-col": 3,
@@ -126,41 +84,90 @@
         "today": "<span background='Gold' color='Black'><b>{}</b></span>"
       }
     },
-    "actions": {
-      "on-click-right": "mode",
-      "on-click-forward": "tz_up",
-      "on-click-backward": "tz_down",
-      "on-scroll-up": "shift_up",
-      "on-scroll-down": "shift_down"
-    }
+    "format": "󰸗",
+    "format-alt": "{:%a %F %R}",
+    "tooltip-format": "<span size='11pt' font='monospace'>{calendar}</span>"
   },
   "cpu": {
     "format": "{icon}",
     "format-icons": [
-      "󰋙",
-      "󰫃",
-      "󰫄",
-      "󰫅",
-      "󰫆",
+      "",
+      "󰪞",
+      "󰪟",
+      "󰪠",
+      "󰪡",
       "󰪢",
-      "󰫈"
+      "󰪣",
+      "󰪤",
+      "󰪥",
     ]
+  },
+  "custom/binary_clock": {
+    "exec": "~/.local/bin/localbaseclock",
+    "format": "{}",
+    "interval": 5,
+    "tooltip": true,
+    "tooltip-format": "{}"
+  },
+  "hyprland/language": {
+    "format": "{}",
+    "format-en": "EN",
+    "format-es": "ES"
+  },
+  "hyprland/submap": {
+    "format": "{}"
+  },
+  "hyprland/window": {
+    "rewrite": {
+      "(.*) — (Mozilla Firefox|Zen Browser)": "$1",
+      "(.*) and \\d+ more page(.*)": "$1",
+      "(.*) - Personal - Microsoft(.*)": "$1",
+      "(.*) - (.*)": "$1"
+    },
+    "separate-outputs": true
+  },
+  "hyprland/workspaces": {
+    "format": "{name} {windows}",
+    "format-window-separator": " ",
+    "on-scroll-down": "hyprctl dispatch workspace e-1",
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "show-special": true,
+    "window-rewrite-default": "󰙵",
+    "window-rewrite": {
+      "class<[Bb]rave-browser.*>": "󰖟",
+      "class<firefox>": "",
+      "class<mousepad>": "󱩼",
+      "class<org.gnome.FileRoller>": "󰗄",
+      "class<org.wezfurlong.wezterm>": "",
+      "class<org.wezfurlong.wezterm> title<.*nvim.*>": "",
+      "class<thunar>": "󰥨",
+      "class<thunar> title<.*lmcs.*>": "󱂵",
+      "class<thunderbird>": "",
+      "class<vivaldi.*>": "",
+      "class<zen.*>": "󰗝",
+      "title<.*github.*>": "",
+      "title<.*Picture.in.Picture.*>": "󰹗",
+      "title<.*reddit.*>": "",
+      "title<.*x.com.*>": "",
+      "title<.*youtube.*>": "",
+      "title<.*whatsapp.*>": ""
+    }
   },
   "idle_inhibitor": {
     "format": "{icon}",
     "format-icons": {
-      "activated": "󰒳 ",
-      "deactivated": "󰒲 "
+      "activated": "",
+      "deactivated": ""
     }
   },
   "keyboard-state": {
-    "numlock": true,
     "capslock": true,
     "format": "{name} {icon}",
     "format-icons": {
       "locked": "",
       "unlocked": ""
-    }
+    },
+    "numlock": true
   },
   "memory": {
     "format": "{icon}",
@@ -170,146 +177,49 @@
       "󰫄",
       "󰫅",
       "󰫆",
-      "󰪢",
+      "󰫇",
       "󰫈"
     ]
   },
   "network": {
     "format": "󰛳",
-    "tooltip-format-ethernet": "Interface:\t\t{ifname}\nIP:\t\t\t{ipaddr}\nMask:\t\t{cidr}\nGateway:\t\t{gwaddr}",
-    "tooltip-format-wifi": "SSID:\t\t{essid}\nSignal strength:\t{signalStrength}% {icon}\nInterface:\t\t{ifname}\nIP:\t\t\t{ipaddr}\nMask:\t\t{cidr}\nGateway:\t\t{gwaddr}",
-    "format-linked": "{ifname} (No IP) 󰌙",
-    "format-disconnected": "{ifname} 󰲛",
     "format-alt": "{ifname}: {ipaddr}/{cidr}",
+    "format-disconnected": "{ifname} 󰲛",
     "format-icons": [
       "󰤯",
       "󰤟",
       "󰤢",
       "󰤥",
       "󰤨"
-    ]
+    ],
+    "format-linked": "{ifname} (No IP) 󰌙",
+    "tooltip-format-ethernet": "Interface:\t\t{ifname}\nIP:\t\t\t{ipaddr}\nMask:\t\t{cidr}\nGateway:\t\t{gwaddr}",
+    "tooltip-format-wifi": "SSID:\t\t{essid}\nSignal strength:\t{signalStrength}% {icon}\nInterface:\t\t{ifname}\nIP:\t\t\t{ipaddr}\nMask:\t\t{cidr}\nGateway:\t\t{gwaddr}"
   },
   "pulseaudio": {
-    "scroll-step": 5,
-    "format": "{format_source} {icon}",
-    "format-headphones": "{format_source} {icon}",
-    "format-headphones-muted": "{format_source} 󰝛 󰝟",
-    "format-muted": "{format_source} 󰝛 󰝟",
-    "format-source": "󰍬",
-    "format-source-muted": "󰍭",
+    "format": "{format_source} {volume}% {icon}",
     "format-icons": {
-      "default": [
-        "󰕾 󰝦",
-        "󰕾 󰪞",
-        "󰕾 󰪟",
-        "󰕾 󰪠",
-        "󰕾 󰪡",
-        "󰕾 󰪢",
-        "󰕾 󰪣",
-        "󰕾 󰪤",
-        "󰕾 󰪥"
-      ],
-      "headphone": [
-        "󰋋 󰝦",
-        "󰋋 󰪞",
-        "󰋋 󰪟",
-        "󰋋 󰪠",
-        "󰋋 󰪡",
-        "󰋋 󰪢",
-        "󰋋 󰪣",
-        "󰋋 󰪤",
-        "󰋋 󰪥"
-      ],
-      "speaker": [
-        "󰓃 󰝦",
-        "󰓃 󰪞",
-        "󰓃 󰪟",
-        "󰓃 󰪠",
-        "󰓃 󰪡",
-        "󰓃 󰪢",
-        "󰓃 󰪣",
-        "󰓃 󰪤",
-        "󰓃 󰪥"
-      ],
-      "hdmi": [
-        "󰡁 󰝦",
-        "󰡁 󰪞",
-        "󰡁 󰪟",
-        "󰡁 󰪠",
-        "󰡁 󰪡",
-        "󰡁 󰪢",
-        "󰡁 󰪣",
-        "󰡁 󰪤",
-        "󰡁 󰪥"
-      ],
-      "headset": [
-        "󰋎 󰝦",
-        "󰋎 󰪞",
-        "󰋎 󰪟",
-        "󰋎 󰪠",
-        "󰋎 󰪡",
-        "󰋎 󰪢",
-        "󰋎 󰪣",
-        "󰋎 󰪤",
-        "󰋎 󰪥"
-      ],
-      "hands-free": [
-        "󱡏 󰝦",
-        "󱡏 󰪞",
-        "󱡏 󰪟",
-        "󱡏 󰪠",
-        "󱡏 󰪡",
-        "󱡏 󰪢",
-        "󱡏 󰪣",
-        "󱡏 󰪤",
-        "󱡏 󰪥"
-      ],
-      "portable": [
-        "󰲑 󰝦",
-        "󰲑 󰪞",
-        "󰲑 󰪟",
-        "󰲑 󰪠",
-        "󰲑 󰪡",
-        "󰲑 󰪢",
-        "󰲑 󰪣",
-        "󰲑 󰪤",
-        "󰲑 󰪥"
-      ],
-      "car": [
-        "󰄋 󰝦",
-        "󰄋 󰪞",
-        "󰄋 󰪟",
-        "󰄋 󰪠",
-        "󰄋 󰪡",
-        "󰄋 󰪢",
-        "󰄋 󰪣",
-        "󰄋 󰪤",
-        "󰄋 󰪥"
-      ],
-      "hifi": [
-        "󰴸 󰝦",
-        "󰴸 󰪞",
-        "󰴸 󰪟",
-        "󰴸 󰪠",
-        "󰴸 󰪡",
-        "󰴸 󰪢",
-        "󰴸 󰪣",
-        "󰴸 󰪤",
-        "󰴸 󰪥"
-      ],
-      "phone": [
-        "󰏲 󰝦",
-        "󰏲 󰪞",
-        "󰏲 󰪟",
-        "󰏲 󰪠",
-        "󰏲 󰪡",
-        "󰏲 󰪢",
-        "󰏲 󰪣",
-        "󰏲 󰪤",
-        "󰏲 󰪥"
-      ]
+      "car": "󰄋",
+      "default": "󰕾",
+      "hands-free": "󱡏",
+      "hands-free-muted": "󱡐",
+      "headphone": "󰋋",
+      "headphone-muted": "󰟎",
+      "headset": "󰋎",
+      "headset-muted": "󰋐",
+      "hdmi": "󰡁",
+      "hifi": "󰴸",
+      "phone": "󰏲",
+      "phone-muted": "󰷯",
+      "portable": "󰲑",
+      "speaker": "󰓃",
+      "speaker-muted": "󰓄"
     },
-    "on-click": "pavucontrol"
+    "format-muted": "{format_source} 0% {icon}",
+    "format-source": "{volume}% ",
+    "format-source-muted": "0% 󰍭",
+    "on-click": "pavucontrol",
+    "scroll-step": 5
   },
   "temperature": {
     "critical-threshold": 85,
@@ -324,7 +234,6 @@
     ]
   },
   "tray": {
-    "icon-size": 24,
-    "spacing": 0
+    "spacing": 5
   }
 }

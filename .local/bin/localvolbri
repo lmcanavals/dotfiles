@@ -117,7 +117,7 @@ function show_volume_notif {
       -h int:value:$volume \
       -i "$album_art" \
       -t $notification_timeout \
-      "$volume_icon  $volume%" \
+      "$volume% $volume_icon" \
       "$current_song"
   else
     notify-send \
@@ -125,7 +125,7 @@ function show_volume_notif {
       -h int:value:$volume \
       -i audio-speakers \
       -t $notification_timeout \
-      "$volume_icon  $volume%"
+      "$volume% $volume_icon"
   fi
 }
 
@@ -137,7 +137,7 @@ function show_mic_notif {
     -h int:value:$volume \
     -i audio-input-microphone \
     -t $notification_timeout \
-    "$volume_icon $volume%"
+    "$volume% $volume_icon"
 }
 
 function show_music_notif {
@@ -166,7 +166,7 @@ function show_brightness_notif {
     -h int:value:$brightness \
     -i display \
     -t $notification_timeout \
-    "$brightness_icon $brightness%"
+    "$brightness% $brightness_icon"
 }
 
 case $1 in
