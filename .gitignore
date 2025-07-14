@@ -153,11 +153,12 @@ rust.sh
 .config/zsh/.zcompcache/
 
 .local/lib/
+.local/share/Trash/
 .local/share/flatpak/
 .local/share/gvfs-metadata/
 .local/share/hyprland/
-.local/share/jupyter/
 .local/share/icons/
+.local/share/jupyter/
 .local/share/keyrings/
 .local/share/kxmlgui5/
 .local/share/mc/

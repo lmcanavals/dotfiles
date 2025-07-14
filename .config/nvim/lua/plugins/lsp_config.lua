@@ -8,6 +8,7 @@ return {
 				denols = {},
 				html = {},
 				pylsp = {},
+				qmlls = {},
 			},
 			setup = {
 				-- TODO check capabilities for everything
@@ -28,6 +29,9 @@ return {
 							},
 						},
 					}
+				end,
+				qmlls = function(_, opts)
+					opts.cmd = { "qmlls", "-E" }
 				end,
 			},
 		},
