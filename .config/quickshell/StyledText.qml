@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Effects
+import "MyShell"
 
 Text {
     id: text
@@ -8,6 +9,6 @@ Text {
     layer.enabled: true
     layer.effect: MultiEffect {
         shadowEnabled: true
-        shadowColor: "red"
+        shadowColor: Config.shadow
     }
 }

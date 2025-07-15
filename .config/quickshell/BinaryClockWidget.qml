@@ -1,6 +1,7 @@
-import QtQuick
+import "MyShell"
 
 SimpleWidget {
+    textContent: text
 
     StyledText {
         id: text

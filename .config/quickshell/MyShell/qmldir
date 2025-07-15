@@ -1,0 +1,5 @@
+module MyShell
+singleton Config 1.0 Config.qml
+singleton BinaryTime 1.0 BinaryTime.qml
+singleton Time 1.0 Time.qml
+

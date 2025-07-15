@@ -17,4 +17,5 @@ Singleton {
     readonly property string focusedBackground: "#ccfab387"
     readonly property string focusedForeground: "black"
     readonly property string itemBackground: "#88444444"
+    readonly property string shadow: "crimson"
 }

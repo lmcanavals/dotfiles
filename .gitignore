@@ -22,6 +22,7 @@ rust.sh
 .zdirs
 
 .config/*rc
+.config/.qmlformat.ini
 .config/Mousepad/accels.scm
 .config/QtProject.conf
 .config/Trolltech.conf
@@ -29,8 +30,8 @@ rust.sh
 .config/emaildefaults
 .config/emailidentities
 .config/font-manager/Sources.xml
-.config/fontconfig/conf.d/39-Aliases.conf
 .config/fontconfig/conf.d/09-Directories.conf
+.config/fontconfig/conf.d/39-Aliases.conf
 .config/gh/hosts.yml
 .config/gtkrc-2.0
 .config/kdeglobals
@@ -53,10 +54,11 @@ rust.sh
 .config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
 .config/zoom.conf
 .config/zoomus.conf
-.config/zsh/dynamic.zsh
 .config/zsh/.zsh_history
+.config/zsh/dynamic.zsh
 
 .local/share/.vivaldi_reporting_data
+.local/share/applications/Qt-MaintenanceTool.desktop
 .local/share/mimeapps.list
 .local/share/recently-used.xbel
 
@@ -65,6 +67,7 @@ rust.sh
 .cargo/
 .conan2/
 .conda/
+.designer/
 .dotfiles.git/
 .gephi/
 .gnome/
@@ -95,11 +98,11 @@ rust.sh
 
 .config/Bitwarden/
 .config/Bitwarden\ CLI/
-.config/chromium/
 .config/JetBrains/
 .config/KDE/
 .config/Kitware/
-.config/microsoft-edge-dev/
+.config/Qt/
+.config/QtProject/
 .config/Thunar/
 .config/Unknown\ Organization/
 .config/VirtualBox/
@@ -108,6 +111,7 @@ rust.sh
 .config/autostart/
 .config/blender/
 .config/cef_user_data/
+.config/chromium/
 .config/coc/
 .config/configstore/
 .config/dconf/
@@ -121,22 +125,24 @@ rust.sh
 .config/hiro/
 .config/htop/
 .config/inkscape/
-.config/keepassxc/
 .config/kde.org/
 .config/kdeconnect/
 .config/kdedefaults/
+.config/keepassxc/
 .config/khtml/
 .config/ksnip/
 .config/libaccounts-glib/
 .config/lutris/
 .config/mc/
 .config/menus/
+.config/microsoft-edge-dev/
 .config/microsoft-edge/
 .config/mypaint/
 .config/nvim/plugged/
 .config/obs-studio/
 .config/opera/
 .config/pulse/
+.config/qt-*/
 .config/rclone/
 .config/ristretto/
 .config/rncbc.org/
@@ -149,10 +155,12 @@ rust.sh
 .config/xfce4/panel/
 .config/xournalpp/metadata/
 .config/xsettingsd/
-.config/zsh/plugins/
 .config/zsh/.zcompcache/
+.config/zsh/plugins/
 
 .local/lib/
+.local/share/Qt/
+.local/share/QtProject/
 .local/share/Trash/
 .local/share/flatpak/
 .local/share/gvfs-metadata/

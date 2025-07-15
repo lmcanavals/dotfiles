@@ -2,27 +2,34 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell.Hyprland
+import "MyShell"
 
 RowLayout {
     id: row
 
     Repeater {
+        id: repeater
+
         model: {
             return Hyprland.workspaces;
         }
         delegate: Button {
-            property bool isInMonitor: modelData.monitor.name === panel.screen.name
+            id: btn
+
+            required property HyprlandWorkspace modelData
+            property bool isInMonitor: modelData.monitor.name === scope.modelData.name
 
             visible: isInMonitor
 
             background: SimpleWidget {
-                color: modelData.focused ? Config.focusedBackground : Config.itemBackground
+                textContent: text
+                color: btn.modelData.focused ? Config.focusedBackground : Config.itemBackground
             }
             contentItem: StyledText {
                 id: text
 
-                color: modelData.focused ? Config.focusedForeground : Config.foreground
-                text: isInMonitor ? modelData.name : ''
+                color: btn.modelData.focused ? Config.focusedForeground : Config.foreground
+                text: btn.isInMonitor ? btn.modelData.name : ''
             }
             onClicked: modelData.activate()
         }

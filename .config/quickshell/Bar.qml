@@ -1,61 +1,52 @@
 import QtQuick
 import Quickshell
+import "MyShell"
 
-Scope {
+PanelWindow {
+    // set screen when instantiating: Bar { screen: parent.modelData }
 
-    Variants {
-        model: Quickshell.screens
+    color: Config.background
 
-        PanelWindow {
-            id: panel
+    anchors {
+        top: true
+        left: true
+        right: true
+    }
 
-            property var modelData
-            screen: modelData
+    implicitHeight: child.implicitHeight
 
-            color: Config.background
+    Item {
+        id: child
 
-            anchors {
-                top: true
-                left: true
-                right: true
-            }
+        anchors {
+            left: parent.left
+            right: parent.right
+            verticalCenter: parent.verticalCenter
+        }
+        implicitHeight: Config.height
 
-            implicitHeight: child.implicitHeight
+        OsIconWidget {
+            id: osIcon
 
-            Item {
-                id: child
+            anchors.left: parent.left
+        }
 
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    verticalCenter: parent.verticalCenter
-                }
-                implicitHeight: Config.height
+        WorkspacesWidget {
+            id: workspaces
 
-                OsIconWidget {
-                    id: osIcon
+            anchors.left: osIcon.right
+        }
 
-                    anchors.left: parent.left
-                }
+        ClockWidget {
+            id: clock
 
-                WorkspacesWidget {
-                    id: workspaces
+            anchors.centerIn: parent
+        }
 
-                    anchors.left: osIcon.right
-                }
+        BinaryClockWidget {
+            id: binClock
 
-                ClockWidget {
-                    id: clock
-
-                    anchors.centerIn: parent
-                }
-
-                BinaryClockWidget {
-                    id: binClock
-
-                    anchors.right: parent.right
-                }
-            }
+            anchors.right: parent.right
         }
     }
 }
