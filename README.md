@@ -303,7 +303,7 @@ Other stuff from aur
 
 ```sh
 <aur helper> -S \
-sound-theme-smooth
+sound-theme-smooth hyprshade quickshell wofi-emoji zen-browser-bin
 ```
 
 Fonts from aur
@@ -311,7 +311,7 @@ Fonts from aur
 ```sh
 <aur helper> -S \
 ttf-architects-daughter ttf-indieflower ttf-nothingyoucoulddo ttf-pacifico \
-maplemono-nf maplemono-ttf
+maplemono-nf maplemono-ttf psf-cozette ttf-fairfax-hd
 ```
 
 Cloud storage, Google Drive, One Drive, etc:
