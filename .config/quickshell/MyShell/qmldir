@@ -1,5 +1,7 @@
 module MyShell
-singleton Config 1.0 Config.qml
+SimpleWidget 1.0 SimpleWidget.qml
+StyledButton 1.0 StyledButton.qml
+StyledText 1.0 StyledText.qml
 singleton BinaryTime 1.0 BinaryTime.qml
+singleton Config 1.0 Config.qml
 singleton Time 1.0 Time.qml
-

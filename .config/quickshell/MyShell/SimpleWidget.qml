@@ -1,9 +1,13 @@
 import QtQuick
-import "MyShell"
+import "."
 
 Rectangle {
     required property var textContent
-    anchors.verticalCenter: parent.verticalCenter
+
+    anchors {
+        verticalCenter: parent.verticalCenter
+        margins: Config.margin
+    }
     color: Config.itemBackground
     implicitHeight: parent.implicitHeight
     implicitWidth: textContent.paintedWidth + Config.padding * 2

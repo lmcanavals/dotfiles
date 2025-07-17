@@ -39,6 +39,13 @@ function LmcsFoldText()
 	return line .. lineCount .. " "
 end
 
+opt.colorcolumn = "81"
+opt.background = vim.env.LCTHEME or "dark"
+opt.expandtab = false
+opt.shiftwidth = 2
+opt.softtabstop = 2
+opt.tabstop = 2
+opt.foldtext = "v:lua.LmcsFoldText()"
 opt.listchars = {
 	tab = "╎ ",
 	trail = "∙",
@@ -46,6 +53,3 @@ opt.listchars = {
 	precedes = "«",
 	nbsp = "§",
 }
-opt.colorcolumn = "81"
-opt.background = vim.env.LCTHEME or "dark"
-opt.foldtext = "v:lua.LmcsFoldText()"

@@ -3,6 +3,7 @@ import Quickshell
 import "MyShell"
 
 PanelWindow {
+    id: panel
     // set screen when instantiating: Bar { screen: parent.modelData }
 
     color: Config.background
@@ -34,6 +35,7 @@ PanelWindow {
         WorkspacesWidget {
             id: workspaces
 
+            screen: panel.screen
             anchors.left: osIcon.right
         }
 

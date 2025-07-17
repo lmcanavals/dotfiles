@@ -1,37 +1,35 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Layouts
+import Quickshell
 import Quickshell.Hyprland
 import "MyShell"
 
 RowLayout {
-    id: row
+  id: row
 
-    Repeater {
-        id: repeater
+  required property ShellScreen screen
 
-        model: {
-            return Hyprland.workspaces;
-        }
-        delegate: Button {
-            id: btn
+  anchors.margins: Config.margin
 
-            required property HyprlandWorkspace modelData
-            property bool isInMonitor: modelData.monitor.name === scope.modelData.name
+  Repeater {
+	id: repeater
 
-            visible: isInMonitor
+	model: {
+	  return Hyprland.workspaces;
+	}
 
-            background: SimpleWidget {
-                textContent: text
-                color: btn.modelData.focused ? Config.focusedBackground : Config.itemBackground
-            }
-            contentItem: StyledText {
-                id: text
+	delegate: StyledButton {
+	  id: btn
 
-                color: btn.modelData.focused ? Config.focusedForeground : Config.foreground
-                text: btn.isInMonitor ? btn.modelData.name : ''
-            }
-            onClicked: modelData.activate()
-        }
-    }
+	  required property HyprlandWorkspace modelData
+
+	  focused: modelData.focused
+	  text: modelData.name
+	  visible: modelData.monitor.name === row.screen.name
+
+	  onClicked: modelData.activate()
+	}
+  }
 }

@@ -5,6 +5,7 @@ import Quickshell
 Singleton {
     readonly property int height: 28
     readonly property int padding: 10
+    readonly property int margin: 5
     readonly property int radius: 5
 
     // data stuff
