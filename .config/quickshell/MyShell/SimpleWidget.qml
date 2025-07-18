@@ -2,14 +2,14 @@ import QtQuick
 import "."
 
 Rectangle {
-    required property var textContent
-
-    anchors {
-        verticalCenter: parent.verticalCenter
-        margins: Config.margin
-    }
     color: Config.itemBackground
     implicitHeight: parent.implicitHeight
-    implicitWidth: textContent.paintedWidth + Config.padding * 2
+    implicitWidth: 200
     radius: Config.radius
+
+    anchors {
+        margins: Config.margin
+        verticalCenter: parent.verticalCenter
+    }
 }
+// vim: set ts=4 sw=4 et sts=0 :

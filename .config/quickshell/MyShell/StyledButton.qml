@@ -1,22 +1,28 @@
 import QtQuick
 import "."
 
-SimpleWidget {
+Rectangle {
     id: btn
 
     property color baseColor: focused ? Config.focusedBackground : Config.itemBackground
     property color currentVisualColor: baseColor
-    property color hoverColor: "#2ecc71"
-    property color pressedColor: "orange"
-    property string text
-
     required property bool focused
+    property color hoverColor: Config.hoverBackground
+    property color pressedColor: Config.pressedBackground
+    property string text
 
     signal clicked
 
     color: currentVisualColor
     implicitHeight: Config.height
-    textContent: buttonText
+    implicitWidth: buttonText.paintedWidth + Config.padding * 2
+    radius: Config.radius
+
+    Behavior on color {
+        ColorAnimation {
+            duration: 150
+        }
+    }
 
     onFocusedChanged: {
         if (!mouseArea.containsMouse && !mouseArea.pressed) {
@@ -26,9 +32,11 @@ SimpleWidget {
 
     MouseArea {
         id: mouseArea
+
         anchors.fill: parent
         hoverEnabled: true
 
+        onClicked: btn.clicked()
         onEntered: {
             btn.currentVisualColor = btn.hoverColor;
         }
@@ -37,7 +45,6 @@ SimpleWidget {
                 btn.currentVisualColor = btn.baseColor;
             }
         }
-
         onPressed: {
             btn.currentVisualColor = btn.pressedColor;
         }
@@ -48,20 +55,13 @@ SimpleWidget {
                 btn.currentVisualColor = btn.baseColor;
             }
         }
-
-        onClicked: btn.clicked()
     }
-
     StyledText {
         id: buttonText
 
         color: btn.focused ? Config.focusedForeground : Config.foreground
         text: btn.text
     }
-
-    Behavior on color {
-        ColorAnimation {
-            duration: 150
-        }
-    }
 }
+
+// vim: set ts=4 sw=4 et sts=0 :

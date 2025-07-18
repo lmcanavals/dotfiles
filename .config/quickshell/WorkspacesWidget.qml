@@ -7,29 +7,32 @@ import Quickshell.Hyprland
 import "MyShell"
 
 RowLayout {
-  id: row
+    id: row
 
-  required property ShellScreen screen
+    required property ShellScreen screen
 
-  anchors.margins: Config.margin
+    anchors.margins: Config.margin
 
-  Repeater {
-	id: repeater
+    Repeater {
+        id: repeater
 
-	model: {
-	  return Hyprland.workspaces;
-	}
+        model: Hyprland.workspaces
 
-	delegate: StyledButton {
-	  id: btn
+        delegate: StyledButton {
+            id: btn
 
-	  required property HyprlandWorkspace modelData
+            required property HyprlandWorkspace modelData
 
-	  focused: modelData.focused
-	  text: modelData.name
-	  visible: modelData.monitor.name === row.screen.name
+            focused: modelData?.focused ?? false
+            text: modelData?.name ?? "bye"
+            visible: modelData?.monitor?.name === row.screen.name
 
-	  onClicked: modelData.activate()
-	}
-  }
+            onClicked: {
+                if (!modelData.focused) {
+                    modelData.activate();
+                }
+            }
+        }
+    }
 }
+// vim: set ts=4 sw=4 et sts=0 :

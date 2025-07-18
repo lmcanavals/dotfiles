@@ -1,7 +1,7 @@
 import "MyShell"
 
 SimpleWidget {
-    textContent: text
+    implicitWidth: text.paintedWidth + Config.padding * 2
 
     StyledText {
         id: text
@@ -9,3 +9,4 @@ SimpleWidget {
         text: Time.time
     }
 }
+// vim: set ts=4 sw=4 et sts=0 :
