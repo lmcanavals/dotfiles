@@ -26,18 +26,18 @@ PanelWindow {
             right: parent.right
             verticalCenter: parent.verticalCenter
         }
-        OsIconWidget {
+        OsIcon {
             id: osIcon
 
             anchors.left: parent.left
         }
-        WorkspacesWidget {
+        Workspaces {
             id: workspaces
 
             anchors.left: osIcon.right
             screen: panel.screen
         }
-        ClockWidget {
+        TimeDate {
             id: clock
 
             anchors.centerIn: parent
@@ -52,7 +52,7 @@ PanelWindow {
 
             anchors.right: binClock.left
         }
-        BinaryClockWidget {
+        BinaryClock {
             id: binClock
 
             anchors.right: parent.right

@@ -4,7 +4,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Hyprland
-import "MyShell"
+import ".."
 
 RowLayout {
     id: row
@@ -16,7 +16,9 @@ RowLayout {
     Repeater {
         id: repeater
 
-        model: Hyprland.workspaces
+        model: {
+            Hyprland.workspaces.values.filter(d => d ? d.monitor.name == row.screen.name : false);
+        }
 
         delegate: StyledButton {
             id: btn
@@ -24,8 +26,10 @@ RowLayout {
             required property HyprlandWorkspace modelData
 
             focused: modelData?.focused ?? false
-            text: modelData?.name ?? "bye"
-            visible: modelData?.monitor?.name === row.screen.name
+            text: {
+                const workspaceName = modelData ? modelData.name : "bye";
+                return workspaceName.replace(/special:/, "");
+            }
 
             onClicked: {
                 if (!modelData.focused) {

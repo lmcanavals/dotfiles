@@ -1,4 +1,4 @@
-import "MyShell"
+import ".."
 
 SimpleWidget {
     implicitWidth: text.paintedWidth + Config.padding * 2
@@ -6,7 +6,8 @@ SimpleWidget {
     StyledText {
         id: text
 
-        text: BinaryTime.time
+        anchors.centerIn: parent
+        text: Config.osIcon
     }
 }
 // vim: set ts=4 sw=4 et sts=0 :

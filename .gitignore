@@ -41,6 +41,7 @@ rust.sh
 .config/nvim/lazy-lock.json
 .config/okular.kmessagebox
 .config/pavucontrol.ini
+.config/quickshell/.qmlls.ini
 .config/user-dirs.dirs
 .config/user-dirs.locale
 .config/webengineurlinterceptoradblockrc
@@ -59,6 +60,8 @@ rust.sh
 
 .local/share/.vivaldi_reporting_data
 .local/share/applications/Qt-MaintenanceTool.desktop
+.local/share/krita-sysinfo.log
+.local/share/krita.log
 .local/share/mimeapps.list
 .local/share/recently-used.xbel
 
@@ -168,6 +171,7 @@ rust.sh
 .local/share/icons/
 .local/share/jupyter/
 .local/share/keyrings/
+.local/share/krita/
 .local/share/kxmlgui5/
 .local/share/mc/
 .local/share/mime/

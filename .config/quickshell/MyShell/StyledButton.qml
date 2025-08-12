@@ -4,7 +4,9 @@ import "."
 Rectangle {
     id: btn
 
-    property color baseColor: focused ? Config.focusedBackground : Config.itemBackground
+    property color baseColor: {
+        focused ? Config.focusedBackground : Config.itemBackground;
+    }
     property color currentVisualColor: baseColor
     required property bool focused
     property color hoverColor: Config.hoverBackground
@@ -26,7 +28,11 @@ Rectangle {
 
     onFocusedChanged: {
         if (!mouseArea.containsMouse && !mouseArea.pressed) {
-            currentVisualColor = focused ? Config.focusedBackground : Config.itemBackground;
+            if (focused) {
+                currentVisualColor = Config.focusedBackground;
+            } else {
+                currentVisualColor = Config.itemBackground;
+            }
         }
     }
 
