@@ -3,15 +3,19 @@ return {
 		"folke/snacks.nvim",
 		opts = {
 			dashboard = {
-				preset = {
-					header = [[
-.____                             ____   ____.__          
-|    |    _____   ________ ___.__.\   \ /   /|__|  _____  
-|    |    \__  \  \___   /<   |  | \   Y   / |  | /     \ 
-|    |___  / __ \_ /    /  \___  |  \     /  |  ||  Y Y  \
-|_______ \(____  //_____ \ / ____|   \___/   |__||__|_|  /
-        \/     \/       \/ \/                          \/ 
- neovim]],
+				sections = {
+					{
+						section = "terminal",
+						cmd = "cat ~/.config/logaso; sleep .1",
+						random = 10,
+						height = 21,
+						width = 44,
+					},
+					{
+						pane = 2,
+						{ section = "keys", gap = 1, padding = 1 },
+						{ section = "startup" },
+					},
 				},
 			},
 			indent = {

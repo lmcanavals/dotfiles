@@ -1,4 +1,5 @@
 import Quickshell
+import "MyShell/Popups"
 
 Variants {
     model: Quickshell.screens
@@ -10,6 +11,8 @@ Variants {
 
         Bar {
             screen: scope.modelData
+        }
+        Volume {
         }
     }
 }
