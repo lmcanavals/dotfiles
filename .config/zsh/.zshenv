@@ -1,3 +1,5 @@
+# Essentials goes here, interactive stuff goes on .zshrc.pre
+
 if (( "x${CUSTOMZSHENV}x" == "xx" )); then
 	export CUSTOMZSHENV="X"
 fi
@@ -35,8 +37,6 @@ fi
 PATH=/home/lmcs/.local/bin:$PATH
 typeset -U PATH
 export PATH
-
-export LCLR=$(<$ZDOTDIR/colors)
 
 [[ -f "$HOME/.cargo/env" ]] && \
 . "$HOME/.cargo/env"

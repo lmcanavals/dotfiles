@@ -46,6 +46,7 @@ PanelWindow {
             id: batteries
 
             anchors.right: sysTray.left
+            bar: panel
         }
         SysTray {
             id: sysTray

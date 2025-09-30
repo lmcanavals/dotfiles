@@ -1,24 +1,53 @@
 import ".."
+import "../Popups"
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell.Services.UPower
+import Quickshell
 
 SimpleWidget {
+    id: batteryWidget
+
+    required property PanelWindow bar
+
     implicitWidth: trayLayout.implicitWidth + Config.padding
 
+    BatteryPopup {
+        id: batteryPopup
+
+        anchorWindow: batteryWidget.bar
+    }
     RowLayout {
         id: trayLayout
 
         anchors.centerIn: parent
 
+        ListModel {
+            id: combinedModel
+
+        }
         Repeater {
-            model: UPower.devices.values.filter(d => d.isPresent)
+            model: {
+                combinedModel.clear();
+                const originalDevices = UPower.devices.values.filter(d => d.isPresent);
+
+                for (const device of originalDevices) {
+                    combinedModel.append({
+                        device: device,
+                        popup: batteryPopup
+                    });
+                }
+                return combinedModel;
+            }
+
+            //model: UPower.devices.values.filter(d => d.isPresent)
 
             delegate: MouseArea {
                 id: area
 
-                required property UPowerDevice modelData
+                required property var modelData
+                property UPowerDevice mdevice: modelData.device
+                property BatteryPopup mpopup: modelData.popup
 
                 acceptedButtons: Qt.LeftButton | Qt.RightButton
                 hoverEnabled: true
@@ -27,24 +56,26 @@ SimpleWidget {
 
                 onClicked: event => {
                     if (event.button === Qt.LeftButton) {
-                        console.log(">>>> left");
-                    } else {
                         console.log(`>>>> ${event.button}`);
                     }
+                }
+                onEntered: {
+                    mpopup.currentDevice = mdevice;
+                    mpopup.visible = true;
+                }
+                onExited: {
+                    mpopup.visible = false;
                 }
 
                 StyledText {
                     id: text
 
-                    ToolTip.text: area.modelData.nativePath // TODO: more info
-
-                    ToolTip.visible: area.containsMouse
                     color: {
-                        if (area.modelData.percentage < .2) {
+                        if (area.mdevice.percentage < .2) {
                             return "orangered";
-                        } else if (area.modelData.percentage < .5) {
+                        } else if (area.mdevice.percentage < .5) {
                             return "orange";
-                        } else if (area.modelData.state == 4) {
+                        } else if (area.mdevice.state == 4) {
                             return "lightgreen";
                         }
                         return Config.foreground;
@@ -57,11 +88,11 @@ SimpleWidget {
                         //}
                         // TODO: handle batteries of other devices nicely
                         const icons = "󰂎 󰁺 󰁻 󰁼 󰁽 󰁾 󰁿 󰂀 󰂁 󰂂 󰁹".split(" ");
-                        let prcnt = area.modelData.percentage;
+                        let prcnt = area.mdevice?.percentage ?? 0;
                         prcnt = prcnt == 1 ? .99 : prcnt;
                         const idx = parseInt(Math.floor(prcnt * icons.length));
                         let info = `${icons[idx]}`;
-                        switch (area.modelData.state) {
+                        switch (area.mdevice.state) {
                         case 0:
                             // Unkwnown
                             info = "󰂑";
@@ -73,7 +104,7 @@ SimpleWidget {
                         case 2:
                             // Discharging
                             if (prcnt < .2) {
-                                info += "!󰚥";
+                                info += `!󰚥 ${prcnt * 100}%`;
                             }
                             break;
                         case 4:
@@ -85,7 +116,7 @@ SimpleWidget {
                         case 6: // Pending Discharge
                         default:
                             // Invalid Status
-                            const state = area.modelData.state;
+                            const state = area.mdevice.state;
                             const msg = UPowerDeviceState.toString(state);
                             console.log(msg);
                         }

@@ -1,3 +1,5 @@
+# stuff for interactive shells, colors and the like
+
 if [[ "$TERM" == "linux" ]]; then
 	# echo -en "\e]P0${LCLR:1:6}" && clear # for background artifacting
 	for i in {1..15}; do
@@ -6,6 +8,8 @@ if [[ "$TERM" == "linux" ]]; then
 fi
 
 export EDITOR=nvim
+
+export LCLR=$(<$ZDOTDIR/colors)
 
 # pacdiff stuff
 export DIFFPROG='nvim -d'
@@ -17,8 +21,30 @@ export BAT_THEME="Catppuccin $([[ $LCTHEME == "dark" ]] && echo Mocha || Latte)"
 
 # fzf
 export FZF_DEFAULT_COMMAND='fd --type f'
-export FZF_CTRL_T_COMMAND='fd'
 export FZF_CTRL_T_COMMAND='fd --type d'
+export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
+  --highlight-line \
+  --info=inline-right \
+  --ansi \
+  --layout=reverse \
+  --border=none \
+  --color=bg+:#283457 \
+  --color=bg:#16161e \
+  --color=border:#27a1b9 \
+  --color=fg:#c0caf5 \
+  --color=gutter:#16161e \
+  --color=header:#ff9e64 \
+  --color=hl+:#2ac3de \
+  --color=hl:#2ac3de \
+  --color=info:#545c7e \
+  --color=marker:#ff007c \
+  --color=pointer:#ff007c \
+  --color=prompt:#2ac3de \
+  --color=query:#c0caf5:regular \
+  --color=scrollbar:#27a1b9 \
+  --color=separator:#ff9e64 \
+  --color=spinner:#ff007c \
+"
 
 localismosh && export ISMOSHBRUH="yup"
 
