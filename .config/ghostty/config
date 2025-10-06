@@ -1,0 +1,22 @@
+# my awesome config
+
+background-opacity = 0.9
+
+#custom-shader = ~/Documents/git/ghostty-shaders/tft.glsl
+
+font-family = "Iosevka"
+font-family-bold = "Iosevka Slab"
+font-family-bold-italic = "Terminus"
+font-family-italic = "Monofur Nerd Font"
+font-feature = "dlig"
+font-feature = "ss09"
+font-size = 14
+font-style = "Regular"
+font-style-bold = "SemiBold"
+font-style-bold-italic = "Bold"
+font-style-italic = "Italic"
+
+theme = TokyoNight Night
+
+window-padding-balance = true
+window-show-tab-bar = never
