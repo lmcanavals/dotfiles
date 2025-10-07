@@ -9,6 +9,7 @@ return {
 				"css",
 				"go",
 				-- "html",
+				"hyprlang",
 				-- "javascript",
 				"latex",
 				"llvm",

@@ -1,0 +1,282 @@
+{
+	"modules-left": [
+		"hyprland/workspaces",
+		"hyprland/window",
+		"hyprland/submap"
+	],
+	"modules-center": [
+		"group/time"
+	],
+	"modules-right": [
+		"group/hardware",
+		"wireplumber",
+		"tray",
+		"idle_inhibitor"
+	],
+	"group/hardware": {
+		"orientation": "inherit",
+		"drawer": {
+			"children-class": "drawer-hw",
+			"transition-left-to-right": false
+		},
+		"modules": [
+			"battery",
+			"hyprland/language",
+			"backlight",
+			"memory",
+			"cpu",
+			"temperature"
+		]
+	},
+	"group/time": {
+		"orientation": "inherit",
+		"drawer": {
+			"children-class": "drawer-time"
+		},
+		"modules": [
+			"custom/binary_clock",
+			"clock"
+		]
+	},
+	"backlight": {
+		"format": "{icon} {percent}%",
+		"format-icons": [
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		],
+		"tooltip-format": "{percent}% {icon}"
+	},
+	"battery": {
+		"format": "{icon}󱐥",
+		"format-alt": "{icon}󱐥 {capacity}%",
+		"format-charging": "{icon}󱐋",
+		"format-critical": "{capacity}% {icon}!󰚥",
+		"format-discharging": "{icon}",
+		"format-icons": [
+			"󰂎",
+			"󰁺",
+			"󰁻",
+			"󰁼",
+			"󰁽",
+			"󰁾",
+			"󰁿",
+			"󰂀",
+			"󰂁",
+			"󰂂",
+			"󰁹"
+		],
+		"format-time": "{H} h {M} min",
+		"full-at": 98,
+		"states": {
+			"good": 75,
+			"low": 45,
+			"critical": 15
+		}
+	},
+	"clock": {
+		"actions": {
+			"on-click-right": "mode",
+			"on-click-forward": "tz_up",
+			"on-click-backward": "tz_down",
+			"on-scroll-up": "shift_up",
+			"on-scroll-down": "shift_down"
+		},
+		"calendar": {
+			"mode": "year",
+			"mode-mon-col": 3,
+			"weeks-pos": "right",
+			"on-scroll": 1,
+			"on-click-right": "mode",
+			"format": {
+				"months": "<span color='LightSteelBlue'><b>{}</b></span>",
+				"days": "<span color='White'>{}</span>",
+				"weeks": "<span color='Thistle'>{}</span>",
+				"weekdays": "<span color='Moccasin'><b>{}</b></span>",
+				"today": "<span background='Gold' color='Black'><b>{}</b></span>"
+			}
+		},
+		"format": "{:%a %b %e %R}",
+		"format-alt": "{:%A %F %R}",
+		"tooltip-format": "<span size='11pt' font='monospace'>{calendar}</span>"
+	},
+	"cpu": {
+		"format": "{icon} {usage}%",
+		"format-icons": [
+			"",
+			"󰪞",
+			"󰪟",
+			"󰪠",
+			"󰪡",
+			"󰪢",
+			"󰪣",
+			"󰪤",
+			"󰪥"
+		]
+	},
+	"custom/binary_clock": {
+		"exec": "~/.local/bin/localbaseclock",
+		"format": "{}",
+		"interval": 5,
+		"return-type": "json",
+		"tooltip": true
+	},
+	"hyprland/language": {
+		"format": "󰌌 {}",
+		"format-en-altgr-intl": "EN(altgr-intl)",
+		"format-en-intl": "EN(intl)",
+		"format-es": "ES(latam)"
+	},
+	"hyprland/submap": {
+		"format": "{}"
+	},
+	"hyprland/window": {
+		"rewrite": {
+			"(.*) — (Mozilla Firefox|Zen Browser)": "$1",
+			"(.*) and \\d+ more page(.*)": "$1",
+			"(.*) - Personal - Microsoft(.*)": "$1",
+			"(.*) - (.*)": "$1"
+		},
+		"separate-outputs": true
+	},
+	"hyprland/workspaces": {
+		"format": "{name} {windows}",
+		"format-window-separator": " ",
+		"on-scroll-down": "hyprctl dispatch workspace e-1",
+		"on-scroll-up": "hyprctl dispatch workspace e+1",
+		"show-special": true,
+		"window-rewrite-default": "󰙵",
+		"window-rewrite": {
+			"class<[Bb]rave-browser.*>": "󰖟",
+			"class<firefox>": "",
+			"class<mousepad>": "󱩼",
+			"class<org.gnome.FileRoller>": "󰗄",
+			"class<com.mitchellh.ghostty>": "",
+			"class<org.wezfurlong.wezterm>": "",
+			"class<org.wezfurlong.wezterm> title<.*nvim.*>": "",
+			"class<thunar>": "󰥨",
+			"class<thunar> title<.*lmcs.*>": "󱂵",
+			"class<thunderbird>": "",
+			"class<vivaldi.*>": "",
+			"class<zen.*>": "󰗝",
+			"title<.*github.*>": "",
+			"title<.*Picture.in.Picture.*>": "󰹗",
+			"title<.*reddit.*>": "",
+			"title<.*x.com.*>": "",
+			"title<.*youtube.*>": "",
+			"title<.*whatsapp.*>": ""
+		}
+	},
+	"idle_inhibitor": {
+		"format": "{icon}",
+		"format-icons": {
+			"activated": "󰒳 ",
+			"deactivated": "󰒲 "
+		}
+	},
+	"keyboard-state": {
+		"capslock": true,
+		"format": "{name} {icon}",
+		"format-icons": {
+			"locked": "",
+			"unlocked": ""
+		},
+		"numlock": true
+	},
+	"memory": {
+		"format": "{icon} {percentage}%",
+		"format-icons": [
+			"󰋙",
+			"󰫃",
+			"󰫄",
+			"󰫅",
+			"󰫆",
+			"󰫇",
+			"󰫈"
+		],
+		"tooltip-format": "RAM:\t{used:0.1f}/{total}G ({percentage}%)\nSWAP:\t{swapUsed:0.1f}/{swapTotal}G ({swapPercentage}%)"
+	},
+	"network": {
+		"format": "󰛳",
+		"format-alt": "{ifname}: {ipaddr}/{cidr}",
+		"format-disconnected": "{ifname} 󰲛",
+		"format-icons": [
+			"󰤯",
+			"󰤟",
+			"󰤢",
+			"󰤥",
+			"󰤨"
+		],
+		"format-linked": "{ifname} (No IP) 󰌙",
+		"tooltip-format-ethernet": "Interface:\t\t{ifname}\nIP:\t\t\t{ipaddr}\nMask:\t\t{cidr}\nGateway:\t\t{gwaddr}",
+		"tooltip-format-wifi": "SSID:\t\t{essid}\nSignal strength:\t{signalStrength}% {icon}\nInterface:\t\t{ifname}\nIP:\t\t\t{ipaddr}\nMask:\t\t{cidr}\nGateway:\t\t{gwaddr}"
+	},
+	"pulseaudio": {
+		"format": "{format_source} {volume}% {icon}",
+		"format-icons": {
+			"car": "󰄋",
+			"default": "󰕾",
+			"hands-free": "󱡏",
+			"hands-free-muted": "󱡐",
+			"headphone": "󰋋",
+			"headphone-muted": "󰟎",
+			"headset": "󰋎",
+			"headset-muted": "󰋐",
+			"hdmi": "󰡁",
+			"hifi": "󰴸",
+			"phone": "󰏲",
+			"phone-muted": "󰷯",
+			"portable": "󰲑",
+			"speaker": "󰓃",
+			"speaker-muted": "󰓄"
+		},
+		"format-muted": "{format_source} 0% {icon}",
+		"format-source": "{volume}% ",
+		"format-source-muted": "0% 󰍭",
+		"on-click": "pavucontrol",
+		"scroll-step": 5
+	},
+	"temperature": {
+		"critical-threshold": 85,
+		"format": "{icon} {temperatureC}°C",
+		"format-critical": "{icon}! {temperatureC}°C",
+		"format-icons": [
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
+	"tray": {
+		"spacing": 5,
+		"icons": {
+			"blueman": "bluetooth",
+			"nm-applet": "network"
+		}
+	},
+	"wireplumber": {
+		"format": "{format_source} {icon} {volume}%",
+		"format-icons": {
+			"default": [
+				" ",
+				" ",
+				" "
+			]
+		},
+		"format-muted": "{format_source}  ",
+		"format-source": " {volume}%",
+		"format-source-muted": "󰍭",
+		"on-click": "pavucontrol",
+		"on-click-middle": "wpctl set-mute @DEFAULT_SINK@ toggle",
+		"on-click-right": "wpctl set-mute @DEFAULT_SOURCE@ toggle",
+		"scroll-step": 5,
+		"tooltip-format": "Output:\t{node_name}\nInput:\t{source_desc}"
+	}
+}

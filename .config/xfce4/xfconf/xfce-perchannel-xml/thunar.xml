@@ -11,7 +11,7 @@
   <property name="misc-use-csd" type="bool" value="false"/>
   <property name="last-window-maximized" type="bool" value="true"/>
   <property name="last-details-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_38_PERCENT"/>
-  <property name="last-details-view-column-widths" type="string" value="50,50,157,50,50,50,50,50,412,50,50,70,50,197"/>
+  <property name="last-details-view-column-widths" type="string" value="50,50,155,50,50,85,50,50,200,50,50,75,50,175"/>
   <property name="last-separator-position" type="int" value="170"/>
   <property name="misc-expandable-folders" type="bool" value="true"/>
   <property name="misc-date-style" type="string" value="THUNAR_DATE_STYLE_YYYYMMDD"/>
