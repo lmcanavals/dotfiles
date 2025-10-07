@@ -1,15 +1,50 @@
-@define-color textLight #1e1e2e; /* Base */
-@define-color shadow1 #45475a; /* Surface 1 */
-@define-color shadow2 #9399b2; /* Overlay 2 */
-@define-color grayish #7f849c; /* Overlay 1 */
-@define-color greenish #a6e3a1; /* Green */
-@define-color text #cdd6f4; /* Text */
-@define-color redish #f38ba8; /* Red */
-@define-color alert #fab387; /* Peach */
+@define-color bg #24283b;
+@define-color bg_dark #1f2335;
+@define-color bg_dark1 #1b1e2d;
+@define-color bg_highlight #292e42;
+@define-color blue #7aa2f7;
+@define-color blue0 #3d59a1;
+@define-color blue1 #2ac3de;
+@define-color blue2 #0db9d7;
+@define-color blue5 #89ddff;
+@define-color blue6 #b4f9f8;
+@define-color blue7 #394b70;
+@define-color comment #565f89;
+@define-color cyan #7dcfff;
+@define-color dark3 #545c7e;
+@define-color dark5 #737aa2;
+@define-color fg #c0caf5;
+@define-color fg_dark #a9b1d6;
+@define-color fg_gutter #3b4261;
+@define-color green #9ece6a;
+@define-color green1 #73daca;
+@define-color green2 #41a6b5;
+@define-color magenta #bb9af7;
+@define-color magenta2 #ff007c;
+@define-color orange #ff9e64;
+@define-color purple #9d7cd8;
+@define-color red #f7768e;
+@define-color red1 #db4b4b;
+@define-color teal #1abc9c;
+@define-color terminal_black #414868;
+@define-color yellow #e0af68;
+@define-color gitadd #449dab;
+@define-color gitchange #6183bb;
+@define-color gitdelete #914c54;
 
-
-@define-color blinkBg rgba(249, 226, 175, 0.6); /* Yellow */
-@define-color activeBg rgba(250, 179, 135, 0.8); /* Peach */
-@define-color urgentBg rgba(69, 71, 90, 0.1); /* Surface 1 */
-@define-color background rgba(30, 30, 46, 0.6); /* Base */
-@define-color submapBg rgba(180, 190, 254, 0.8); /* Lavander */
+@define-color alert @orange;
+@define-color bg_atention @dark5;
+@define-color bg_critical @red1;
+@define-color bg_hover @dark3;
+@define-color bg_widget @bg_dark;
+@define-color bg_widget_r @green;
+@define-color box_shadow alpha(@bg_highlight, .75);
+@define-color fg_atention @yellow;
+@define-color fg_critical @blue6;
+@define-color fg_hover @blue6;
+@define-color fg_widget @green;
+@define-color fg_widget_r @bg_dark;
+@define-color fg_dimmed @comment;
+@define-color fg_readonly @red;
+@define-color text_shadow1 alpha(@cyan, .75);
+@define-color text_shadow2 alpha(@red, .75);

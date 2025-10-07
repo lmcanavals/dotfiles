@@ -1,149 +1,112 @@
 @import url("colors.css");
 
-* {
-	font-family: Electrolize, 'Nimbus Sans Narrow', FontAwesome, sans-serif;
-	font-size: 1.045em;
-}
-
-@keyframes fg_blink {
+@keyframes animation_critical {
 to {
-	color: @redish;
-	text-shadow: .05em .05em @shadow2, 0 0 .25em @shadow1;
+	color: @fg_critical;
+	background-color: @bg_critical;
 }
 }
-@keyframes bg_blink {
+@keyframes animation_atention {
 to {
-	background-color: @alert;
+	color: @fg_atention;
+	background-color: @bg_atention;
 }
 }
 
-button {
-	border-radius: .5em;
-	color: @text;
-  margin: 0 .35em;
-	padding: 0 1em;
-}
 button.active {
-	background-color: @alert;
-	color: @textLight;
+	background-color: @bg_widget_r;
+	color: @fg_widget_r;
 }
-button.urgent {
-	animation-name: bg_blink;
-	animation-duration: 0.75s;
-	animation-timing-function: linear;
-	animation-iteration-count: infinite;
+button.urgent,
+#submap {
 	animation-direction: alternate;
-	background-color: @grayish;
+	animation-duration: .75s;
+	animation-iteration-count: infinite;
+	animation-name: animation_atention;
+	animation-timing-function: linear;
 }
 button:hover {
-  background: inherit;
-	background-color: @alert;
-	color: @textLight;
-}
-
-label:focus {
-	background-color: @redish;
+	background: inherit;
+	background-color: @bg_hover;
+	color: @fg_hover;
+	text-shadow: inherit;
 }
 
 window#waybar {
-	background-color: @background;
-	color: @text;
-	text-shadow: .05em .05em @shadow1, 0 0 .25em @shadow2;
-	transition-property: background-color;
-	transition-duration: .5s;
+	background: none;
+	font-family: monospace, 'Nimbus Sans Narrow', FontAwesome, sans-serif;
+	font-size: 1em;
+	text-shadow: -.1em -.1em .25em @text_shadow2, .1em .1em .25em @text_shadow1;
 }
 window#waybar.hidden {
-	opacity: 0.1
-}
-window#waybar.somerandomapp {
-	background-color: red;
-	border: none;
+	opacity: .1
 }
 
+button,
 #backlight,
 #battery,
 #clock,
 #cpu,
-#custom-media,
+#custom-binary_clock,
 #disk,
 #idle_inhibitor,
-#keybeard-state,
+#keyboard-state,
 #language,
 #memory,
 #submap,
 #mpd,
 #network,
 #pulseaudio,
+#submap,
 #temperature,
 #tray,
 #window,
 #wireplumber {
   /* border: solid 1px red; */
-	margin: 0 .35em;
-	padding: 0;
+	border: none;
+	box-shadow: .1em .05em .1em @box_shadow;
+	color: @fg_widget;
+	background-color: @bg_widget;
+	border-radius: .25em;
+	margin: .15em .25em;
+	padding: 0 .75em;
 }
 
-#battery.charging, #battery.plugged {
-	color: @greenish;
+#battery.discharging {
 }
-
+#battery.low {
+	color: @alert;
+}
 #battery.critical:not(.charging),
 #temperature.critical {
-	animation-name: fg_blink;
-	animation-duration: 0.75s;
-	animation-timing-function: linear;
-	animation-iteration-count: infinite;
 	animation-direction: alternate;
-	color: @text;
-}
-
-#clock,
-#pulseaudio {
-	font-family: 'Monaspace Krypton';
-	font-size: 1em;
+	animation-duration: .75s;
+	animation-iteration-count: infinite;
+	animation-name: animation_critical;
+	animation-timing-function: linear;
 }
 
 #custom-binary_clock {
 }
 
 #keyboard-state > label.locked {
-	color: @redish;
+	color: @fg_readonly;
 }
 
 #network.disconnected {
-	color: @grayish;
+	color: @fg_dimmed;
 }
 
-#submap {
-	animation-name: bg_blink;
-	animation-duration: 0.75s;
-	animation-timing-function: linear;
-	animation-iteration-count: infinite;
-	animation-direction: alternate;
-	background-color: @submapBg;
-  border-radius: .5em;
-	color: @textLight;
-  margin: 0 .35em;
-	min-width: 2em;
-	padding: 0 1em;
-}
-
-
-#tray {
-}
 #tray > .active {
 }
 #tray > .needs-attention {
 	-gtk-icon-effect: highlight;
-	color: @alert;
+	background-color: @bg_atention;
 }
 #tray > .passive {
 	-gtk-icon-effect: dim;
 }
 
-#workspaces {
-	margin: 0 .35em 0 0;
-}
 #workspaces button {
 	text-shadow: inherit;
   /* in case we need special style for specific buttons */
