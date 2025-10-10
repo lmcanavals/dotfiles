@@ -1,7 +1,11 @@
 #!/bin/zsh
 
 function dec_to_base() {
-  printf "%0$1s\n" "$(echo "obase=$2;$3" | bc)" | sed 's/ /0/g'
+  printf \
+		"%0$1s\n" \
+		"$(echo "obase=$2;$3" | bc)" \
+		| sed 's/[ 0]/\\ueabc/g' \
+		| sed 's/1/\\uea71/g'
 }
 
 function cool_time() {
@@ -21,7 +25,7 @@ function cool_time() {
 	#	codedtime="${codedtime}${base[p]}"
 	#done
 	#echo "$codedtime"
-	text="\"text\": \"$hour:$minute\""
+	text="\"text\": \"$hour $minute\""
 	tooltip="\"tooltip\": \"coming soon...\""
 	echo "{$text,$tooltip}"
 }

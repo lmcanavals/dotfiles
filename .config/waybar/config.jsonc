@@ -5,6 +5,7 @@
 		"hyprland/submap"
 	],
 	"modules-center": [
+		"custom/updates",
 		"group/time"
 	],
 	"modules-right": [
@@ -126,6 +127,15 @@
 		"interval": 5,
 		"return-type": "json",
 		"tooltip": true
+	},
+	"custom/updates": {
+		"exec": "~/.cargo/bin/waybar-module-pacman-updates --no-zero-output --tooltip-align-columns --color-semver-updates f7768e,ff9e64,e0af68,9ece6a,7dcfff",
+		"format": "{} {icon}",
+		"format-icons": {
+			"has-updates": "󰏔",
+			"updated": ""
+		},
+		"return-type": "json"
 	},
 	"hyprland/language": {
 		"format": "󰌌 {}",
