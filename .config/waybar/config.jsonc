@@ -36,7 +36,8 @@
 		},
 		"modules": [
 			"custom/binary_clock",
-			"clock"
+			"clock",
+			"custom/screenrecorder"
 		]
 	},
 	"backlight": {
@@ -127,6 +128,16 @@
 		"interval": 5,
 		"return-type": "json",
 		"tooltip": true
+	},
+	"custom/screenrecorder": {
+		"exec": "$HOME/Apps/repos/waybar-screenrecorder/screenrecorder status",
+		"interval": "once",
+		"signal": 1,
+		"return-type": "json",
+		"tooltip": true,
+		"format": "{}",
+		"on-click": "$HOME/Apps/repos/waybar-screenrecorder/screenrecorder toggle fullscreen",
+		"on-click-right": "$HOME/Apps/repos/waybar-screenrecorder/screenrecorder toggle region"
 	},
 	"custom/updates": {
 		"exec": "~/.cargo/bin/waybar-module-pacman-updates --no-zero-output --tooltip-align-columns --color-semver-updates f7768e,ff9e64,e0af68,9ece6a,7dcfff",
@@ -247,7 +258,7 @@
 			"speaker-muted": "󰓄"
 		},
 		"format-muted": "{format_source} 0% {icon}",
-		"format-source": "{volume}% ",
+		"format-source": "{volume}% 󰍬",
 		"format-source-muted": "0% 󰍭",
 		"on-click": "pavucontrol",
 		"scroll-step": 5
@@ -277,7 +288,7 @@
 			]
 		},
 		"format-muted": "{format_source} ",
-		"format-source": " ",
+		"format-source": "󰍬 ",
 		"format-source-muted": "",
 		"on-click": "qpwgraph",
 		"on-click-middle": "wpctl set-mute @DEFAULT_SINK@ toggle",

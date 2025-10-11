@@ -34,9 +34,8 @@ button:hover {
 
 window#waybar {
 	background: none;
-	font-family: monospace, 'Nimbus Sans Narrow', FontAwesome, sans-serif;
-	font-size: 1em;
-	text-shadow: -.1em -.1em .25em @text_shadow2, .1em .1em .25em @text_shadow1;
+	font-family: monospace, FontAwesome, sans-serif;
+	font-size: 1.25em;
 }
 window#waybar.hidden {
 	opacity: .1
@@ -48,6 +47,7 @@ button,
 #clock,
 #cpu,
 #custom-binary_clock,
+#custom-screenrecorder,
 #custom-updates,
 #disk,
 #idle_inhibitor,
@@ -62,7 +62,6 @@ button,
 #tray,
 #window,
 #wireplumber {
-  /* border: solid 1px red; */
 	border: none;
 	box-shadow: .1em .05em .1em @box_shadow;
 	color: @fg_widget;
@@ -72,8 +71,6 @@ button,
 	padding: 0 .75em;
 }
 
-#battery.discharging {
-}
 #battery.low {
 	color: @alert;
 }
@@ -86,9 +83,6 @@ button,
 	animation-timing-function: linear;
 }
 
-#custom-binary_clock {
-}
-
 #keyboard-state > label.locked {
 	color: @fg_readonly;
 }
@@ -97,8 +91,6 @@ button,
 	color: @fg_dimmed;
 }
 
-#tray > .active {
-}
 #tray > .needs-attention {
 	-gtk-icon-effect: highlight;
 	background-color: @bg_atention;
@@ -107,8 +99,11 @@ button,
 	-gtk-icon-effect: dim;
 }
 
+#window {
+	font-size: 1em;
+}
 #workspaces button {
 	text-shadow: inherit;
-  /* in case we need special style for specific buttons */
+  /* in case we need special styling for specific buttons */
 }
 
