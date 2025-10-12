@@ -166,6 +166,7 @@ rust.sh
 .local/share/QtProject/
 .local/share/Trash/
 .local/share/flatpak/
+.local/share/font-manager/
 .local/share/gvfs-metadata/
 .local/share/hyprland/
 .local/share/icons/
