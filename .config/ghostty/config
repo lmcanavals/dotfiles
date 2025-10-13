@@ -19,4 +19,4 @@ font-style-italic = Italic
 theme = TokyoNight Night
 
 window-padding-balance = true
-window-show-tab-bar = auto
+window-show-tab-bar = never
