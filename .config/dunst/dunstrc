@@ -8,7 +8,8 @@ format = "<span foreground='#74c7ec'>%s</span>\n%b"
 frame_color = "#6c7086"
 frame_width = 1
 icon_theme = Tela-circle-orange-dark
-idle_threshold = 120 
+idle_threshold = 120
+max_icon_size = 128
 markup = full
 monitor = 1
 progress_bar_corner_radius = 5

@@ -34,10 +34,12 @@
 
 @define-color alert @orange;
 @define-color bg_atention @dark5;
+@define-color bg_main alpha(@bg, .75);
 @define-color bg_critical @red1;
 @define-color bg_hover @dark3;
 @define-color bg_widget alpha(@bg_dark, .25);
 @define-color bg_widget_r @green;
+@define-color border_main @bg;
 @define-color box_shadow alpha(@bg_highlight, .25);
 @define-color fg_atention @yellow;
 @define-color fg_critical @blue6;
