@@ -141,9 +141,9 @@
 	},
 	"custom/updates": {
 		"exec": "~/.cargo/bin/waybar-module-pacman-updates --no-zero-output --tooltip-align-columns --color-semver-updates f7768e,ff9e64,e0af68,9ece6a,7dcfff",
-		"format": "{} {icon}",
+		"format": "{}{icon}",
 		"format-icons": {
-			"has-updates": "󰏔",
+			"has-updates": " 󰏔",
 			"updated": ""
 		},
 		"return-type": "json"
