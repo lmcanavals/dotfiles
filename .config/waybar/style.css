@@ -54,7 +54,7 @@ button,
 #keyboard-state,
 #language,
 #memory,
-#mpd,
+#mpris,
 #network,
 #pulseaudio,
 #submap,
@@ -83,8 +83,11 @@ button,
 	animation-timing-function: linear;
 }
 
+#keyboard-state > label {
+	color: @fg_dimmed;
+}
 #keyboard-state > label.locked {
-	color: @fg_readonly;
+	color: @fg_widget;
 }
 
 #network.disconnected {

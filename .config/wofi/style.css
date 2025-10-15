@@ -36,6 +36,11 @@ window {
 	color: @fg_widget_r;
 }
 
+#expander-box #entry:selected #text,
 #entry:selected #text {
 	color: @fg_widget_r;
 }
+#expander-box #entry #text {
+	color: @fg_widget;
+}
+

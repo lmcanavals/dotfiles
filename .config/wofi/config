@@ -3,3 +3,4 @@ height=274
 mode=run
 colors=colors
 filter_rate=100
+key_expand=Shift-Right

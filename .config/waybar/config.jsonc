@@ -53,7 +53,7 @@
 			"",
 			""
 		],
-		"tooltip-format": "{percent}% {icon}"
+		"tooltip-format": "{icon} {percent}%"
 	},
 	"battery": {
 		"format": "{icon}󱐥",
@@ -155,7 +155,8 @@
 		"format-es": "ES(latam)"
 	},
 	"hyprland/submap": {
-		"format": "{}"
+		"format": "{}",
+		"tooltip": false
 	},
 	"hyprland/window": {
 		"rewrite": {
@@ -168,28 +169,37 @@
 	},
 	"hyprland/workspaces": {
 		"format": "{name} {windows}",
+		"workspace-taskbar": {
+			"enable": true,
+			"update-active-window": true,
+			"format": "{icon}",
+			"icon-size": 22,
+			"icon-theme": "Tela-circle-orange-dark",
+			"on-click-window": "hyprctl dispatch focuswindow address:{address}"
+		},
 		"format-window-separator": " ",
 		"on-scroll-down": "hyprctl dispatch workspace e-1",
 		"on-scroll-up": "hyprctl dispatch workspace e+1",
 		"show-special": true,
 		"window-rewrite-default": "󰙵",
 		"window-rewrite": {
-			"class<[Bb]rave-browser.*>": "󰖟",
+			"class<[Bb]rave-browser.*>": "󰄛",
 			"class<firefox>": "",
 			"class<mousepad>": "󱩼",
 			"class<org.gnome.FileRoller>": "󰗄",
 			"class<com.mitchellh.ghostty>": "",
 			"class<org.wezfurlong.wezterm>": "",
-			"class<org.wezfurlong.wezterm> title<.*nvim.*>": "",
 			"class<thunar>": "󰥨",
 			"class<thunar> title<.*lmcs.*>": "󱂵",
 			"class<thunderbird>": "",
 			"class<vivaldi.*>": "",
 			"class<zen.*>": "󰗝",
+			"title<.*/ X.*>": "",
+			"title<.*Discord.*>": "",
 			"title<.*github.*>": "",
+			"title<.*nvim.*>": "",
 			"title<.*Picture.in.Picture.*>": "󰹗",
 			"title<.*reddit.*>": "",
-			"title<.*x.com.*>": "",
 			"title<.*youtube.*>": "",
 			"title<.*whatsapp.*>": ""
 		}
@@ -197,16 +207,19 @@
 	"idle_inhibitor": {
 		"format": "{icon}",
 		"format-icons": {
-			"activated": "󰒳 ",
-			"deactivated": "󰒲 "
+			"activated": "󰒳",
+			"deactivated": "󰒲"
 		}
 	},
 	"keyboard-state": {
 		"capslock": true,
-		"format": "{name} {icon}",
+		"format": {
+			"numlock": "󰎤",
+			"capslock": "󰬈 "
+		},
 		"format-icons": {
-			"locked": "",
-			"unlocked": ""
+			"locked": " ",
+			"unlocked": " "
 		},
 		"numlock": true
 	},
@@ -221,7 +234,7 @@
 			"󰫇",
 			"󰫈"
 		],
-		"tooltip-format": "RAM:\t{used:0.1f}/{total}G ({percentage}%)\nSWAP:\t{swapUsed:0.1f}/{swapTotal}G ({swapPercentage}%)"
+		"tooltip-format": "RAM:\t{percentage}%\t{used:0.2f}/{total:0.2f}GB\nSWAP:\t{swapPercentage}%\t{swapUsed:0.2f}/{swapTotal:0.2f}GB"
 	},
 	"network": {
 		"format": "󰛳",
@@ -239,7 +252,7 @@
 		"tooltip-format-wifi": "SSID:\t\t{essid}\nSignal strength:\t{signalStrength}% {icon}\nInterface:\t\t{ifname}\nIP:\t\t\t{ipaddr}\nMask:\t\t{cidr}\nGateway:\t\t{gwaddr}"
 	},
 	"pulseaudio": {
-		"format": "{format_source} {volume}% {icon}",
+		"format": "{format_source}{icon}",
 		"format-icons": {
 			"car": "󰄋",
 			"default": "󰕾",
@@ -257,37 +270,45 @@
 			"speaker": "󰓃",
 			"speaker-muted": "󰓄"
 		},
-		"format-muted": "{format_source} 0% {icon}",
-		"format-source": "{volume}% 󰍬",
-		"format-source-muted": "0% 󰍭",
-		"on-click": "pavucontrol",
-		"scroll-step": 5
+		"format-muted": "{format_source}{icon}",
+		"format-source": "󰍬 ",
+		"format-source-muted": "",
+		"on-click": "qpwgraph",
+		"on-click-middle": "wpctl set-mute @DEFAULT_SINK@ toggle",
+		"on-click-right": "wpctl set-mute @DEFAULT_SOURCE@ toggle",
+		"scroll-step": 5,
+		"tooltip": true,
+		"tooltip-format": "Output:\t<b>{volume:3}%</b>\t{desc}"
 	},
 	"temperature": {
 		"critical-threshold": 85,
 		"format": "{icon} {temperatureC}°C",
-		"format-critical": "{icon}! {temperatureC}°C",
+		"format-critical": "{icon}󰈸 {temperatureC}°C",
 		"format-icons": [
 			"",
 			"",
 			"",
 			"",
 			""
-		]
+		],
+		"tooltip-format": "{temperatureC} degrees Celsius"
 	},
 	"tray": {
 		"spacing": 5
 	},
 	"wireplumber": {
-		"format": "{format_source}{icon}",
+		"format": "{format_source}󰋋 {icon}",
 		"format-icons": {
 			"default": [
-				"",
-				"",
-				""
+				"",
+				"",
+				"",
+				"",
+				"",
+				""
 			]
 		},
-		"format-muted": "{format_source} ",
+		"format-muted": "{format_source}󰟎",
 		"format-source": "󰍬 ",
 		"format-source-muted": "",
 		"on-click": "qpwgraph",
