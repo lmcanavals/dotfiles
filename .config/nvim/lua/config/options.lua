@@ -6,13 +6,15 @@ local v = vim.v
 local fn = vim.fn
 local opt = vim.opt
 
+-- TODO: unify the 88 and 90 because they are related
+
 function LmcsFoldText()
 	local lineCount = (v.foldend - v.foldstart + 1)
 	local indent = fn.indent(v.foldstart)
 	local newindent = string.rep(" ", indent)
 	local winid = vim.api.nvim_get_current_win()
 	local cols = vim.fn.winwidth(winid) - vim.fn.getwininfo(winid)[1].textoff
-	local width = math.min(78, cols - 2)
+	local width = math.min(88, cols - 2)
 	local line
 	local goodline = false
 	local i = 0
@@ -39,7 +41,7 @@ function LmcsFoldText()
 	return line .. lineCount .. " "
 end
 
-opt.colorcolumn = "81"
+opt.colorcolumn = "90"
 opt.background = vim.env.LCTHEME or "dark"
 opt.expandtab = false
 opt.shiftwidth = 2
