@@ -437,7 +437,7 @@ Run `xdg-user-dirs-update`
 ### As super user
 
 Avatar on lightdm follow instructions on this
-[link](https://wiki.archlinux.org/index.php/LightDM#The_AccountsService_way)
+[awesome link](https://wiki.archlinux.org/index.php/LightDM#The_AccountsService_way)
 (Xfce4 rotating wallpapers overwrites `/var/lib/AccountsService/users/lmcs`,
 messing up the avatar setting)
 
