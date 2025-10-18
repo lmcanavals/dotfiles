@@ -57,6 +57,7 @@ ntp
 numlockx
 nwg-look
 obs-studio
+otf-font-awesome-5
 otf-monaspace
 pacman-contrib
 powertop
@@ -64,6 +65,7 @@ procs
 psf-cozette
 putty
 qpwgraph
+qt6ct
 redshift
 ristretto
 sd
@@ -73,6 +75,7 @@ slop
 socat
 solaar
 sound-theme-smooth
+speech-dispatcher
 speedtest-cli
 sshfs
 starship
@@ -89,7 +92,8 @@ ttc-iosevka
 ttc-iosevka-slab
 ttf-caladea
 ttf-carlito
-ttf-fairfax-hd
+ttf-fira-code
+ttf-jetbrains-mono
 ttf-opensans
 ttf-roboto-mono
 unarchiver
@@ -123,4 +127,3 @@ xorg-xev
 xournalpp
 yay
 yazi
-zen-browser-bin

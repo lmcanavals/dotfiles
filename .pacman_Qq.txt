@@ -410,7 +410,6 @@ libimobiledevice
 libimobiledevice-glue
 libinih
 libinput
-libinstpatch
 libisl
 libjpeg-turbo
 libjuice
@@ -674,6 +673,7 @@ openvdb
 openxr
 opus
 orc
+otf-font-awesome-5
 otf-monaspace
 p11-kit
 pacman
@@ -777,7 +777,6 @@ qt6-declarative
 qt6-shadertools
 qt6-svg
 qt6-translations
-qt6-wayland
 qt6ct
 quazip-qt5
 raptor
@@ -881,9 +880,8 @@ ttf-caladea
 ttf-carlito
 ttf-croscore
 ttf-dejavu
-ttf-fairfax-hd
-ttf-firacode-nerd
-ttf-jetbrains-mono-nerd
+ttf-fira-code
+ttf-jetbrains-mono
 ttf-liberation
 ttf-monofur-nerd
 ttf-nerd-fonts-symbols
@@ -892,7 +890,6 @@ ttf-nerd-fonts-symbols-mono
 ttf-opensans
 ttf-roboto-mono
 ttf-terminus-nerd
-ttf-victor-mono-nerd
 tumbler
 twolame
 tzdata

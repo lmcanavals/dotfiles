@@ -1,38 +1,39 @@
 [global]
 alignment = center
-corner_radius = 15
+corner_radius = 5
 dmenu = "/usr/bin/wofi -S dmenu -p dunst"
 enable_recursive_icon_lookup = true
-font = "Electrolize Regular 10, Font Awesome 5 Free Regular 10"
-format = "<span foreground='#74c7ec'>%s</span>\n%b"
+font = "Electrolize 12, Font Awesome 5 Free 12, Symbols Nerd Font 12"
+format = "<span foreground='#e0af68' size='x-large'>%s</span>\n%b"
 frame_color = "#6c7086"
 frame_width = 1
+highlight = "#9ece6a"
 icon_theme = Tela-circle-orange-dark
+icon_corner_radius = 5
 idle_threshold = 120
 max_icon_size = 128
 markup = full
 monitor = 1
 progress_bar_corner_radius = 5
-progress_bar_max_width = 300
-progress_bar_min_width = 300
+progress_bar_height = 15
 transparency = 15
-width = 350
+width = 450
 
 
 [urgency_low]
-    background = "#16161e"
-    foreground = "#c0caf5"
-    frame_color = "#c0caf5"
+background = "#24283b"
+foreground = "#9ece6a"
+frame_color = "#737aa2"
 
 [urgency_normal]
-    background = "#1a1b26"
-    foreground = "#c0caf5"
-    frame_color = "#c0caf5"
+background = "#24283b"
+foreground = "#9ece6a"
+frame_color = "#9ece6a"
 
 [urgency_critical]
-    background = "#292e42"
-    foreground = "#db4b4b"
-    frame_color = "#db4b4b"
+background = "#394b70"
+foreground = "#ff9e64"
+frame_color = "#ff9e64"
 
 
 # Every section that isn't one of the above is interpreted as a rules to
