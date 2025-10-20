@@ -140,7 +140,7 @@
 		"on-click-right": "$HOME/Apps/repos/waybar-screenrecorder/screenrecorder toggle region"
 	},
 	"custom/updates": {
-		"exec": "~/.cargo/bin/waybar-module-pacman-updates --no-zero-output --tooltip-align-columns --color-semver-updates f7768e,ff9e64,e0af68,9ece6a,7dcfff",
+		"exec": "~/Apps/repos/waybar-updates-btw/waybar-updates-btw",
 		"format": "{}{icon}",
 		"format-icons": {
 			"has-updates": " 󰏔",

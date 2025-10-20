@@ -14,6 +14,7 @@ idle_threshold = 120
 max_icon_size = 128
 markup = full
 monitor = 1
+mouse_right_click = context
 progress_bar_corner_radius = 5
 progress_bar_height = 15
 transparency = 15
