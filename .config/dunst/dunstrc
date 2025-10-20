@@ -7,7 +7,7 @@ font = "Electrolize 12, Font Awesome 5 Free 12, Symbols Nerd Font 12"
 format = "<span foreground='#e0af68' size='x-large'>%s</span>\n%b"
 frame_color = "#6c7086"
 frame_width = 1
-highlight = "#9ece6a"
+highlight = "#e0af68"
 icon_theme = Tela-circle-orange-dark
 icon_corner_radius = 5
 idle_threshold = 120
