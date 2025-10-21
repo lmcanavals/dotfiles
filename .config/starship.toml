@@ -34,25 +34,25 @@ vimcmd_replace_symbol = "[ : ](bg:bright-black bright-cyan)"
 vimcmd_visual_symbol = "[ : ](bg:bright-black blue)"
 
 [cmake]
-format = "[$symbol($version•)]($style)"
+format = "[$symbol($version·)]($style)"
 style = "bg:bright-black blue"
 version_format = "${major}.${minor}"
 
 [cmd_duration]
-format = "[($duration•)]($style)"
+format = "[($duration·)]($style)"
 min_time = 10_000
 show_notifications = true
 style = "bg:bright-black yellow"
 
 [conda]
-format = "[$symbol($environment•)]($style) "
+format = "[$symbol($environment·)]($style) "
 style = "bg:bright-black bright-blue"
 symbol = " "
 
 [deno]
 detect_extensions = ["js"]
 detect_folders = ["js"]
-format = "[$symbol($version•)]($style)"
+format = "[$symbol($version·)]($style)"
 style = "bg:bright-black bright-green"
 symbol = " "
 version_format = "${major}.${minor}"
@@ -64,11 +64,11 @@ read_only = "󰉐 "
 style = "bg:bright-black bright-cyan"
 read_only_style = "bg:yellow blue"
 truncation_length = 1
-truncation_symbol = "…"
+truncation_symbol = "… "
 fish_style_pwd_dir_length = 1
 
 [git_branch]
-format = "[$symbol($branch•)]($style)"
+format = "[$symbol($branch·)]($style)"
 style = "bg:bright-black purple"
 symbol = ""
 
@@ -85,7 +85,7 @@ format = "([$all_status$ahead_behind ]($style))"
 style = "bg:bright-black red"
 
 [golang]
-format = "[$symbol($version•)]($style)"
+format = "[$symbol($version·)]($style)"
 style = "bg:bright-black bright-green"
 symbol = " "
 version_format = "${major}.${minor}"
@@ -95,7 +95,7 @@ format = "[$hostname]($style):"
 style = "bg:bright-black bright-yellow"
 
 [java]
-format = "[$symbol($version•)]($style)"
+format = "[$symbol($version·)]($style)"
 style = "bg:bright-black bright-green"
 symbol = " "
 version_format = "${major}.${minor}"
@@ -106,25 +106,25 @@ style = "bg:bright-black bright-blue"
 symbol = "󱀝 "
 
 [julia]
-format = "[$symbol($version•)]($style)"
+format = "[$symbol($version·)]($style)"
 style = "bg:bright-black bright-green"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [lua]
-format = "[$symbol($version•)]($style)"
+format = "[$symbol($version·)]($style)"
 style = "bg:bright-black bright-green"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [python]
-format = "[$symbol(\\($virtualenv\\))($version•)]($style)"
+format = "[$symbol(\\($virtualenv\\))($version·)]($style)"
 style = "bg:bright-black bright-green"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [rust]
-format = "[$symbol($version•)]($style)"
+format = "[$symbol($version·)]($style)"
 style = "bg:bright-black bright-green"
 symbol = " "
 version_format = "${major}.${minor}"
@@ -140,7 +140,7 @@ format = "[ $symbol]($style)"
 style = "bg:bright-black bright-green"
 
 [username]
-format = "[($user•)]($style)"
+format = "[($user·)]($style)"
 style_root = "bg:bright-black red"
 style_user = "bg:bright-black green"
 

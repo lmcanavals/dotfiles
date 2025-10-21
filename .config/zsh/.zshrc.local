@@ -31,22 +31,48 @@ autoload -U colors && colors
 # /home/user/folder/stuff/tra/cool --> ~/f/s/t/cool
 # cooler than %~
 function cool_folder() {
-	print $(echo ${PWD/$HOME/󱂵 } | sed -e "s/\(\w\)\(\w\+\)\//\1\//g")
+local full_path="${1:-$PWD}"
+    local prefix=""
+    local path_to_shorten=""
+
+    if [[ "$full_path" == "$HOME" ]]; then
+        echo "󱂵 "
+        return 0
+    elif [[ "$full_path" == "$HOME/"* ]]; then
+        prefix="󱂵 /"
+        path_to_shorten="${full_path#$HOME/}"
+    elif [[ "$full_path" == "/" ]]; then
+        echo "/"
+        return 0
+    else
+        prefix="/"
+        path_to_shorten="${full_path#\/}"
+    fi
+
+    if [[ -z "$path_to_shorten" ]]; then
+        echo "${prefix%?}"
+        return 0
+    fi
+    local shortened_path=$(
+        echo "$path_to_shorten" | sed -e "s|\(\w\)\(\w\+\)/|\1/|g"
+    )
+
+    echo "${prefix}${shortened_path}"
 }
 function prompt_color() {
 	local c
 	[[ EUID -eq 0 ]] && c="red" || c="yellow"
 	[[ $KEYMAP == vicmd ]] && c="blue"
 	print "%{$fg[$c]%}"
-	#print "%{$fg_bold[$c]%} "
 }
 function rnd_adorn() {
   local base="🬀🬁🬂🬃🬄🬅🬆🬇🬈🬉🬊🬋🬌🬍🬎🬏🬐🬑🬒🬓▌🬔🬕🬖🬗🬘🬙🬚🬛🬜🬝🬞🬟🬠🬡🬢🬣🬤🬥🬦🬧▐🬨🬩🬪🬫🬬🬭🬮🬯🬰🬱🬲🬳🬴🬵🬶🬷🬸🬹🬺🬻█"
+	local num_chars=${#base}
   local adorn=""
   local pos
   RANDOM=$(date +"%N")
   for i in {1..6}; do
-    pos=$((RANDOM % 63 + 1))
+    pos=$((RANDOM % $num_chars + 1))
     adorn+="${base[pos]}"
   done
   print "$adorn"

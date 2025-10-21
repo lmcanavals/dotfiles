@@ -140,7 +140,7 @@
 		"on-click-right": "$HOME/Apps/repos/waybar-screenrecorder/screenrecorder toggle region"
 	},
 	"custom/updates": {
-		"exec": "~/Apps/repos/waybar-updates-btw/waybar-updates-btw",
+		"exec": "~/Apps/repos/waybar-updates-btw/updates-btw",
 		"format": "{}{icon}",
 		"format-icons": {
 			"has-updates": " 󰏔",
