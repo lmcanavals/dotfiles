@@ -31,33 +31,33 @@ autoload -U colors && colors
 # /home/user/folder/stuff/tra/cool --> ~/f/s/t/cool
 # cooler than %~
 function cool_folder() {
-local full_path="${1:-$PWD}"
-    local prefix=""
-    local path_to_shorten=""
+	local full_path="${1:-$PWD}"
+	local prefix=""
+	local path_to_shorten=""
 
-    if [[ "$full_path" == "$HOME" ]]; then
-        echo "󱂵 "
-        return 0
-    elif [[ "$full_path" == "$HOME/"* ]]; then
-        prefix="󱂵 /"
-        path_to_shorten="${full_path#$HOME/}"
-    elif [[ "$full_path" == "/" ]]; then
-        echo "/"
-        return 0
-    else
-        prefix="/"
-        path_to_shorten="${full_path#\/}"
-    fi
+	if [[ "$full_path" == "$HOME" ]]; then
+		echo "󱂵 "
+		return 0
+	elif [[ "$full_path" == "$HOME/"* ]]; then
+		prefix="󱂵 /"
+		path_to_shorten="${full_path#$HOME/}"
+	elif [[ "$full_path" == "/" ]]; then
+		echo "/"
+		return 0
+	else
+		prefix="/"
+		path_to_shorten="${full_path#\/}"
+	fi
 
-    if [[ -z "$path_to_shorten" ]]; then
-        echo "${prefix%?}"
-        return 0
-    fi
-    local shortened_path=$(
-        echo "$path_to_shorten" | sed -e "s|\(\w\)\(\w\+\)/|\1/|g"
-    )
+	if [[ -z "$path_to_shorten" ]]; then
+		echo "${prefix%?}"
+		return 0
+	fi
+	local shortened_path=$(
+		echo "$path_to_shorten" | sed -e "s|\(\w\)\(\w\+\)/|\1/|g"
+	)
 
-    echo "${prefix}${shortened_path}"
+	echo "${prefix}${shortened_path}"
 }
 function prompt_color() {
 	local c
@@ -66,21 +66,21 @@ function prompt_color() {
 	print "%{$fg[$c]%}"
 }
 function rnd_adorn() {
-  local base="🬀🬁🬂🬃🬄🬅🬆🬇🬈🬉🬊🬋🬌🬍🬎🬏🬐🬑🬒🬓▌🬔🬕🬖🬗🬘🬙🬚🬛🬜🬝🬞🬟🬠🬡🬢🬣🬤🬥🬦🬧▐🬨🬩🬪🬫🬬🬭🬮🬯🬰🬱🬲🬳🬴🬵🬶🬷🬸🬹🬺🬻█"
+	local base="🬀🬁🬂🬃🬄🬅🬆🬇🬈🬉🬊🬋🬌🬍🬎🬏🬐🬑🬒🬓▌🬔🬕🬖🬗🬘🬙🬚🬛🬜🬝🬞🬟🬠🬡🬢🬣🬤🬥🬦🬧▐🬨🬩🬪🬫🬬🬭🬮🬯🬰🬱🬲🬳🬴🬵🬶🬷🬸🬹🬺🬻█"
 	local num_chars=${#base}
-  local adorn=""
-  local pos
-  RANDOM=$(date +"%N")
-  for i in {1..6}; do
-    pos=$((RANDOM % $num_chars + 1))
-    adorn+="${base[pos]}"
-  done
-  print "$adorn"
-}
+		local adorn=""
+		local pos
+		RANDOM=$(date +"%N")
+		for i in {1..6}; do
+			pos=$((RANDOM % $num_chars + 1))
+			adorn+="${base[pos]}"
+		done
+		print "$adorn"
+	}
 function left_prompt() {
 	local s
 	[[ $KEYMAP == vicmd ]] && s=":" || s="_"
-  print "$(prompt_color)$(rnd_adorn) %#$s%{$reset_color%} "
+	print "$(prompt_color)$(rnd_adorn) %#$s%{$reset_color%} "
 }
 function right_prompt() {
 	local s
@@ -106,12 +106,12 @@ function prompt_lmcs_precmd() {
 }
 function prompt_lmcs_help() {
 	<<__EOF0__
-  prompt lmcs
+	prompt lmcs
 
-    My prompt it's super cool and uses starship to easily add stuff to the right
+		My prompt it's super cool and uses starship to easily add stuff to the right
 
-        - left: a simple %#_ green for users and red for root
-        - right: starship stuff configured at $HOME/.config/starship.toml
+				- left: a simple %#_ green for users and red for root
+				- right: starship stuff configured at $HOME/.config/starship.toml
 __EOF0__
 }
 function zle-keymap-select() {
@@ -141,8 +141,8 @@ export LCSTARSHIP
 # Shortcuts and aliases
 #
 abk+=(
-  "c"   " clang -std=c23 -o prog.app -g "
-  "cc"  " clang++ -std=c++23 -o prog.app -g "
+	"c"   " clang -std=c23 -o prog.app -g "
+	"cc"  " clang++ -std=c++23 -o prog.app -g "
 	"d"   " GIT_DIR=$HOME/.dotfiles.git GIT_WORK_TREE=$HOME g"
 	"f"   "| fzf"
 	"ga"  " git add ."
@@ -193,6 +193,23 @@ alias dotfiles="git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME "
 #
 [[ -s $ZDOTDIR/dynamic.zsh ]] && source $ZDOTDIR/dynamic.zsh
 source <(fzf --zsh)
+
+#
+# various workarounds and utilities
+#
+_get_job_command() {
+		jobs -l %% | sed -e 's/.*suspended *\(.*\)/\1/'
+}
+fg() {
+    if [[ -n "$1" ]]; then
+        local job_command=$(_get_job_command "$1")
+    else
+        local job_command=$(_get_job_command "%%")
+    fi
+    print -Pn "\e]2;$job_command \a"
+
+    builtin fg "$@"
+}
 
 #
 # plugin manager
