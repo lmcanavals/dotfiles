@@ -119,6 +119,7 @@ rust.sh
 .config/configstore/
 .config/dconf/
 .config/discord/
+.config/dlv/
 .config/github-copilot/
 .config/go/
 .config/google-chrome/
@@ -145,6 +146,7 @@ rust.sh
 .config/obs-studio/
 .config/opera/
 .config/pulse/
+.config/qalculate/
 .config/qt-*/
 .config/rclone/
 .config/ristretto/
@@ -169,6 +171,7 @@ rust.sh
 .local/share/font-manager/
 .local/share/gvfs-metadata/
 .local/share/hyprland/
+.local/share/hyprlauncher/
 .local/share/icons/
 .local/share/jupyter/
 .local/share/keyrings/
@@ -182,6 +185,7 @@ rust.sh
 .local/share/wezterm/
 .local/share/xfce4/helpers/
 .local/share/xorg/
+.local/share/yarn/
 .local/state/
 
 Apps/

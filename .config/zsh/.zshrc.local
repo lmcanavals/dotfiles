@@ -141,8 +141,9 @@ export LCSTARSHIP
 # Shortcuts and aliases
 #
 abk+=(
-	"c"   " clang -std=c23 -o prog.app -g "
-	"cc"  " clang++ -std=c++23 -o prog.app -g "
+	"c"   "| wl-copy"
+	"cc"  " clang -std=c23 -o prog.app -g "
+	"cx"  " clang++ -std=c++23 -o prog.app -g "
 	"d"   " GIT_DIR=$HOME/.dotfiles.git GIT_WORK_TREE=$HOME g"
 	"f"   "| fzf"
 	"ga"  " git add ."
@@ -169,7 +170,6 @@ abk+=(
 	"si"  " pacman -Si "
 	"ss"  " pacman -Ss "
 	"sy"  "sudo pacman -Syu"
-	"x"   "| xsel -ib"
 )
 bind2maps emacs viins       -- -s '^@' zleiab
 

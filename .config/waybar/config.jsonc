@@ -59,7 +59,7 @@
 		"format": "{icon}󱐥",
 		"format-alt": "{icon}󱐥 {capacity}%",
 		"format-charging": "{icon}󱐋",
-		"format-critical": "{capacity}% {icon}!󰚥",
+		"format-critical": "{icon}!󰚥 {capacity}%",
 		"format-discharging": "{icon}",
 		"format-icons": [
 			"󰂎",
@@ -312,9 +312,10 @@
 		"format-source": "󰍬 ",
 		"format-source-muted": "",
 		"on-click": "qpwgraph",
-		"on-click-middle": "wpctl set-mute @DEFAULT_SINK@ toggle",
-		"on-click-right": "wpctl set-mute @DEFAULT_SOURCE@ toggle",
-		"scroll-step": 5,
+		"on-click-middle": "~/.local/bin/localvolbri volume_mute",
+		"on-click-right": "~/.local/bin/localvolbri mic_mute",
+		"on-scroll-down": "~/.local/bin/localvolbri volume_down",
+		"on-scroll-up": "~/.local/bin/localvolbri volume_up",
 		"tooltip-format": "Output:\t{volume:3}%\t{node_name}\nInput:\t{source_volume:3}%\t{source_desc}"
 	}
 }

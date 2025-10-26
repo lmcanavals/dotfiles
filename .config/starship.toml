@@ -1,8 +1,8 @@
 add_newline = false
 format = "$character"
 right_format = """
-$sudo\
 $status\
+$sudo\
 $character\
 $jobs\
 $cmd_duration\
@@ -138,6 +138,7 @@ style = "bg:red black"
 disabled = false
 format = "[ $symbol]($style)"
 style = "bg:bright-black bright-green"
+symbol = " "
 
 [username]
 format = "[($user·)]($style)"
