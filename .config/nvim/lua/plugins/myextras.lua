@@ -21,4 +21,13 @@ return {
 		event = "VeryLazy",
 		keys = { { "<leader>Xc", ":ColorizerToggle<cr>", desc = "Colorizer" } },
 	},
+	{
+		"brenoprata10/nvim-highlight-colors",
+		event = "VeryLazy",
+		keys = { { "<leader>Xh", ":HighlightColors On<cr>", desc = "Highlight colors" } },
+		opts = {
+			render = "virtual",
+			virtual_symbol = "■",
+		},
+	},
 }
