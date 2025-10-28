@@ -50,14 +50,14 @@ config.background = {
 }
 
 -- fonts
-local base_font = "Monaspace Argon" -- "Maple Mono NF"
-local str_font = "Monaspace Xenon" -- "FiraCode Nerd Font"
-local cmnt_font = "Monaspace Radon" -- "Victor Mono Nerd Font"
-local half_font = "Monaspace Neon" -- "Fairfax HD"
-local diag_font = "Monaspace Krypton"
+local base_font = "Iosevka" -- "Monaspace Argon" -- "Maple Mono NF"
+local str_font = "Iosevka Slab" -- "Monaspace Xenon" -- "FiraCode Nerd Font"
+local cmnt_font = "Monofur Nerd Font" -- "Monaspace Radon" -- "Victor Mono Nerd Font"
+local half_font = "Terminus" -- "Monaspace Neon" -- "Fairfax HD"
+local diag_font = "Terminus" -- "Monaspace Krypton"
 
 -- local maple_hb = { "cv02", "ss01", "ss02", "ss03", "ss04", "ss05" }
-local monaspace_hb = {
+--[[ local monaspace_hb = {
 	"calt",
 	"ss01",
 	"ss02",
@@ -70,11 +70,14 @@ local monaspace_hb = {
 	"ss09",
 	"liga",
 }
-local base_hb = monaspace_hb
-local str_hb = monaspace_hb
-local cmnt_hb = monaspace_hb
-local half_hb = monaspace_hb
-local diag_hb = monaspace_hb
+--]]
+local iosekva_hb = { "dlig", "ss09" }
+local no_hb = {}
+local base_hb = iosekva_hb -- monaspace_hb
+local str_hb = no_hb -- monaspace_hb
+local cmnt_hb = no_hb -- monaspace_hb
+local half_hb = no_hb -- monaspace_hb
+local diag_hb = no_hb -- monaspace_hb
 
 config.font = wezterm.font({
 	family = base_font,
