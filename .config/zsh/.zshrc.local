@@ -187,6 +187,7 @@ alias eold="eza -rtl *(D.Om[1,10])"
 alias eolddir="eza -rtdl *(/Om[1,10]) .*(D/Om[1,10])"
 alias esmall="eza -rl *(.oL[1,10])"
 alias dotfiles="git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME "
+alias tree="ee -T"
 
 #
 # some extra sources
