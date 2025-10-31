@@ -213,7 +213,7 @@ shared/
 # exception rules
 
 .config/asciinema/*
-!.config/asciinema/config
+!.config/asciinema/config.toml
 
 .local/bin/*
 !.local/bin/grimblast

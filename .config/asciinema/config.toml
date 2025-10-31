@@ -1,0 +1,5 @@
+[playback]
+speed = 2
+
+[session]
+idle_time_limit = 2
