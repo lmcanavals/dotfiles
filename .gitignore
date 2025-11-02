@@ -173,6 +173,7 @@ rust.sh
 .local/share/hyprland/
 .local/share/hyprlauncher/
 .local/share/icons/
+.local/share/go/
 .local/share/jupyter/
 .local/share/keyrings/
 .local/share/krita/
@@ -202,7 +203,6 @@ Pictures/
 Videos/
 VirtualBox VMs/
 git/
-go/
 llvm-project/
 shared/
 

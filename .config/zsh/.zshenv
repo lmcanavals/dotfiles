@@ -14,6 +14,11 @@ fi
 export CC=/usr/bin/clang
 export CXX=/usr/bin/clang++
 
+# Go
+if [[ -d "$HOME/.local/share/go" ]]; then
+	export GOPATH=$HOME/.local/share/go
+fi
+
 # Java stuff
 if [[ -d /opt/java ]]; then
 	JAVA_HOME=/opt/java
@@ -34,11 +39,12 @@ if [[ -d /opt/maven ]]; then
 	export MAVEN_OPTS
 fi
 
+# Rust
+[[ -f "$HOME/.cargo/env" ]] && \
+. "$HOME/.cargo/env"
+
 PATH=/home/lmcs/.local/bin:$PATH
 typeset -U PATH
 export PATH
-
-[[ -f "$HOME/.cargo/env" ]] && \
-. "$HOME/.cargo/env"
 
 # vim: set ts=2:sw=2:noet:sts=2:
