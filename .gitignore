@@ -180,6 +180,7 @@ rust.sh
 .local/share/mc/
 .local/share/mime/
 .local/share/okular/
+.local/share/qalculate/
 .local/share/sddm/
 .local/share/vlc/
 .local/share/wezterm/
