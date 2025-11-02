@@ -17,11 +17,6 @@ return {
 	},
 	{ "dylon/vim-antlr", ft = { "antlr3", "antlr4" } },
 	{
-		"norcalli/nvim-colorizer.lua",
-		event = "VeryLazy",
-		keys = { { "<leader>Xc", ":ColorizerToggle<cr>", desc = "Colorizer" } },
-	},
-	{
 		"brenoprata10/nvim-highlight-colors",
 		event = "VeryLazy",
 		keys = { { "<leader>Xh", ":HighlightColors On<cr>", desc = "Highlight colors" } },
