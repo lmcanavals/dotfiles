@@ -2,7 +2,7 @@
 gtk-theme=Adwaita-dark
 icon-theme=Tela-circle-orange-dark
 font-name=Electrolize Regular 10
-cursor-theme=elementary
+cursor-theme=Adwaita
 cursor-size=24
 toolbar-style=icons
 toolbar-icons-size=small
