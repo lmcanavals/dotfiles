@@ -60,6 +60,7 @@ rust.sh
 
 .local/share/.vivaldi_reporting_data
 .local/share/applications/Qt-MaintenanceTool.desktop
+.local/share/emojicache.txt
 .local/share/krita-sysinfo.log
 .local/share/krita.log
 .local/share/mimeapps.list

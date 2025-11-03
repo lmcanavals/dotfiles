@@ -1,0 +1,15 @@
+#!/usr/bin/zsh
+
+# Emojis! go
+
+function wofoji() {
+	local emojson=https://raw.githubusercontent.com/muan/emojilib/refs/heads/main/dist/emoji-en-US.json
+	local cacheji=$HOME/.local/share/emojicache.txt
+	if [[ ! -f "$cacheji" ]]; then
+		curl $emojson | jq -r 'to_entries[] | "\(.key) \(.value | join(" "))"' > $cacheji
+	fi
+
+	wofi -p "󰞅  emojis" -iIS dmenu < $cacheji | awk '{printf "%s", $1}' | wl-copy
+}
+
+wofoji
