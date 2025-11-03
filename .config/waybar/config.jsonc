@@ -160,7 +160,7 @@
 	},
 	"hyprland/window": {
 		"rewrite": {
-			"(.*) — (Mozilla Firefox|Zen Browser)": "$1",
+			"(.*) — (.*)": "$1",
 			"(.*) and \\d+ more page(.*)": "$1",
 			"(.*) - Personal - Microsoft(.*)": "$1",
 			"(.*) - (.*)": "$1"

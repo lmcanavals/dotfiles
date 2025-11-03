@@ -169,11 +169,11 @@ rust.sh
 .local/share/Trash/
 .local/share/flatpak/
 .local/share/font-manager/
+.local/share/go/
 .local/share/gvfs-metadata/
 .local/share/hyprland/
 .local/share/hyprlauncher/
 .local/share/icons/
-.local/share/go/
 .local/share/jupyter/
 .local/share/keyrings/
 .local/share/krita/
@@ -183,6 +183,7 @@ rust.sh
 .local/share/okular/
 .local/share/qalculate/
 .local/share/sddm/
+.local/share/sounds/
 .local/share/vlc/
 .local/share/wezterm/
 .local/share/xfce4/helpers/
