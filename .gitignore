@@ -146,6 +146,7 @@ rust.sh
 .config/nvim/plugged/
 .config/obs-studio/
 .config/opera/
+.config/pcmanfm-qt/
 .config/pulse/
 .config/qalculate/
 .config/qt-*/
@@ -179,6 +180,7 @@ rust.sh
 .local/share/keyrings/
 .local/share/krita/
 .local/share/kxmlgui5/
+.local/share/libfm-qt/
 .local/share/mc/
 .local/share/mime/
 .local/share/okular/
