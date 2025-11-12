@@ -36,8 +36,7 @@
 		},
 		"modules": [
 			"custom/binary_clock",
-			"clock",
-			"custom/screenrecorder"
+			"clock"
 		]
 	},
 	"backlight": {
@@ -128,16 +127,6 @@
 		"interval": 5,
 		"return-type": "json",
 		"tooltip": true
-	},
-	"custom/screenrecorder": {
-		"exec": "$HOME/Apps/repos/waybar-screenrecorder/screenrecorder status",
-		"interval": "once",
-		"signal": 1,
-		"return-type": "json",
-		"tooltip": true,
-		"format": "{}",
-		"on-click": "$HOME/Apps/repos/waybar-screenrecorder/screenrecorder toggle fullscreen",
-		"on-click-right": "$HOME/Apps/repos/waybar-screenrecorder/screenrecorder toggle region"
 	},
 	"custom/updates": {
 		"exec": "~/Apps/repos/waybar-updates-btw/updates-btw",

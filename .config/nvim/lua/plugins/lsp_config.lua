@@ -4,7 +4,6 @@ return {
 		---@class PluginLspOpts
 		opts = {
 			servers = {
-				denols = {},
 				html = {},
 			},
 			setup = {

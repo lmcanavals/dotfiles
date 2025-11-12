@@ -21,6 +21,7 @@ return {
 				-- "regex",
 				-- "rust",
 				-- "vim",
+				"wgsl",
 			},
 		},
 	},

@@ -67,6 +67,7 @@ rust.sh
 .local/share/recently-used.xbel
 
 .android/
+.bundle/
 .cache/
 .cargo/
 .conan2/
@@ -171,6 +172,7 @@ rust.sh
 .local/share/Trash/
 .local/share/flatpak/
 .local/share/font-manager/
+.local/share/gem/
 .local/share/go/
 .local/share/gvfs-metadata/
 .local/share/hyprland/

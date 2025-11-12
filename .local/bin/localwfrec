@@ -1,0 +1,50 @@
+#!/bin/zsh
+
+function do_the_thing() {
+	local FILENAME
+	local REGION
+	local STOP
+	local RECINFO="/tmp/lmcs_wf_recorder_pid"
+	local PID
+	while [[ $# -gt 0 ]]; do
+		case $1 in
+			region)
+				REGION=1
+				shift
+				;;
+			stop)
+				STOP=1
+				shift
+				;;
+			*)
+				FILENAME=$1
+				shift
+				;;
+		esac
+	done
+
+	if [[ $STOP -gt 0 ]]; then
+		if [[ -f $RECINFO ]]; then
+			PID=$(head -n 1 $RECINFO)
+			FILENAME=$(head -n 2 $RECINFO | tail -n 1)
+			echo "PID($PID) FILENAME($FILENAME)"
+			rm $RECINFO
+			kill $PID
+			echo "making thumb"
+			sleep 2
+			ffmpegthumbnailer -i $FILENAME -o /tmp/$FILENAME.jpg
+			echo "send notify"
+			notify-send -i /tmp/%FILENAME.jpg "Video saved at" "$FILENAME"
+		else
+			notify-send -i camera "Screen recorder" "No recording in progress."
+		fi
+		exit
+	fi
+
+	wf-recorder -g "$(slurp)" -f $FILENAME &
+	echo "${!}" > $RECINFO
+	echo "$FILENAME" >> $RECINFO
+
+}
+
+do_the_thing $*
