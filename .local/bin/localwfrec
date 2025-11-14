@@ -41,7 +41,11 @@ function do_the_thing() {
 		exit
 	fi
 
-	wf-recorder -g "$(slurp)" -f $FILENAME &
+	if [[ $REGION -gt 0 ]]; then
+		wf-recorder -g "$(slurp)" -f $FILENAME &
+	else
+		wf-recorder -o "$(slurp -o -f "%o")" -f $FILENAME &
+	fi
 	echo "${!}" > $RECINFO
 	echo "$FILENAME" >> $RECINFO
 
