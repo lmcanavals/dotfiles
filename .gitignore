@@ -172,6 +172,7 @@ rust.sh
 .local/share/Trash/
 .local/share/flatpak/
 .local/share/font-manager/
+.local/share/fonts/
 .local/share/gem/
 .local/share/go/
 .local/share/gvfs-metadata/
@@ -185,6 +186,7 @@ rust.sh
 .local/share/libfm-qt/
 .local/share/mc/
 .local/share/mime/
+.local/share/nvim/
 .local/share/okular/
 .local/share/qalculate/
 .local/share/sddm/
@@ -226,18 +228,9 @@ shared/
 !.local/bin/grimblast
 !.local/bin/ix
 !.local/bin/local*
+!.local/bin/spots.sh
 
-.local/share/nvim/
-.local/share/fonts/
-
-.local/bin/*
-!.local/bin/grimblast
-!.local/bin/ix
-!.local/bin/local*
 !.local/share/applications/
-.local/share/applications/chrome-*
 .local/share/applications/mimeinfo.cache
 .local/share/applications/mimeapps.list
-.local/share/applications/userapp-Telegram*
-.local/share/applications/userapp-Thunderbird*
 
