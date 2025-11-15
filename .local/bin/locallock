@@ -7,4 +7,4 @@ for output in "${outputs[@]}"; do
 	$HOME/.local/bin/spots.sh -s 8 <(grim -o "$output" -) "$filename"
 done
 
-loginctl lock-session
+hyprlock

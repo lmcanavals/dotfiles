@@ -22,6 +22,7 @@ return {
 				-- "rust",
 				-- "vim",
 				"wgsl",
+				"zsh",
 			},
 		},
 	},
