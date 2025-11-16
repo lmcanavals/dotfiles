@@ -9,7 +9,7 @@ format = "<span foreground='#e0af68' size='large'>%s</span>\n%b"
 frame_color = "#6c7086aa"
 frame_width = 1
 highlight = "#e0af68aa"
-icon_theme = Tela-circle-orange-dark
+icon_theme = Reversal-dark
 icon_corner_radius = 5
 idle_threshold = 120
 max_icon_size = 128

@@ -163,7 +163,7 @@
 			"update-active-window": true,
 			"format": "{icon}",
 			"icon-size": 22,
-			"icon-theme": "Tela-circle-orange-dark",
+			"icon-theme": "Reversal-dark",
 			"on-click-window": "hyprctl dispatch focuswindow address:{address}"
 		},
 		"format-window-separator": " ",
