@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 # based on https://gitlab.com/Nmoleo/i3-volume-brightness-indicator
 

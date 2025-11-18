@@ -3,7 +3,7 @@
 if [[ "$TERM" == "linux" ]]; then
 	# echo -en "\e]P0${LCLR:1:6}" && clear # for background artifacting
 	for i in {1..15}; do
-		echo -en "\e]P$(printf "%x" "$i")${LCLR:$i * 8 + 1:6}"
+		echo -en "\e]P$(printf "%x" "$i")${LCLR:$i*8+1:6}"
 	done
 fi
 
@@ -46,6 +46,6 @@ export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
   --color=spinner:#ff007c \
 "
 
-localismosh && export ISMOSHBRUH="yup"
+localismosh.zsh && export ISMOSHBRUH="yup"
 
 # vim: set ts=2:sw=2:noet:sts=2:
