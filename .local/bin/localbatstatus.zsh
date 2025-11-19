@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
 get_battery_status() {
 	declare -a BATTERY_ICONS=("󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹")
@@ -18,7 +18,7 @@ get_battery_status() {
 	local STATUS_RAW=$(echo "$BATTERY_INFO" | awk '/state:/ {print $2}')
 	local IS_ONLINE=$(echo "$BATTERY_INFO" | awk '/online:/ {print $2}') # 'yes' or 'no'
 
-	local ICON_INDEX=$(printf "%d\n" $(( $PERCENTAGE / 9.1 + 1)))
+	local ICON_INDEX=$(printf "%d\n" $(($PERCENTAGE / 9.1 + 1)))
 	local BASE_ICON=${BATTERY_ICONS[$ICON_INDEX]}
 
 	local FINAL_ICON=""

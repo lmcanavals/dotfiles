@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/bin/bash
 
 # based on https://gitlab.com/Nmoleo/i3-volume-brightness-indicator
 
@@ -11,6 +11,7 @@ show_album_art=true
 show_music_in_volume_indicator=true
 
 # TODO: when wpctl makes it easier to get this info, migrate to it
+# TODO: zsh this thing
 function get_volume {
 	pactl get-sink-volume @DEFAULT_SINK@ | rg -Po '[0-9]{1,3}(?=%)' | head -1
 }

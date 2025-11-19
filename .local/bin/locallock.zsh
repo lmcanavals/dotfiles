@@ -1,10 +1,12 @@
-#!/usr/bin/bash
+#!/usr/bin/env zsh
 
-outputs=($(hyprctl -j monitors | jq -r '.[].name'))
+coollock() {
+	outputs=($(hyprctl -j monitors | jq -r '.[].name'))
 
-for output in "${outputs[@]}"; do
-	filename="$HOME/Pictures/Wallpapers/${output}-lockscreen.png"
-	$HOME/.local/bin/spots.sh -s 8 <(grim -o "$output" -) "$filename"
-done
-
+	for output in "${outputs[@]}"; do
+		filename="$HOME/Pictures/Wallpapers/${output}-lockscreen.png"
+		$HOME/.local/bin/spots.sh -s 8 <(grim -o "$output" -) "$filename"
+	done
+}
+coollock
 hyprlock

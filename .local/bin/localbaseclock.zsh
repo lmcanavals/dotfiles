@@ -1,14 +1,12 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
-function dec_to_base() {
-  printf \
-		"%0$1s\n" \
-		"$(echo "obase=$2;$3" | bc)" \
-		| sed 's/[ 0]/\\ueabc/g' \
-		| sed 's/1/\\uea71/g'
+dec_to_base() {
+	printf "%0$1s\n" "$(echo "obase=$2;$3" | bc)" |
+		sed 's/[ 0]/\\ueabc/g' |
+		sed 's/1/\\uea71/g'
 }
 
-function cool_time() {
+cool_time() {
 	hour=$(date +%H)
 	minute=$(date +%M)
 	second=$(date +%S)
