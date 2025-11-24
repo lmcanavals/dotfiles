@@ -32,9 +32,19 @@ button:hover {
 	text-shadow: inherit;
 }
 
+tooltip {
+	border-radius: .25em;
+	background-color: @bg_main;
+}
+tooltip label {
+	color: @fg_widget;
+	font-family: monospace;
+	font-size: 1.25em;
+}
+
 window#waybar {
 	background: none;
-	font-family: monospace, FontAwesome, sans-serif;
+	font-family: monospace, sans-serif;
 	font-size: 1.25em;
 }
 window#waybar.hidden {

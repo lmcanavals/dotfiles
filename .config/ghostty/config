@@ -5,9 +5,13 @@ background-opacity = 0.9
 #custom-shader = ~/Apps/repos/ghostty-shaders/tft.glsl
 
 font-family = Iosevka
+font-family = Symbols Nerd Font Mono
 font-family-bold = Iosevka Slab
+font-family-bold = Symbols Nerd Font Mono
 font-family-bold-italic = Terminus
+font-family-bold-italic = Symbols Nerd Font Mono
 font-family-italic = Monofur Nerd Font
+font-family-italic = Symbols Nerd Font Mono
 font-feature = dlig
 font-feature = ss09
 font-size = 14

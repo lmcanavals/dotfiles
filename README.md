@@ -180,7 +180,7 @@ ln -s /home/lmcs/.config/starship.toml /root/.config/
 ```
 
 Building the kernel image, don't forget copy the `mkinitcpio.conf` from
-dotfiles.git which has the hook to support hibernation:
+`.root` in case it has some cool features like early fonts fb, etc:
 
 ```sh
 mkinitcpio -p linux
@@ -208,6 +208,14 @@ makepkg -Acsi
 
 Configure grub, copy the `/etc/default/grub` from arch-conf.git which adds the
 parameters needed for hibernation support:
+
+Speaking of hibernation, we need the UUID and offset which we can get with and we
+probably want to do this afterwards from userspace:
+
+```sh
+findmnt / -o UUID -n
+sudo filefrag -v /swapfile | awk '{ if($1=="0:"){print $4} }'
+```
 
 ```sh
 grub-install --target=x86_64-efi --efi-directory=/efi \

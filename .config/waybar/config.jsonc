@@ -263,8 +263,10 @@
 		"format-source": "󰍬 ",
 		"format-source-muted": "",
 		"on-click": "qpwgraph",
-		"on-click-middle": "wpctl set-mute @DEFAULT_SINK@ toggle",
-		"on-click-right": "wpctl set-mute @DEFAULT_SOURCE@ toggle",
+		"on-click-middle": "~/.local/bin/localvolbri.zsh volume_mute",
+		"on-click-right": "~/.local/bin/localvolbri.zsh mic_mute",
+		"on-scroll-down": "~/.local/bin/localvolbri.zsh volume_down",
+		"on-scroll-up": "~/.local/bin/localvolbri.zsh volume_up",
 		"scroll-step": 5,
 		"tooltip": true,
 		"tooltip-format": "Output:\t<b>{volume:3}%</b>\t{desc}"
