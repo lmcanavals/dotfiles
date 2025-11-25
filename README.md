@@ -499,3 +499,11 @@ Install preferably on `~/Apps`, rename from `jdk-x.x.x` to `java` then as root:
 ```sh
 ln -s /home/lmcs/Archive/usr/java /opt/java
 ```
+
+dolphin:
+
+To populate the open with list you need to run:
+
+```sh
+XDG_MENU_PREFIX=arch- kbuildsycoca6
+```

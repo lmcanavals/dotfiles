@@ -65,6 +65,7 @@ rust.sh
 .local/share/krita.log
 .local/share/mimeapps.list
 .local/share/recently-used.xbel
+.local/share/user-places.xbel*
 
 .android/
 .bundle/
