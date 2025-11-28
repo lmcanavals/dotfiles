@@ -20,7 +20,7 @@ do_the_thing() {
 			kill $PID 2>/dev/null
 			if (($? == 0)); then
 				local thumbnail_name="/tmp/${filename:t:r}.jpg"
-				time -p timeout 5s ffmpegthumbnailer -i "$filename" -o "$thumbnail_name" 2>/dev/null
+				ffmpegthumbnailer -i "$filename" -o "$thumbnail_name" 2>/dev/null
 				notify-send -i "$thumbnail_name" "Video saved" "$filename"
 			else
 				notify-send -i camera "Screen recorder" "Nothing to stop."
@@ -35,7 +35,7 @@ do_the_thing() {
 	zparseopts -E {-file,f}:=filename
 	filename="${filename[2]:-video$(date '+%Y%m%d_%H%M%S_%N').mp4}"
 
-	local slurparr=($SLURP_ARGS)
+	local slurparr=(${=SLURP_ARGS})
 	local wfargs=("-g")
 	local region
 	zparseopts -E {-region,r}=region

@@ -68,6 +68,7 @@ rust.sh
 .local/share/user-places.xbel*
 
 .android/
+.antigravity/
 .bundle/
 .cache/
 .cargo/
@@ -75,6 +76,7 @@ rust.sh
 .conda/
 .designer/
 .dotfiles.git/
+.gemini/
 .gephi/
 .gnome/
 .gnupg/
@@ -112,6 +114,7 @@ rust.sh
 .config/Thunar/
 .config/Unknown\ Organization/
 .config/VirtualBox/
+.config/Antigravity/
 .config/abiword/
 .config/akonadi/
 .config/autostart/
@@ -168,6 +171,7 @@ rust.sh
 .config/zsh/plugins/
 
 .local/lib/
+.local/share/CMakeTools/
 .local/share/Qt/
 .local/share/QtProject/
 .local/share/Trash/
