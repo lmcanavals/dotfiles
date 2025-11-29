@@ -1,0 +1,15 @@
+[General]
+TerminalApplication=ghostty
+
+[Icons]
+Theme=Reversal-dark
+
+[KDE]
+ShowDeleteCommand=false
+
+[PreviewSettings]
+EnableRemoteFolderThumbnail=false
+MaximumRemoteSize=0
+
+[UiSettings]
+ColorScheme=darker

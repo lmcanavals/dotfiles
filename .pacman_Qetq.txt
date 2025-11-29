@@ -4,6 +4,8 @@ adobe-source-han-sans-otc-fonts
 amd-ucode
 antlr4-runtime
 arch-install-scripts
+archlinux-xdg-menu
+ark
 asciinema
 base
 bat
@@ -17,10 +19,13 @@ cheese
 cliphist
 dconf-editor
 docker
+dolphin
 dunst
 dust
+efibootmgr
 eza
 fastfetch
+fd
 ffmpegthumbnailer
 font-manager
 ghostty
@@ -31,15 +36,16 @@ go
 gphoto2
 gptfdisk
 grml-zsh-config
-grub-theme-vimix
 gthumb
 gutenprint
 haveged
+hyperfine
 hypridle
 hyprlock
 hyprpaper
 hyprpolkitagent
-hyprshade
+hyprpwcenter
+hyprqt6engine
 hyprshot
 hyprsunset
 kitty
@@ -49,7 +55,6 @@ lazygit
 lld
 lldb
 luarocks
-maplemono-nf
 maplemono-ttf
 mc
 mosh
@@ -62,7 +67,6 @@ obs-studio
 otf-font-awesome-5
 pacman-contrib
 pavucontrol
-pcmanfm-qt
 powertop
 procs
 psf-cozette
@@ -76,7 +80,6 @@ sd
 showmethekey
 slop
 socat
-speech-dispatcher
 speedtest-cli
 sshfs
 starship
@@ -96,7 +99,7 @@ ttf-fira-code
 ttf-jetbrains-mono
 ttf-opensans
 ttf-roboto-mono
-unarchiver
+uv
 vivaldi
 vulkan-extra-layers
 vulkan-html-docs
@@ -107,7 +110,6 @@ waybar
 wev
 wf-recorder
 woff2-font-awesome
-wofi
 wtype
 xdg-user-dirs
 xf86-input-wacom
@@ -115,4 +117,4 @@ xorg-server
 xorg-xev
 xournalpp
 yay
-yazi
+zoxide

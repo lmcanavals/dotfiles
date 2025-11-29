@@ -34,7 +34,6 @@ rust.sh
 .config/fontconfig/conf.d/39-Aliases.conf
 .config/gh/hosts.yml
 .config/gtkrc-2.0
-.config/kdeglobals
 .config/kwallet
 .config/mailtransports
 .config/mimeapps.list
