@@ -161,7 +161,6 @@ rust.sh
 .config/session/
 .config/smartgit/
 .config/solaar/
-.config/systemd/
 .config/vlc/
 .config/xfce4/desktop/
 .config/xfce4/panel/
@@ -175,6 +174,7 @@ rust.sh
 .local/share/Qt/
 .local/share/QtProject/
 .local/share/Trash/
+.local/share/ark/
 .local/share/flatpak/
 .local/share/font-manager/
 .local/share/fonts/

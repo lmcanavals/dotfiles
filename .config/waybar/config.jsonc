@@ -129,7 +129,7 @@
 		"tooltip": true
 	},
 	"custom/updates": {
-		"exec": "~/Apps/repos/waybar-updates-btw/updates-btw",
+		"exec": "~/Apps/repos/waybar-updates-btw/build/updates-query",
 		"format": "{}{icon}",
 		"format-icons": {
 			"has-updates": " 󰏔",

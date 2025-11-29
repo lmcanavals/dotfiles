@@ -1,0 +1,10 @@
+
+export ADW_DEBUG_COLOR_SCHEME=prefer-dark
+export ADW_DISABLE_PORTAL=1
+export GTK_MODULES=canberra-gtk-module
+export GTK_THEME=Adwaita-dark
+export LCTHEME=dark
+export XCURSOR_SIZE=32
+export XCURSOR_THEME=Adwaita
+export XDG_DATA_DIRS=/usr/local/share:/usr/share
+export XDG_MENU_PREFIX=arch-

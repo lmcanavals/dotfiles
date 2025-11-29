@@ -1,0 +1,8 @@
+[Unit]
+Description=UpdatesBtw D-Bus Service
+
+[Service]
+Type=dbus
+BusName=org.lmcs.DBus.UpdatesBtw
+ExecStart=/home/lmcs/Apps/repos/waybar-updates-btw/build/updates-fetch
+
