@@ -10,10 +10,22 @@
 	],
 	"modules-right": [
 		"group/hardware",
-		"wireplumber",
+		"group/audio",
 		"tray",
 		"idle_inhibitor"
 	],
+	"group/audio": {
+		"orientation": "inherit",
+		"drawer": {
+			"children-class": "drawer-hw",
+			"transition-left-to-right": false
+		},
+		"modules": [
+			"pulseaudio",
+			"wireplumber#source",
+			"wireplumber#sink"
+		]
+	},
 	"group/hardware": {
 		"orientation": "inherit",
 		"drawer": {
@@ -103,8 +115,8 @@
 				"today": "<span background='Gold' color='Black'><b>{}</b></span>"
 			}
 		},
-		"format": "{:%a %b %e %R}",
-		"format-alt": "{:%A %F %R}",
+		"format": "{:%a, %e %b %R}",
+		"format-alt": "{:%A, %e of %B  %R}",
 		"tooltip-format": "<span size='11pt' font='monospace'>{calendar}</span>"
 	},
 	"cpu": {
@@ -125,14 +137,13 @@
 		"exec": "~/.local/bin/localbaseclock.zsh",
 		"format": "{}",
 		"interval": 5,
-		"return-type": "json",
-		"tooltip": true
+		"return-type": "json"
 	},
 	"custom/updates": {
 		"exec": "~/Apps/repos/waybar-updates-btw/build/updates-query",
 		"format": "{}{icon}",
 		"format-icons": {
-			"has-updates": " 󰏔",
+			"has-updates": " 󰮯",
 			"updated": ""
 		},
 		"return-type": "json"
@@ -148,6 +159,7 @@
 		"tooltip": false
 	},
 	"hyprland/window": {
+		"icon": true,
 		"rewrite": {
 			"(.*) — (.*)": "$1",
 			"(.*) and \\d+ more page(.*)": "$1",
@@ -159,7 +171,7 @@
 	"hyprland/workspaces": {
 		"format": "{name} {windows}",
 		"workspace-taskbar": {
-			"enable": true,
+			"enable": false,
 			"update-active-window": true,
 			"format": "{icon}",
 			"icon-size": 22,
@@ -170,27 +182,25 @@
 		"on-scroll-down": "hyprctl dispatch workspace e-1",
 		"on-scroll-up": "hyprctl dispatch workspace e+1",
 		"show-special": true,
-		"window-rewrite-default": "󰙵",
+		"window-rewrite-default": "󰣆",
 		"window-rewrite": {
+			"class<.*(ghostty|kitty|wezterm).*>": "",
+			"class<.*ark>": "󰗄",
+			"class<.*dolphin> title<.*lmcs.*>": "󱂵",
+			"class<.*dolphin>": "󰥨",
 			"class<[Bb]rave-browser.*>": "󰄛",
 			"class<firefox>": "",
-			"class<mousepad>": "󱩼",
-			"class<org.gnome.FileRoller>": "󰗄",
-			"class<com.mitchellh.ghostty>": "",
-			"class<org.wezfurlong.wezterm>": "",
-			"class<thunar>": "󰥨",
-			"class<thunar> title<.*lmcs.*>": "󱂵",
 			"class<thunderbird>": "",
 			"class<vivaldi.*>": "",
 			"class<zen.*>": "󰗝",
 			"title<.*/ X.*>": "",
 			"title<.*Discord.*>": "",
+			"title<.*Picture.in.Picture.*>": "󰹗",
 			"title<.*github.*>": "",
 			"title<.*nvim.*>": "",
-			"title<.*Picture.in.Picture.*>": "󰹗",
 			"title<.*reddit.*>": "",
-			"title<.*youtube.*>": "",
-			"title<.*whatsapp.*>": ""
+			"title<.*whatsapp.*>": "",
+			"title<.*youtube.*>": ""
 		}
 	},
 	"idle_inhibitor": {
@@ -285,28 +295,57 @@
 		"tooltip-format": "{temperatureC} degrees Celsius"
 	},
 	"tray": {
+		"show-passive-items": true,
 		"spacing": 5
 	},
-	"wireplumber": {
-		"format": "{format_source}󰋋 {icon}",
+	"wireplumber#sink": {
+		"format": "󰕾{icon}",
 		"format-icons": {
 			"default": [
-				"",
-				"",
-				"",
-				"",
-				"",
-				""
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				""
 			]
 		},
-		"format-muted": "{format_source}󰟎",
-		"format-source": "󰍬 ",
-		"format-source-muted": "",
-		"on-click": "qpwgraph",
-		"on-click-middle": "~/.local/bin/localvolbri.zsh volume_mute",
-		"on-click-right": "~/.local/bin/localvolbri.zsh mic_mute",
+		"node-type": "Audio/Sink",
+		"format-muted": "󰖁",
+		"on-click": "~/.local/bin/localvolbri.zsh volume_mute",
 		"on-scroll-down": "~/.local/bin/localvolbri.zsh volume_down",
 		"on-scroll-up": "~/.local/bin/localvolbri.zsh volume_up",
-		"tooltip-format": "Output:\t{volume:3}%\t{node_name}\nInput:\t{source_volume:3}%\t{source_desc}"
+		"tooltip-format": "Output: {volume:3}% {node_name}"
+	},
+	"wireplumber#source": {
+		"format": "{format_source}{icon}",
+		"format-icons": {
+			"default": [
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				""
+			]
+		},
+		"node-type": "Audio/Source",
+		"format-muted": "{format_source}",
+		"format-source": "󰍬",
+		"format-source-muted": "󰍭",
+		"on-click": "~/.local/bin/localvolbri.zsh mic_mute",
+		"on-scroll-down": "~/.local/bin/localvolbri.zsh mic_down",
+		"on-scroll-up": "~/.local/bin/localvolbri.zsh mic_up",
+		"tooltip-format": "Input: {source_volume:3}% {source_desc}"
 	}
 }

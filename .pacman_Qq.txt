@@ -1,7 +1,6 @@
 7zip
 a52dec
 aalib
-abiword
 abseil-cpp
 accountsservice
 acl
@@ -132,7 +131,6 @@ ffmpeg
 ffmpegthumbnailer
 fftw
 file
-file-roller
 filesystem
 findutils
 flac
@@ -160,7 +158,6 @@ gdbm
 gdk-pixbuf2
 geoclue
 gettext
-ghostscript
 ghostty
 ghostty-shell-integration
 ghostty-terminfo
@@ -192,7 +189,6 @@ gnustep-base
 gnutls
 go
 gobject-introspection-runtime
-goffice
 gperftools
 gpgme
 gpgmepp
@@ -270,7 +266,6 @@ hyprwayland-scanner
 i2c-tools
 iana-etc
 icu
-ijs
 imagemagick
 imath
 imlib2
@@ -287,13 +282,13 @@ iputils
 iso-codes
 jansson
 jasper
-jbig2dec
 jbigkit
 jemalloc
 jq
 json-c
 json-glib
 jsoncpp
+kamera
 karchive
 kauth
 kbd
@@ -354,7 +349,6 @@ kxmlgui
 l-smash
 lame
 lapack
-lasem
 lazygit
 lcms2
 ldb
@@ -440,14 +434,11 @@ libglvnd
 libgme
 libgpg-error
 libgphoto2
-libgsf
 libgudev
 libhandy
 libharu
 libheif
-libical
 libice
-libidn
 libidn2
 libiec61883
 libimobiledevice
@@ -484,7 +475,6 @@ libmpeg2
 libmspack
 libmtp
 libmysofa
-libnautilus-extension
 libndp
 libnetfilter_conntrack
 libnewt
@@ -535,7 +525,6 @@ libsndfile
 libsodium
 libsoup3
 libsoxr
-libspectre
 libspeechd
 libspnav
 libsrtp
@@ -766,7 +755,6 @@ playerctl
 polkit
 polkit-qt6
 poppler
-poppler-data
 poppler-glib
 poppler-qt6
 popt
@@ -835,12 +823,10 @@ qt6-translations
 qt6ct
 quazip-qt5
 raptor
-rasqal
 rav1e
 re2
 readline
 recode
-redland
 redshift
 rhash
 ripgrep
@@ -990,7 +976,6 @@ woff2-font-awesome
 wofi
 wpa_supplicant
 wtype
-wv
 wxwidgets-common
 wxwidgets-gtk3
 x264

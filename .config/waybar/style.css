@@ -52,26 +52,18 @@ window#waybar.hidden {
 }
 
 button,
-#backlight,
-#battery,
-#clock,
-#cpu,
-#custom-binary_clock,
-#custom-screenrecorder,
+#audio,
 #custom-updates,
 #disk,
+#hardware,
 #idle_inhibitor,
 #keyboard-state,
-#language,
-#memory,
 #mpris,
 #network,
-#pulseaudio,
 #submap,
-#temperature,
+#time,
 #tray,
-#window,
-#wireplumber {
+#window {
 	border: none;
 	box-shadow: .1em .05em .1em @box_shadow;
 	color: @fg_widget;
@@ -79,6 +71,19 @@ button,
 	border-radius: .25em;
 	margin: .15em .25em;
 	padding: 0 .75em;
+}
+
+#clock {
+	margin-left: 1em;
+}
+
+#backlight,
+#cpu,
+#language,
+#memory,
+#temperature,
+#wireplumber {
+	margin-right: 1em;
 }
 
 #battery.low {
