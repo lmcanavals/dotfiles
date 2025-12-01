@@ -134,7 +134,7 @@
 		]
 	},
 	"custom/binary_clock": {
-		"exec": "~/.local/bin/localbaseclock.zsh",
+		"exec": "localbaseclock.zsh",
 		"format": "{}",
 		"interval": 5,
 		"return-type": "json"
@@ -273,10 +273,10 @@
 		"format-source": "󰍬 ",
 		"format-source-muted": "",
 		"on-click": "qpwgraph",
-		"on-click-middle": "~/.local/bin/localvolbri.zsh volume_mute",
-		"on-click-right": "~/.local/bin/localvolbri.zsh mic_mute",
-		"on-scroll-down": "~/.local/bin/localvolbri.zsh volume_down",
-		"on-scroll-up": "~/.local/bin/localvolbri.zsh volume_up",
+		"on-click-middle": "localvolbri.zsh volume_mute",
+		"on-click-right": "localvolbri.zsh mic_mute",
+		"on-scroll-down": "localvolbri.zsh volume_down",
+		"on-scroll-up": "localvolbri.zsh volume_up",
 		"scroll-step": 5,
 		"tooltip": true,
 		"tooltip-format": "Output:\t<b>{volume:3}%</b>\t{desc}"
@@ -317,9 +317,9 @@
 		},
 		"node-type": "Audio/Sink",
 		"format-muted": "󰖁",
-		"on-click": "~/.local/bin/localvolbri.zsh volume_mute",
-		"on-scroll-down": "~/.local/bin/localvolbri.zsh volume_down",
-		"on-scroll-up": "~/.local/bin/localvolbri.zsh volume_up",
+		"on-click": "localvolbri.zsh volume_mute",
+		"on-scroll-down": "localvolbri.zsh volume_down",
+		"on-scroll-up": "localvolbri.zsh volume_up",
 		"tooltip-format": "Output: {volume:3}% {node_name}"
 	},
 	"wireplumber#source": {
@@ -343,9 +343,9 @@
 		"format-muted": "{format_source}",
 		"format-source": "󰍬",
 		"format-source-muted": "󰍭",
-		"on-click": "~/.local/bin/localvolbri.zsh mic_mute",
-		"on-scroll-down": "~/.local/bin/localvolbri.zsh mic_down",
-		"on-scroll-up": "~/.local/bin/localvolbri.zsh mic_up",
+		"on-click": "localvolbri.zsh mic_mute",
+		"on-scroll-down": "localvolbri.zsh mic_down",
+		"on-scroll-up": "localvolbri.zsh mic_up",
 		"tooltip-format": "Input: {source_volume:3}% {source_desc}"
 	}
 }
