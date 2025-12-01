@@ -27,7 +27,7 @@ button.urgent,
 }
 button:hover {
 	background: inherit;
-	background-color: @bg_hover;
+	background-color: @bg_widget_r;
 	color: @fg_hover;
 	text-shadow: inherit;
 }

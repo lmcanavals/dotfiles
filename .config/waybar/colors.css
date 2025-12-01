@@ -45,7 +45,7 @@
 @define-color box_shadow alpha(@bg_highlight, .25);
 @define-color fg_atention @yellow;
 @define-color fg_critical @blue6;
-@define-color fg_hover @blue6;
+@define-color fg_hover @gitchange;
 @define-color fg_widget @green;
 @define-color fg_widget_r @bg_dark;
 @define-color fg_dimmed @comment;
