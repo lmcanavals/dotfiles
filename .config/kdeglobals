@@ -1,5 +1,5 @@
 [General]
-TerminalApplication=ghostty
+TerminalApplication=ghostty --working-directory=%F --gtk-single-instance=false
 
 [Icons]
 Theme=Reversal-dark
