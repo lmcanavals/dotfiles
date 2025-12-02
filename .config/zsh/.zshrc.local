@@ -243,11 +243,13 @@ function lmcs-plugman() {
 				;;
 			update)
 				if [[ -d $ZDOTDIR/plugins/$plug_name ]]; then
+					echo "+--------------------------------------------------------------------+"
 					echo "updating $plug_name"
 					oldpwd=$(pwd)
 					cd $ZDOTDIR/plugins/$plug_name
 					git pull
 					cd $oldpwd
+					echo "+--------------------------------------------------------------------+"
 				else
 					echo "$plug_name not installed... installing it..."
 					git clone --depth 1 $plug_gh_url $plug_folder

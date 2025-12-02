@@ -11,6 +11,7 @@ rust.sh
 .netrc
 .nvidia-settings-rc
 .python_history
+.startup_time
 .steampath
 .steampid
 .sudo_as_admin_successful
@@ -195,6 +196,7 @@ rust.sh
 .local/share/qalculate/
 .local/share/sddm/
 .local/share/sounds/
+.local/share/uv/
 .local/share/vlc/
 .local/share/wezterm/
 .local/share/xfce4/helpers/

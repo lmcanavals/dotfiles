@@ -141,11 +141,6 @@
 	},
 	"custom/updates": {
 		"exec": "~/Apps/repos/waybar-updates-btw/build/updates-query",
-		"format": "{}{icon}",
-		"format-icons": {
-			"has-updates": " 󰮯",
-			"updated": ""
-		},
 		"return-type": "json"
 	},
 	"hyprland/language": {
@@ -159,7 +154,6 @@
 		"tooltip": false
 	},
 	"hyprland/window": {
-		"icon": true,
 		"rewrite": {
 			"(.*) — (.*)": "$1",
 			"(.*) and \\d+ more page(.*)": "$1",
