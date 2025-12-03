@@ -35,17 +35,17 @@ do_the_thing() {
 	zparseopts -E {-file,f}:=filename
 	filename="${filename[2]:-video$(date '+%Y%m%d_%H%M%S_%N').mp4}"
 
-	local slurparr=(${=SLURP_ARGS})
-	local wfargs=("-g")
+	local slurp_args=(${=SLURP_ARGS})
+	local wf_args=("-g")
 	local region
 	zparseopts -E {-region,r}=region
 
 	if (($#region == 0)); then
-		slurparr+=("-o" "-f" "%o")
-		wfargs=("-o")
+		slurp_args+=("-o" "-f" "%o")
+		wf_args=("-o")
 	fi
 
-	wf-recorder $wfargs "$(slurp "${slurparr[@]}")" -f "$filename" &
+	wf-recorder $wf_args "$(slurp "${slurp_args[@]}")" -f "$filename" &
 
 	print -r "$! $filename" >$recinfo
 
