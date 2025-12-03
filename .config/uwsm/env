@@ -1,4 +1,3 @@
-
 export ADW_DEBUG_COLOR_SCHEME=prefer-dark
 export ADW_DISABLE_PORTAL=1
 export GTK_MODULES=canberra-gtk-module

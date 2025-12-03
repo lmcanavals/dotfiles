@@ -4,6 +4,7 @@
 # Captures full screen, region, monitor, or active window (via grim/slurp/hyprctl).
 # Features include timed delay, clipboard copy, file save, editor launch (Swappy/GIMP),
 # and notification with a thumbnail. Requires wl-copy, jq, and vipsthumbnail.
+# TODO: add a --quiet or --notification off to suppress the notification
 
 print_usage() {
 	cat <<- EOF
