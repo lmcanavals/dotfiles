@@ -15,8 +15,6 @@ rust.sh
 .steampath
 .steampid
 .sudo_as_admin_successful
-.sway.log
-.sway1.log
 .wget-hsts
 .xsession-*
 .zcompdump
@@ -27,7 +25,6 @@ rust.sh
 .config/Mousepad/accels.scm
 .config/QtProject.conf
 .config/Trolltech.conf
-.config/background
 .config/emaildefaults
 .config/emailidentities
 .config/font-manager/Sources.xml
@@ -44,15 +41,6 @@ rust.sh
 .config/quickshell/.qmlls.ini
 .config/user-dirs.dirs
 .config/user-dirs.locale
-.config/webengineurlinterceptoradblockrc
-.config/xfce4/help.rc
-.config/xfce4/helpers.rc
-.config/xfce4/terminal/accels.scm
-.config/xfce4/xfce4-screenshooter
-.config/xfce4/xfce4-taskmanager.rc
-.config/xfce4/xfconf/xfce-perchannel-xml/displays.xml
-.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml
-.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
 .config/zoom.conf
 .config/zoomus.conf
 .config/zsh/.zsh_history
@@ -88,7 +76,6 @@ rust.sh
 .kde4/
 .lldb/
 .m2/
-.mozilla/
 .mplayer/
 .npm/
 .pki/
@@ -112,7 +99,6 @@ rust.sh
 .config/Qt/
 .config/QtProject/
 .config/Thunar/
-.config/Unknown\ Organization/
 .config/VirtualBox/
 .config/Antigravity/
 .config/abiword/
@@ -147,7 +133,6 @@ rust.sh
 .config/menus/
 .config/microsoft-edge-dev/
 .config/microsoft-edge/
-.config/mypaint/
 .config/nvim/plugged/
 .config/obs-studio/
 .config/opera/
@@ -162,12 +147,13 @@ rust.sh
 .config/smartgit/
 .config/solaar/
 .config/vlc/
-.config/xfce4/desktop/
-.config/xfce4/panel/
 .config/xournalpp/metadata/
 .config/xsettingsd/
 .config/zsh/.zcompcache/
 .config/zsh/plugins/
+.config/fcitx/dbus/
+.config/fcitx5/
+.config/ibus/bus/
 
 .local/lib/
 .local/share/CMakeTools/
@@ -208,7 +194,6 @@ Apps/
 Desktop/
 Documents/
 Downloads/
-Emulation/
 Games/
 GoogleDrive/
 IdeaProjects/
@@ -216,9 +201,6 @@ OneDrive/
 Pictures/
 Videos/
 VirtualBox VMs/
-git/
-llvm-project/
-shared/
 
 # Multifolder stuff
 
@@ -231,8 +213,6 @@ shared/
 !.config/asciinema/config.toml
 
 .local/bin/*
-!.local/bin/grimblast
-!.local/bin/ix
 !.local/bin/local*
 !.local/bin/spots.sh
 
