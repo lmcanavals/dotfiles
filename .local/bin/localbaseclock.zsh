@@ -1,35 +1,38 @@
 #!/usr/bin/env zsh
 
-# Description: Generates a compact, symbolic string representing the current Git repository status.
+tag() {
+	echo -n "<span foreground=\\\"$1\\\">$2</span>"
+}
+
+# Generates a compact, symbolic string representing the current Git repository status.
 # Output is formatted using Pango markup for use in Waybar.
 dotfiles_status() {
-	local COLOR_ADDED="<span foreground=\\\"#0db9d7\\\">"
-	local COLOR_CLEAN="<span foreground=\\\"#41a6b5\\\">"
-	local COLOR_DELETED="<span foreground=\\\"#db4b4b\\\">"
-	local COLOR_DIVERGED="<span foreground=\\\"#ff9e64\\\">"
-	local COLOR_MODIFIED="<span foreground=\\\"#e0af68\\\">"
-	local COLOR_RESET="</span>"
-	local COLOR_STAGED="<span foreground=\\\"#6183bb\\\">"
-	local COLOR_UNTRACKED="<span foreground=\\\"#9d7cd8\\\">"
+	local COLOR_ADDED="#0db9d7"
+	local COLOR_CLEAN="#41a6b5"
+	local COLOR_DELETED="#db4b4b"
+	local COLOR_DIVERGED="#ff9e64"
+	local COLOR_MODIFIED="#e0af68"
+	local COLOR_STAGED="#6183bb"
+	local COLOR_UNTRACKED="#9d7cd8"
 
-	local SYMBOL_AHEAD=$'\uf093'     # 
-	local SYMBOL_BEHIND=$'\uf019'    # 
-	local SYMBOL_BRANCH=$'\uf126'    # 
-	local SYMBOL_CHECK=$'\uf1d2'     # 
-	local SYMBOL_COMMITTED=$'\ue729' # 
-	local SYMBOL_DIVERGED=$'\ue728'  # 
-	local SYMBOL_MODIFIED=$'\uf14b'  # 
-	local SYMBOL_UNTRACKED=$'\uf059' # 
+	local ICON_AHEAD=$'\uf093'     # 
+	local ICON_BEHIND=$'\uf019'    # 
+	local ICON_BRANCH=$'\uf126'    # 
+	local ICON_CHECK=$'\uf1d2'     # 
+	local ICON_COMMITTED=$'\ue729' # 
+	local ICON_DIVERGED=$'\ue728'  # 
+	local ICON_MODIFIED=$'\uf14b'  # 
+	local ICON_UNTRACKED=$'\uf059' # 
 
 	local dotfiles=("--git-dir=$HOME/.dotfiles.git" "--work-tree=$HOME")
 
-	# Check if we are inside a Git repository
+	# Check if we are inside a git repository
 	if ! git ${dotfiles[@]} rev-parse --is-inside-work-tree &>/dev/null; then
 		return 0
 	fi
 
 	# 1. Get the short, machine-readable status
-	local status_line=$(git ${dotfiles[@]} status --porcelain=v1 --branch 2>/dev/null)
+	local status_line=$(git ${dotfiles[@]} status -u --porcelain=v1 --branch 2>/dev/null)
 
 	# 2. Extract branch/remote information from the first line
 	local branch_info=$(echo "$status_line" | head -n 1)
@@ -60,16 +63,16 @@ dotfiles_status() {
 		branch_color="$COLOR_MODIFIED"
 	fi
 
-	# Start the prompt string: [COLOR_BRANCH] [SYMBOL] [BRANCH_NAME]
-	local output="${branch_color}${SYMBOL_BRANCH} ${current_branch}${COLOR_RESET} "
+	# Start the prompt string: [COLOR_BRANCH] [ICON] [BRANCH_NAME]
+	local output="$(tag $branch_color "$ICON_BRANCH $current_branch")"
 
-	# 3. Handle Ahead/Behind/Diverged Status
+	# 3. Handle ahead/behind/diverged status
 	if ((ahead > 0 && behind > 0)); then
-		output+="${COLOR_DIVERGED}${SYMBOL_DIVERGED}${COLOR_RESET}\r"
+		output+=" $(tag $COLOR_DIVERGED $ICON_DIVERGED)\r"
 	elif ((ahead > 0)); then
-		output+="${COLOR_ADDED}${SYMBOL_AHEAD} ${ahead}${COLOR_RESET}\r"
+		output+=" $(tag $COLOR_ADDED "$ICON_AHEAD $ahead")\r"
 	elif ((behind > 0)); then
-		output+="${COLOR_DELETED}${SYMBOL_BEHIND} ${behind}${COLOR_RESET}\r"
+		output+=" $(tag $COLOR_DELETED "$ICON_BEHIND $behind")\r"
 	fi
 
 	# 4. Count files in various states using --porcelain output (from line 2 onwards)
@@ -80,20 +83,21 @@ dotfiles_status() {
 
 	# 5. Append symbols based on counts
 	if ((staged_count > 0)); then
-		output+="${COLOR_STAGED}${SYMBOL_COMMITTED} ${staged_count} staged${COLOR_RESET} "
+		output+="$(tag $COLOR_STAGED "$ICON_COMMITTED $staged_count staged") "
 	fi
 	if ((modified_count > 0)); then
-		output+="${COLOR_MODIFIED}${SYMBOL_MODIFIED} ${modified_count} modified${COLOR_RESET} "
+		output+="$(tag $COLOR_MODIFIED "$ICON_MODIFIED $modified_count modified") "
 	fi
 	if ((untracked_count > 0)); then
-		output+="${COLOR_UNTRACKED}${SYMBOL_UNTRACKED} ${untracked_count} untracked${COLOR_RESET}"
+		output+="$(tag $COLOR_UNTRACKED "$ICON_UNTRACKED $untracked_count untracked")"
 	fi
 
-	# 6. Final Status (Clean or Dirty)
-	if ((staged_count == 0 && modified_count == 0 && untracked_count == 0 && ahead == 0 && behind == 0)); then
-		output="<b>${COLOR_CLEAN}${SYMBOL_CHECK} files synced${COLOR_RESET}</b>\r${output}"
+	# 6. Final status (clean or dirty)
+	if ((staged_count == 0 && modified_count == 0 && \
+		untracked_count == 0 && ahead == 0 && behind == 0)); then
+		output="$(tag $COLOR_CLEAN "<b>$ICON_CHECK files synced</b>")\r${output}"
 	else
-		output="<b>${COLOR_MODIFIED}${SYMBOL_CHECK} files out of sync${COLOR_RESET}</b>\r${output}"
+		output="$(tag $COLOR_MODIFIED "<b>$ICON_CHECK files out of sync</b>")\r${output}"
 	fi
 
 	echo -n "$output"
@@ -101,18 +105,23 @@ dotfiles_status() {
 
 dec_to_base() {
 	printf "%0$1s\n" "$(echo "obase=$2;$3" | bc)" |
-		sed 's/[ 0]/\\ueabc/g' |
-		sed 's/1/\\uea71/g'
+		sed "s/[ 0]/$4/g" |
+		sed "s/1/$5/g"
 }
 
 cool_time() {
+	#    
+	local ICON_H0=$'\uf4c3' # 
+	local ICON_H1=$'\uf444' # 
+	local ICON_M0=$'\uf4c3' # 
+	local ICON_M1=$'\uf444' # 
 	local hour=$(date +%H)
 	local minute=$(date +%M)
 	local second=$(date +%S)
 
-	hour=$(dec_to_base 6 2 $hour)
-	minute=$(dec_to_base 6 2 $minute)
-	text="\"text\": \"$hour $minute\""
+	hour=$(dec_to_base 5 2 $hour $ICON_H0 $ICON_H1)
+	minute=$(dec_to_base 6 2 $minute $ICON_M0 $ICON_M1)
+	text="\"text\": \"<b>$hour</b>:$minute\""
 	tooltip="\"tooltip\": \"$(dotfiles_status)\""
 	echo "{$text,$tooltip}"
 }
