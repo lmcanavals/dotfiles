@@ -1,1 +1,0 @@
-*/3 * * * * DISPLAY=:0.0 xfdesktop --reload # change wallpaper every 3 minutes
