@@ -91,6 +91,7 @@ rust.sh
 .zen/
 .zoom/
 
+.config/Antigravity/
 .config/Bitwarden/
 .config/Bitwarden\ CLI/
 .config/JetBrains/
@@ -100,7 +101,6 @@ rust.sh
 .config/QtProject/
 .config/Thunar/
 .config/VirtualBox/
-.config/Antigravity/
 .config/abiword/
 .config/akonadi/
 .config/autostart/
@@ -112,6 +112,8 @@ rust.sh
 .config/dconf/
 .config/discord/
 .config/dlv/
+.config/fcitx/dbus/
+.config/fcitx5/
 .config/github-copilot/
 .config/go/
 .config/google-chrome/
@@ -120,6 +122,7 @@ rust.sh
 .config/higan/
 .config/hiro/
 .config/htop/
+.config/ibus/bus/
 .config/inkscape/
 .config/kde.org/
 .config/kdeconnect/
@@ -146,14 +149,12 @@ rust.sh
 .config/session/
 .config/smartgit/
 .config/solaar/
+.config/systemd/user/graphical-session.target.wants/
 .config/vlc/
 .config/xournalpp/metadata/
 .config/xsettingsd/
 .config/zsh/.zcompcache/
 .config/zsh/plugins/
-.config/fcitx/dbus/
-.config/fcitx5/
-.config/ibus/bus/
 
 .local/lib/
 .local/share/CMakeTools/

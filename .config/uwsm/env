@@ -8,10 +8,5 @@ export XCURSOR_THEME=Adwaita
 export XDG_DATA_DIRS=/usr/local/share:/usr/share
 export XDG_MENU_PREFIX=arch-
 
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export SDL_IM_MODULE=fcitx
-export XMODIFIERS=@im=fcitx
-
 export LCTHEME=dark
 export PATH=$HOME/.local/bin:$PATH
