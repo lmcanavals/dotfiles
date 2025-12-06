@@ -1,5 +1,23 @@
 #!/usr/bin/env zsh
 
+COLOR_ADDED="#0db9d7"
+COLOR_CLEAN="#41a6b5"
+COLOR_DELETED="#db4b4b"
+COLOR_DIVERGED="#ff9e64"
+COLOR_MODIFIED="#e0af68"
+COLOR_STAGED="#6183bb"
+COLOR_UNTRACKED="#9d7cd8"
+
+ICON_AHEAD=$'\uf093'     # 
+ICON_BEHIND=$'\uf019'    # 
+ICON_BRANCH=$'\uf126'    # 
+ICON_CHECK=$'\uf1d2'     # 
+ICON_COMMITTED=$'\ue729' # 
+ICON_DIVERGED=$'\ue728'  # 
+ICON_MODIFIED=$'\uf14b'  # 
+ICON_UNTRACKED=$'\uf059' # 
+
+#
 tag() {
 	echo -n "<span foreground=\\\"$1\\\">$2</span>"
 }
@@ -7,23 +25,6 @@ tag() {
 # Generates a compact, symbolic string representing the current Git repository status.
 # Output is formatted using Pango markup for use in Waybar.
 dotfiles_status() {
-	local COLOR_ADDED="#0db9d7"
-	local COLOR_CLEAN="#41a6b5"
-	local COLOR_DELETED="#db4b4b"
-	local COLOR_DIVERGED="#ff9e64"
-	local COLOR_MODIFIED="#e0af68"
-	local COLOR_STAGED="#6183bb"
-	local COLOR_UNTRACKED="#9d7cd8"
-
-	local ICON_AHEAD=$'\uf093'     # 
-	local ICON_BEHIND=$'\uf019'    # 
-	local ICON_BRANCH=$'\uf126'    # 
-	local ICON_CHECK=$'\uf1d2'     # 
-	local ICON_COMMITTED=$'\ue729' # 
-	local ICON_DIVERGED=$'\ue728'  # 
-	local ICON_MODIFIED=$'\uf14b'  # 
-	local ICON_UNTRACKED=$'\uf059' # 
-
 	local dotfiles=("--git-dir=$HOME/.dotfiles.git" "--work-tree=$HOME")
 
 	# Check if we are inside a git repository
@@ -68,12 +69,13 @@ dotfiles_status() {
 
 	# 3. Handle ahead/behind/diverged status
 	if ((ahead > 0 && behind > 0)); then
-		output+=" $(tag $COLOR_DIVERGED $ICON_DIVERGED)\r"
+		output+=" $(tag $COLOR_DIVERGED $ICON_DIVERGED)"
 	elif ((ahead > 0)); then
-		output+=" $(tag $COLOR_ADDED "$ICON_AHEAD $ahead")\r"
+		output+=" $(tag $COLOR_ADDED "$ICON_AHEAD $ahead")"
 	elif ((behind > 0)); then
-		output+=" $(tag $COLOR_DELETED "$ICON_BEHIND $behind")\r"
+		output+=" $(tag $COLOR_DELETED "$ICON_BEHIND $behind")"
 	fi
+	output+="\r"
 
 	# 4. Count files in various states using --porcelain output (from line 2 onwards)
 	local unstaged_output=$(echo "$status_line" | tail -n +2)
@@ -103,27 +105,25 @@ dotfiles_status() {
 	echo -n "$output"
 }
 
-dec_to_base() {
-	printf "%0$1s\n" "$(echo "obase=$2;$3" | bc)" |
-		sed "s/[ 0]/$4/g" |
-		sed "s/1/$5/g"
-}
+#    
+ICON_H0=$'\uf4c3' # 
+ICON_H1=$'\uf444' # 
+ICON_M0=$'\uf4c3' # 
+ICON_M1=$'\uf444' # 
+HOUR=({$ICON_H0,$ICON_H1}{$ICON_H0,$ICON_H1}{$ICON_H0,$ICON_H1}{$ICON_H0,$ICON_H1}{$ICON_H0,$ICON_H1})
+MINUTE=({$ICON_M0,$ICON_M1}{$ICON_M0,$ICON_M1}{$ICON_M0,$ICON_M1}{$ICON_M0,$ICON_M1}{$ICON_M0,$ICON_M1}{$ICON_M0,$ICON_M1})
 
 cool_time() {
-	#    
-	local ICON_H0=$'\uf4c3' # 
-	local ICON_H1=$'\uf444' # 
-	local ICON_M0=$'\uf4c3' # 
-	local ICON_M1=$'\uf444' # 
 	local hour=$(date +%H)
 	local minute=$(date +%M)
 	local second=$(date +%S)
 
-	hour=$(dec_to_base 5 2 $hour $ICON_H0 $ICON_H1)
-	minute=$(dec_to_base 6 2 $minute $ICON_M0 $ICON_M1)
-	text="\"text\": \"<b>$hour</b>:$minute\""
+	text="\"text\": \"<b>${HOUR[$hour + 1]}</b>:${MINUTE[$minute + 1]}\""
 	tooltip="\"tooltip\": \"$(dotfiles_status)\""
 	echo "{$text,$tooltip}"
 }
 
-cool_time
+while :; do
+	cool_time
+	sleep 10
+done

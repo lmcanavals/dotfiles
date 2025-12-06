@@ -49,7 +49,10 @@ AddPackage v4l2loopback-dkms     # v4l2-loopback device – module sources
 AddPackage xournalpp             # Handwriting notetaking software with PDF annotation support
 AddPackage zenity                # Display graphical dialog boxes from shell scripts
 
-AddPackage --foreign aconfmgr-git         # A configuration manager for Arch Linux
+# This are needed for https://github.com/CyberShadow/aconfmgr
+AddPackage expect   # A tool for automating interactive applications
+AddPackage pacutils # Helper tools for libalpm
+
 AddPackage --foreign hyprqt6engine        # QT6 Theme Provider for Hyprland
 AddPackage --foreign maplemono-ttf        # Open source monospace font with round corner, ligatures and Nerd-Font for IDE and command line
 AddPackage --foreign otf-font-awesome-5   # Iconic font designed for Bootstrap (version 5.x)

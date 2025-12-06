@@ -135,8 +135,6 @@
 	},
 	"custom/binary_clock": {
 		"exec": "localbaseclock.zsh",
-		"format": "{}",
-		"interval": 5,
 		"return-type": "json"
 	},
 	"custom/updates": {
