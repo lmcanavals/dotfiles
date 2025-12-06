@@ -101,9 +101,9 @@ symbol = " "
 version_format = "${major}.${minor}"
 
 [jobs]
-format = "[$symbol$number]($style)"
+format = "[$number$symbol]($style)"
 style = "bg:bright-black bright-blue"
-symbol = "󱀝 "
+symbol = " "
 
 [julia]
 format = "[$symbol($version·)]($style)"

@@ -1,0 +1,8 @@
+[org.freedesktop.DisplayManager.AccountsService]
+BackgroundFile='/usr/share/backgrounds/xfce/xfce-leaves.svg'
+
+[User]
+Session=
+XSession=xfce
+Icon=/var/lib/AccountsService/icons/lmcs.png
+SystemAccount=false
