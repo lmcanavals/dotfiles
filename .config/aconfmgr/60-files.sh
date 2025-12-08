@@ -1,5 +1,6 @@
 CopyFile /boot/loader/entries/arch-fallback.conf 700
-CopyFile /boot/loader/entries/arch.conf 700
+CopyFile /boot/loader/entries/arch-amd.conf 700
+CopyFile /boot/loader/entries/arch-intel.conf 700
 CopyFile /boot/loader/loader.conf 700
 CreateDir /etc/colord '' colord colord
 CopyFile /etc/greetd/config.toml

@@ -32,12 +32,11 @@ AddPackage kded                            # Extensible deamon for providing sys
 AddPackage kitty                           # A modern, hackable, featureful, OpenGL-based terminal emulator
 AddPackage kvantum                         # SVG-based theme engine for Qt6 (including config tool and extra themes)
 AddPackage mplayer                         # Media player for Linux
-AddPackage network-manager-applet          # Applet for managing network connections
+AddPackage networkmanager-dmenu            # Control Networkmanager via dmenu
 AddPackage noto-fonts-emoji                # Google Noto Color Emoji font
 AddPackage nwg-look                        # GTK settings editor adapted to work on wlroots-based compositors
 AddPackage pavucontrol                     # PulseAudio Volume Control
 AddPackage pipewire-pulse                  # Low-latency audio/video router and processor - PulseAudio replacement
-AddPackage qpwgraph                        # PipeWire Graph Qt GUI Interface
 AddPackage qt5-wayland                     # Provides APIs for Wayland
 AddPackage qt6ct                           # Qt 6 Configuration Utility
 AddPackage slurp                           # Select a region in a Wayland compositor
@@ -71,4 +70,3 @@ AddPackage xdg-desktop-portal              # Desktop integration portals for san
 AddPackage xdg-desktop-portal-hyprland     # xdg-desktop-portal backend for hyprland
 AddPackage xdg-user-dirs                   # Manage user directories like ~/Desktop and ~/Music
 AddPackage xf86-input-wacom                # X.Org Wacom tablet driver
-AddPackage xorg-server                     # Xorg X server
