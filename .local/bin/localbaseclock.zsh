@@ -123,7 +123,17 @@ cool_time() {
 	echo "{$text,$tooltip}"
 }
 
-while :; do
-	cool_time
-	sleep 10
-done
+lmcsbinclock() {
+	local once
+	zparseopts -E {-once,o}=once
+	if (($#once > 0)); then
+		cool_time
+		return 0
+	fi
+	while :; do
+		cool_time
+		sleep 10
+	done
+}
+
+lmcsbinclock $@

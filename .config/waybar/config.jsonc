@@ -178,8 +178,8 @@
 		"window-rewrite": {
 			"class<.*(ghostty|kitty|wezterm).*>": "",
 			"class<.*ark>": "󰗄",
-			"class<.*dolphin> title<.*lmcs.*>": "󱂵",
-			"class<.*dolphin>": "󰥨",
+			"class<.*dolphin>": "󰝰",
+			"class<.*gthumb>": "󰋹",
 			"class<[Bb]rave-browser.*>": "󰄛",
 			"class<firefox>": "",
 			"class<thunderbird>": "",
