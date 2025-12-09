@@ -1,44 +1,37 @@
 #!/usr/bin/env zsh
 
 get_battery_status() {
-	declare -a BATTERY_ICONS=("󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹")
-	local CHARGING_ICON="󱐋"
-	local LOW_WARNING_ICON="!󰚥"
-	local FULL_PLUGGED_ICON="󱐥"
-	local BATTERY_PATH=$(upower -e | grep 'BAT' | head -n 1)
+	declare -a battery_normal=("󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹")
+	declare -a battery_charging=("󰢟" "󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅")
+	local icon_low="󱃍"
+	local icon_plugged=""
+	local battery_path=$(upower -e | grep 'BAT' | head -n 1)
 
-	if [[ -z "$BATTERY_PATH" ]]; then
-		echo "No battery found"
+	if [[ -z "$battery_path" ]]; then
+		echo "󰂑 not found"
 		return 1
 	fi
 
-	local BATTERY_INFO=$(upower -i $BATTERY_PATH | grep -E "state|percentage|online")
+	local battery_info=$(upower -i $battery_path | grep -E "state|percentage|present")
+	local percentage=$(echo "$battery_info" | awk '/percentage:/ {print $2}' | tr -d '%')
+	local state=$(echo "$battery_info" | awk '/state:/ {print $2}')
+	local present=$(echo "$battery_info" | awk '/present:/ {print $2}') # 'yes' or 'no'
 
-	local PERCENTAGE=$(echo "$BATTERY_INFO" | awk '/percentage:/ {print $2}' | tr -d '%')
-	local STATUS_RAW=$(echo "$BATTERY_INFO" | awk '/state:/ {print $2}')
-	local IS_ONLINE=$(echo "$BATTERY_INFO" | awk '/online:/ {print $2}') # 'yes' or 'no'
+	local icon_idx=$(printf "%d\n" $(($percentage / 9.1 + 1)))
 
-	local ICON_INDEX=$(printf "%d\n" $(($PERCENTAGE / 9.1 + 1)))
-	local BASE_ICON=${BATTERY_ICONS[$ICON_INDEX]}
+	local output=""
 
-	local FINAL_ICON=""
-	local FINAL_STATUS=""
-
-	if [[ "$STATUS_RAW" == "fully-charged" && "$IS_ONLINE" == "yes" ]]; then
-		FINAL_ICON="$BASE_ICON$FULL_PLUGGED_ICON"
-		FINAL_STATUS="Full"
-	elif [[ "$STATUS_RAW" == "charging" ]]; then
-		FINAL_ICON="$BASE_ICON$CHARGING_ICON"
-		FINAL_STATUS="Charging"
-	elif [[ "$STATUS_RAW" == "discharging" && "$PERCENTAGE" -lt 25 ]]; then
-		FINAL_ICON="$BASE_ICON$LOW_WARNING_ICON"
-		FINAL_STATUS="Low"
+	if [[ "$state" == "fully-charged" && "$present" == "yes" ]]; then
+		output="$icon_plugged battery full"
+	elif [[ "$state" == "charging" ]]; then
+		output="${battery_charging[$icon_idx]} $percentage%"
+	elif [[ "$state" == "discharging" && "$percentage" -lt 25 ]]; then
+		output="<span color=\"${LCLR:24:7}\">$icon_low $percentage% </span>"
 	else
-		FINAL_ICON="$BASE_ICON"
-		FINAL_STATUS="$(echo "$STATUS_RAW" | sed 's/\b\(.\)/\u\1/g')"
+		output="${battery_normal[$icon_idx]} $percentage% $state"
 	fi
 
-	echo "${FINAL_ICON} ${PERCENTAGE}% ${FINAL_STATUS}"
+	echo "${output}"
 }
 
 get_battery_status

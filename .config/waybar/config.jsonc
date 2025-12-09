@@ -11,6 +11,7 @@
 	"modules-right": [
 		"group/hardware",
 		"group/audio",
+		"network",
 		"tray",
 		"idle_inhibitor"
 	],
@@ -67,31 +68,46 @@
 		"tooltip-format": "{icon} {percent}%"
 	},
 	"battery": {
-		"format": "{icon}󱐥",
-		"format-alt": "{icon}󱐥 {capacity}%",
-		"format-charging": "{icon}󱐋",
-		"format-critical": "{icon}!󰚥 {capacity}%",
-		"format-discharging": "{icon}",
-		"format-icons": [
-			"󰂎",
-			"󰁺",
-			"󰁻",
-			"󰁼",
-			"󰁽",
-			"󰁾",
-			"󰁿",
-			"󰂀",
-			"󰂁",
-			"󰂂",
-			"󰁹"
-		],
-		"format-time": "{H} h {M} min",
+		"format-full": "",
+		"format-alt": "{icon} {capacity}%",
+		"format": "{icon}",
+		"format-critical": "󱃍 {capacity}%",
+		"format-icons": {
+			"charging": [
+				"󰢟",
+				"󰢜",
+				"󰂆",
+				"󰂇",
+				"󰂈",
+				"󰢝",
+				"󰂉",
+				"󰢞",
+				"󰂊",
+				"󰂋",
+				"󰂅"
+			],
+			"default": [
+				"󰂎",
+				"󰁺",
+				"󰁻",
+				"󰁼",
+				"󰁽",
+				"󰁾",
+				"󰁿",
+				"󰂀",
+				"󰂁",
+				"󰂂",
+				"󰁹"
+			]
+		},
+		"format-time": "{H} hours {M} minutes",
 		"full-at": 98,
 		"states": {
 			"good": 75,
 			"low": 45,
 			"critical": 15
-		}
+		},
+		"tooltip-format": "{capacity}%\r{timeTo}"
 	},
 	"clock": {
 		"actions": {
@@ -117,7 +133,7 @@
 		},
 		"format": "{:%a, %e %b %R}",
 		"format-alt": "{:%A, %e of %B  %R}",
-		"tooltip-format": "<span size='11pt' font='monospace'>{calendar}</span>"
+		"tooltip-format": "<tt>{calendar}</tt>"
 	},
 	"cpu": {
 		"format": "{icon} {usage}%",
@@ -228,9 +244,11 @@
 		"tooltip-format": "RAM:\t{percentage}%\t{used:0.2f}/{total:0.2f}GB\nSWAP:\t{swapPercentage}%\t{swapUsed:0.2f}/{swapTotal:0.2f}GB"
 	},
 	"network": {
-		"format": "󰛳",
-		"format-alt": "{ifname}: {ipaddr}/{cidr}",
-		"format-disconnected": "{ifname} 󰲛",
+		"format": "{icon} {essid}",
+		"format-alt": "",
+		"format-disabled": "󰀝",
+		"format-disconnected": "󰌙",
+		"format-ethernet": "󰌘",
 		"format-icons": [
 			"󰤯",
 			"󰤟",
@@ -238,9 +256,13 @@
 			"󰤥",
 			"󰤨"
 		],
-		"format-linked": "{ifname} (No IP) 󰌙",
-		"tooltip-format-ethernet": "Interface:\t\t{ifname}\nIP:\t\t\t{ipaddr}\nMask:\t\t{cidr}\nGateway:\t\t{gwaddr}",
-		"tooltip-format-wifi": "SSID:\t\t{essid}\nSignal strength:\t{signalStrength}% {icon}\nInterface:\t\t{ifname}\nIP:\t\t\t{ipaddr}\nMask:\t\t{cidr}\nGateway:\t\t{gwaddr}"
+		"format-wifi": "{icon}",
+		"on-click-middle": "networkmanager_dmenu",
+		"on-click-right": "nm-connection-editor",
+		"tooltip-format": "<span size=\"x-large\"> </span><b>Details</b>\nESSID:\t{essid}\rIP:\t{ipaddr}\rMask:\t{netmask}\rGateway:\t{gwaddr}:{cidr}\r<b>Speed:</b>\rUp:\t{bandwidthUpBytes}\rDown:\t{bandwidthDownBytes}\rTotal:\t{bandwidthTotalBytes}",
+		"tooltip-format-disconnected": "<span size=\"x-large\">󰌙 </span><b>No signal</b>",
+		"tooltip-format-ethernet": "<span size=\"x-large\">󰌘 </span><b>Good ol' ethernet</b>",
+		"tooltip-format-wifi": "<span size=\"x-large\">{icon} </span><b>{essid} ({signalStrength}%)</b>"
 	},
 	"pulseaudio": {
 		"format": "{format_source}{icon}",
@@ -271,7 +293,7 @@
 		"on-scroll-up": "localvolbri.zsh volume_up",
 		"scroll-step": 5,
 		"tooltip": true,
-		"tooltip-format": "Output:\t<b>{volume:3}%</b>\t{desc}"
+		"tooltip-format": "Volume: <b>{volume}%</b>\r{desc}"
 	},
 	"temperature": {
 		"critical-threshold": 85,

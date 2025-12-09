@@ -195,3 +195,21 @@ su - lmcs
 # cha cha chaaaan
 aconfmgr apply
 ```
+
+## Finishing up
+
+Making sure the system can boot
+
+### Don't for get to set the password for `root`
+
+Set it like this
+
+```sh
+passwd
+```
+
+### Configuring the boot loader
+
+```sh
+
+```

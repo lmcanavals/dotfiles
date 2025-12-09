@@ -33,6 +33,7 @@ AddPackage kitty                           # A modern, hackable, featureful, Ope
 AddPackage kvantum                         # SVG-based theme engine for Qt6 (including config tool and extra themes)
 AddPackage mplayer                         # Media player for Linux
 AddPackage networkmanager-dmenu            # Control Networkmanager via dmenu
+AddPackage nm-connection-editor            # NetworkManager GUI connection editor and widgets
 AddPackage noto-fonts-emoji                # Google Noto Color Emoji font
 AddPackage nwg-look                        # GTK settings editor adapted to work on wlroots-based compositors
 AddPackage pavucontrol                     # PulseAudio Volume Control
