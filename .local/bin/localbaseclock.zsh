@@ -75,7 +75,6 @@ dotfiles_status() {
 	elif ((behind > 0)); then
 		output+=" $(tag $COLOR_DELETED "$ICON_BEHIND $behind")"
 	fi
-	output+="\r"
 
 	# 4. Count files in various states using --porcelain output (from line 2 onwards)
 	local unstaged_output=$(echo "$status_line" | tail -n +2)
@@ -85,13 +84,13 @@ dotfiles_status() {
 
 	# 5. Append symbols based on counts
 	if ((staged_count > 0)); then
-		output+="$(tag $COLOR_STAGED "$ICON_COMMITTED $staged_count staged") "
+		output+="\r$(tag $COLOR_STAGED "$ICON_COMMITTED $staged_count staged") "
 	fi
 	if ((modified_count > 0)); then
-		output+="$(tag $COLOR_MODIFIED "$ICON_MODIFIED $modified_count modified") "
+		output+="\r$(tag $COLOR_MODIFIED "$ICON_MODIFIED $modified_count modified") "
 	fi
 	if ((untracked_count > 0)); then
-		output+="$(tag $COLOR_UNTRACKED "$ICON_UNTRACKED $untracked_count untracked")"
+		output+="\r$(tag $COLOR_UNTRACKED "$ICON_UNTRACKED $untracked_count untracked")"
 	fi
 
 	# 6. Final status (clean or dirty)

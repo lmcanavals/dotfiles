@@ -11,15 +11,13 @@
 	"modules-right": [
 		"group/hardware",
 		"group/audio",
-		"network",
-		"tray",
+		"group/indicators",
 		"idle_inhibitor"
 	],
 	"group/audio": {
 		"orientation": "inherit",
 		"drawer": {
-			"children-class": "drawer-hw",
-			"transition-left-to-right": false
+			"children-class": "drawer-hw"
 		},
 		"modules": [
 			"pulseaudio",
@@ -30,8 +28,7 @@
 	"group/hardware": {
 		"orientation": "inherit",
 		"drawer": {
-			"children-class": "drawer-hw",
-			"transition-left-to-right": false
+			"children-class": "drawer-hw"
 		},
 		"modules": [
 			"battery",
@@ -40,6 +37,17 @@
 			"memory",
 			"cpu",
 			"temperature"
+		]
+	},
+	"group/indicators": {
+		"orientation": "inherit",
+		"drawer": {
+			"children-class": "drawer-hw"
+		},
+		"modules": [
+			"network",
+			"bluetooth",
+			"tray"
 		]
 	},
 	"group/time": {
@@ -108,6 +116,24 @@
 			"critical": 15
 		},
 		"tooltip-format": "{capacity}%\r{timeTo}"
+	},
+	"bluetooth": {
+		"format-device-preference": [
+			""
+		],
+		"format": "󰂯",
+		"format-disabled": "󰂲",
+		"format-connected": "󰂱",
+		"format-no-controller": "󰂲",
+		"on-click": "",
+		"on-click-middle": "",
+		"on-click-right": "",
+		"tooltip-format": "tt",
+		"tooltip-format-disabled": "dis",
+		"tooltip-format-off": "off",
+		"tooltip-format-on": "on",
+		"tooltip-format-connected": "con",
+		"tooltip-format-enumerate-connected": "enum"
 	},
 	"clock": {
 		"actions": {
@@ -192,7 +218,7 @@
 		"show-special": true,
 		"window-rewrite-default": "󰣆",
 		"window-rewrite": {
-			"class<.*(ghostty|kitty|wezterm).*>": "",
+			"class<.*(ghostty|kitty|wezterm)>": "",
 			"class<.*ark>": "󰗄",
 			"class<.*dolphin>": "󰝰",
 			"class<.*gthumb>": "󰋹",

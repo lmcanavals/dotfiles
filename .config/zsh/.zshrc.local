@@ -98,14 +98,14 @@ function prompt_lmcs_setup() {
 	add-zsh-hook precmd prompt_lmcs_precmd
 }
 function prompt_lmcs_precmd() {
-	PS1="$(left_prompt)"
 	if [[ $LCSTARSHIP -eq 0 ]]; then
+		PS1="$(left_prompt)"
 		RPS1="$(right_prompt)"
 	fi
 	set_title ${(%):-"%n@%m:$(cool_folder)"}
 }
 function prompt_lmcs_help() {
-	<<__EOF0__
+	cat <<__EOF0__
 	prompt lmcs
 
 		My prompt it's super cool and uses starship to easily add stuff to the right
@@ -115,7 +115,9 @@ function prompt_lmcs_help() {
 __EOF0__
 }
 function zle-keymap-select() {
-	PROMPT="$(left_prompt)"
+	if [[ $LCSTARSHIP -eq 0 ]]; then
+		PROMPT="$(left_prompt)"
+	fi
 	() { return $__prompt_status }
 	zle reset-prompt
 }

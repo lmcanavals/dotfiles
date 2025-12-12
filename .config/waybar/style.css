@@ -43,7 +43,7 @@ tooltip label {
 }
 
 window#waybar {
-	background: none;
+	background: alpha(@bg_main, .25);
 	font-family: monospace, sans-serif;
 	font-size: 1.25em;
 }
@@ -52,17 +52,15 @@ window#waybar.hidden {
 }
 
 button,
-#audio,
 #custom-updates,
 #disk,
-#hardware,
 #idle_inhibitor,
 #keyboard-state,
 #mpris,
 #network,
-#submap,
-#time,
 #tray,
+#bluetooth,
+#submap,
 #window {
 	border: none;
 	box-shadow: .1em .05em .1em @box_shadow;
@@ -70,22 +68,51 @@ button,
 	background-color: @bg_widget;
 	border-radius: .25em;
 	margin: .15em .25em;
-	padding: 0 .75em;
+	padding: 0 .5em;
 }
 
-#clock {
-	margin-left: 1em;
-}
-
+#custom-binary_clock,
 #backlight,
+#battery,
+#bluetooth,
+#clock,
 #cpu,
 #language,
 #memory,
+#network,
+#pulseaudio,
 #temperature,
+#tray,
 #wireplumber {
-	margin-right: 1em;
+	border: none;
+	color: @fg_widget;
+	background-color: @bg_widget_group;
+	border-radius: .25em;
+	padding: 0 .5em;
+	margin: 0 0 0 .25em;
 }
 
+#custom-binary_clock,
+#battery,
+#network,
+#pulseaudio {
+	margin: 0;
+}
+
+#audio,
+#hardware,
+#indicators,
+#time {
+	border: none;
+	box-shadow: .1em .05em .1em @box_shadow;
+	color: @fg_widget;
+	background-color: @bg_widget_group;
+	border-radius: .25em;
+	padding: 0;
+	margin: .15em .25em;
+}
+
+#battery.critical,
 #battery.low {
 	color: @alert;
 }
@@ -105,8 +132,14 @@ button,
 	color: @fg_widget;
 }
 
-#network.disconnected {
+#bluetooth.disabled,
+#bluetooth.off,
+#network.disabled {
 	color: @fg_dimmed;
+}
+
+#network.disconnected {
+	color: @fg_atention;
 }
 
 #tray > .needs-attention {

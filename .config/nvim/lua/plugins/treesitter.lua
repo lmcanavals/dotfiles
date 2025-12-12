@@ -7,6 +7,7 @@ return {
 				-- "c",
 				"cpp",
 				"css",
+				"fish",
 				"go",
 				-- "html",
 				"hyprlang",
