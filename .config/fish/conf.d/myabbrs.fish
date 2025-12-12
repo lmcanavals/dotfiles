@@ -1,0 +1,33 @@
+if status is-interactive
+    abbr -a --position anywhere -- c '| wl-copy'
+    abbr -a --position anywhere -- f '| fzf'
+    abbr -a --position anywhere -- j "| jq -r '.[].name'"
+    abbr -a --set-cursor='%' -- gc ' git commit -a -m "%"'
+    abbr -a -- cc ' clang -std=c23 -o prog.app -g'
+    abbr -a -- cx ' clang++ -std=c++23 -o prog.app -g'
+    abbr -a -- d ' GIT_DIR=$HOME/.dotfiles.git GIT_WORK_TREE=$HOME'
+    abbr -a -- ga ' git add .'
+    abbr -a -- gd ' git difftool'
+    abbr -a -- gp ' git push'
+    abbr -a -- gl ' git pull'
+    abbr -a -- gr ' git restore'
+    abbr -a -- grm ' git rm --cached'
+    abbr -a -- gs ' git status -u'
+    abbr -a -- n ' nvim'
+    abbr -a -- p ' ps -e f'
+    abbr -a -- qd ' pacman -Qdt'
+    abbr -a -- qe ' pacman -Qet'
+    abbr -a -- qi ' pacman -Qi'
+    abbr -a -- ql ' pacman -Ql'
+    abbr -a -- qm ' pacman -Qm'
+    abbr -a -- qo ' pacman -Qo'
+    abbr -a -- qs ' pacman -Qs'
+    abbr -a -- rs 'sudo pacman -Rncs'
+    abbr -a -- s 'sudo pacman -S'
+    abbr -a -- sc ' sudo pacman -Sc'
+    abbr -a -- si ' pacman -Si'
+    abbr -a -- ss ' pacman -Ss'
+    abbr -a -- sy 'sudo pacman -Syu'
+end
+
+# vim: set ts=4 sw=4 et sts=4:
