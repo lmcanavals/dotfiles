@@ -9,6 +9,8 @@ CopyFile /etc/greetd/regreet.toml
 CopyFile /etc/issue
 CopyFile /etc/locale.conf
 CreateLink /etc/localtime /usr/share/zoneinfo/America/Lima
+CopyFile /etc/makepkg.conf
+CopyFile /etc/makepkg.conf.d/fortran.conf
 CopyFile /etc/mkinitcpio.conf
 CopyFile /etc/modprobe.d/v4l2loopback.conf
 CopyFile /etc/modules-load.d/v4l2loopback.conf

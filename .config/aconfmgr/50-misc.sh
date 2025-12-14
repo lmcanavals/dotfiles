@@ -1,6 +1,6 @@
 AddPackage 7zip                  # File archiver for extremely high compression
 AddPackage bat                   # Cat clone with syntax highlighting and git integration
-AddPackage bottom                # A graphical process/system monitor
+AddPackage btop                  # A monitor of system resources, bpytop ported to C++
 AddPackage chafa                 # Image-to-text converter supporting a wide range of symbols and palettes, transparency, animations, etc.
 AddPackage cups                  # OpenPrinting CUPS - daemon package
 AddPackage dust                  # A more intuitive version of du in rust
@@ -54,6 +54,7 @@ AddPackage --foreign yay                  # Yet another yogurt. Pacman wrapper a
 IgnorePackage arch-install-scripts   # Scripts to aid in installing Arch Linux
 IgnorePackage asciinema              # Record and share terminal sessions
 IgnorePackage blender                # A fully integrated 3D graphics creation suite
+IgnorePackage bottom                 # A graphical process/system monitor
 IgnorePackage cheese                 # Take photos and videos with your webcam, with fun graphical effects
 IgnorePackage fastfetch              # A feature-rich and performance oriented neofetch like system information tool
 IgnorePackage gnuplot                # Plotting package which outputs to X11, PostScript, PNG, GIF, and others

@@ -3,6 +3,7 @@ AddPackage amd-ucode       # Microcode update image for AMD CPUs
 AddPackage base            # Minimal package set to define a basic Arch Linux installation
 AddPackage dosfstools      # DOS filesystem utilities
 AddPackage efibootmgr      # Linux user-space application to modify the EFI Boot Manager
+AddPackage fish            # Smart and user friendly shell intended mostly for interactive use
 AddPackage gptfdisk        # A text-mode partitioning tool that works on GUID Partition Table (GPT) disks
 AddPackage grml-zsh-config # grml's zsh setup
 AddPackage haveged         # Entropy harvesting daemon using CPU timings
