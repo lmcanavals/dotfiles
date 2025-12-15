@@ -1,3 +1,36 @@
+# Clang stuff
+set -gx CC /usr/bin/clang
+set -gx CXX '/usr/bin/clang++'
+
+# Go stuff
+if test -d /usr/local/go/bin
+    fish_add_path $GOPATH_BIN
+end
+
+if test -d "$HOME/.local/share/go"
+    set -gx GOPATH "$HOME/.local/share/go"
+end
+
+# Java stuff
+if test -d /opt/java
+    set -gx JAVA_HOME /opt/java
+    set -gx CLASSPATH "$JAVA_HOME/lib"
+    fish_add_path "$JAVA_HOME/bin"
+end
+
+# Maven
+if test -d /opt/maven
+    set -gx M2_HOME /opt/maven
+    set -gx M2 "$M2_HOME/bin"
+    set -gx MAVEN_OPTS "-Xms256m -Xmx512m"
+    fish_add_path $M2
+end
+
+# Local bin
+if test -d "$HOME/.local/bin"
+    fish_add_path "$HOME/.local/bin"
+end
+
 if status is-interactive
     # Commands to run in interactive sessions can go here
     set -gx LCLR (cat $XDG_CONFIG_HOME/lmcscolors | string collect)

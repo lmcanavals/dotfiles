@@ -201,7 +201,7 @@ source <(fzf --zsh)
 # various workarounds and utilities
 #
 _get_job_command() {
-		jobs -l %% | sed -e 's/.*suspended *\(.*\)/\1/'
+		jobs -l $1 | sed -e 's/.*suspended *\(.*\)/\1/'
 }
 fg() {
     if [[ -n "$1" ]]; then

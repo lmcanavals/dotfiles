@@ -11,5 +11,6 @@ export NO_AT_BRIDGE=1
 #export QT_QPA_PLATFORMTHEME=qt5ct
 
 #xset -b
+. "$HOME/.cargo/env"
 
 # vim: set ts=2:sw=2:noet:sts=2:
