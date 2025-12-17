@@ -14,6 +14,7 @@ AddPackage fcitx5-configtool               # Configuration Tool for Fcitx5
 AddPackage fcitx5-gtk                      # Fcitx5 gtk im module and glib based dbus client library
 AddPackage fcitx5-qt                       # Fcitx5 Qt Library (Qt5 & Qt6 integrations)
 AddPackage ffmpegthumbnailer               # Lightweight video thumbnailer that can be used by file managers
+AddPackage fuzzel                          # Application launcher for wlroots based Wayland compositors
 AddPackage ghostty                         # Fast, native, feature-rich terminal emulator pushing modern features
 AddPackage gnome-themes-extra              # Extra GNOME themes (legacy HighContrast icon theme and index files for Adwaita)
 AddPackage greetd                          # Generic greeter daemon
@@ -65,7 +66,6 @@ AddPackage wev                             # A tool for debugging wayland events
 AddPackage wf-recorder                     # Screen recorder for wlroots-based compositors such as sway
 AddPackage wl-clipboard                    # Command-line copy/paste utilities for Wayland
 AddPackage woff2-font-awesome              # Iconic font designed for Bootstrap - woff2 format
-AddPackage wofi                            # launcher for wlroots-based wayland compositors
 AddPackage wtype                           # xdotool type for wayland
 AddPackage xdg-desktop-portal              # Desktop integration portals for sandboxed apps
 AddPackage xdg-desktop-portal-hyprland     # xdg-desktop-portal backend for hyprland

@@ -70,6 +70,7 @@ IgnorePackage openmp                 # LLVM OpenMP Runtime Library
 IgnorePackage qpwgraph               # PipeWire Graph Qt GUI Interface
 IgnorePackage ruby-erb               # An easy to use but powerful templating system for Ruby
 IgnorePackage thunderbird            # Standalone mail and news reader from mozilla.org
+IgnorePackage wofi                   # launcher for wlroots-based wayland compositors
 IgnorePackage xorg-server            # Xorg X server
 IgnorePackage xournalpp              # Handwriting notetaking software with PDF annotation support
 

@@ -9,9 +9,11 @@ wofoji() {
 		curl $jsoji | jq -r 'to_entries[] | "\(.key) \(.value | join(" "))"' >$cacheji
 	fi
 
-	local emoji=$(wofi -p "🦃 emojis" -iIS dmenu <$cacheji | awk '{printf "%s", $1}')
+	local emoji=$(fuzzel --placeholder "🦃 emojis" --dmenu <$cacheji | awk '{printf "%s", $1}')
 	wl-copy "$emoji"
-	wtype "$emoji"
+	wl-copy -p "emoji"
+	# simulating a paste because directly wtyping doesn't work on chromium based stuff
+	wtype -M shift -k Insert -m shift
 }
 
 wofoji
