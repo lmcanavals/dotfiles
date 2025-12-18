@@ -10,7 +10,7 @@ function fish_greeting --description 'The fish greeting'
         end
         chafa "$banner"
     else
-        echo "Come fishy fishy fishy! ><O>"
+        cat /etc/motd
     end
 end
 

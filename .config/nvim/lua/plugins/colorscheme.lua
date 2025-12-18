@@ -4,9 +4,12 @@ return {
 		"folke/tokyonight.nvim",
 		opts = {
 			style = "night",
+			transparent = true,
 			---@param hl tokyonight.Highlights
 			---@param c ColorScheme
 			on_highlights = function(hl, c)
+				hl.BufferLineBackground = { bold = true, italic = true, fg = c.comment }
+				hl.BufferLineBufferVisible = { bold = true, italic = true, fg = c.purple }
 				hl.CursorLineNr = { bold = true, italic = true, fg = c.orange }
 				hl.DiagnosticError = { bold = true, italic = true, fg = c.error }
 				hl.DiagnosticWarn = { bold = true, italic = true, fg = c.warning }

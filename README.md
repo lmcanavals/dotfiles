@@ -62,7 +62,8 @@ btrfs subvolume create Documents
 
 ### Mounting it all
 
-It's recommended to have the `efi` partition on `/boot` to allow systemd-boot to work
+It's recommended to have the `efi` partition on `/boot` to allow systemd-boot
+to work
 
 ```sh
 mount /dev/$part2 /mnt

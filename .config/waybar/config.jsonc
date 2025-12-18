@@ -221,7 +221,7 @@
 			"class<.*(ghostty|kitty|wezterm)>": "",
 			"class<.*ark>": "󰗄",
 			"class<.*dolphin>": "󰝰",
-			"class<.*gthumb>": "󰋹",
+			"class<.*(gthumb|swappy)>": "󰋹",
 			"class<[Bb]rave-browser.*>": "󰄛",
 			"class<firefox>": "",
 			"class<thunderbird>": "",
