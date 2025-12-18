@@ -1,6 +1,14 @@
 function fish_greeting --description 'The fish greeting'
     if test "$TERM" != linux
-        chafa .face
+        set -l artwork_dir "$XDG_DATA_HOME/artwork/"
+        set -l banner "$artwork_dir/archbanner.png"
+        set -l url "https://archlinux.org/static/logos/archlinux-logo-light-90dpi.png"
+        if not test -f $banner
+            mkdir -p "$artwork_dir"
+            curl -o "$banner" $url &>/dev/null
+            clear
+        end
+        chafa "$banner"
     else
         echo "Come fishy fishy fishy! ><O>"
     end

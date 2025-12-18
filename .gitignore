@@ -163,6 +163,7 @@ rust.sh
 .local/share/QtProject/
 .local/share/Trash/
 .local/share/ark/
+.local/share/artwork/
 .local/share/backgrounds/
 .local/share/flatpak/
 .local/share/font-manager/
