@@ -6,10 +6,9 @@ return {
 				sections = {
 					{
 						section = "terminal",
-						cmd = "cat ~/.config/logaso; sleep .1",
-						random = 10,
+						-- iosevka width to height ratio is 10/24 so 50x21 grid is almost square
+						cmd = "chafa $XDG_DATA_HOME/artwork/corplogo.png -f symbols -s 50x21 --stretch; sleep .1",
 						height = 21,
-						width = 44,
 					},
 					{
 						pane = 2,
