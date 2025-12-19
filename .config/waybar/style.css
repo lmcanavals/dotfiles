@@ -89,7 +89,7 @@ button,
 	background: none;
 	border-radius: .25em;
 	padding: 0 .5em;
-	margin: 0 0 0 .25em;
+	margin: 0 .25em 0 0;
 }
 
 #custom-binary_clock,

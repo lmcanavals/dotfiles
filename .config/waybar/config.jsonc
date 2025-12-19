@@ -17,7 +17,8 @@
 	"group/audio": {
 		"orientation": "inherit",
 		"drawer": {
-			"children-class": "drawer-hw"
+			"children-class": "drawer-hw",
+			"transition-left-to-right": false
 		},
 		"modules": [
 			"pulseaudio",
@@ -28,7 +29,8 @@
 	"group/hardware": {
 		"orientation": "inherit",
 		"drawer": {
-			"children-class": "drawer-hw"
+			"children-class": "drawer-hw",
+			"transition-left-to-right": false
 		},
 		"modules": [
 			"battery",
@@ -42,7 +44,8 @@
 	"group/indicators": {
 		"orientation": "inherit",
 		"drawer": {
-			"children-class": "drawer-hw"
+			"children-class": "drawer-hw",
+			"transition-left-to-right": false
 		},
 		"modules": [
 			"network",
@@ -53,7 +56,8 @@
 	"group/time": {
 		"orientation": "inherit",
 		"drawer": {
-			"children-class": "drawer-time"
+			"children-class": "drawer-time",
+			"transition-left-to-right": false
 		},
 		"modules": [
 			"custom/binary_clock",
@@ -109,7 +113,7 @@
 			]
 		},
 		"format-time": "{H} hours {M} minutes",
-		"full-at": 98,
+		"full-at": 95,
 		"states": {
 			"good": 75,
 			"low": 45,
@@ -363,7 +367,7 @@
 		"tooltip-format": "Output: {volume:3}% {node_name}"
 	},
 	"wireplumber#source": {
-		"format": "{format_source}{icon}",
+		"format": "󰍬{icon}",
 		"format-icons": {
 			"default": [
 				"",
@@ -380,9 +384,7 @@
 			]
 		},
 		"node-type": "Audio/Source",
-		"format-muted": "{format_source}",
-		"format-source": "󰍬",
-		"format-source-muted": "󰍭",
+		"format-muted": "󰍭",
 		"on-click": "localvolbri.zsh mic_mute",
 		"on-scroll-down": "localvolbri.zsh mic_down",
 		"on-scroll-up": "localvolbri.zsh mic_up",
