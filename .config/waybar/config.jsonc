@@ -80,7 +80,6 @@
 		"tooltip-format": "{icon} {percent}%"
 	},
 	"battery": {
-		"format-full": "",
 		"format-alt": "{icon} {capacity}%",
 		"format": "{icon}",
 		"format-critical": "󱃍 {capacity}%",
@@ -110,7 +109,8 @@
 				"󰂁",
 				"󰂂",
 				"󰁹"
-			]
+			],
+			"plugged": ""
 		},
 		"format-time": "{H} hours {M} minutes",
 		"full-at": 95,
