@@ -21,12 +21,12 @@ do_the_thing() {
 			if (($? == 0)); then
 				local thumbnail_name="/tmp/${filename:t:r}.jpg"
 				ffmpegthumbnailer -i "$filename" -o "$thumbnail_name" 2>/dev/null
-				notify-send -i "$thumbnail_name" "Video saved" "$filename"
+				fyi -i "$thumbnail_name" "Video saved" "$filename"
 			else
-				notify-send -i camera "Screen recorder" "Nothing to stop."
+				fyi -i camera "Screen recorder" "Nothing to stop."
 			fi
 		else
-			notify-send -i camera "Screen recorder" "No recording in progress."
+			fyi -i camera "Screen recorder" "No recording in progress."
 		fi
 		return 0
 	fi
@@ -49,8 +49,7 @@ do_the_thing() {
 
 	print -r "$! $filename" >$recinfo
 
-	notify-send \
-		-i camera "Screen recorder" "Recording $filename\nTo stop run '$ZSH_ARGZERO -s'"
+	fyi -i camera "Screen recorder" "Recording $filename\nTo stop run '$ZSH_ARGZERO -s'"
 }
 
 do_the_thing "$@"

@@ -73,7 +73,7 @@ lmcsshot() {
 		slurp_result=$(hyprctl activewindow -j |
 			jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"' 2>/dev/null)
 		if [[ -z "$slurp_result" ]]; then
-			notify-send -i image "Screenshot error" "No active window found for capture."
+			fyi -i image "Screenshot error" "No active window found for capture."
 			return 1
 		fi
 		options+=("-g")
@@ -106,7 +106,7 @@ lmcsshot() {
 		title="Screenshot loaded to clipboard and..."
 		wl-copy < $filename
 	fi
-	notify-send -i "$thumbnail" $title "Saved to $filename"
+	fyi -i "$thumbnail" $title "Saved to $filename"
 }
 
 lmcsshot "$@"
