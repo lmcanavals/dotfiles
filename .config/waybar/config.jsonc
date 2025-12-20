@@ -6,7 +6,8 @@
 	],
 	"modules-center": [
 		"custom/updates",
-		"group/time"
+		"group/time",
+		"mpris"
 	],
 	"modules-right": [
 		"group/hardware",
@@ -110,6 +111,7 @@
 				"󰂂",
 				"󰁹"
 			],
+			"full": "",
 			"plugged": ""
 		},
 		"format-time": "{H} hours {M} minutes",
@@ -189,9 +191,9 @@
 	},
 	"hyprland/language": {
 		"format": "󰌌 {}",
-		"format-en-altgr-intl": "EN(altgr-intl)",
-		"format-en-intl": "EN(intl)",
-		"format-es": "ES(latam)"
+		"format-en-altgr-intl": "EN<sub>altgr-intl</sub>",
+		"format-en-intl": "EN<sub>intl</sub>",
+		"format-es": "ES<sub>la</sub>"
 	},
 	"hyprland/submap": {
 		"format": "{}",
@@ -272,6 +274,23 @@
 			"󰫈"
 		],
 		"tooltip-format": "RAM:\t{percentage}%\t{used:0.2f}/{total:0.2f}GB\nSWAP:\t{swapPercentage}%\t{swapUsed:0.2f}/{swapTotal:0.2f}GB"
+	},
+	"mpris": {
+		"format": "{player_icon} {title} - {artist}",
+		"format-paused": "{status_icon} {title} - {artist}",
+		"on-click": "localvolbri.zsh play_pause",
+		"on-click-middle": "localvolbri.zsh prev_track",
+		"on-click-right": "localvolbri.zsh next_track",
+		"player-icons": {
+			"default": "󰓃",
+			"vivaldi": ""
+		},
+		"status-icons": {
+			"paused": "",
+			"playing": "",
+			"stopped": ""
+		},
+		"tooltip-format": "Status:\t{player} {status}\nTitle:\t{title}\nArtist:\t{artist}\nAlbum:\t{album}\nTime:\t{position}/{length}"
 	},
 	"network": {
 		"format": "{icon} {essid}",

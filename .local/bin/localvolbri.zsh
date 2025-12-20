@@ -94,7 +94,7 @@ function show_music_notif {
 		local album_art=$(get_album_art)
 	fi
 	if [[ -n "$song_album" ]]; then
-		song_album="<br><b>song_album</b>"
+		song_album="<br><b>$song_album</b>"
 	fi
 
 	fyi --hint=string:x-dunst-stack-tag:music_notif \

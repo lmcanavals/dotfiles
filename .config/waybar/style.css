@@ -125,6 +125,15 @@ button,
 	animation-timing-function: linear;
 }
 
+#bluetooth.disabled,
+#bluetooth.off,
+#network.disabled {
+	color: @fg_dimmed;
+}
+#network.disconnected {
+	color: @fg_atention;
+}
+
 #keyboard-state > label {
 	color: @fg_dimmed;
 }
@@ -132,13 +141,10 @@ button,
 	color: @fg_widget;
 }
 
-#bluetooth.disabled,
-#bluetooth.off,
-#network.disabled {
+#mpris.paused {
 	color: @fg_dimmed;
 }
-
-#network.disconnected {
+#mpris.stopped {
 	color: @fg_atention;
 }
 
