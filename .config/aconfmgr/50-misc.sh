@@ -7,6 +7,7 @@ AddPackage dust                  # A more intuitive version of du in rust
 AddPackage eza                   # A modern replacement for ls (community fork of exa)
 AddPackage fd                    # Simple, fast and user-friendly alternative to find
 AddPackage font-manager          # A simple font management application for GTK+ Desktop Environments
+AddPackage fyi                   # A command line utility and notify-send alternative to send desktop notifications
 AddPackage fzf                   # Command-line fuzzy finder
 AddPackage gphoto2               # A digital camera download and access program.
 AddPackage gthumb                # Image browser and viewer for the GNOME Desktop
@@ -59,6 +60,7 @@ IgnorePackage cheese                 # Take photos and videos with your webcam, 
 IgnorePackage fastfetch              # A feature-rich and performance oriented neofetch like system information tool
 IgnorePackage gnuplot                # Plotting package which outputs to X11, PostScript, PNG, GIF, and others
 IgnorePackage go                     # Core compiler tools for the Go programming language
+IgnorePackage hyprwire               # A fast and consistent wire protocol for IPC
 IgnorePackage intel-ucode            # Microcode update image for Intel CPUs
 IgnorePackage krita                  # Edit and paint images
 IgnorePackage lld                    # Linker from the LLVM project
@@ -70,6 +72,7 @@ IgnorePackage openmp                 # LLVM OpenMP Runtime Library
 IgnorePackage qpwgraph               # PipeWire Graph Qt GUI Interface
 IgnorePackage ruby-erb               # An easy to use but powerful templating system for Ruby
 IgnorePackage thunderbird            # Standalone mail and news reader from mozilla.org
+IgnorePackage wl-mirror              # a simple Wayland output mirror client
 IgnorePackage wofi                   # launcher for wlroots-based wayland compositors
 IgnorePackage xorg-server            # Xorg X server
 IgnorePackage xournalpp              # Handwriting notetaking software with PDF annotation support

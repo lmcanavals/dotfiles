@@ -85,10 +85,23 @@ function show_mic_notif {
 }
 
 function show_music_notif {
+	local ready=false
+	for ((i = 1; i <= 15; i++)); do
+		status=$(playerctl status 2>/dev/null)
+		if [ "$status" != "Stopped" ] && [ -n "$status" ]; then
+			ready=true
+			break
+		fi
+		sleep 0.1
+	done
+	local album_art="music"
+	if not $ready; then
+		fyi --hint=string:x-dunst-stack-tag:music_notif -i \
+			"$album_art" -t $notification_timeout "Playerctl" "isn't ready"
+	fi
 	local song_title=$(playerctl -f "{{title}}" metadata)
 	local song_artist=$(playerctl -f "{{artist}}" metadata)
 	local song_album=$(playerctl -f "{{album}}" metadata)
-	local album_art="music"
 
 	if [[ $show_album_art == "true" ]]; then
 		local album_art=$(get_album_art)
@@ -156,12 +169,12 @@ function volbri() {
 	case $1 in
 	next_track)
 		playerctl next
-		sleep 0.5 && show_music_notif
+		show_music_notif
 		;;
 
 	prev_track)
 		playerctl previous
-		sleep 0.5 && show_music_notif
+		show_music_notif
 		;;
 
 	play_pause)
