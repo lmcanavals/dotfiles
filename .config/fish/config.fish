@@ -33,7 +33,7 @@ end
 
 if status is-interactive
     # Commands to run in interactive sessions can go here
-    set -gx LCLR (cat $XDG_CONFIG_HOME/lmcscolors | string collect)
+    set -gx LCLR (cat ~/.config/lmcscolors | string collect)
 
     if test "$TERM" = linux
         echo -en "\e]P0"(string sub -l 6 -s 2 "$LCLR")
