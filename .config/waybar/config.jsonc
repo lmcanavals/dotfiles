@@ -224,7 +224,7 @@
 		"show-special": true,
 		"window-rewrite-default": "󰣆",
 		"window-rewrite": {
-			"class<.*(ghostty|kitty|wezterm)>": "",
+			"class<.*(foot|ghostty|kitty|wezterm)>": "",
 			"class<.*ark>": "󰗄",
 			"class<.*dolphin>": "󰝰",
 			"class<.*(gthumb|swappy)>": "󰋹",

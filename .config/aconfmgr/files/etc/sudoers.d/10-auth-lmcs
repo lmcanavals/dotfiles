@@ -1,0 +1,3 @@
+# Authorization for lmcs requiring password
+lmcs ALL= ALL
+

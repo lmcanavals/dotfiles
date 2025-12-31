@@ -56,11 +56,10 @@ IgnorePackage arch-install-scripts   # Scripts to aid in installing Arch Linux
 IgnorePackage asciinema              # Record and share terminal sessions
 IgnorePackage blender                # A fully integrated 3D graphics creation suite
 IgnorePackage bottom                 # A graphical process/system monitor
-IgnorePackage cheese                 # Take photos and videos with your webcam, with fun graphical effects
 IgnorePackage fastfetch              # A feature-rich and performance oriented neofetch like system information tool
+IgnorePackage foot                   # Fast, lightweight, and minimalistic Wayland terminal emulator
 IgnorePackage gnuplot                # Plotting package which outputs to X11, PostScript, PNG, GIF, and others
 IgnorePackage go                     # Core compiler tools for the Go programming language
-IgnorePackage hyprwire               # A fast and consistent wire protocol for IPC
 IgnorePackage intel-ucode            # Microcode update image for Intel CPUs
 IgnorePackage krita                  # Edit and paint images
 IgnorePackage lld                    # Linker from the LLVM project

@@ -10,8 +10,8 @@ vt = 1
 # with whatever you want started, such as `sway`.
 #command = "agreety --cmd /bin/sh"
 #command = "agreety --cmd /usr/bin/startx"
-#command = "agreety --cmd /usr/bin/Hyprland"
-command = "Hyprland --config /etc/greetd/hyprland.conf"
+#command = "agreety --cmd /usr/bin/start-hyprland"
+command = "start-hyprland -- --config /etc/greetd/hyprland.conf"
 
 # The user to run the command as. The privileges this user must have depends
 # on the greeter. A graphical greeter may for example require the user to be

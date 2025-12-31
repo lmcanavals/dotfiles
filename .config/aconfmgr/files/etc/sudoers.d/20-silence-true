@@ -1,0 +1,3 @@
+# Starship sudo probe: Disable logging for the 'true' command
+Defaults!/usr/bin/true !syslog, !pam_setcred
+
