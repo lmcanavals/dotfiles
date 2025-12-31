@@ -6,8 +6,8 @@ return {
 				sections = {
 					{
 						section = "terminal",
-						-- iosevka width to height ratio is 10/24 so 50x21 grid is almost square
-						cmd = "chafa $XDG_DATA_HOME/artwork/corplogo.png -f symbols -s 50x21 --stretch; sleep .1",
+						-- iosevka width to height ratio is 9/24 so 56x21 grid is nice square
+						cmd = "chafa $XDG_DATA_HOME/artwork/corplogo.png -f symbols -s 56x21 --stretch; sleep .1",
 						height = 21,
 					},
 					{

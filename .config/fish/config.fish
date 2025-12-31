@@ -80,7 +80,8 @@ if status is-interactive
         set -gx BAT_THEME tokyonight_night
     end
 
-    fish_vi_key_bindings
+    set --global fish_key_bindings fish_vi_key_bindings
+    fish_config theme choose "TokyoNight Night"
     starship init fish | source
     fzf --fish | source
 end

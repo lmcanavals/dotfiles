@@ -16,6 +16,8 @@ CopyFile /etc/modprobe.d/v4l2loopback.conf
 CopyFile /etc/modules-load.d/v4l2loopback.conf
 CopyFile /etc/motd
 CopyFile /etc/pacman.conf
+CopyFile /etc/sudoers.d/10-auth-lmcs 440
+CopyFile /etc/sudoers.d/20-silence-true 440
 CopyFile /etc/vconsole.conf
 CopyFile /var/lib/AccountsService/icons/lmcs.png
 CopyFile /var/lib/AccountsService/users/lmcs 600
