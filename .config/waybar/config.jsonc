@@ -200,6 +200,8 @@
 		"tooltip": false
 	},
 	"hyprland/window": {
+		"icon": true,
+		"max-length": 1,
 		"rewrite": {
 			"(.*) — (.*)": "$1",
 			"(.*) and \\d+ more page(.*)": "$1",
@@ -290,6 +292,8 @@
 			"playing": "",
 			"stopped": ""
 		},
+		"artist-len": 20,
+		"title-len": 30,
 		"tooltip-format": "Status:\t{player} {status}\nTitle:\t{title}\nArtist:\t{artist}\nAlbum:\t{album}\nTime:\t{position}/{length}"
 	},
 	"network": {
