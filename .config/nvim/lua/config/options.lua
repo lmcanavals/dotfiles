@@ -55,3 +55,6 @@ opt.listchars = {
 	precedes = "«",
 	nbsp = "§",
 }
+
+vim.g.lazyvim_python_lsp = "ty"
+vim.g.lazyvim_python_ruff = "ruff"
