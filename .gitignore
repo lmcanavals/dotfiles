@@ -58,6 +58,8 @@ rust.sh
 
 .android/
 .antigravity/
+.archi/
+.arduino15/
 .bundle/
 .cache/
 .cargo/
