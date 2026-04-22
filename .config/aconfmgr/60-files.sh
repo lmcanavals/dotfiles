@@ -22,7 +22,6 @@ CopyFile /var/lib/AccountsService/users/lmcs 600
 
 CreateLink /etc/localtime /usr/share/zoneinfo/America/Lima
 
-SetFileProperty /boot mode 755
 SetFileProperty /boot/amd-ucode.img mode 700
 SetFileProperty /boot/loader mode 700
 SetFileProperty /boot/loader/entries mode 700

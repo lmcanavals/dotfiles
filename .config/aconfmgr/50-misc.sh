@@ -53,6 +53,7 @@ AddPackage --foreign yay                  # Yet another yogurt. Pacman wrapper a
 
 # packages we should ignore
 IgnorePackage arch-install-scripts   # Scripts to aid in installing Arch Linux
+IgnorePackage arduino-cli            # Arduino command line interface
 IgnorePackage asciinema              # Record and share terminal sessions
 IgnorePackage blender                # A fully integrated 3D graphics creation suite
 IgnorePackage bottom                 # A graphical process/system monitor
