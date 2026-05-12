@@ -168,6 +168,7 @@ rust.sh
 .local/share/ark/
 .local/share/artwork/
 .local/share/backgrounds/
+.local/share/containers/
 .local/share/flatpak/
 .local/share/font-manager/
 .local/share/fonts/
