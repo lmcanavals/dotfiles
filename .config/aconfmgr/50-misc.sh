@@ -52,6 +52,7 @@ AddPackage --foreign rose-pine-hyprcursor # None
 AddPackage --foreign yay                  # Yet another yogurt. Pacman wrapper and AUR helper written in go.
 
 # packages we should ignore
+IgnorePackage guvcview               # Simple GTK+ interface for capturing and viewing video from v4l2 devices
 IgnorePackage arch-install-scripts   # Scripts to aid in installing Arch Linux
 IgnorePackage arduino-cli            # Arduino command line interface
 IgnorePackage asciinema              # Record and share terminal sessions
