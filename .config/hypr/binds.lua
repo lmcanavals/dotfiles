@@ -29,8 +29,6 @@ local rec = "Record: 󰬺 󰍹 ┃ 󰬻 󰩭 | 󰬼 "
 local power = "Session: 󰬺  ┃ 󰬻 󰍃 ┃ 󰬼 󰒲 ┃ 󰬽 󰤄 ┃ 󰬾 󰜉 ┃ 󰬿 󰐥"
 local window = "Move or resize (󰘶): 󰞗 ┃ 󰞖 ┃ 󰞙 ┃ 󰞘"
 
-hl.dispatch(hl.dsp.submap("reset"))
-
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("killall -SIGUSR1 waybar"))
 hl.bind(mainMod .. " + C", hl.dsp.window.close())
