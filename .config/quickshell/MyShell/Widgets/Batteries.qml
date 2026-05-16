@@ -109,7 +109,7 @@ SimpleWidget {
                             break;
                         case 4:
                             // Fully Charged
-                            info += "󱐥";
+                            info += " 󱐥";
                             break;
                         case 3: // Empty
                         case 5: // Pending Charge

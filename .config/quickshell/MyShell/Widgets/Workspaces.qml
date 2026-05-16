@@ -27,7 +27,7 @@ RowLayout {
 
             focused: modelData?.focused ?? false
             text: {
-                const workspaceName = modelData ? modelData.name : "bye";
+                const workspaceName = modelData?.name ?? "bye";
                 return workspaceName.replace(/special:/, "");
             }
 

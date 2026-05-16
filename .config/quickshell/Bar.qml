@@ -37,6 +37,11 @@ PanelWindow {
             anchors.left: osIcon.right
             screen: panel.screen
         }
+        Window {
+            id: window
+
+            anchors.left: workspaces.right
+        }
         TimeDate {
             id: clock
 

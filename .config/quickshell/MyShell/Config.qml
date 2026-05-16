@@ -5,7 +5,7 @@ import Quickshell
 
 Singleton {
     readonly property color background: "#991e1e2e"
-    readonly property string dateFormat: "HH:mm:ss, dddd d of MMMM"
+    readonly property string dateFormat: "ddd, d MMMM HH:mm"
     readonly property color focusedBackground: "#ccfab387"
     readonly property color focusedForeground: "black"
     readonly property color foreground: "white"
@@ -13,7 +13,7 @@ Singleton {
     readonly property color hoverBackground: "gold"
     readonly property color itemBackground: "#88444444"
     readonly property int margin: 5
-    readonly property string osIcon: "  btw"
+    readonly property string osIcon: " btw"
     readonly property int padding: 10
     readonly property color pressedBackground: "crimson"
     readonly property int radius: 5
