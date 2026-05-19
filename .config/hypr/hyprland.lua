@@ -65,7 +65,7 @@ hl.permission({ binary = "/usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland",
 hl.config({
 	general = {
 		gaps_in = 2,
-		gaps_out = 5,
+		gaps_out = 4,
 
 		border_size = 2,
 
