@@ -285,7 +285,7 @@
 		"on-click-right": "localvolbri.zsh next_track",
 		"player-icons": {
 			"default": "󰓃",
-			"vivaldi": ""
+			"vivaldi": ""
 		},
 		"status-icons": {
 			"paused": "",
