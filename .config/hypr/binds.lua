@@ -8,7 +8,7 @@ local srfile = "$HOME/Videos/Screencasts/$(date '+%Y%m%d_%H%M%S_%N').mp4"
 local browser = "xdg-open https://google.com"
 local clipboardTool = 'cliphist list | fuzzel --placeholder="  clipboard" --dmenu | cliphist decode | wl-copy'
 local fileManager = "uwsm-app -- dolphin"
-local localvolbri = "uwsm-app -- localvolbri.zsh"
+local lvolbri = "uwsm-app -- lvolbri"
 local mailClient = "uwsm-app -- thunderbird"
 local menuDrun = 'uwsm-app -- fuzzel --placeholder="󰀻  applications" --show-actions'
 local menuRun = 'fuzzel --placeholder=" _ command" --list-executables-in-path'
@@ -56,7 +56,7 @@ if hl.get_config("general.layout") == "scrolling" then
 end
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd(menuRun))
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("localshot.zsh -f " .. ssfile .. "'swappy -f' -r"))
+hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("lshot -f " .. ssfile .. "'swappy -f' -r"))
 hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.pin({ action = "toggle" }))
 hl.bind(mainMod .. " + SHIFT + X", hl.dsp.window.move({ workspace = "special:󰯉" }))
 
@@ -67,7 +67,7 @@ hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
 
 hl.bind(mainMod .. " + escape", hl.dsp.submap("reset"), { submap_universal = true })
-hl.bind(mainMod .. " + period", hl.dsp.exec_cmd("uwsm-app -- localemojis.zsh"))
+hl.bind(mainMod .. " + period", hl.dsp.exec_cmd("uwsm-app -- lmojis"))
 hl.bind(mainMod .. " + tab", hl.dsp.exec_cmd(fyi .. " Missing Win+Tab"))
 hl.bind("ALT + CTRL + tab", hl.dsp.exec_cmd(fyi .. " Missing Alt+Ctrl+Tab"))
 
@@ -97,24 +97,20 @@ hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Laptop multimedia keys for volume and LCD brightness
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(localvolbri .. " volume_up"), { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(localvolbri .. " volume_down"), { locked = true, repeating = true })
-hl.bind("XF86AudioMute", hl.dsp.exec_cmd(localvolbri .. " volume_mute"), { locked = true, repeating = true })
-hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd(localvolbri .. " mic_mute"), { locked = true, repeating = true })
-hl.bind(
-	"XF86MonBrightnessDown",
-	hl.dsp.exec_cmd(localvolbri .. " brightness_down"),
-	{ locked = true, repeating = true }
-)
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(localvolbri .. " brightness_up"), { locked = true, repeating = true })
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(lvolbri .. " volume_up"), { locked = true, repeating = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(lvolbri .. " volume_down"), { locked = true, repeating = true })
+hl.bind("XF86AudioMute", hl.dsp.exec_cmd(lvolbri .. " volume_mute"), { locked = true, repeating = true })
+hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd(lvolbri .. " mic_mute"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(lvolbri .. " brightness_down"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(lvolbri .. " brightness_up"), { locked = true, repeating = true })
 
 -- Requires playerctl
-hl.bind("XF86AudioNext", hl.dsp.exec_cmd(localvolbri .. " next_track"), { locked = true })
-hl.bind("XF86AudioPause", hl.dsp.exec_cmd(localvolbri .. " play_pause"), { locked = true })
-hl.bind("XF86AudioPlay", hl.dsp.exec_cmd(localvolbri .. " play_pause"), { locked = true })
--- hl.bind("XF86AudioPlayPause", hl.dsp.exec_cmd(localvolbri .. " play_pause"), { locked = true })
-hl.bind("XF86AudioPrev", hl.dsp.exec_cmd(localvolbri .. " prev_track"), { locked = true })
-hl.bind("XF86AudioStop", hl.dsp.exec_cmd(localvolbri .. " play_stop"), { locked = true })
+hl.bind("XF86AudioNext", hl.dsp.exec_cmd(lvolbri .. " next_track"), { locked = true })
+hl.bind("XF86AudioPause", hl.dsp.exec_cmd(lvolbri .. " play_pause"), { locked = true })
+hl.bind("XF86AudioPlay", hl.dsp.exec_cmd(lvolbri .. " play_pause"), { locked = true })
+-- hl.bind("XF86AudioPlayPause", hl.dsp.exec_cmd(lvolbri .. " play_pause"), { locked = true })
+hl.bind("XF86AudioPrev", hl.dsp.exec_cmd(lvolbri .. " prev_track"), { locked = true })
+hl.bind("XF86AudioStop", hl.dsp.exec_cmd(lvolbri .. " play_stop"), { locked = true })
 
 -- Other special keys
 hl.bind("Print", hl.dsp.submap(grab), { locked = true })
@@ -146,31 +142,31 @@ hl.define_submap(grab, function()
 	hl.bind("E", hl.dsp.submap(rec))
 	hl.bind("escape", hl.dsp.submap("reset"))
 	hl.define_submap(swappy, "reset", function()
-		hl.bind("1", hl.dsp.exec_cmd("localshot.zsh -f " .. ssfile .. " -e 'swappy -f'"))
-		hl.bind("2", hl.dsp.exec_cmd("localshot.zsh -f " .. ssfile .. " -e 'swappy -f' -o"))
-		hl.bind("3", hl.dsp.exec_cmd("localshot.zsh -f " .. ssfile .. " -e 'swappy -f' -w"))
-		hl.bind("4", hl.dsp.exec_cmd("localshot.zsh -f " .. ssfile .. " -e 'swappy -f' -r"))
-		hl.bind("SHIFT + 1", hl.dsp.exec_cmd("localshot.zsh -f " .. ssfile .. " -e 'swappy -f' -d 2"))
-		hl.bind("SHIFT + 2", hl.dsp.exec_cmd("localshot.zsh -f " .. ssfile .. " -e 'swappy -f' -d 2 -o"))
-		hl.bind("SHIFT + 3", hl.dsp.exec_cmd("localshot.zsh -f " .. ssfile .. " -e 'swappy -f' -d 2 -w"))
-		hl.bind("SHIFT + 4", hl.dsp.exec_cmd("localshot.zsh -f " .. ssfile .. " -e 'swappy -f' -d 2 -r"))
+		hl.bind("1", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f'"))
+		hl.bind("2", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -o"))
+		hl.bind("3", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -w"))
+		hl.bind("4", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -r"))
+		hl.bind("SHIFT + 1", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -d 2"))
+		hl.bind("SHIFT + 2", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -d 2 -o"))
+		hl.bind("SHIFT + 3", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -d 2 -w"))
+		hl.bind("SHIFT + 4", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -d 2 -r"))
 		hl.bind("escape", hl.dsp.submap("reset"))
 	end)
 	hl.define_submap(save, "reset", function()
-		hl.bind("1", hl.dsp.exec_cmd("localshot.zsh -f " .. ssfile .. " -c"))
-		hl.bind("2", hl.dsp.exec_cmd("localshot.zsh -f " .. ssfile .. " -c -o"))
-		hl.bind("3", hl.dsp.exec_cmd("localshot.zsh -f " .. ssfile .. " -c -w"))
-		hl.bind("4", hl.dsp.exec_cmd("localshot.zsh -f " .. ssfile .. " -c -r"))
-		hl.bind("SHIFT + 1", hl.dsp.exec_cmd("localshot.zsh -f " .. ssfile .. " -c -d 2"))
-		hl.bind("SHIFT + 2", hl.dsp.exec_cmd("localshot.zsh -f " .. ssfile .. " -c -d 2 -o"))
-		hl.bind("SHIFT + 3", hl.dsp.exec_cmd("localshot.zsh -f " .. ssfile .. " -c -d 2 -w"))
-		hl.bind("SHIFT + 4", hl.dsp.exec_cmd("localshot.zsh -f " .. ssfile .. " -c -d 2 -r"))
+		hl.bind("1", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c"))
+		hl.bind("2", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -o"))
+		hl.bind("3", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -w"))
+		hl.bind("4", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -r"))
+		hl.bind("SHIFT + 1", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -d 2"))
+		hl.bind("SHIFT + 2", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -d 2 -o"))
+		hl.bind("SHIFT + 3", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -d 2 -w"))
+		hl.bind("SHIFT + 4", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -d 2 -r"))
 		hl.bind("escape", hl.dsp.submap("reset"))
 	end)
 	hl.define_submap(rec, "reset", function()
-		hl.bind("1", hl.dsp.exec_cmd("localwfrec.zsh -f " .. srfile))
-		hl.bind("2", hl.dsp.exec_cmd("localwfrec.zsh -f " .. srfile .. " -r"))
-		hl.bind("3", hl.dsp.exec_cmd("localwfrec.zsh --stop"))
+		hl.bind("1", hl.dsp.exec_cmd("lwfrec -f " .. srfile))
+		hl.bind("2", hl.dsp.exec_cmd("lwfrec -f " .. srfile .. " -r"))
+		hl.bind("3", hl.dsp.exec_cmd("lwfrec --stop"))
 		hl.bind("escape", hl.dsp.submap("reset"))
 	end)
 end)

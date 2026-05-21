@@ -12,7 +12,7 @@ Singleton {
     Process {
         id: dateProc
 
-        command: ["/home/lmcs/.local/bin/localbaseclock.zsh"]
+        command: ["/home/lmcs/.local/bin/lclock"]
         running: true
 
         stdout: StdioCollector {

@@ -80,7 +80,7 @@ if status is-interactive
         set -gx FISH_THEME "TokyoNight Night"
     end
 
-    localismosh.zsh; and set -gx ISMOSHBRUH yup
+    lismosh; and set -gx ISMOSHBRUH yup
     set --global fish_key_bindings fish_vi_key_bindings
     fish_config theme choose "$FISH_THEME"
     starship init fish | source
