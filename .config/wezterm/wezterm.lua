@@ -5,10 +5,18 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 -- color theme stuff
-config.color_scheme = "Tokyo Night Moon"
-config.set_environment_variables = {
-	LCTHEME = "dark", -- set it to have apps match the theme light or dark
-}
+local has_theme, theme = pcall(require, "theme")
+if has_theme and theme then
+	config.color_scheme = theme.wezterm_scheme
+	config.set_environment_variables = {
+		LCTHEME = theme.light_or_dark,
+	}
+else
+	config.color_scheme = "Tokyo Night Moon"
+	config.set_environment_variables = {
+		LCTHEME = "dark",
+	}
+end
 
 -- background awesome
 local bgfolder = ".local/share/backgrounds/"

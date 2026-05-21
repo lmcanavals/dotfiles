@@ -16,7 +16,7 @@ font-style-bold = SemiBold
 font-style-bold-italic = Bold
 font-style-italic = Italic
 
-theme = TokyoNight Night
+config-file = theme
 
 window-padding-balance = true
 window-show-tab-bar = never

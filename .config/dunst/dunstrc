@@ -21,20 +21,21 @@ transparency = 15
 width = 450
 
 
-[urgency_low]
-background = "#24283baa"
-foreground = "#9ece6a"
-frame_color = "#737aa2aa"
-
-[urgency_normal]
-background = "#24283baa"
-foreground = "#9ece6a"
-frame_color = "#9ece6aaa"
-
-[urgency_critical]
-background = "#394b70aa"
-foreground = "#ff9e64"
-frame_color = "#ff9e64aa"
+# Colors are now managed dynamically via dunstrc.d/colors.conf
+#[urgency_low]
+#background = "#24283baa"
+#foreground = "#9ece6a"
+#frame_color = "#737aa2aa"
+#
+#[urgency_normal]
+#background = "#24283baa"
+#foreground = "#9ece6a"
+#frame_color = "#9ece6aaa"
+#
+#[urgency_critical]
+#background = "#394b70aa"
+#foreground = "#ff9e64"
+#frame_color = "#ff9e64aa"
 
 
 # Every section that isn't one of the above is interpreted as a rules to
