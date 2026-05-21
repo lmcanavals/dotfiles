@@ -1,0 +1,71 @@
+#!/usr/bin/env zsh
+
+# Configuration
+THRESHOLD_LOW=20
+THRESHOLD_CRITICAL=10
+THRESHOLD_FULL=98
+
+# Icons (Nerd Fonts / Font Awesome)
+ICON_PLUGGED=$'\uF0E7'      # 
+ICON_UNPLUGGED=$'\uF242'    # 
+ICON_LOW=$'\uF243'          # 
+ICON_CRITICAL=$'\uF244'     # 
+ICON_FULL=$'\uF240'         # 
+
+# State tracking to prevent spamming
+LAST_LEVEL=-1
+LAST_STATE=""
+LOW_NOTIFIED=false
+CRIT_NOTIFIED=false
+
+function send_battery_notif() {
+	local title=$1
+	local msg=$2
+	local icon=$3
+	local urgency=${4:-normal}
+
+	fyi -u "$urgency" -i "battery" "$icon $title" "$msg"
+}
+
+# Initial check
+function check_battery() {
+	local battery_info=$(upower -i $(upower -e | grep 'BAT'))
+	local percentage=$(echo "$battery_info" | grep -E "percentage" | awk '{print $2}' | tr -d '%')
+	local state=$(echo "$battery_info" | grep -E "state" | awk '{print $2}')
+
+	# Handle State Changes (Plugged/Unplugged)
+	if [[ "$state" != "$LAST_STATE" ]]; then
+		if [[ "$state" == "charging" ]]; then
+			send_battery_notif "Power Connected" "Battery is now charging ($percentage%)" "$ICON_PLUGGED"
+			LOW_NOTIFIED=false
+			CRIT_NOTIFIED=false
+		elif [[ "$state" == "discharging" ]]; then
+			send_battery_notif "Power Disconnected" "Running on battery ($percentage%)" "$ICON_UNPLUGGED"
+		fi
+		LAST_STATE="$state"
+	fi
+
+	# Handle Levels
+	if [[ "$state" == "discharging" ]]; then
+		if (( percentage <= THRESHOLD_CRITICAL )) && [[ "$CRIT_NOTIFIED" == false ]]; then
+			send_battery_notif "CRITICAL BATTERY" "System will hibernate soon! ($percentage%)" "$ICON_CRITICAL" "critical"
+			CRIT_NOTIFIED=true
+		elif (( percentage <= THRESHOLD_LOW )) && [[ "$LOW_NOTIFIED" == false ]]; then
+			send_battery_notif "Low Battery" "Please plug in your charger ($percentage%)" "$ICON_LOW" "normal"
+			LOW_NOTIFIED=true
+		fi
+	elif [[ "$state" == "fully-charged" || ( "$state" == "charging" && percentage >= $THRESHOLD_FULL ) ]]; then
+		if [[ "$LAST_LEVEL" -lt $THRESHOLD_FULL ]]; then
+			send_battery_notif "Battery Full" "You can unplug the charger now." "$ICON_FULL"
+		fi
+	fi
+
+	LAST_LEVEL=$percentage
+}
+
+check_battery
+upower --monitor-detail | while read -r line; do
+	if [[ "$line" =~ "state" || "$line" =~ "percentage" ]]; then
+		check_battery
+	fi
+done

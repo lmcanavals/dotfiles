@@ -3,7 +3,10 @@ return {
 	{
 		"folke/tokyonight.nvim",
 		opts = {
-			style = "night",
+			style = (function()
+				local ok, theme = pcall(require, "config.theme")
+				return (ok and theme and theme.tokyonight_style) or "night"
+			end)(),
 			transparent = true,
 			---@param hl tokyonight.Highlights
 			---@param c ColorScheme

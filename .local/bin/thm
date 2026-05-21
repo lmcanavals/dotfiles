@@ -1,0 +1,432 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+import json
+import argparse
+import subprocess
+
+
+def get_home_path(*parts):
+    return os.path.join(os.path.expanduser("~"), *parts)
+
+
+# Path to the directory where JSON themes are stored
+THEME_DIR = get_home_path(".config", "themes", "definitions")
+
+
+def load_themes():
+    """Dynamically reads all JSON theme files from the definitions folder."""
+    themes = {}
+    if not os.path.exists(THEME_DIR):
+        os.makedirs(THEME_DIR, exist_ok=True)
+        return themes
+
+    for filename in os.listdir(THEME_DIR):
+        if filename.endswith(".json"):
+            theme_id = os.path.splitext(filename)[0]
+            path = os.path.join(THEME_DIR, filename)
+            try:
+                with open(path, "r") as f:
+                    themes[theme_id] = json.load(f)
+            except Exception as e:
+                print(
+                    f"Warning: Failed to parse theme file '{filename}': {e}",
+                    file=sys.stderr,
+                )
+    return themes
+
+
+def write_file(path, content):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w") as f:
+        f.write(content)
+    print(f"Written: {path}")
+
+
+def apply_theme(theme_id, themes):
+    if theme_id not in themes:
+        print(f"Error: Theme '{theme_id}' not found.")
+        sys.exit(1)
+
+    theme = themes[theme_id]
+    c = theme["colors"]
+    print(f"Applying theme: {theme['name']}...")
+
+    # 1. Shell themes (Zsh)
+    zsh_theme_content = f"""# Dynamic theme variables for Zsh
+export LCTHEME="{theme["light_or_dark"]}"
+export BAT_THEME="{theme["bat_theme"]}"
+export FISH_THEME="{theme["fish_theme"]}"
+export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \\
+  --highlight-line \\
+  --info=inline-right \\
+  --ansi \\
+  --layout=reverse \\
+  --border=none \\
+  --color=bg+:#{c["bg_highlight"]} \\
+  --color=bg:#{c["bg"]} \\
+  --color=border:#{c["cyan"]} \\
+  --color=fg:#{c["fg"]} \\
+  --color=gutter:#{c["bg"]} \\
+  --color=header:#{c["orange"]} \\
+  --color=hl+:#{c["blue1"]} \\
+  --color=hl:#{c["blue1"]} \\
+  --color=info:#{c["dark3"]} \\
+  --color=marker:#{c["magenta2"]} \\
+  --color=pointer:#{c["magenta2"]} \\
+  --color=prompt:#{c["blue1"]} \\
+  --color=query:#{c["fg"]}:regular \\
+  --color=scrollbar:#{c["blue1"]} \\
+  --color=separator:#{c["orange"]} \\
+  --color=spinner:#{c["magenta2"]}"
+"""
+    write_file(
+        get_home_path(".config", "themes", "active_theme.zsh"), zsh_theme_content
+    )
+
+    # 2. Shell themes (Fish)
+    fish_theme_content = f"""# Dynamic theme variables for Fish
+set -gx LCTHEME "{theme["light_or_dark"]}"
+set -gx BAT_THEME "{theme["bat_theme"]}"
+set -gx FISH_THEME "{theme["fish_theme"]}"
+set -gx FZF_DEFAULT_OPTS "$FZF_DEFAULT_OPTS \\
+  --highlight-line \\
+  --info=inline-right \\
+  --ansi \\
+  --layout=reverse \\
+  --border=none \\
+  --color=bg+:#{c["bg_highlight"]} \\
+  --color=bg:#{c["bg"]} \\
+  --color=border:#{c["cyan"]} \\
+  --color=fg:#{c["fg"]} \\
+  --color=gutter:#{c["bg"]} \\
+  --color=header:#{c["orange"]} \\
+  --color=hl+:#{c["blue1"]} \\
+  --color=hl:#{c["blue1"]} \\
+  --color=info:#{c["dark3"]} \\
+  --color=marker:#{c["magenta2"]} \\
+  --color=pointer:#{c["magenta2"]} \\
+  --color=prompt:#{c["blue1"]} \\
+  --color=query:#{c["fg"]}:regular \\
+  --color=scrollbar:#{c["blue1"]} \\
+  --color=separator:#{c["orange"]} \\
+  --color=spinner:#{c["magenta2"]}"
+"""
+    write_file(
+        get_home_path(".config", "themes", "active_theme.fish"), fish_theme_content
+    )
+
+    # 3. Hex code lists for Linux console escape setups
+    hex_list_content = "\n".join([f"#{col}" for col in theme["lmcscolors"]]) + "\n"
+    write_file(get_home_path(".config", "lmcscolors"), hex_list_content)
+
+    # 4. Waybar colors
+    waybar_css = "/* Sourced waybar colors */\n"
+    for k, val in c.items():
+        waybar_css += f"@define-color {k} #{val};\n"
+
+    write_file(get_home_path(".config", "waybar", "theme.css"), waybar_css)
+
+    # 5. Hyprland colors
+    hypr_conf = "# Sourced Hyprland colors\n"
+    for k, val in c.items():
+        hypr_conf += f"${k} = {val}\n"
+    write_file(get_home_path(".config", "hypr", "theme.conf"), hypr_conf)
+
+    # Hyprland lua helper
+    hypr_lua = "-- Sourced Hyprland colors lua\nlocal M = {}\n"
+    for k, val in c.items():
+        hypr_lua += f'M.{k} = "{val}"\n'
+    hypr_lua += "return M"
+    write_file(get_home_path(".config", "hypr", "theme.lua"), hypr_lua)
+
+    # 6. Dunst colors
+    dunst_colors = f"""# Sourced Dunst colors
+[urgency_low]
+background = "#{c["bg"]}aa"
+foreground = "#{c["green"]}"
+frame_color = "#{c["comment"]}aa"
+
+[urgency_normal]
+background = "#{c["bg"]}aa"
+foreground = "#{c["green"]}"
+frame_color = "#{c["green"]}aa"
+
+[urgency_critical]
+background = "#{c["blue7"]}aa"
+foreground = "#{c["orange"]}"
+frame_color = "#{c["orange"]}aa"
+"""
+    write_file(
+        get_home_path(".config", "dunst", "dunstrc.d", "colors.conf"), dunst_colors
+    )
+
+    # 7. Fuzzel theme
+    fuzzel_theme = f"""[colors]
+background={c["bg_dark"]}A0
+text={c["green"]}ff
+prompt={c["yellow"]}ff
+placeholder={c["comment"]}ff
+input={c["green"]}ff
+match={c["yellow"]}ff
+selection={c["green"]}80
+selection-text={c["bg_dark"]}ff
+selection-match={c["yellow"]}ff
+counter={c["comment"]}ff
+border={c["bg"]}ff
+"""
+    write_file(get_home_path(".config", "fuzzel", "theme.ini"), fuzzel_theme)
+
+    # 8. Lazygit theme
+    lazygit_theme = f"""gui:
+  nerdFontsVersion: "3"
+  theme:
+    activeBorderColor:
+      - "#{c["orange"]}"
+      - "bold"
+    inactiveBorderColor:
+      - "#{c["blue1"]}"
+    searchingActiveBorderColor:
+      - "#{c["orange"]}"
+      - "bold"
+    optionsTextColor:
+      - "#{c["blue"]}"
+    selectedLineBgColor:
+      - "#{c["bg_highlight"]}"
+    cherryPickedCommitFgColor:
+      - "#{c["blue"]}"
+    cherryPickedCommitBgColor:
+      - "#{c["magenta"]}"
+    markedBaseCommitFgColor:
+      - "#{c["blue"]}"
+    markedBaseCommitBgColor:
+      - "#{c["yellow"]}"
+    unstagedChangesColor:
+      - "#{c["red1"]}"
+    defaultFgColor:
+      - "#{c["fg"]}"
+"""
+    write_file(get_home_path(".config", "lazygit", "config.yml"), lazygit_theme)
+
+    # 9. Terminal Themes
+    # Ghostty
+    write_file(
+        get_home_path(".config", "ghostty", "theme"),
+        f"theme = {theme['ghostty_theme']}\n",
+    )
+
+    # Wezterm
+    wezterm_theme = f"""return {{
+  wezterm_scheme = "{theme["wezterm_scheme"]}",
+  light_or_dark = "{theme["light_or_dark"]}",
+}}
+"""
+    write_file(get_home_path(".config", "wezterm", "theme.lua"), wezterm_theme)
+
+    # Kitty
+    kitty_theme = f"""# Sourced Kitty colors
+background #{c["bg"]}
+foreground #{c["fg"]}
+selection_background #{c["bg_highlight"]}
+selection_foreground #{c["fg"]}
+url_color #{c["green1"]}
+cursor #{c["fg"]}
+cursor_text_color #{c["bg"]}
+
+# Tabs
+active_tab_background #{c["blue"]}
+active_tab_foreground #{c["bg_dark"]}
+inactive_tab_background #{c["bg_highlight"]}
+inactive_tab_foreground #{c["comment"]}
+tab_bar_background #{c["bg_dark1"]}
+
+# Windows
+active_border_color #{c["blue"]}
+inactive_border_color #{c["bg_highlight"]}
+
+# Normal
+color0 #{c["bg_dark1"]}
+color1 #{c["red"]}
+color2 #{c["green"]}
+color3 #{c["yellow"]}
+color4 #{c["blue"]}
+color5 #{c["magenta"]}
+color6 #{c["cyan"]}
+color7 #{c["fg_dark"]}
+
+# Bright
+color8 #{c["terminal_black"]}
+color9 #{c["red"]}
+color10 #{c["green1"]}
+color11 #{c["yellow"]}
+color12 #{c["blue"]}
+color13 #{c["magenta"]}
+color14 #{c["cyan"]}
+color15 #{c["fg"]}
+
+# Extended
+color16 #{c["orange"]}
+color17 #{c["red1"]}
+"""
+    write_file(get_home_path(".config", "kitty", "theme.conf"), kitty_theme)
+
+    # Foot
+    foot_theme = f"""[colors-dark]
+background={c["bg"]}
+foreground={c["fg"]}
+regular0={c["bg_dark1"]}
+regular1={c["red"]}
+regular2={c["green"]}
+regular3={c["yellow"]}
+regular4={c["blue"]}
+regular5={c["magenta"]}
+regular6={c["cyan"]}
+regular7={c["fg_dark"]}
+bright0={c["terminal_black"]}
+bright1={c["red"]}
+bright2={c["green1"]}
+bright3={c["yellow"]}
+bright4={c["blue"]}
+bright5={c["magenta"]}
+bright6={c["cyan"]}
+bright7={c["fg"]}
+"""
+    write_file(get_home_path(".config", "foot", "theme"), foot_theme)
+
+    # 10. Btop theme
+    btop_theme = f"""# Theme: {theme["name"]}
+theme[main_bg]="#{c["bg_dark"]}"
+theme[main_fg]="#{c["fg_dark"]}"
+theme[title]="#{c["fg"]}"
+theme[hi_fg]="#{c["cyan"]}"
+theme[selected_bg]="#{c["bg_highlight"]}"
+theme[selected_fg]="#{c["fg"]}"
+theme[inactive_fg]="#{c["comment"]}"
+theme[proc_misc]="#{c["cyan"]}"
+theme[cpu_box]="#{c["comment"]}"
+theme[mem_box]="#{c["comment"]}"
+theme[net_box]="#{c["comment"]}"
+theme[proc_box]="#{c["comment"]}"
+theme[div_line]="#{c["comment"]}"
+theme[temp_start]="#{c["green"]}"
+theme[temp_mid]="#{c["yellow"]}"
+theme[temp_end]="#{c["red"]}"
+theme[cpu_start]="#{c["green"]}"
+theme[cpu_mid]="#{c["yellow"]}"
+theme[cpu_end]="#{c["red"]}"
+theme[free_start]="#{c["green"]}"
+theme[free_mid]="#{c["yellow"]}"
+theme[free_end]="#{c["red"]}"
+theme[cached_start]="#{c["green"]}"
+theme[cached_mid]="#{c["yellow"]}"
+theme[cached_end]="#{c["red"]}"
+theme[available_start]="#{c["green"]}"
+theme[available_mid]="#{c["yellow"]}"
+theme[available_end]="#{c["red"]}"
+theme[used_start]="#{c["green"]}"
+theme[used_mid]="#{c["yellow"]}"
+theme[used_end]="#{c["red"]}"
+theme[download_start]="#{c["green"]}"
+theme[download_mid]="#{c["yellow"]}"
+theme[download_end]="#{c["red"]}"
+theme[upload_start]="#{c["green"]}"
+theme[upload_mid]="#{c["yellow"]}"
+theme[upload_end]="#{c["red"]}"
+"""
+    write_file(get_home_path(".config", "btop", "theme.theme"), btop_theme)
+
+    # 11. Neovim dynamic theme
+    nvim_theme = f"""return {{
+  nvim_scheme = "{theme["nvim_scheme"]}",
+  tokyonight_style = "{theme["tokyonight_style"]}",
+}}
+"""
+    write_file(
+        get_home_path(".config", "nvim", "lua", "config", "theme.lua"), nvim_theme
+    )
+
+    # 12. Hot reload processes
+    print("Reloading active applications...")
+    try:
+        subprocess.run(["dunstctl", "reload"], stderr=subprocess.DEVNULL)
+    except Exception:
+        pass
+
+    try:
+        subprocess.run(["killall", "-USR2", "waybar"], stderr=subprocess.DEVNULL)
+    except Exception:
+        pass
+
+    try:
+        subprocess.run(["hyprctl", "reload"], stderr=subprocess.DEVNULL)
+    except Exception:
+        pass
+
+    print("Theme applied successfully!")
+
+
+def run_fzf_selector(themes):
+    # Verify FZF is installed
+    try:
+        subprocess.run(
+            ["fzf", "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+        )
+    except FileNotFoundError:
+        print("Error: 'fzf' is not installed or not in PATH.")
+        sys.exit(1)
+
+    themes_input = "\n".join(themes.keys())
+
+    try:
+        proc = subprocess.Popen(
+            ["fzf", "--ansi", "--prompt=Select System Theme > "],
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            text=True,
+        )
+        stdout, _ = proc.communicate(input=themes_input)
+        selected = stdout.strip()
+        if selected:
+            apply_theme(selected, themes)
+        else:
+            print("Selection cancelled.")
+    except Exception as e:
+        print(f"Error running fzf: {e}")
+        sys.exit(1)
+
+
+def main():
+    themes = load_themes()
+
+    parser = argparse.ArgumentParser(description="Centralized theme switcher.")
+    subparsers = parser.add_subparsers(dest="command")
+
+    # thm list
+    subparsers.add_parser("list", help="List all available themes")
+
+    # thm set <theme>
+    set_parser = subparsers.add_parser("set", help="Set active theme")
+    set_parser.add_argument("theme_name", type=str, help="Theme ID to apply")
+
+    # thm select
+    subparsers.add_parser("select", help="Interactively select a theme using fzf")
+
+    args = parser.parse_args()
+
+    if not themes:
+        print(f"No themes found in '{THEME_DIR}'. Please add JSON theme files.")
+        sys.exit(1)
+
+    if args.command == "list":
+        print("Available Themes:")
+        for tid, tinfo in themes.items():
+            print(f"  - {tid:<20} ({tinfo.get('name', 'Unknown')})")
+    elif args.command == "set":
+        apply_theme(args.theme_name, themes)
+    elif args.command == "select" or args.command is None:
+        run_fzf_selector(themes)
+
+
+if __name__ == "__main__":
+    main()
