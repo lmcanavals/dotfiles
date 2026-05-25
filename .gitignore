@@ -37,7 +37,7 @@ rust.sh
 .config/gh/hosts.yml
 .config/ghostty/theme
 .config/gtkrc-2.0
-.config/hypr/theme.*
+.config/hypr/colors.*
 .config/kitty/theme.conf
 .config/kwallet
 .config/lazygit/config.yml
@@ -227,6 +227,7 @@ VirtualBox VMs/
 
 **/a.out
 **/*.app
+__pycache__/
 
 # exception rules
 

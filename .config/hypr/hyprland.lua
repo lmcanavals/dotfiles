@@ -53,7 +53,7 @@ end)
 
 hl.config({ ecosystem = { enforce_permissions = true } })
 
-hl.permission({ binary = "/usr/(bin|local/bin)/(grim|hyprlock)", type = "screencopy", mode = "allow" })
+hl.permission({ binary = "/usr/(bin|local/bin)/(grim|hyprlock|wf-recorder)", type = "screencopy", mode = "allow" })
 hl.permission({ binary = "/usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland", type = "screencopy", mode = "allow" })
 -- hl.permission({ binary = "/usr/(bin|local/bin)/hyprpm", type = "plugin", mode = "allow" })
 
@@ -70,8 +70,8 @@ hl.config({
 		border_size = 2,
 
 		col = {
-			active_border = { colors = { c.border0, c.border1 }, angle = 45 },
-			inactive_border = { colors = { c.border2, c.border3 }, angle = 45 },
+			active_border = { colors = { "rgba(" .. c.accent .. "80)", "rgba(" .. c.border .. "80)" }, angle = 45 },
+			inactive_border = { colors = { "rgba(" .. c.accent .. "40)", "rgba(" .. c.border .. "40)" }, angle = 45 },
 		},
 
 		-- Set to true to enable resizing windows by clicking and dragging on borders and gaps
@@ -100,7 +100,7 @@ hl.config({
 			enabled = true,
 			range = 4,
 			render_power = 3,
-			color = c.box_shadow,
+			color = "rgba(" .. c.shadow .. "40)",
 		},
 
 		blur = {
@@ -300,7 +300,8 @@ hl.window_rule({
 
 -- Example windowrules that are useful
 
-local suppressMaximizeRule = hl.window_rule({
+-- local suppressMaximizeRule = hl.window_rule({
+hl.window_rule({
 	-- Ignore maximize requests from all apps. You'll probably like this.
 	name = "suppress-maximize-events",
 	match = { class = ".*" },
