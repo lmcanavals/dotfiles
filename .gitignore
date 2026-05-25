@@ -52,7 +52,7 @@ rust.sh
 .config/themes/active_theme.*
 .config/user-dirs.dirs
 .config/user-dirs.locale
-.config/waybar/theme.css
+.config/waybar/colors.css
 .config/wezterm/theme.lua
 .config/zoom.conf
 .config/zoomus.conf
