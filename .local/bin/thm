@@ -5,6 +5,25 @@ import sys
 import json
 import argparse
 import subprocess
+from pathlib import Path
+from typing import Dict, Any, List, Set
+
+from PySide6.QtWidgets import (
+    QApplication,
+    QMainWindow,
+    QTableWidgetItem,
+    QInputDialog,
+    QMessageBox,
+    QComboBox,
+    QWidget,
+    QStyledItemDelegate,
+    QTabWidget,
+    QTableWidget,
+    QPushButton,
+)
+from PySide6.QtDesigner import QFormBuilder
+from PySide6.QtCore import QFile, Qt, QIODevice
+from PySide6.QtGui import QColor, QKeySequence, QShortcut, QIcon, QPixmap
 
 
 def get_home_path(*parts):
@@ -13,6 +32,9 @@ def get_home_path(*parts):
 
 # Path to the directory where JSON themes are stored
 THEME_DIR = get_home_path(".config", "themes", "definitions")
+THEME_DIR_PATH = Path(THEME_DIR)
+DEFAULT_COLOR = "#00ff00"
+MISSING_VAL_MARKER = "<missing>"
 
 
 def load_themes():
@@ -27,7 +49,7 @@ def load_themes():
             theme_id = os.path.splitext(filename)[0]
             path = os.path.join(THEME_DIR, filename)
             try:
-                with open(path, "r") as f:
+                with open(path, "r", encoding="utf-8") as f:
                     themes[theme_id] = json.load(f)
             except Exception as e:
                 print(
@@ -44,17 +66,49 @@ def write_file(path, content):
     print(f"Written: {path}")
 
 
+def resolve_theme_colors(theme):
+    """Resolves and normalizes colors in a theme dict to raw hex strings without '#'."""
+    palette = theme.get("palette", {})
+    raw_colors = theme.get("colors", {})
+    resolved = {}
+
+    # Normalize palette keys and values
+    clean_palette = {}
+    for k, v in palette.items():
+        if isinstance(v, str):
+            clean_palette[k] = v.lstrip("#").lower()
+        else:
+            clean_palette[k] = v
+
+    for key, val in raw_colors.items():
+        if isinstance(val, str):
+            if val.startswith("palette."):
+                palette_key = val.split(".")[1]
+                resolved_val = clean_palette.get(palette_key, "ffffff")
+            elif val in clean_palette:
+                resolved_val = clean_palette[val]
+            else:
+                resolved_val = val
+        else:
+            resolved_val = str(val)
+
+        # Normalize the resolved value to lowercase hex without '#'
+        resolved[key] = resolved_val.lstrip("#").lower()
+
+    return resolved
+
+
 def apply_theme(theme_id, themes):
     if theme_id not in themes:
         print(f"Error: Theme '{theme_id}' not found.")
         sys.exit(1)
 
     theme = themes[theme_id]
-    c = theme["colors"]
+    c = resolve_theme_colors(theme)
     print(f"Applying theme: {theme['name']}...")
 
     # 1. Shell themes (Zsh)
-    zsh_theme_content = f"""# Dynamic theme variables for Zsh
+    zsh_theme = f"""# Dynamic theme variables for Zsh
 export LCTHEME="{theme["light_or_dark"]}"
 export BAT_THEME="{theme["bat_theme"]}"
 export FISH_THEME="{theme["fish_theme"]}"
@@ -66,27 +120,25 @@ export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \\
   --border=none \\
   --color=bg+:#{c["bg_highlight"]} \\
   --color=bg:#{c["bg"]} \\
-  --color=border:#{c["cyan"]} \\
+  --color=border:#{c["border"]} \\
   --color=fg:#{c["fg"]} \\
   --color=gutter:#{c["bg"]} \\
-  --color=header:#{c["orange"]} \\
-  --color=hl+:#{c["blue1"]} \\
-  --color=hl:#{c["blue1"]} \\
-  --color=info:#{c["dark3"]} \\
-  --color=marker:#{c["magenta2"]} \\
-  --color=pointer:#{c["magenta2"]} \\
-  --color=prompt:#{c["blue1"]} \\
+  --color=header:#{c["accent_alt"]} \\
+  --color=hl+:#{c["accent"]} \\
+  --color=hl:#{c["accent"]} \\
+  --color=info:#{c["comment"]} \\
+  --color=marker:#{c["accent_dim"]} \\
+  --color=pointer:#{c["accent_dim"]} \\
+  --color=prompt:#{c["accent"]} \\
   --color=query:#{c["fg"]}:regular \\
-  --color=scrollbar:#{c["blue1"]} \\
-  --color=separator:#{c["orange"]} \\
-  --color=spinner:#{c["magenta2"]}"
+  --color=scrollbar:#{c["accent"]} \\
+  --color=separator:#{c["accent_alt"]} \\
+  --color=spinner:#{c["accent_dim"]}"
 """
-    write_file(
-        get_home_path(".config", "themes", "active_theme.zsh"), zsh_theme_content
-    )
+    write_file(get_home_path(".config", "themes", "active_theme.zsh"), zsh_theme)
 
     # 2. Shell themes (Fish)
-    fish_theme_content = f"""# Dynamic theme variables for Fish
+    fish_theme = f"""# Dynamic theme variables for Fish
 set -gx LCTHEME "{theme["light_or_dark"]}"
 set -gx BAT_THEME "{theme["bat_theme"]}"
 set -gx FISH_THEME "{theme["fish_theme"]}"
@@ -98,81 +150,95 @@ set -gx FZF_DEFAULT_OPTS "$FZF_DEFAULT_OPTS \\
   --border=none \\
   --color=bg+:#{c["bg_highlight"]} \\
   --color=bg:#{c["bg"]} \\
-  --color=border:#{c["cyan"]} \\
+  --color=border:#{c["border"]} \\
   --color=fg:#{c["fg"]} \\
   --color=gutter:#{c["bg"]} \\
-  --color=header:#{c["orange"]} \\
-  --color=hl+:#{c["blue1"]} \\
-  --color=hl:#{c["blue1"]} \\
-  --color=info:#{c["dark3"]} \\
-  --color=marker:#{c["magenta2"]} \\
-  --color=pointer:#{c["magenta2"]} \\
-  --color=prompt:#{c["blue1"]} \\
+  --color=header:#{c["accent_alt"]} \\
+  --color=hl+:#{c["accent"]} \\
+  --color=hl:#{c["accent"]} \\
+  --color=info:#{c["comment"]} \\
+  --color=marker:#{c["accent_dim"]} \\
+  --color=pointer:#{c["accent_dim"]} \\
+  --color=prompt:#{c["accent"]} \\
   --color=query:#{c["fg"]}:regular \\
-  --color=scrollbar:#{c["blue1"]} \\
-  --color=separator:#{c["orange"]} \\
-  --color=spinner:#{c["magenta2"]}"
+  --color=scrollbar:#{c["accent"]} \\
+  --color=separator:#{c["accent_alt"]} \\
+  --color=spinner:#{c["accent_dim"]}"
 """
-    write_file(
-        get_home_path(".config", "themes", "active_theme.fish"), fish_theme_content
-    )
+    write_file(get_home_path(".config", "themes", "active_theme.fish"), fish_theme)
 
     # 3. Hex code lists for Linux console escape setups
-    hex_list_content = "\n".join([f"#{col}" for col in theme["lmcscolors"]]) + "\n"
-    write_file(get_home_path(".config", "lmcscolors"), hex_list_content)
+    lmcscolors = f"""#{c["t0_bg"]}
+#{c["t1_red"]}
+#{c["t2_green"]}
+#{c["t3_orange"]}
+#{c["t4_blue"]}
+#{c["t5_purple"]}
+#{c["t6_cyan"]}
+#{c["t7_fgdark"]}
+#{c["t8_bglight"]}
+#{c["t9_pink"]}
+#{c["ta_green"]}
+#{c["tb_yellow"]}
+#{c["tc_blue"]}
+#{c["td_violet"]}
+#{c["te_aqua"]}
+#{c["tf_fg"]}
+"""
+    write_file(get_home_path(".config", "lmcscolors"), lmcscolors)
 
     # 4. Waybar colors
-    waybar_css = "/* Sourced waybar colors */\n"
+    waybar_css = "/* Sourced waybar colors */\n\n"
     for k, val in c.items():
         waybar_css += f"@define-color {k} #{val};\n"
 
-    write_file(get_home_path(".config", "waybar", "theme.css"), waybar_css)
+    write_file(get_home_path(".config", "waybar", "colors.css"), waybar_css)
 
     # 5. Hyprland colors
-    hypr_conf = "# Sourced Hyprland colors\n"
+    hyprlang_theme = "# Sourced Hyprland colors\n\n"
     for k, val in c.items():
-        hypr_conf += f"${k} = {val}\n"
-    write_file(get_home_path(".config", "hypr", "theme.conf"), hypr_conf)
+        hyprlang_theme += f"${k} = {val}\n"
+    write_file(get_home_path(".config", "hypr", "colors.conf"), hyprlang_theme)
 
     # Hyprland lua helper
-    hypr_lua = "-- Sourced Hyprland colors lua\nlocal M = {}\n"
+    hyprlua_theme = "-- Sourced Hyprland colors lua\n\nlocal M = {}\n\n"
     for k, val in c.items():
-        hypr_lua += f'M.{k} = "{val}"\n'
-    hypr_lua += "return M"
-    write_file(get_home_path(".config", "hypr", "theme.lua"), hypr_lua)
+        hyprlua_theme += f'M.{k} = "{val}"\n'
+    hyprlua_theme += "\nreturn M"
+    write_file(get_home_path(".config", "hypr", "colors.lua"), hyprlua_theme)
 
     # 6. Dunst colors
-    dunst_colors = f"""# Sourced Dunst colors
+    dunst_theme = f"""# Sourced Dunst colors
 [urgency_low]
 background = "#{c["bg"]}aa"
-foreground = "#{c["green"]}"
+foreground = "#{c["success"]}"
 frame_color = "#{c["comment"]}aa"
 
 [urgency_normal]
 background = "#{c["bg"]}aa"
-foreground = "#{c["green"]}"
-frame_color = "#{c["green"]}aa"
+foreground = "#{c["success"]}"
+frame_color = "#{c["success"]}aa"
 
 [urgency_critical]
-background = "#{c["blue7"]}aa"
-foreground = "#{c["orange"]}"
-frame_color = "#{c["orange"]}aa"
+background = "#{c["shadow"]}aa"
+foreground = "#{c["warning"]}"
+frame_color = "#{c["warning"]}aa"
 """
     write_file(
-        get_home_path(".config", "dunst", "dunstrc.d", "colors.conf"), dunst_colors
+        get_home_path(".config", "dunst", "dunstrc.d", "colors.conf"), dunst_theme
     )
 
     # 7. Fuzzel theme
     fuzzel_theme = f"""[colors]
 background={c["bg_dark"]}A0
-text={c["green"]}ff
-prompt={c["yellow"]}ff
+text={c["success"]}ff
+prompt={c["warning"]}ff
 placeholder={c["comment"]}ff
-input={c["green"]}ff
-match={c["yellow"]}ff
-selection={c["green"]}80
+input={c["success"]}ff
+match={c["warning"]}ff
+selection={c["success"]}80
 selection-text={c["bg_dark"]}ff
-selection-match={c["yellow"]}ff
+selection-match={c["warning"]}ff
 counter={c["comment"]}ff
 border={c["bg"]}ff
 """
@@ -183,27 +249,27 @@ border={c["bg"]}ff
   nerdFontsVersion: "3"
   theme:
     activeBorderColor:
-      - "#{c["orange"]}"
+      - "#{c["accent_alt"]}"
       - "bold"
     inactiveBorderColor:
-      - "#{c["blue1"]}"
+      - "#{c["accent"]}"
     searchingActiveBorderColor:
-      - "#{c["orange"]}"
+      - "#{c["accent_alt"]}"
       - "bold"
     optionsTextColor:
-      - "#{c["blue"]}"
+      - "#{c["accent"]}"
     selectedLineBgColor:
       - "#{c["bg_highlight"]}"
     cherryPickedCommitFgColor:
-      - "#{c["blue"]}"
+      - "#{c["accent"]}"
     cherryPickedCommitBgColor:
-      - "#{c["magenta"]}"
+      - "#{c["t5_purple"]}"
     markedBaseCommitFgColor:
-      - "#{c["blue"]}"
+      - "#{c["accent"]}"
     markedBaseCommitBgColor:
-      - "#{c["yellow"]}"
+      - "#{c["warning"]}"
     unstagedChangesColor:
-      - "#{c["red1"]}"
+      - "#{c["error"]}"
     defaultFgColor:
       - "#{c["fg"]}"
 """
@@ -211,10 +277,8 @@ border={c["bg"]}ff
 
     # 9. Terminal Themes
     # Ghostty
-    write_file(
-        get_home_path(".config", "ghostty", "theme"),
-        f"theme = {theme['ghostty_theme']}\n",
-    )
+    ghostty_theme = f"theme = {theme['ghostty_theme']}\n"
+    write_file(get_home_path(".config", "ghostty", "theme"), ghostty_theme)
 
     # Wezterm
     wezterm_theme = f"""return {{
@@ -230,44 +294,44 @@ background #{c["bg"]}
 foreground #{c["fg"]}
 selection_background #{c["bg_highlight"]}
 selection_foreground #{c["fg"]}
-url_color #{c["green1"]}
+url_color #{c["ta_green"]}
 cursor #{c["fg"]}
 cursor_text_color #{c["bg"]}
 
 # Tabs
-active_tab_background #{c["blue"]}
+active_tab_background #{c["accent"]}
 active_tab_foreground #{c["bg_dark"]}
 inactive_tab_background #{c["bg_highlight"]}
 inactive_tab_foreground #{c["comment"]}
-tab_bar_background #{c["bg_dark1"]}
+tab_bar_background #{c["shadow"]}
 
 # Windows
-active_border_color #{c["blue"]}
+active_border_color #{c["accent"]}
 inactive_border_color #{c["bg_highlight"]}
 
 # Normal
-color0 #{c["bg_dark1"]}
-color1 #{c["red"]}
-color2 #{c["green"]}
-color3 #{c["yellow"]}
-color4 #{c["blue"]}
-color5 #{c["magenta"]}
-color6 #{c["cyan"]}
-color7 #{c["fg_dark"]}
+color0 #{c["t0_bg"]}
+color1 #{c["t1_red"]}
+color2 #{c["t2_green"]}
+color3 #{c["t3_orange"]}
+color4 #{c["t4_blue"]}
+color5 #{c["t5_purple"]}
+color6 #{c["t6_cyan"]}
+color7 #{c["t7_fgdark"]}
 
 # Bright
-color8 #{c["terminal_black"]}
-color9 #{c["red"]}
-color10 #{c["green1"]}
-color11 #{c["yellow"]}
-color12 #{c["blue"]}
-color13 #{c["magenta"]}
-color14 #{c["cyan"]}
-color15 #{c["fg"]}
+color8  #{c["t8_bglight"]}
+color9  #{c["t9_pink"]}
+color10 #{c["ta_green"]}
+color11 #{c["tb_yellow"]}
+color12 #{c["tc_blue"]}
+color13 #{c["td_violet"]}
+color14 #{c["te_aqua"]}
+color15 #{c["tf_fg"]}
 
 # Extended
-color16 #{c["orange"]}
-color17 #{c["red1"]}
+color16 #{c["tg_redish"]}
+color17 #{c["th_crimson"]}
 """
     write_file(get_home_path(".config", "kitty", "theme.conf"), kitty_theme)
 
@@ -275,22 +339,22 @@ color17 #{c["red1"]}
     foot_theme = f"""[colors-dark]
 background={c["bg"]}
 foreground={c["fg"]}
-regular0={c["bg_dark1"]}
-regular1={c["red"]}
-regular2={c["green"]}
-regular3={c["yellow"]}
-regular4={c["blue"]}
-regular5={c["magenta"]}
-regular6={c["cyan"]}
-regular7={c["fg_dark"]}
-bright0={c["terminal_black"]}
-bright1={c["red"]}
-bright2={c["green1"]}
-bright3={c["yellow"]}
-bright4={c["blue"]}
-bright5={c["magenta"]}
-bright6={c["cyan"]}
-bright7={c["fg"]}
+regular0={c["t0_bg"]}
+regular1={c["t1_red"]}
+regular2={c["t2_green"]}
+regular3={c["t3_orange"]}
+regular4={c["t4_blue"]}
+regular5={c["t5_purple"]}
+regular6={c["t6_cyan"]}
+regular7={c["t7_fgdark"]}
+bright0={c["t8_bglight"]}
+bright1={c["t9_pink"]}
+bright2={c["ta_green"]}
+bright3={c["tb_yellow"]}
+bright4={c["tc_blue"]}
+bright5={c["td_violet"]}
+bright6={c["te_aqua"]}
+bright7={c["tf_fg"]}
 """
     write_file(get_home_path(".config", "foot", "theme"), foot_theme)
 
@@ -299,40 +363,40 @@ bright7={c["fg"]}
 theme[main_bg]="#{c["bg_dark"]}"
 theme[main_fg]="#{c["fg_dark"]}"
 theme[title]="#{c["fg"]}"
-theme[hi_fg]="#{c["cyan"]}"
+theme[hi_fg]="#{c["accent"]}"
 theme[selected_bg]="#{c["bg_highlight"]}"
 theme[selected_fg]="#{c["fg"]}"
 theme[inactive_fg]="#{c["comment"]}"
-theme[proc_misc]="#{c["cyan"]}"
+theme[proc_misc]="#{c["accent"]}"
 theme[cpu_box]="#{c["comment"]}"
 theme[mem_box]="#{c["comment"]}"
 theme[net_box]="#{c["comment"]}"
 theme[proc_box]="#{c["comment"]}"
 theme[div_line]="#{c["comment"]}"
-theme[temp_start]="#{c["green"]}"
-theme[temp_mid]="#{c["yellow"]}"
-theme[temp_end]="#{c["red"]}"
-theme[cpu_start]="#{c["green"]}"
-theme[cpu_mid]="#{c["yellow"]}"
-theme[cpu_end]="#{c["red"]}"
-theme[free_start]="#{c["green"]}"
-theme[free_mid]="#{c["yellow"]}"
-theme[free_end]="#{c["red"]}"
-theme[cached_start]="#{c["green"]}"
-theme[cached_mid]="#{c["yellow"]}"
-theme[cached_end]="#{c["red"]}"
-theme[available_start]="#{c["green"]}"
-theme[available_mid]="#{c["yellow"]}"
-theme[available_end]="#{c["red"]}"
-theme[used_start]="#{c["green"]}"
-theme[used_mid]="#{c["yellow"]}"
-theme[used_end]="#{c["red"]}"
-theme[download_start]="#{c["green"]}"
-theme[download_mid]="#{c["yellow"]}"
-theme[download_end]="#{c["red"]}"
-theme[upload_start]="#{c["green"]}"
-theme[upload_mid]="#{c["yellow"]}"
-theme[upload_end]="#{c["red"]}"
+theme[temp_start]="#{c["success"]}"
+theme[temp_mid]="#{c["warning"]}"
+theme[temp_end]="#{c["error"]}"
+theme[cpu_start]="#{c["success"]}"
+theme[cpu_mid]="#{c["warning"]}"
+theme[cpu_end]="#{c["error"]}"
+theme[free_start]="#{c["success"]}"
+theme[free_mid]="#{c["warning"]}"
+theme[free_end]="#{c["error"]}"
+theme[cached_start]="#{c["success"]}"
+theme[cached_mid]="#{c["warning"]}"
+theme[cached_end]="#{c["error"]}"
+theme[available_start]="#{c["success"]}"
+theme[available_mid]="#{c["warning"]}"
+theme[available_end]="#{c["error"]}"
+theme[used_start]="#{c["success"]}"
+theme[used_mid]="#{c["warning"]}"
+theme[used_end]="#{c["error"]}"
+theme[download_start]="#{c["success"]}"
+theme[download_mid]="#{c["warning"]}"
+theme[download_end]="#{c["error"]}"
+theme[upload_start]="#{c["success"]}"
+theme[upload_mid]="#{c["warning"]}"
+theme[upload_end]="#{c["error"]}"
 """
     write_file(get_home_path(".config", "btop", "theme.theme"), btop_theme)
 
@@ -396,7 +460,393 @@ def run_fzf_selector(themes):
         sys.exit(1)
 
 
+class ColorMappingDelegate(QStyledItemDelegate):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.palette_items = []
+
+    def set_palette_items(self, items):
+        """Updates the dropdown autocomplete source list context dynamically."""
+        self.palette_items = sorted(list(items))
+
+    def createEditor(self, parent, option, index):
+        # Index column 0 is the row schema label; we don't place a custom dropdown editor there
+        if index.column() == 0:
+            return super().createEditor(parent, option, index)
+
+        editor = QComboBox(parent)
+        editor.setEditable(True)  # Allows fallback hex typing overrides directly
+
+        # Add literal names and standard prefixed mappings cleanly
+        formatted_items = list(self.palette_items)
+
+        editor.addItems(formatted_items)
+        return editor
+
+    def setEditorData(self, editor, index):
+        model = index.model()
+        if model:
+            value = model.data(index, Qt.ItemDataRole.EditRole)
+            if value:
+                editor.setCurrentText(str(value))
+
+    def setModelData(self, editor, model, index):
+        model.setData(index, editor.currentText(), Qt.ItemDataRole.EditRole)
+
+
+class ThemeEditor(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.themes: Dict[str, Dict[str, Any]] = {}
+        self.theme_ids: List[str] = []
+
+        # 1. Load the UI safely using QFormBuilder
+        ui_path = Path(__file__).parent / "main_window.ui"
+        ui_file = QFile(str(ui_path))
+        if not ui_file.open(QIODevice.OpenModeFlag.ReadOnly):
+            print(f"Error: Cannot open main_window.ui at {ui_path}", file=sys.stderr)
+            sys.exit(1)
+
+        builder = QFormBuilder()
+        # Load as a generic widget container instead of passing 'self'
+        self.ui_container = builder.load(ui_file)
+        ui_file.close()
+
+        if not self.ui_container:
+            print("Error: Failed to load UI layout data structure.", file=sys.stderr)
+            sys.exit(1)
+
+        # 2. Extract widgets from the container wrapper using findChild and assert not None
+        tab_widget = self.ui_container.findChild(QTabWidget, "tabWidget")
+        assert tab_widget is not None
+        self.tab_widget = tab_widget
+
+        color_table = self.ui_container.findChild(QTableWidget, "colorTable")
+        assert color_table is not None
+        self.color_table = color_table
+
+        meta_table = self.ui_container.findChild(QTableWidget, "metaTable")
+        assert meta_table is not None
+        self.meta_table = meta_table
+
+        add_key_button = self.ui_container.findChild(QPushButton, "addKeyButton")
+        assert add_key_button is not None
+        self.add_key_button = add_key_button
+
+        new_theme_button = self.ui_container.findChild(QPushButton, "newThemeButton")
+        assert new_theme_button is not None
+        self.new_theme_button = new_theme_button
+
+        apply_theme_button = self.ui_container.findChild(
+            QPushButton, "applyThemeButton"
+        )
+        assert apply_theme_button is not None
+        self.apply_theme_button = apply_theme_button
+
+        # Set up the main window CentralWidget
+        central_widget = self.ui_container.findChild(QWidget, "centralWidget")
+        assert central_widget is not None
+        self.setCentralWidget(central_widget)
+
+        self.setWindowTitle("THM-EDIT ── Theme Configuration Studio")
+        self.resize(900, 650)
+
+        # Setup specific inline column delegates
+        self.color_delegate = ColorMappingDelegate(self)
+        self.color_table.setItemDelegate(self.color_delegate)
+
+        # 3. Connect system action slots
+        self.add_key_button.clicked.connect(self.handle_add_key)
+        self.new_theme_button.clicked.connect(self.handle_create_theme)
+        self.apply_theme_button.clicked.connect(self.handle_apply_theme)
+        self.color_table.cellChanged.connect(self.handle_color_cell_changed)
+        self.meta_table.cellChanged.connect(self.handle_meta_cell_changed)
+
+        # Standard close application binding setup
+        quit_shortcut = QShortcut(QKeySequence("Ctrl+Q"), self)
+        quit_shortcut.activated.connect(self.close)
+
+        # 4. Initialize Core Data Pipelines
+        self.load_all_themes_from_disk()
+        self.populate_grids()
+
+    def get_color_item(self, row: int, col: int) -> QTableWidgetItem:
+        item = self.color_table.item(row, col)
+        assert item is not None
+        return item
+
+    def get_meta_item(self, row: int, col: int) -> QTableWidgetItem:
+        item = self.meta_table.item(row, col)
+        assert item is not None
+        return item
+
+    def load_all_themes_from_disk(self):
+        THEME_DIR_PATH.mkdir(parents=True, exist_ok=True)
+        self.themes = {}
+        for path in THEME_DIR_PATH.glob("*.json"):
+            theme_id = path.stem
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    self.themes[theme_id] = json.load(f)
+            except Exception as e:
+                print(f"Failed loading theme {theme_id}: {e}")
+        self.theme_ids = sorted(list(self.themes.keys()))
+
+    def save_all_themes_to_disk(self):
+        THEME_DIR_PATH.mkdir(parents=True, exist_ok=True)
+        for theme_id, data in self.themes.items():
+            path = THEME_DIR_PATH / f"{theme_id}.json"
+            try:
+                with open(path, "w", encoding="utf-8") as f:
+                    json.dump(data, f, indent=4)
+            except Exception as e:
+                QMessageBox.critical(
+                    self, "Disk Write Error", f"Could not write {theme_id}.json:\n{e}"
+                )
+
+    def get_all_color_keys(self) -> List[str]:
+        keys: Set[str] = set()
+        for t in self.themes.values():
+            keys.update(t.get("colors", {}).keys())
+        return sorted(list(keys))
+
+    def get_all_meta_keys(self) -> List[str]:
+        keys: Set[str] = set()
+        protected = {"colors", "palette"}
+        for t in self.themes.values():
+            keys.update(k for k in t.keys() if k not in protected)
+        return sorted(list(keys))
+
+    def populate_grids(self):
+        self.color_table.blockSignals(True)
+        self.meta_table.blockSignals(True)
+
+        color_keys = self.get_all_color_keys()
+        meta_keys = self.get_all_meta_keys()
+
+        color_headers = ["colors"] + self.theme_ids
+        meta_headers = ["properties"] + self.theme_ids
+
+        # --- Build Color Schemes Grid ---
+        self.color_table.setColumnCount(len(color_headers))
+        self.color_table.setRowCount(len(color_keys))
+        self.color_table.setHorizontalHeaderLabels(color_headers)
+
+        for row, r_key in enumerate(color_keys):
+            item = QTableWidgetItem(r_key)
+            item.setFlags(
+                Qt.ItemFlag.ItemIsEnabled
+                | Qt.ItemFlag.ItemIsSelectable
+                | Qt.ItemFlag.ItemIsEditable
+            )
+            item.setData(Qt.ItemDataRole.UserRole, r_key)
+            self.color_table.setItem(row, 0, item)
+
+            for col, tid in enumerate(self.theme_ids, start=1):
+                theme = self.themes[tid]
+                colors_dict = theme.setdefault("colors", {})
+                val = colors_dict.setdefault(r_key, DEFAULT_COLOR)
+                cell_item = QTableWidgetItem(val)
+                resolved_hex = self.resolve_hex(val, theme.get("palette", {}))
+                cell_item.setBackground(QColor(f"#{resolved_hex}"))
+
+                self.color_table.setItem(row, col, cell_item)
+
+        # --- Build Application Meta Grid ---
+        self.meta_table.setColumnCount(len(meta_headers))
+        self.meta_table.setRowCount(len(meta_keys))
+        self.meta_table.setHorizontalHeaderLabels(meta_headers)
+
+        for row, r_key in enumerate(meta_keys):
+            self.meta_table.setItem(row, 0, QTableWidgetItem(r_key))
+            item_meta = self.meta_table.item(row, 0)
+            assert item_meta is not None
+            item_meta.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable)
+
+            for col, tid in enumerate(self.theme_ids, start=1):
+                theme = self.themes[tid]
+                val = theme.setdefault(r_key, MISSING_VAL_MARKER)
+                self.meta_table.setItem(row, col, QTableWidgetItem(str(val)))
+
+        # Connect Dynamic Interactive Dropdown Hooks
+        self.color_table.currentCellChanged.connect(self.update_delegate_palette_scope)
+
+        self.color_table.resizeColumnsToContents()
+        self.meta_table.resizeColumnsToContents()
+
+        self.color_table.blockSignals(False)
+        self.meta_table.blockSignals(False)
+
+    def update_delegate_palette_scope(self, _row, col, _old_row, _old_col):
+        if col < 1 or col > len(self.theme_ids):
+            return
+        target_theme_id = self.theme_ids[col - 1]
+        palette_dict = self.themes[target_theme_id].get("palette", {})
+        self.color_delegate.set_palette_items(palette_dict.keys())
+
+    def resolve_hex(self, val: str, palette: Dict[str, str]) -> str:
+        if val.startswith("palette."):
+            pk = val.split(".")[1]
+            return palette.get(pk, "ffffff").lstrip("#")
+        if val in palette:
+            return palette.get(val, "ffffff").lstrip("#")
+        return val.lstrip("#")
+
+    def create_color_icon(self, hex_str: str) -> QIcon:
+        color = QColor(f"#{hex_str}") if len(hex_str) in (3, 6) else QColor("#00ff00")
+        pixmap = QPixmap(16, 16)
+        pixmap.fill(color)
+        return QIcon(pixmap)
+
+    def handle_color_cell_changed(self, row, col):
+        if col == 0:
+            item = self.get_color_item(row, 0)
+            new_key = item.text().strip()
+            old_key = item.data(Qt.ItemDataRole.UserRole)
+
+            if not old_key:
+                return
+            if new_key == old_key:
+                return
+
+            if not new_key:
+                QMessageBox.warning(self, "Invalid Key", "Color key cannot be empty.")
+                self.color_table.blockSignals(True)
+                item.setText(old_key)
+                self.color_table.blockSignals(False)
+                return
+
+            # Rename key across all themes
+            for theme in self.themes.values():
+                colors_dict = theme.setdefault("colors", {})
+                if old_key in colors_dict:
+                    val = colors_dict.pop(old_key)
+                    colors_dict[new_key] = val
+
+            self.save_all_themes_to_disk()
+            item.setData(Qt.ItemDataRole.UserRole, new_key)
+            self.populate_grids()
+            return
+
+        tid = self.theme_ids[col - 1]
+        row_key = self.get_color_item(row, 0).text()
+        new_val = self.get_color_item(row, col).text().strip()
+
+        self.themes[tid]["colors"][row_key] = new_val
+
+        self.color_table.blockSignals(True)
+        resolved_hex = self.resolve_hex(new_val, self.themes[tid].get("palette", {}))
+        self.get_color_item(row, col).setBackground(QColor(f"#{resolved_hex}"))
+        self.get_color_item(row, col).setIcon(self.create_color_icon(resolved_hex))
+        self.color_table.blockSignals(False)
+
+        self.save_all_themes_to_disk()
+
+    def handle_meta_cell_changed(self, row, col):
+        if col == 0:
+            return
+        tid = self.theme_ids[col - 1]
+        row_key = self.get_meta_item(row, 0).text()
+        new_val = self.get_meta_item(row, col).text().strip()
+
+        self.themes[tid][row_key] = new_val
+        self.save_all_themes_to_disk()
+
+    def handle_add_key(self):
+        current_tab_idx = self.tab_widget.currentIndex()
+        prompt_title = (
+            "New Color Key Mapping"
+            if current_tab_idx == 0
+            else "New Configuration Parameter"
+        )
+        prompt_label = "Enter structural key dictionary identifier:"
+
+        new_key, ok = QInputDialog.getText(self, prompt_title, prompt_label)
+        if not ok or not new_key.strip():
+            return
+
+        new_key = new_key.strip()
+        for t in self.themes.values():
+            if current_tab_idx == 0:
+                t.setdefault("colors", {})[new_key] = DEFAULT_COLOR
+            else:
+                t[new_key] = MISSING_VAL_MARKER
+
+        self.save_all_themes_to_disk()
+        self.populate_grids()
+
+    def handle_create_theme(self):
+        theme_id, ok = QInputDialog.getText(
+            self, "New Theme Template", "Enter Unique Filename File ID:"
+        )
+        if not ok or not theme_id.strip():
+            return
+
+        theme_id = theme_id.replace(".json", "").strip()
+        skeleton = {
+            "name": f"{theme_id.title()} Template Scheme",
+            "light_or_dark": "dark",
+            "palette": {
+                "background": "#1a1a1a",
+                "foreground": "#e0e0e0",
+                "accent": "#00ff00",
+            },
+            "colors": {
+                "bg": "background",
+                "fg": "foreground",
+            },
+        }
+        self.themes[theme_id] = skeleton
+        self.save_all_themes_to_disk()
+        self.load_all_themes_from_disk()
+        self.populate_grids()
+
+    def handle_apply_theme(self):
+        current_tab_idx = self.tab_widget.currentIndex()
+        table = self.color_table if current_tab_idx == 0 else self.meta_table
+        current_col = table.currentColumn()
+
+        if current_col < 1 or current_col > len(self.theme_ids):
+            QMessageBox.warning(
+                self,
+                "Select Theme",
+                "Please select a cell in a theme's column first to apply it.",
+            )
+            return
+
+        theme_id = self.theme_ids[current_col - 1]
+        theme_name = self.themes[theme_id].get("name", theme_id)
+
+        try:
+            self.save_all_themes_to_disk()
+            apply_theme(theme_id, self.themes)
+            self.statusBar().showMessage(f"Applied theme: {theme_name}", 5000)
+        except Exception as e:
+            QMessageBox.critical(
+                self, "Apply Theme Error", f"Failed to apply theme '{theme_id}':\n{e}"
+            )
+
+    def closeEvent(self, event):
+        self.save_all_themes_to_disk()
+        event.accept()
+
+
+def run_gui():
+    app = QApplication(sys.argv)
+    window = ThemeEditor()
+    window.show()
+    sys.exit(app.exec())
+
+
 def main():
+    if (
+        os.path.basename(sys.argv[0]) == "thmedit"
+        or "--gui" in sys.argv
+        or "-g" in sys.argv
+    ):
+        run_gui()
+        sys.exit(0)
+
     themes = load_themes()
 
     parser = argparse.ArgumentParser(description="Centralized theme switcher.")
@@ -412,19 +862,25 @@ def main():
     # thm select
     subparsers.add_parser("select", help="Interactively select a theme using fzf")
 
+    # thm gui / edit
+    subparsers.add_parser("gui", help="Launch the GUI Theme Configuration Studio")
+    subparsers.add_parser("edit", help="Launch the GUI Theme Configuration Studio")
+
     args = parser.parse_args()
 
     if not themes:
         print(f"No themes found in '{THEME_DIR}'. Please add JSON theme files.")
         sys.exit(1)
 
-    if args.command == "list":
+    if args.command in ("gui", "edit") or args.command is None:
+        run_gui()
+    elif args.command == "list":
         print("Available Themes:")
         for tid, tinfo in themes.items():
             print(f"  - {tid:<20} ({tinfo.get('name', 'Unknown')})")
     elif args.command == "set":
         apply_theme(args.theme_name, themes)
-    elif args.command == "select" or args.command is None:
+    elif args.command == "select":
         run_fzf_selector(themes)
 
 
