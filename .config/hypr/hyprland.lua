@@ -230,10 +230,12 @@ require("binds")
 
 hl.layer_rule({
 	name = "blur-layer",
-	match = { namespace = "(?:waybar|launcher)" },
+	match = { namespace = "(?:waybar|launcher|notifications)" },
 
 	blur = true,
 	blur_popups = true,
+	ignore_alpha = 0.1,
+	animation = "popin 50%",
 })
 
 -- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/

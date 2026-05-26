@@ -2,15 +2,15 @@
 @import url("/home/lmcs/.config/waybar/colors.css");
 
 window {
-	background-color: @bg_main;
-	border: .1em solid @border_main;
+	background-color: @bg;
+	border: .1em solid @border;
 	border-radius: .5em;
 	font-size: 1.25em;
 }
 
 #input {
-	background-color: @bg_main;
-	border: .1em solid @border_main;
+	background-color: @bg;
+	border: .1em solid @border;
 	border-radius: .5em;
 	color: @fg_widget;
 }
