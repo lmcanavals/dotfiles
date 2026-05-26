@@ -228,6 +228,7 @@ VirtualBox VMs/
 **/a.out
 **/*.app
 __pycache__/
+.antigravitycli/
 
 # exception rules
 
@@ -235,7 +236,7 @@ __pycache__/
 !.config/asciinema/config.toml
 
 .local/bin/aconfmgr
-.local/bin/agy
+.local/bin/agy*
 .local/bin/networkmanager_dmenu
 .local/bin/spots
 .local/bin/testt.zsh

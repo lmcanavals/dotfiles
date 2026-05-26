@@ -2,14 +2,14 @@
 
 @keyframes animation_critical {
 to {
-	color: @fg_critical;
-	background-color: @bg_critical;
+	color: @bg;
+	background-color: @error;
 }
 }
 @keyframes animation_atention {
 to {
-	color: @fg_atention;
-	background-color: @bg_atention;
+	color: @warning;
+	background-color: @bg_highlight;
 }
 }
 
@@ -28,7 +28,7 @@ button.urgent,
 button:hover {
 	background: inherit;
 	background-color: @bg_widget_r;
-	color: @fg_hover;
+	color: @tg_redish;
 	text-shadow: inherit;
 }
 
@@ -43,7 +43,7 @@ tooltip label {
 }
 
 window#waybar {
-	background: alpha(@bg_main, .25);
+	background: alpha(@bg, .25);
 	font-family: monospace, sans-serif;
 	font-size: 1.25em;
 }
@@ -63,9 +63,9 @@ button,
 #submap,
 #window {
 	border: none;
-	box-shadow: .1em .05em .1em @box_shadow;
+	box-shadow: .1em .05em .1em @shadow;
 	color: @fg_widget;
-	background-color: @bg_widget;
+	background-color: alpha(@bg_widget, .5);
 	border-radius: .25em;
 	margin: .15em .25em;
 	padding: 0 .5em;
@@ -104,9 +104,9 @@ button,
 #indicators,
 #time {
 	border: none;
-	box-shadow: .1em .05em .1em @box_shadow;
+	box-shadow: .1em .05em .1em @shadow;
 	color: @fg_widget;
-	background-color: @bg_widget_group;
+	background-color: alpha(@bg_widget, .75);
 	border-radius: .25em;
 	padding: 0;
 	margin: .15em .25em;
@@ -114,7 +114,7 @@ button,
 
 #battery.critical,
 #battery.low {
-	color: @alert;
+	color: @warning;
 }
 #battery.critical:not(.charging),
 #temperature.critical {
@@ -128,29 +128,29 @@ button,
 #bluetooth.disabled,
 #bluetooth.off,
 #network.disabled {
-	color: @fg_dimmed;
+	color: @comment;
 }
 #network.disconnected {
-	color: @fg_atention;
+	color: @warning;
 }
 
 #keyboard-state > label {
-	color: @fg_dimmed;
+	color: @comment;
 }
 #keyboard-state > label.locked {
 	color: @fg_widget;
 }
 
 #mpris.paused {
-	color: @fg_dimmed;
+	color: @comment;
 }
 #mpris.stopped {
-	color: @fg_atention;
+	color: @warning;
 }
 
 #tray > .needs-attention {
 	-gtk-icon-effect: highlight;
-	background-color: @bg_atention;
+	background-color: @bg_highlight;
 }
 #tray > .passive {
 	-gtk-icon-effect: dim;
