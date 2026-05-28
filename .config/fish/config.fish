@@ -82,7 +82,6 @@ if status is-interactive
 
     lismosh; and set -gx ISMOSHBRUH yup
     set --global fish_key_bindings fish_vi_key_bindings
-    fish_config theme choose "$FISH_THEME"
     starship init fish | source
     fzf --fish | source
 end

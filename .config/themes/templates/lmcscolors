@@ -1,0 +1,17 @@
+# target: ~/.config/lmcscolors
+#{{t0_bg}}
+#{{t1_red}}
+#{{t2_green}}
+#{{t3_orange}}
+#{{t4_blue}}
+#{{t5_purple}}
+#{{t6_cyan}}
+#{{t7_fgdark}}
+#{{t8_bglight}}
+#{{t9_pink}}
+#{{ta_green}}
+#{{tb_yellow}}
+#{{tc_blue}}
+#{{td_violet}}
+#{{te_aqua}}
+#{{tf_fg}}

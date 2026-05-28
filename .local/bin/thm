@@ -3,6 +3,7 @@
 import os
 import sys
 import json
+import re
 import argparse
 import subprocess
 from pathlib import Path
@@ -35,6 +36,7 @@ THEME_DIR = get_home_path(".config", "themes", "definitions")
 THEME_DIR_PATH = Path(THEME_DIR)
 DEFAULT_COLOR = "#00ff00"
 MISSING_VAL_MARKER = "<missing>"
+FOR_PATTERN = re.compile(r"^\s*for\s+(\w+)\s*,\s*(\w+)\s+in\s+(\w+)\s*$")
 
 
 def load_themes():
@@ -52,10 +54,7 @@ def load_themes():
                 with open(path, "r", encoding="utf-8") as f:
                     themes[theme_id] = json.load(f)
             except Exception as e:
-                print(
-                    f"Warning: Failed to parse theme file '{filename}': {e}",
-                    file=sys.stderr,
-                )
+                print(f"Failed to parse '{filename}': {e}", file=sys.stderr)
     return themes
 
 
@@ -68,34 +67,169 @@ def write_file(path, content):
 
 def resolve_theme_colors(theme):
     """Resolves and normalizes colors in a theme dict to raw hex strings without '#'."""
-    palette = theme.get("palette", {})
-    raw_colors = theme.get("colors", {})
-    resolved = {}
+    colors = theme.get("colors", {})
+    palette = {k: v.lstrip("#").lower() for k, v in theme.get("palette", {}).items()}
 
-    # Normalize palette keys and values
-    clean_palette = {}
-    for k, v in palette.items():
-        if isinstance(v, str):
-            clean_palette[k] = v.lstrip("#").lower()
-        else:
-            clean_palette[k] = v
+    return {
+        k: (palette[v] if v in palette else v).lstrip("#").lower()
+        for k, v in colors.items()
+    }
 
-    for key, val in raw_colors.items():
-        if isinstance(val, str):
-            if val.startswith("palette."):
-                palette_key = val.split(".")[1]
-                resolved_val = clean_palette.get(palette_key, "ffffff")
-            elif val in clean_palette:
-                resolved_val = clean_palette[val]
+
+def parse_target_path(first_line: str) -> str:
+    line = first_line.strip()
+    if line.startswith("/*") and line.endswith("*/"):
+        line = line[2:-2].strip()
+    pos = line.find("target:")
+    if pos >= 0:
+        return line[pos + 7 :].strip()
+    return ""
+
+
+def parse_reload_cmd(second_line: str) -> list[str]:
+    line = second_line.strip()
+    if line.startswith("/*") and line.endswith("*/"):
+        line = line[2:-2].strip()
+    pos = line.find("reload:")
+    if pos >= 0:
+        return line[pos + 7 :].strip().split()
+    return []
+
+
+def eval_condition(cond_str: str, context: dict) -> bool:
+    cond_str = cond_str.strip()
+    if "==" in cond_str:
+        parts = cond_str.split("==", 1)
+        lhs = parts[0].strip()
+        rhs = parts[1].strip().strip("\"'")
+        val = context.get(lhs, "")
+        return str(val) == rhs
+    elif "!=" in cond_str:
+        parts = cond_str.split("!=", 1)
+        lhs = parts[0].strip()
+        rhs = parts[1].strip().strip("\"'")
+        val = context.get(lhs, "")
+        return str(val) != rhs
+    else:
+        val = context.get(cond_str)
+        return bool(val and val != "false" and val != "0")
+
+
+def parse_template(lines: list) -> list:
+    def parse_rec(start_i: int) -> tuple[list, int]:
+        nodes = []
+        i = start_i
+        n = len(lines)
+        while i < n:
+            line = lines[i]
+            strip_line = line.strip()
+            if strip_line.startswith("{%") and strip_line.endswith("%}"):
+                content = strip_line[2:-2].strip()
+                if content.startswith("endfor") or content.startswith("endif"):
+                    return nodes, i
+                elif content.startswith("for "):
+                    match = FOR_PATTERN.match(content)
+                    if not match:
+                        raise ValueError(f"Invalid for loop syntax: '{strip_line}'")
+                    key_var, val_var, dict_var = match.groups()
+                    children, end_i = parse_rec(i + 1)
+                    actual_end_i = end_i
+                    if actual_end_i >= n:
+                        raise ValueError(f"Unclosed for loop starting at line {i + 1}")
+                    end_strip = lines[actual_end_i].strip()
+                    if not (
+                        end_strip.startswith("{%")
+                        and end_strip.endswith("%}")
+                        and "endfor" in end_strip
+                    ):
+                        raise ValueError(
+                            f"Expected {{% endfor %}} at line {actual_end_i + 1}, got '{end_strip}'"
+                        )
+                    nodes.append(
+                        {
+                            "type": "for",
+                            "key_var": key_var,
+                            "val_var": val_var,
+                            "dict_var": dict_var,
+                            "children": children,
+                        }
+                    )
+                    i = actual_end_i + 1
+                elif content.startswith("if "):
+                    cond_str = content[3:].strip()
+                    children, end_i = parse_rec(i + 1)
+                    actual_end_i = end_i
+                    if actual_end_i >= n:
+                        raise ValueError(f"Unclosed if block starting at line {i + 1}")
+                    end_strip = lines[actual_end_i].strip()
+                    if not (
+                        end_strip.startswith("{%")
+                        and end_strip.endswith("%}")
+                        and "endif" in end_strip
+                    ):
+                        raise ValueError(
+                            f"Expected {{% endif %}} at line {actual_end_i + 1}, got '{end_strip}'"
+                        )
+                    nodes.append(
+                        {"type": "if", "condition": cond_str, "children": children}
+                    )
+                    i = actual_end_i + 1
+                else:
+                    raise ValueError(f"Unknown template directive: {strip_line}")
             else:
-                resolved_val = val
-        else:
-            resolved_val = str(val)
+                nodes.append({"type": "text", "text": line})
+                i += 1
+        return nodes, i
 
-        # Normalize the resolved value to lowercase hex without '#'
-        resolved[key] = resolved_val.lstrip("#").lower()
+    nodes, last_i = parse_rec(0)
+    if last_i < len(lines):
+        bad_line = lines[last_i].strip()
+        raise ValueError(f"Unmatched end directive: '{bad_line}'")
+    return nodes
 
-    return resolved
+
+def evaluate_nodes(nodes: list, context: dict, unknown_variables: set) -> str:
+    result = []
+
+    def resolve_placeholders(text: str, local_ctx: dict) -> str:
+        def replace_match(match):
+            var_name = match.group(1).strip()
+            if var_name in local_ctx:
+                return str(local_ctx[var_name])
+            else:
+                unknown_variables.add(var_name)
+                return f"{{{{{var_name}}}}}"
+
+        return re.sub(r"\{\{([^}]+)\}\}", replace_match, text)
+
+    for node in nodes:
+        ntype = node["type"]
+        if ntype == "text":
+            result.append(resolve_placeholders(node["text"], context))
+        elif ntype == "if":
+            if eval_condition(node["condition"], context):
+                result.append(
+                    evaluate_nodes(node["children"], context, unknown_variables)
+                )
+        elif ntype == "for":
+            dict_var = node["dict_var"]
+            key_var = node["key_var"]
+            val_var = node["val_var"]
+
+            target_dict = context.get(dict_var)
+            if not isinstance(target_dict, dict):
+                unknown_variables.add(dict_var)
+                continue
+
+            for k, v in target_dict.items():
+                loop_ctx = context.copy()
+                loop_ctx[key_var] = k
+                loop_ctx[val_var] = v
+                result.append(
+                    evaluate_nodes(node["children"], loop_ctx, unknown_variables)
+                )
+
+    return "".join(result)
 
 
 def apply_theme(theme_id, themes):
@@ -107,325 +241,83 @@ def apply_theme(theme_id, themes):
     c = resolve_theme_colors(theme)
     print(f"Applying theme: {theme['name']}...")
 
-    # 1. Shell themes (Zsh)
-    zsh_theme = f"""# Dynamic theme variables for Zsh
-export LCTHEME="{theme["light_or_dark"]}"
-export BAT_THEME="{theme["bat_theme"]}"
-export FISH_THEME="{theme["fish_theme"]}"
-export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \\
-  --highlight-line \\
-  --info=inline-right \\
-  --ansi \\
-  --layout=reverse \\
-  --border=none \\
-  --color=bg+:#{c["bg_highlight"]} \\
-  --color=bg:#{c["bg"]} \\
-  --color=border:#{c["border"]} \\
-  --color=fg:#{c["fg"]} \\
-  --color=gutter:#{c["bg"]} \\
-  --color=header:#{c["accent_alt"]} \\
-  --color=hl+:#{c["accent"]} \\
-  --color=hl:#{c["accent"]} \\
-  --color=info:#{c["comment"]} \\
-  --color=marker:#{c["accent_dim"]} \\
-  --color=pointer:#{c["accent_dim"]} \\
-  --color=prompt:#{c["accent"]} \\
-  --color=query:#{c["fg"]}:regular \\
-  --color=scrollbar:#{c["accent"]} \\
-  --color=separator:#{c["accent_alt"]} \\
-  --color=spinner:#{c["accent_dim"]}"
-"""
-    write_file(get_home_path(".config", "themes", "active_theme.zsh"), zsh_theme)
+    # Build context
+    context = {}
+    for k, v in theme.items():
+        if k not in ("palette", "colors"):
+            context[k] = str(v)
+    for k, v in c.items():
+        context[k] = str(v)
+    context["colors"] = c
 
-    # 2. Shell themes (Fish)
-    fish_theme = f"""# Dynamic theme variables for Fish
-set -gx LCTHEME "{theme["light_or_dark"]}"
-set -gx BAT_THEME "{theme["bat_theme"]}"
-set -gx FISH_THEME "{theme["fish_theme"]}"
-set -gx FZF_DEFAULT_OPTS "$FZF_DEFAULT_OPTS \\
-  --highlight-line \\
-  --info=inline-right \\
-  --ansi \\
-  --layout=reverse \\
-  --border=none \\
-  --color=bg+:#{c["bg_highlight"]} \\
-  --color=bg:#{c["bg"]} \\
-  --color=border:#{c["border"]} \\
-  --color=fg:#{c["fg"]} \\
-  --color=gutter:#{c["bg"]} \\
-  --color=header:#{c["accent_alt"]} \\
-  --color=hl+:#{c["accent"]} \\
-  --color=hl:#{c["accent"]} \\
-  --color=info:#{c["comment"]} \\
-  --color=marker:#{c["accent_dim"]} \\
-  --color=pointer:#{c["accent_dim"]} \\
-  --color=prompt:#{c["accent"]} \\
-  --color=query:#{c["fg"]}:regular \\
-  --color=scrollbar:#{c["accent"]} \\
-  --color=separator:#{c["accent_alt"]} \\
-  --color=spinner:#{c["accent_dim"]}"
-"""
-    write_file(get_home_path(".config", "themes", "active_theme.fish"), fish_theme)
+    templates_dir = get_home_path(".config", "themes", "templates")
+    if not os.path.exists(templates_dir) or not os.listdir(templates_dir):
+        print(
+            f"Error: Templates directory '{templates_dir}' is missing or empty. Please populate it.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
 
-    # 3. Hex code lists for Linux console escape setups
-    lmcscolors = f"""#{c["t0_bg"]}
-#{c["t1_red"]}
-#{c["t2_green"]}
-#{c["t3_orange"]}
-#{c["t4_blue"]}
-#{c["t5_purple"]}
-#{c["t6_cyan"]}
-#{c["t7_fgdark"]}
-#{c["t8_bglight"]}
-#{c["t9_pink"]}
-#{c["ta_green"]}
-#{c["tb_yellow"]}
-#{c["tc_blue"]}
-#{c["td_violet"]}
-#{c["te_aqua"]}
-#{c["tf_fg"]}
-"""
-    write_file(get_home_path(".config", "lmcscolors"), lmcscolors)
+    failures = []
 
-    # 4. Waybar colors
-    waybar_css = "/* Sourced waybar colors */\n\n"
-    for k, val in c.items():
-        waybar_css += f"@define-color {k} #{val};\n"
+    for filename in sorted(os.listdir(templates_dir)):
+        template_path = os.path.join(templates_dir, filename)
+        if not os.path.isfile(template_path):
+            continue
 
-    write_file(get_home_path(".config", "waybar", "colors.css"), waybar_css)
+        try:
+            with open(template_path, "r", encoding="utf-8") as f:
+                template_content = f.read()
+        except Exception as e:
+            failures.append(f"Failed to read template '{filename}': {e}")
+            continue
 
-    # 5. Hyprland colors
-    hyprlang_theme = "# Sourced Hyprland colors\n\n"
-    for k, val in c.items():
-        hyprlang_theme += f"${k} = {val}\n"
-    write_file(get_home_path(".config", "hypr", "colors.conf"), hyprlang_theme)
+        lines = template_content.splitlines(keepends=True)
+        if not lines:
+            failures.append(f"Template '{filename}' is empty.")
+            continue
 
-    # Hyprland lua helper
-    hyprlua_theme = "-- Sourced Hyprland colors lua\n\nlocal M = {}\n\n"
-    for k, val in c.items():
-        hyprlua_theme += f'M.{k} = "{val}"\n'
-    hyprlua_theme += "\nreturn M"
-    write_file(get_home_path(".config", "hypr", "colors.lua"), hyprlua_theme)
+        target_path = parse_target_path(lines[0])
+        reload_cmd = parse_reload_cmd(lines[1])
+        if not target_path:
+            failures.append(
+                f"Template '{filename}' lacks a valid 'target: <path>' directive on the first line."
+            )
+            continue
 
-    # 6. Dunst colors
-    dunst_theme = f"""# Sourced Dunst colors
-[urgency_low]
-background = "#{c["bg"]}aa"
-foreground = "#{c["success"]}"
-frame_color = "#{c["comment"]}aa"
+        template_body = "".join(lines[2 if reload_cmd else 1 :])
+        unknown_vars = set()
+        try:
+            nodes = parse_template(template_body.splitlines(keepends=True))
+            rendered_content = evaluate_nodes(nodes, context, unknown_vars)
+        except Exception as e:
+            failures.append(f"Failed to render template '{filename}': {e}")
+            continue
 
-[urgency_normal]
-background = "#{c["bg"]}aa"
-foreground = "#{c["success"]}"
-frame_color = "#{c["success"]}aa"
+        if unknown_vars:
+            failures.append(
+                f"Template '{filename}' has unknown variables: {', '.join(sorted(unknown_vars))}"
+            )
 
-[urgency_critical]
-background = "#{c["shadow"]}aa"
-foreground = "#{c["warning"]}"
-frame_color = "#{c["warning"]}aa"
-"""
-    write_file(
-        get_home_path(".config", "dunst", "dunstrc.d", "colors.conf"), dunst_theme
-    )
+        expanded_target = os.path.expanduser(target_path)
+        try:
+            write_file(expanded_target, rendered_content)
+            if reload_cmd:
+                try:
+                    subprocess.run(reload_cmd, stderr=subprocess.DEVNULL)
+                    print(f"Reloading '{expanded_target}' corresponding app.")
+                except Exception:
+                    failures.append(f"Couldn't reload '{filename}' corresponding app.")
+        except Exception as e:
+            failures.append(
+                f"Failed to write rendered '{filename}' to '{expanded_target}': {e}"
+            )
 
-    # 7. Fuzzel theme
-    fuzzel_theme = f"""[colors]
-background={c["bg_dark"]}A0
-text={c["success"]}ff
-prompt={c["warning"]}ff
-placeholder={c["comment"]}ff
-input={c["success"]}ff
-match={c["warning"]}ff
-selection={c["success"]}80
-selection-text={c["bg_dark"]}ff
-selection-match={c["warning"]}ff
-counter={c["comment"]}ff
-border={c["bg"]}ff
-"""
-    write_file(get_home_path(".config", "fuzzel", "theme.ini"), fuzzel_theme)
-
-    # 8. Lazygit theme
-    lazygit_theme = f"""gui:
-  nerdFontsVersion: "3"
-  theme:
-    activeBorderColor:
-      - "#{c["accent_alt"]}"
-      - "bold"
-    inactiveBorderColor:
-      - "#{c["accent"]}"
-    searchingActiveBorderColor:
-      - "#{c["accent_alt"]}"
-      - "bold"
-    optionsTextColor:
-      - "#{c["accent"]}"
-    selectedLineBgColor:
-      - "#{c["bg_highlight"]}"
-    cherryPickedCommitFgColor:
-      - "#{c["accent"]}"
-    cherryPickedCommitBgColor:
-      - "#{c["t5_purple"]}"
-    markedBaseCommitFgColor:
-      - "#{c["accent"]}"
-    markedBaseCommitBgColor:
-      - "#{c["warning"]}"
-    unstagedChangesColor:
-      - "#{c["error"]}"
-    defaultFgColor:
-      - "#{c["fg"]}"
-"""
-    write_file(get_home_path(".config", "lazygit", "config.yml"), lazygit_theme)
-
-    # 9. Terminal Themes
-    # Ghostty
-    ghostty_theme = f"theme = {theme['ghostty_theme']}\n"
-    write_file(get_home_path(".config", "ghostty", "theme"), ghostty_theme)
-
-    # Wezterm
-    wezterm_theme = f"""return {{
-  wezterm_scheme = "{theme["wezterm_scheme"]}",
-  light_or_dark = "{theme["light_or_dark"]}",
-}}
-"""
-    write_file(get_home_path(".config", "wezterm", "theme.lua"), wezterm_theme)
-
-    # Kitty
-    kitty_theme = f"""# Sourced Kitty colors
-background #{c["bg"]}
-foreground #{c["fg"]}
-selection_background #{c["bg_highlight"]}
-selection_foreground #{c["fg"]}
-url_color #{c["ta_green"]}
-cursor #{c["fg"]}
-cursor_text_color #{c["bg"]}
-
-# Tabs
-active_tab_background #{c["accent"]}
-active_tab_foreground #{c["bg_dark"]}
-inactive_tab_background #{c["bg_highlight"]}
-inactive_tab_foreground #{c["comment"]}
-tab_bar_background #{c["shadow"]}
-
-# Windows
-active_border_color #{c["accent"]}
-inactive_border_color #{c["bg_highlight"]}
-
-# Normal
-color0 #{c["t0_bg"]}
-color1 #{c["t1_red"]}
-color2 #{c["t2_green"]}
-color3 #{c["t3_orange"]}
-color4 #{c["t4_blue"]}
-color5 #{c["t5_purple"]}
-color6 #{c["t6_cyan"]}
-color7 #{c["t7_fgdark"]}
-
-# Bright
-color8  #{c["t8_bglight"]}
-color9  #{c["t9_pink"]}
-color10 #{c["ta_green"]}
-color11 #{c["tb_yellow"]}
-color12 #{c["tc_blue"]}
-color13 #{c["td_violet"]}
-color14 #{c["te_aqua"]}
-color15 #{c["tf_fg"]}
-
-# Extended
-color16 #{c["tg_redish"]}
-color17 #{c["th_crimson"]}
-"""
-    write_file(get_home_path(".config", "kitty", "theme.conf"), kitty_theme)
-
-    # Foot
-    foot_theme = f"""[colors-dark]
-background={c["bg"]}
-foreground={c["fg"]}
-regular0={c["t0_bg"]}
-regular1={c["t1_red"]}
-regular2={c["t2_green"]}
-regular3={c["t3_orange"]}
-regular4={c["t4_blue"]}
-regular5={c["t5_purple"]}
-regular6={c["t6_cyan"]}
-regular7={c["t7_fgdark"]}
-bright0={c["t8_bglight"]}
-bright1={c["t9_pink"]}
-bright2={c["ta_green"]}
-bright3={c["tb_yellow"]}
-bright4={c["tc_blue"]}
-bright5={c["td_violet"]}
-bright6={c["te_aqua"]}
-bright7={c["tf_fg"]}
-"""
-    write_file(get_home_path(".config", "foot", "theme"), foot_theme)
-
-    # 10. Btop theme
-    btop_theme = f"""# Theme: {theme["name"]}
-theme[main_bg]="#{c["bg_dark"]}"
-theme[main_fg]="#{c["fg_dark"]}"
-theme[title]="#{c["fg"]}"
-theme[hi_fg]="#{c["accent"]}"
-theme[selected_bg]="#{c["bg_highlight"]}"
-theme[selected_fg]="#{c["fg"]}"
-theme[inactive_fg]="#{c["comment"]}"
-theme[proc_misc]="#{c["accent"]}"
-theme[cpu_box]="#{c["comment"]}"
-theme[mem_box]="#{c["comment"]}"
-theme[net_box]="#{c["comment"]}"
-theme[proc_box]="#{c["comment"]}"
-theme[div_line]="#{c["comment"]}"
-theme[temp_start]="#{c["success"]}"
-theme[temp_mid]="#{c["warning"]}"
-theme[temp_end]="#{c["error"]}"
-theme[cpu_start]="#{c["success"]}"
-theme[cpu_mid]="#{c["warning"]}"
-theme[cpu_end]="#{c["error"]}"
-theme[free_start]="#{c["success"]}"
-theme[free_mid]="#{c["warning"]}"
-theme[free_end]="#{c["error"]}"
-theme[cached_start]="#{c["success"]}"
-theme[cached_mid]="#{c["warning"]}"
-theme[cached_end]="#{c["error"]}"
-theme[available_start]="#{c["success"]}"
-theme[available_mid]="#{c["warning"]}"
-theme[available_end]="#{c["error"]}"
-theme[used_start]="#{c["success"]}"
-theme[used_mid]="#{c["warning"]}"
-theme[used_end]="#{c["error"]}"
-theme[download_start]="#{c["success"]}"
-theme[download_mid]="#{c["warning"]}"
-theme[download_end]="#{c["error"]}"
-theme[upload_start]="#{c["success"]}"
-theme[upload_mid]="#{c["warning"]}"
-theme[upload_end]="#{c["error"]}"
-"""
-    write_file(get_home_path(".config", "btop", "theme.theme"), btop_theme)
-
-    # 11. Neovim dynamic theme
-    nvim_theme = f"""return {{
-  nvim_scheme = "{theme["nvim_scheme"]}",
-  tokyonight_style = "{theme["tokyonight_style"]}",
-}}
-"""
-    write_file(
-        get_home_path(".config", "nvim", "lua", "config", "theme.lua"), nvim_theme
-    )
-
-    # 12. Hot reload processes
-    print("Reloading active applications...")
-    try:
-        subprocess.run(["dunstctl", "reload"], stderr=subprocess.DEVNULL)
-    except Exception:
-        pass
-
-    try:
-        subprocess.run(["killall", "-USR2", "waybar"], stderr=subprocess.DEVNULL)
-    except Exception:
-        pass
-
-    try:
-        subprocess.run(["hyprctl", "reload"], stderr=subprocess.DEVNULL)
-    except Exception:
-        pass
+    if failures:
+        print("\n--- Theme Application Report ---", file=sys.stderr)
+        for fail in failures:
+            print(f"Error/Warning: {fail}", file=sys.stderr)
+        print("--------------------------------\n", file=sys.stderr)
 
     print("Theme applied successfully!")
 
@@ -649,6 +541,7 @@ class ThemeEditor(QMainWindow):
                 cell_item = QTableWidgetItem(val)
                 resolved_hex = self.resolve_hex(val, theme.get("palette", {}))
                 cell_item.setBackground(QColor(f"#{resolved_hex}"))
+                cell_item.setIcon(self.create_color_icon(resolved_hex))
 
                 self.color_table.setItem(row, col, cell_item)
 
@@ -686,6 +579,7 @@ class ThemeEditor(QMainWindow):
 
     def resolve_hex(self, val: str, palette: Dict[str, str]) -> str:
         if val.startswith("palette."):
+            print("xxxxxxxxxxxx")
             pk = val.split(".")[1]
             return palette.get(pk, "ffffff").lstrip("#")
         if val in palette:
