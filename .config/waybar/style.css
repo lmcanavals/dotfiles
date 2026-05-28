@@ -28,13 +28,13 @@ button.urgent,
 button:hover {
 	background: inherit;
 	background-color: @bg_widget_r;
-	color: @tg_redish;
+	color: @fg;
 	text-shadow: inherit;
 }
 
 tooltip {
 	border: none;
-	background-color: alpha(black, 0.01);
+	background-color: alpha(@bg_widget, 0.75);
 }
 tooltip label {
 	color: @fg_widget;
