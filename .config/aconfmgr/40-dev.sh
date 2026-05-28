@@ -1,7 +1,6 @@
 AddPackage base-devel      # Basic tools to build Arch Linux packages
 AddPackage clang           # C language family frontend for LLVM
 AddPackage cmake           # A cross-platform open-source make system
-AddPackage gemini-cli      # Open-source AI agent that brings the power of Gemini directly into your terminal
 AddPackage git             # the fast distributed version control system
 AddPackage github-cli      # The GitHub CLI
 AddPackage glfw            # A free, open source, portable framework for graphical application development

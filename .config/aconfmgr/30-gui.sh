@@ -40,6 +40,7 @@ AddPackage nwg-look                        # GTK settings editor adapted to work
 AddPackage pavucontrol                     # PulseAudio Volume Control
 AddPackage pipewire-pulse                  # Low-latency audio/video router and processor - PulseAudio replacement
 AddPackage qt5-wayland                     # Provides APIs for Wayland
+AddPackage qt6-tools                       # A cross-platform application and UI framework (Development Tools, QtHelp)
 AddPackage qt6ct                           # Qt 6 Configuration Utility
 AddPackage slurp                           # Select a region in a Wayland compositor
 AddPackage tela-circle-icon-theme-orange   # A flat colorful design icon theme - orange variant
