@@ -8,4 +8,4 @@ paq0size() {
 		fi
 	done
 }
-pac0size
+paq0size

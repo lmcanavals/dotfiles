@@ -7,13 +7,13 @@ background-opacity = 0.9
 font-family = Iosevka
 font-family = Symbols Nerd Font Mono
 font-family-bold = Iosevka Slab
-font-family-bold-italic = ProggyClean Nerd Font
-font-family-italic = Iosevka Slab
+font-family-bold-italic = Monofur Nerd Font
+font-family-italic = UbuntuMono Nerd Font
 #font-feature = ss09
 font-size = 14
 font-style = Regular
 font-style-bold = SemiBold
-font-style-bold-italic = Bold
+font-style-bold-italic = Regular
 font-style-italic = Italic
 
 config-file = theme
