@@ -1,12 +1,17 @@
 #!/usr/bin/env zsh
 
-COLOR_ADDED="#0db9d7"
-COLOR_CLEAN="#41a6b5"
-COLOR_DELETED="#db4b4b"
-COLOR_DIVERGED="#ff9e64"
-COLOR_MODIFIED="#e0af68"
-COLOR_STAGED="#6183bb"
-COLOR_UNTRACKED="#9d7cd8"
+LCLR=$(<$XDG_CONFIG_HOME/lmcscolors)
+
+# do a `echo $LCLR` to see how colors are stored
+# for ${LCLR:idx:len} idx = c * 8 where c is in {0..15} the 16 base colors
+# the len = 7 to include the # and the 6 hex digits of the RRGGBB color code.
+COLOR_ADDED="${LCLR:16:7}"
+COLOR_CLEAN="${LCLR:96:7}"
+COLOR_DELETED="${LCLR:72:7}"
+COLOR_DIVERGED="${LCLR:24:7}"
+COLOR_MODIFIED="${LCLR:88:7}"
+COLOR_STAGED="${LCLR:112:7}"
+COLOR_UNTRACKED="${LCLR:56:7}"
 
 ICON_AHEAD=$'\uf093'     # 
 ICON_BEHIND=$'\uf019'    # 

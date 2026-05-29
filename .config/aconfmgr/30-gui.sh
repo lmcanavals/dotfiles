@@ -51,14 +51,14 @@ AddPackage ttf-carlito                     # Google's Carlito font
 AddPackage ttf-croscore                    # Chrome OS core fonts
 AddPackage ttf-dejavu                      # Font family based on the Bitstream Vera Fonts with a wider range of characters
 AddPackage ttf-fira-code                   # Monospaced font with programming ligatures
-AddPackage ttf-gohu-nerd                   # Patched font Gohufont from nerd fonts library
 AddPackage ttf-jetbrains-mono              # Typeface for developers, by JetBrains
 AddPackage ttf-liberation                  # Font family which aims at metric compatibility with Arial, Times New Roman, and Courier New
+AddPackage ttf-monofur-nerd                # Patched font Monofur from nerd fonts library
 AddPackage ttf-nerd-fonts-symbols          # High number of extra glyphs from popular 'iconic fonts'
 AddPackage ttf-nerd-fonts-symbols-mono     # High number of extra glyphs from popular 'iconic fonts' (monospace)
 AddPackage ttf-opensans                    # Sans-serif typeface commissioned by Google
-AddPackage ttf-proggyclean-nerd            # Patched font ProggyClean from nerd fonts library
 AddPackage ttf-roboto-mono                 # A monospaced addition to the Roboto type family.
+AddPackage ttf-ubuntu-mono-nerd            # Patched font Ubuntu Mono from nerd fonts library
 AddPackage uwsm                            # A standalone Wayland session manager
 AddPackage vivaldi                         # An advanced browser made with the power user in mind.
 AddPackage vulkan-radeon                   # Open-source Vulkan driver for AMD GPUs
