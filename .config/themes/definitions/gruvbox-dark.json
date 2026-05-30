@@ -2,7 +2,7 @@
     "name": "Gruvbox Dark",
     "light_or_dark": "dark",
     "ghostty_theme": "Gruvbox Dark",
-    "wezterm_scheme": "Gruvbox dark medium",
+    "wezterm_scheme": "GruvboxDark",
     "nvim_scheme": "gruvbox",
     "tokyonight_style": "dark",
     "fish_theme": "Gruvbox",

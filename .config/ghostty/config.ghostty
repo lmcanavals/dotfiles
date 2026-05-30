@@ -1,22 +1,21 @@
 # my awesome config
 
 background-opacity = 0.9
-
-#custom-shader = ~/Apps/repos/ghostty-shaders/drunkard.glsl
+config-file = theme
+#custom-shader = ~/Apps/repos/ghostty-shaders/bloom.glsl
 
 font-family = Iosevka
 font-family = Symbols Nerd Font Mono
 font-family-bold = Iosevka Slab
 font-family-bold-italic = Monofur Nerd Font
 font-family-italic = UbuntuMono Nerd Font
-#font-feature = ss09
+font-feature = dlig
+font-feature = ss09
 font-size = 14
 font-style = Regular
 font-style-bold = SemiBold
 font-style-bold-italic = Regular
 font-style-italic = Italic
-
-config-file = theme
 
 window-padding-balance = true
 window-show-tab-bar = never

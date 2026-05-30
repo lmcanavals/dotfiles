@@ -1,16 +1,16 @@
 #!/usr/bin/env zsh
 
 # Configuration
-THRESHOLD_LOW=20
-THRESHOLD_CRITICAL=10
+THRESHOLD_LOW=97
+THRESHOLD_CRITICAL=95
 THRESHOLD_FULL=98
 
 # Icons (Nerd Fonts / Font Awesome)
-ICON_PLUGGED=$'\uF0E7'      # 
-ICON_UNPLUGGED=$'\uF242'    # 
-ICON_LOW=$'\uF243'          # 
-ICON_CRITICAL=$'\uF244'     # 
-ICON_FULL=$'\uF240'         # 
+ICON_PLUGGED=$'\uF0E7'   # 
+ICON_UNPLUGGED=$'\uF242' # 
+ICON_LOW=$'\uF243'       # 
+ICON_CRITICAL=$'\uF244'  # 
+ICON_FULL=$'\uF240'      # 
 
 # State tracking to prevent spamming
 LAST_LEVEL=-1
@@ -46,15 +46,15 @@ function check_battery() {
 	fi
 
 	# Handle Levels
-	if [[ "$state" == "discharging" ]]; then
-		if (( percentage <= THRESHOLD_CRITICAL )) && [[ "$CRIT_NOTIFIED" == false ]]; then
+	if (("$state" == "discharging")); then
+		if ((percentage <= THRESHOLD_CRITICAL)) && [[ "$CRIT_NOTIFIED" == false ]]; then
 			send_battery_notif "CRITICAL BATTERY" "System will hibernate soon! ($percentage%)" "$ICON_CRITICAL" "critical"
 			CRIT_NOTIFIED=true
-		elif (( percentage <= THRESHOLD_LOW )) && [[ "$LOW_NOTIFIED" == false ]]; then
+		elif ((percentage <= THRESHOLD_LOW)) && [[ "$LOW_NOTIFIED" == false ]]; then
 			send_battery_notif "Low Battery" "Please plug in your charger ($percentage%)" "$ICON_LOW" "normal"
 			LOW_NOTIFIED=true
 		fi
-	elif [[ "$state" == "fully-charged" || ( "$state" == "charging" && percentage >= $THRESHOLD_FULL ) ]]; then
+	elif (("$state" == "fully-charged" || ("$state" == "charging" && percentage >= $THRESHOLD_FULL))); then
 		if [[ "$LAST_LEVEL" -lt $THRESHOLD_FULL ]]; then
 			send_battery_notif "Battery Full" "You can unplug the charger now." "$ICON_FULL"
 		fi

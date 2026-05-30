@@ -21,38 +21,38 @@ $lua\
 $username\
 $hostname\
 $directory"""
-continuation_prompt = "[ 󱞩_ ](bg:bright-black cyan) "
+continuation_prompt = "[ 󱞩_ ](bg:black cyan) "
 
 [character]
 format = "[ 󱓞  ](bg:yellow black)$symbol "
 error_symbol = "[ %! ](bg:bright-red black)"
-success_symbol = "[ %_ ](bg:bright-black bright-yellow)"
-vimcmd_symbol = "[ %: ](bg:bright-black purple)"
-vimcmd_replace_one_symbol = "[ %: ](bg:bright-black cyan)"
-vimcmd_replace_symbol = "[ %: ](bg:bright-black bright-cyan)"
-vimcmd_visual_symbol = "[ %: ](bg:bright-black blue)"
+success_symbol = "[ %_ ](bg:black bright-yellow)"
+vimcmd_symbol = "[ %: ](bg:black purple)"
+vimcmd_replace_one_symbol = "[ %: ](bg:black cyan)"
+vimcmd_replace_symbol = "[ %: ](bg:black bright-cyan)"
+vimcmd_visual_symbol = "[ %: ](bg:black blue)"
 
 [cmake]
 format = "[ $symbol($version)]($style)"
-style = "bg:bright-black blue"
+style = "bg:black blue"
 version_format = "${major}.${minor}"
 
 [cmd_duration]
 format = "[ ($duration)]($style)"
 min_time = 10_000
 show_notifications = true
-style = "bg:bright-black yellow"
+style = "bg:black yellow"
 
 [conda]
 format = "[ $symbol($environment)]($style) "
-style = "bg:bright-black bright-blue"
+style = "bg:black bright-blue"
 symbol = " "
 
 [deno]
 detect_extensions = ["js"]
 detect_folders = ["js"]
 format = "[ $symbol($version)]($style)"
-style = "bg:bright-black bright-green"
+style = "bg:black bright-green"
 symbol = " "
 version_format = "${major}.${minor}"
 
@@ -60,71 +60,71 @@ version_format = "${major}.${minor}"
 format = "[ $path ]($style)[$read_only]($read_only_style)"
 home_symbol = "󱂵 "
 read_only = "󰌾 "
-style = "bg:bright-black bright-cyan"
-read_only_style = "bg:bright-black red"
+style = "bg:black bright-cyan"
+read_only_style = "bg:black red"
 truncation_length = 1
 truncation_symbol = "… "
 fish_style_pwd_dir_length = 1
 
 [git_branch]
 format = "[ $symbol($branch)]($style)"
-style = "bg:bright-black purple"
+style = "bg:black purple"
 symbol = ""
 
 [git_commit]
 format = "[($hash$tag)]($style)"
-style = "bg:bright-black green"
+style = "bg:black green"
 
 [git_state]
 format = "[$state($progress_current/$progress_total)]($style)"
-style = "bg:bright-black bright-yellow"
+style = "bg:black bright-yellow"
 
 [git_status]
 format = "([$all_status$ahead_behind ]($style))"
-style = "bg:bright-black red"
+style = "bg:black red"
 
 [golang]
 format = "[ $symbol($version)]($style)"
-style = "bg:bright-black bright-green"
+style = "bg:black bright-green"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [hostname]
 format = "[$hostname]($style):"
-style = "bg:bright-black bright-yellow"
+style = "bg:black bright-yellow"
 
 [java]
 format = "[ $symbol($version)]($style)"
-style = "bg:bright-black bright-green"
+style = "bg:black bright-green"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [jobs]
 format = "[ $number$symbol]($style)"
-style = "bg:bright-black bright-blue"
+style = "bg:black bright-blue"
 symbol = " "
 
 [julia]
 format = "[ $symbol($version)]($style)"
-style = "bg:bright-black bright-green"
+style = "bg:black bright-green"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [lua]
 format = "[ $symbol($version)]($style)"
-style = "bg:bright-black bright-green"
+style = "bg:black bright-green"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [python]
 format = "[ $symbol(\\($virtualenv\\))($version)]($style)"
-style = "bg:bright-black bright-green"
+style = "bg:black bright-green"
 symbol = " "
 version_format = "${major}.${minor}"
 
 [rust]
 format = "[ $symbol($version)]($style)"
-style = "bg:bright-black bright-green"
+style = "bg:black bright-green"
 symbol = " "
 version_format = "${major}.${minor}"
 
@@ -136,13 +136,13 @@ style = "bg:red black"
 [sudo]
 disabled = false
 format = "[ $symbol]($style)"
-style = "bg:bright-black bright-green"
+style = "bg:black bright-green"
 symbol = " "
 
 [username]
 format = "[ ($user)]($style)"
-style_root = "bg:bright-black red"
-style_user = "bg:bright-black green"
+style_root = "bg:black red"
+style_user = "bg:black green"
 
 [kotlin]
 disabled = true

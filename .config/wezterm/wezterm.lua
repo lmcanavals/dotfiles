@@ -6,17 +6,16 @@ local config = wezterm.config_builder()
 
 -- color theme stuff
 local has_theme, theme = pcall(require, "theme")
+local the_theme = "Tokyo Night Night"
+local the_mode = "dark"
 if has_theme and theme then
-	config.color_scheme = theme.wezterm_scheme
-	config.set_environment_variables = {
-		LCTHEME = theme.light_or_dark,
-	}
-else
-	config.color_scheme = "Tokyo Night Moon"
-	config.set_environment_variables = {
-		LCTHEME = "dark",
-	}
+	the_theme = theme.wezterm_scheme
+	the_mode = theme.light_or_dark
 end
+config.color_scheme = the_theme
+config.set_environment_variables = {
+	LCTHEME = the_mode,
+}
 
 -- background awesome
 local bgfolder = ".local/share/backgrounds/"
@@ -60,9 +59,9 @@ config.background = {
 -- fonts
 local base_font = "Iosevka" -- "Monaspace Argon" -- "Maple Mono NF"
 local str_font = "Iosevka Slab" -- "Monaspace Xenon" -- "FiraCode Nerd Font"
-local cmnt_font = "Monofur Nerd Font" -- "Monaspace Radon" -- "Victor Mono Nerd Font"
+local cmnt_font = "UbuntuMono Nerd Font" -- "Monaspace Radon" -- "Victor Mono Nerd Font"
 local half_font = "Terminus" -- "Monaspace Neon" -- "Fairfax HD"
-local diag_font = "Terminus" -- "Monaspace Krypton"
+local diag_font = "Monofur Nerd Font" -- "Monaspace Krypton"
 
 -- local maple_hb = { "cv02", "ss01", "ss02", "ss03", "ss04", "ss05" }
 --[[ local monaspace_hb = {
@@ -87,10 +86,13 @@ local cmnt_hb = no_hb -- monaspace_hb
 local half_hb = no_hb -- monaspace_hb
 local diag_hb = no_hb -- monaspace_hb
 
-config.font = wezterm.font({
-	family = base_font,
-	harfbuzz_features = base_hb,
-	weight = "Regular",
+config.font = wezterm.font_with_fallback({
+	{
+		family = base_font,
+		harfbuzz_features = base_hb,
+		weight = "Regular",
+	},
+	"Symbols Nerd Font Mono",
 })
 config.font_rules = {
 	{
@@ -128,7 +130,7 @@ config.font_rules = {
 			family = cmnt_font,
 			harfbuzz_features = cmnt_hb,
 			style = "Italic",
-			weight = "Medium",
+			weight = "Regular",
 		}),
 	},
 }
@@ -140,7 +142,7 @@ config.initial_cols = 120
 config.enable_tab_bar = false
 config.term = "wezterm"
 -- config.window_decorations = "TITLE | RESIZE"
--- config.window_background_opacity = 0.9
+config.window_background_opacity = 0.9
 function Recompute_padding(window)
 	local overrides = window:get_config_overrides() or {}
 	local win_dims = window:get_dimensions()
