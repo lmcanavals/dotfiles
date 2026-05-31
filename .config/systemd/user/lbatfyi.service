@@ -1,0 +1,12 @@
+[Unit]
+Description=Lmcs dono's Battery Monitor Notifications
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/bin/zsh /home/lmcs/.local/bin/lbatfyi
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=graphical-session.target

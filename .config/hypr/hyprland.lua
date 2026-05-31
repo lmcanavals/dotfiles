@@ -35,6 +35,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("systemctl --user is-enabled hyprpolkitagent || systemctl --user enable --now hyprpolkitagent")
 	hl.exec_cmd("systemctl --user is-enabled hyprsunset || systemctl --user enable --now hyprsunset")
 	hl.exec_cmd("systemctl --user is-enabled waybar || systemctl --user enable --now waybar")
+	hl.exec_cmd("systemctl --user is-enabled lbatfyi || systemctl --user enable --now lbatfyi")
 
 	hl.exec_cmd("uwsm-app -- wl-paste --watch cliphist store")
 	hl.exec_cmd('rm "$HOME/.cache/cliphist/db"')

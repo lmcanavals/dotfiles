@@ -1,16 +1,50 @@
-local Util = require("tokyonight.util")
+-- 3 year time skip
+
+local has_theme, theme = pcall(require, "config.theme")
+if not (has_theme and theme and theme.nvim_scheme) then
+	return {}
+end
+vim.o.background = theme.background
 return {
+	{ "nordtheme/vim", lazy = true },
+	{
+		"ellisonleao/gruvbox.nvim",
+		lazy = true,
+		opts = {
+			overrides = {
+				LspInlayHint = { bold = true, italic = true, fg = "#665c54" },
+				BufferLineBackground = { bold = true, italic = true, fg = "#7c6f64" },
+				BufferLineBufferVisible = { bold = true, italic = true, fg = "#b16286" },
+				CursorLineNr = { bold = true, italic = true, fg = "#fabd2f" },
+				DiagnosticError = { bold = true, italic = true, fg = "#fb4934" },
+				DiagnosticWarn = { bold = true, italic = true, fg = "#fabd2f" },
+				DiagnosticInfo = { bold = true, italic = true, fg = "#83a598" },
+				DiagnosticHint = { bold = true, italic = true, fg = "#8ec07c" },
+				DiagnosticOk = { bold = true, italic = true, fg = "#b8bb26" },
+				DiagnosticVirtualTextError = { bold = true, italic = true, fg = "#fb4934" },
+				DiagnosticVirtualTextWarn = { bold = true, italic = true, fg = "#fabd2f" },
+				DiagnosticVirtualTextInfo = { bold = true, italic = true, fg = "#83a598" },
+				DiagnosticVirtualTextHint = { bold = true, italic = true, fg = "#8ec07c" },
+				DiagnosticUnnecessary = { bold = true, italic = true, fg = "#928374" },
+				Folded = { bold = true, italic = true, fg = "#928374", bg = "#3c3836" },
+				LineNr = { bold = true, italic = true, fg = "#7c6f64" },
+				NormalFloat = { bold = true, italic = true, fg = "#ebdbb2" },
+				SnacksIndentScope = { fg = "#fe8019" },
+				String = { bold = true, italic = false, fg = "#b8bb26" },
+			},
+			transparent_mode = true,
+		},
+	},
 	{
 		"folke/tokyonight.nvim",
+		lazy = true,
 		opts = {
-			style = (function()
-				local ok, theme = pcall(require, "config.theme")
-				return (ok and theme and theme.tokyonight_style) or "night"
-			end)(),
+			style = theme.tokyonight_style or "night",
 			transparent = true,
 			---@param hl tokyonight.Highlights
 			---@param c ColorScheme
 			on_highlights = function(hl, c)
+				local Util = require("tokyonight.util")
 				hl.BufferLineBackground = { bold = true, italic = true, fg = c.comment }
 				hl.BufferLineBufferVisible = { bold = true, italic = true, fg = c.purple }
 				hl.CursorLineNr = { bold = true, italic = true, fg = c.orange }
@@ -74,52 +108,13 @@ return {
 				-- hl.VisualNOS = { fg = colors.red, underdouble = true }
 			end,
 		},
-	},
-	{
-		"ellisonleao/gruvbox.nvim",
-		opts = {
-			overrides = {
-				LspInlayHint = { bold = true, italic = true, fg = "#665c54" },
-				BufferLineBackground = { bold = true, italic = true, fg = "#7c6f64" },
-				BufferLineBufferVisible = { bold = true, italic = true, fg = "#b16286" },
-				CursorLineNr = { bold = true, italic = true, fg = "#fabd2f" },
-				DiagnosticError = { bold = true, italic = true, fg = "#fb4934" },
-				DiagnosticWarn = { bold = true, italic = true, fg = "#fabd2f" },
-				DiagnosticInfo = { bold = true, italic = true, fg = "#83a598" },
-				DiagnosticHint = { bold = true, italic = true, fg = "#8ec07c" },
-				DiagnosticOk = { bold = true, italic = true, fg = "#b8bb26" },
-				DiagnosticVirtualTextError = {
-					bold = true,
-					italic = true,
-					bg = "#cc241d",
-					fg = "#fbf1c7",
-				},
-				DiagnosticVirtualTextWarn = {
-					bold = true,
-					italic = true,
-					bg = "#d79921",
-					fg = "#fbf1c7",
-				},
-				DiagnosticVirtualTextInfo = {
-					bold = true,
-					italic = true,
-					bg = "#458588",
-					fg = "#fbf1c7",
-				},
-				DiagnosticVirtualTextHint = {
-					bold = true,
-					italic = true,
-					bg = "#689d6a",
-					fg = "#fbf1c7",
-				},
-				DiagnosticUnnecessary = { bold = true, italic = true, fg = "#928374" },
-				Folded = { bold = true, italic = true, fg = "#928374", bg = "#3c3836" },
-				LineNr = { bold = true, italic = true, fg = "#7c6f64" },
-				NormalFloat = { bold = true, italic = true, fg = "#ebdbb2" },
-				SnacksIndentScope = { fg = "#fe8019" },
-				String = { bold = true, italic = false, fg = "#b8bb26" },
+
+		-- Setting the theme and stuff
+		{
+			"LazyVim/LazyVim",
+			opts = {
+				colorscheme = theme.nvim_scheme or "tokyonight",
 			},
-			transparent_mode = true,
 		},
 	},
 }
