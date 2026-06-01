@@ -1,0 +1,3 @@
+#!/bin/sh
+
+python ~/Apps/repos/theme-manager/src/thm/main.py &
