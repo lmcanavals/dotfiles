@@ -4,7 +4,7 @@
 
 local M = {}
 
-{% for k, val in colors %}
+{% for k, val in colors.items() %}
 M.{{k}} = "{{val}}"
 {% endfor %}
 
