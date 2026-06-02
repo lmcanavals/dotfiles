@@ -1,71 +1,135 @@
 #!/usr/bin/env zsh
 
 # Configuration
-THRESHOLD_LOW=97
-THRESHOLD_CRITICAL=95
-THRESHOLD_FULL=98
+THRESHOLD_FULL=95
+THRESHOLD_GOOD=50
+THRESHOLD_LOW=30
+THRESHOLD_CRITICAL=10
 
-# Icons (Nerd Fonts / Font Awesome)
-ICON_PLUGGED=$'\uF0E7'   # 
-ICON_UNPLUGGED=$'\uF242' # 
-ICON_LOW=$'\uF243'       # 
-ICON_CRITICAL=$'\uF244'  # 
-ICON_FULL=$'\uF240'      # 
-
-# State tracking to prevent spamming
+# State tracking
 LAST_LEVEL=-1
 LAST_STATE=""
 LOW_NOTIFIED=false
 CRIT_NOTIFIED=false
 
-function send_battery_notif() {
-	local title=$1
-	local msg=$2
-	local icon=$3
-	local urgency=${4:-normal}
+# Cache the battery path once at startup
+BATTERY_PATH=$(upower -e | grep -m1 'BAT')
 
-	fyi -u "$urgency" -i "battery" "$icon $title" "$msg"
+function send_battery_notif() {
+	local title=$1 msg=$2 icon=$3 urgency=${4:-normal}
+	fyi -u "$urgency" -i "$icon" "$title" "$msg"
 }
 
-# Initial check
-function check_battery() {
-	local battery_info=$(upower -i $(upower -e | grep 'BAT'))
-	local percentage=$(echo "$battery_info" | grep -E "percentage" | awk '{print $2}' | tr -d '%')
-	local state=$(echo "$battery_info" | grep -E "state" | awk '{print $2}')
+# Helper to determine standard XDG system icon string name based on status/charge
+get_battery_icon() {
+	local state=$1
+	local percentage=$2
 
-	# Handle State Changes (Plugged/Unplugged)
+	if [[ "$state" == "discharging" ]]; then
+		if ((percentage >= THRESHOLD_FULL)); then
+			echo "battery-full"
+		elif ((percentage >= THRESHOLD_GOOD)); then
+			echo "battery-good"
+		elif ((percentage >= THRESHOLD_LOW)); then
+			echo "battery-low"
+		elif ((percentage >= THRESHOLD_CRITICAL)); then
+			echo "battery-caution"
+		else
+			echo "battery-empty"
+		fi
+	elif [[ "$state" == "charging" ]]; then
+		if ((percentage >= THRESHOLD_FULL)); then
+			echo "battery-full-charging"
+		elif ((percentage >= THRESHOLD_GOOD)); then
+			echo "battery-good-charging"
+		elif ((percentage >= THRESHOLD_LOW)); then
+			echo "battery-low-charging"
+		elif ((percentage >= THRESHOLD_CRITICAL)); then
+			echo "battery-caution-charging"
+		else
+			echo "battery-empty-charging"
+		fi
+	elif [[ "$state" == "fully-charged" ]]; then
+		echo "battery-full"
+	elif [[ "$state" == "empty" ]]; then
+		echo "battery-empty"
+	else
+		echo "battery-missing"
+	fi
+}
+
+function check_battery() {
+	local state=$1
+	local percentage=$2
+
+	# Guard against empty arguments
+	[[ -z "$state" || -z "$percentage" ]] && return
+
+	local current_icon=$(get_battery_icon "$state" "$percentage")
+
+	# Handle State Changes
 	if [[ "$state" != "$LAST_STATE" ]]; then
 		if [[ "$state" == "charging" ]]; then
-			send_battery_notif "Power Connected" "Battery is now charging ($percentage%)" "$ICON_PLUGGED"
+			send_battery_notif "Power Connected" "Battery is now charging ($percentage%)" "$current_icon"
 			LOW_NOTIFIED=false
 			CRIT_NOTIFIED=false
 		elif [[ "$state" == "discharging" ]]; then
-			send_battery_notif "Power Disconnected" "Running on battery ($percentage%)" "$ICON_UNPLUGGED"
+			send_battery_notif "Power Disconnected" "Running on battery ($percentage%)" "$current_icon"
 		fi
 		LAST_STATE="$state"
 	fi
 
 	# Handle Levels
-	if (("$state" == "discharging")); then
+	if [[ "$state" == "discharging" ]]; then
 		if ((percentage <= THRESHOLD_CRITICAL)) && [[ "$CRIT_NOTIFIED" == false ]]; then
-			send_battery_notif "CRITICAL BATTERY" "System will hibernate soon! ($percentage%)" "$ICON_CRITICAL" "critical"
+			send_battery_notif "CRITICAL BATTERY" "System will hibernate soon! ($percentage%)" "$current_icon" "critical"
 			CRIT_NOTIFIED=true
 		elif ((percentage <= THRESHOLD_LOW)) && [[ "$LOW_NOTIFIED" == false ]]; then
-			send_battery_notif "Low Battery" "Please plug in your charger ($percentage%)" "$ICON_LOW" "normal"
+			send_battery_notif "Low Battery" "Please plug in your charger ($percentage%)" "$current_icon"
 			LOW_NOTIFIED=true
 		fi
-	elif (("$state" == "fully-charged" || ("$state" == "charging" && percentage >= $THRESHOLD_FULL))); then
-		if [[ "$LAST_LEVEL" -lt $THRESHOLD_FULL ]]; then
-			send_battery_notif "Battery Full" "You can unplug the charger now." "$ICON_FULL"
+	elif [[ "$state" == "fully-charged" ]] || { [[ "$state" == "charging" ]] && ((percentage >= THRESHOLD_FULL)); }; then
+		if ((LAST_LEVEL < THRESHOLD_FULL)); then
+			send_battery_notif "Battery Full" "You can unplug the charger now." "$current_icon" "low"
 		fi
 	fi
 
 	LAST_LEVEL=$percentage
 }
 
-check_battery
-upower --monitor-detail | while read -r line; do
-	if [[ "$line" =~ "state" || "$line" =~ "percentage" ]]; then
-		check_battery
+function the_main() {
+	local state=""
+	local percentage=""
+
+	local initial_info=$(upower -i "$BATTERY_PATH")
+	if [[ "$initial_info" =~ "percentage:[[:space:]]*([0-9]+)%" ]]; then
+		percentage=$match[1]
 	fi
-done
+	if [[ "$initial_info" =~ "state:[[:space:]]*([^[:space:]]+)" ]]; then
+		state=$match[1]
+	fi
+
+	# Run initial check with the fetched data
+	check_battery "$state" "$percentage"
+	send_battery_notif "Battery monitor" "Monitor is up and running." "battery-good" "low"
+
+	percentage=""
+	state=""
+
+	# This keeps the loop running inside the parent shell so state tracking variables work!
+	while read -r line; do
+		if [[ "$line" =~ "percentage:[[:space:]]*([0-9]+)%" ]]; then
+			percentage=$match[1]
+		fi
+		if [[ "$line" =~ "state:[[:space:]]*([^[:space:]]+)" ]]; then
+			state=$match[1]
+		fi
+		if [[ -n "$percentage" && -n "$state" ]]; then
+			check_battery "$state" "$percentage"
+			percentage=""
+			state=""
+		fi
+	done < <(upower --monitor-detail)
+}
+
+the_main

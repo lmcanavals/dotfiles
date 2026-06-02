@@ -13,6 +13,7 @@ icon_theme = Reversal-dark
 icon_corner_radius = 5
 idle_threshold = 120
 max_icon_size = 128
+min_icon_size = 48
 markup = full
 mouse_right_click = context
 progress_bar_corner_radius = 5
