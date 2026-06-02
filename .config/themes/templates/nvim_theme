@@ -3,8 +3,6 @@
 
 return {
 	background = "{{light_or_dark}}",
-	nvim_scheme = "{{nvim_scheme}}",
-	{% if tokyonight %}
-	tokyonight_style = "{{tokyonight_style}}",
-	{% endif %}
+	nvim_scheme = "{{nvim_scheme}}",{% if nvim_scheme == "tokyonight" %}
+	tokyonight_style = "{{tokyonight_style}}",{% endif %}
 }

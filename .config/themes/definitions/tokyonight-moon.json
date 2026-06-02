@@ -1,7 +1,7 @@
 {
     "name": "Tokyo Night Moon",
     "light_or_dark": "dark",
-    "ghostty_theme": "tokyonight-moon",
+    "ghostty_theme": "TokyoNight Moon",
     "wezterm_scheme": "Tokyo Night Moon",
     "nvim_scheme": "tokyonight",
     "tokyonight_style": "moon",
