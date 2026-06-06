@@ -240,6 +240,7 @@ __pycache__/
 .local/bin/networkmanager_dmenu
 .local/bin/spots
 .local/bin/testt.zsh
+.local/bin/wezterm
 
 !.local/share/applications/
 .local/share/applications/mimeinfo.cache

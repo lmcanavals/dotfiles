@@ -1,9 +1,11 @@
+skip_selection = true
+
 [background]
 path = "/usr/share/backgrounds/greeter_background"
 fit = "Contain"
 
 [env]
-ENV_VARIABLE = "value"
+# ENV_VARIABLE = "value"
 
 [GTK]
 application_prefer_dark_theme = true
@@ -18,10 +20,10 @@ reboot = [ "systemctl", "reboot" ]
 poweroff = [ "systemctl", "poweroff" ]
 
 [appearance]
-greeting_msg = "Welcome back!"
+greeting_msg = "Salutations, earthling!"
 
 [widget.clock]
-format = "%a %H:%M"
+format = "%A, %e of %B %R"
 resolution = "500ms"
 timezone = "America/Chicago"
 label_width = 150

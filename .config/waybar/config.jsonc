@@ -164,7 +164,7 @@
 			}
 		},
 		"format": "{:%a, %e %b %R}",
-		"format-alt": "{:%A, %e of %B  %R}",
+		"format-alt": "{:%A, %e of %B %R}",
 		"tooltip-format": "<tt>{calendar}</tt>"
 	},
 	"cpu": {
