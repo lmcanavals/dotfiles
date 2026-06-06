@@ -18,6 +18,7 @@ config.set_environment_variables = {
 }
 
 -- background awesome
+--[[
 local bgfolder = ".local/share/backgrounds/"
 local bgsolid = bgfolder .. "bg000000cd.png"
 local bg0 = bgfolder .. "bg0b.png"
@@ -55,6 +56,7 @@ config.background = {
 		source = { File = bg3 },
 	},
 }
+--]]
 
 -- fonts
 local base_font = "Iosevka" -- "Monaspace Argon" -- "Maple Mono NF"
@@ -78,7 +80,7 @@ local diag_font = "Monofur Nerd Font" -- "Monaspace Krypton"
 	"liga",
 }
 --]]
-local iosekva_hb = { "dlig", "ss09" }
+local iosekva_hb = { "dlig", "ss12" }
 local no_hb = {}
 local base_hb = iosekva_hb -- monaspace_hb
 local str_hb = no_hb -- monaspace_hb
@@ -134,7 +136,7 @@ config.font_rules = {
 		}),
 	},
 }
-config.font_size = 12
+config.font_size = 14
 
 -- window
 config.initial_rows = 30

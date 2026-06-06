@@ -24,8 +24,41 @@ local c = require("colors")
 -- Autostart necessary processes (like notifications daemons, status bars, etc.)
 -- Or execute your favorite apps at launch like this:
 
+local function load_fonts(filepath)
+	local myfonts = {}
+
+	filepath = filepath:gsub("%$([%w_]+)", function(var)
+		return os.getenv(var) or ""
+	end)
+
+	if filepath:sub(1, 1) == "~" then
+		filepath = os.getenv("HOME") .. filepath:sub(2)
+	end
+
+	local file = io.open(filepath, "r")
+	if not file then
+		print("Error: Could not open font configuration file at " .. filepath)
+		return nil
+	end
+
+	for line1 in file:lines() do
+		local line = line1:match("^%s*(.-)%s*$")
+
+		if line ~= "" and not line:match("^#") then
+			local key, value = line:match("^([^=]+)%s*=%s*(.+)$")
+			if key and value then
+				key = key:match("^%s*(.-)%s*$")
+				value = value:match("^%s*(.-)%s*$"):gsub("%s*,%s*", " ")
+				myfonts[key] = value
+			end
+		end
+	end
+	file:close()
+	return myfonts
+end
+
 hl.on("hyprland.start", function()
-	hl.exec_cmd("uwsm-app -- mplayer $XDG_DATA_HOME/sounds/Smooth/stereo/desktop-login.oga")
+	hl.exec_cmd("mplayer $XDG_DATA_HOME/sounds/Smooth/stereo/desktop-login.oga")
 
 	hl.exec_cmd("dbus-update-activation-environment --all")
 	hl.exec_cmd("systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
@@ -40,7 +73,11 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("uwsm-app -- wl-paste --watch cliphist store")
 	hl.exec_cmd('rm "$HOME/.cache/cliphist/db"')
 
-	hl.exec_cmd("uwsm-app -- kded6")
+	local myfonts = load_fonts("$XDG_CONFIG_HOME/myfonts.conf")
+	if myfonts then
+		hl.exec_cmd("gsettings set org.gnome.desktop.interface font-name '" .. myfonts["sans-serif"] .. "'")
+		hl.exec_cmd("gsettings set org.gnome.desktop.interface monospace-font-name '" .. myfonts["monospace"] .. "'")
+	end
 	hl.exec_cmd("systemd-analyze >> .startup_time")
 end)
 
