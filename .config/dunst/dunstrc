@@ -4,7 +4,7 @@ corner_radius = 5
 dmenu = "/usr/bin/fuzzel --dmenu --placeholder '󰎟  choose one'"
 enable_recursive_icon_lookup = true
 follow = mouse
-font = "Electrolize 10, Font Awesome 5 Free 10, Symbols Nerd Font 10"
+font = "Jura 10, Font Awesome 5 Free 10, Symbols Nerd Font 10"
 format = "<span foreground='#e0af68' size='large'>%s</span>\n%b"
 frame_color = "#6c7086aa"
 frame_width = 1

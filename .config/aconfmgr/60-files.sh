@@ -7,6 +7,7 @@ CopyFile /boot/loader/entries/arch-intel.conf 700
 CopyFile /boot/loader/loader.conf 700
 CopyFile /etc/greetd/config.toml
 CopyFile /etc/greetd/hyprland.lua
+CopyFile /etc/greetd/regreet.css
 CopyFile /etc/greetd/regreet.toml
 CopyFile /etc/issue
 CopyFile /etc/locale.conf

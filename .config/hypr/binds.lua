@@ -13,7 +13,7 @@ local mailClient = "uwsm-app -- thunderbird"
 local menuDrun = 'uwsm-app -- fuzzel --placeholder="󰀻  applications" --show-actions'
 local menuRun = 'fuzzel --placeholder=" _ command" --list-executables-in-path'
 local fyi = "uwsm-app -- fyi -u low -i computer"
-local terminal = "uwsm-app -- ghostty"
+local terminal = "uwsm-app -- foot"
 
 -- hyprzoom commands
 local zoomIn = "hyprctl -q keyword cursor:zoom_factor $(hyprctl getoption cursor:zoom_factor -j | jq '.float * 1.1')"

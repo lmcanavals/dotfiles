@@ -44,12 +44,15 @@ AddPackage zenity                # Display graphical dialog boxes from shell scr
 AddPackage expect   # A tool for automating interactive applications
 AddPackage pacutils # Helper tools for libalpm
 
-AddPackage --foreign hyprqt6engine        # QT6 Theme Provider for Hyprland
-AddPackage --foreign maplemono-ttf        # Open source monospace font with round corner, ligatures and Nerd-Font for IDE and command line
-AddPackage --foreign otf-font-awesome-5   # Iconic font designed for Bootstrap (version 5.x)
-AddPackage --foreign psf-cozette          # A bitmap programming font optimized for coziness, console version (PSF format)
-AddPackage --foreign rose-pine-hyprcursor # None
-AddPackage --foreign yay                  # Yet another yogurt. Pacman wrapper and AUR helper written in go.
+AddPackage --foreign hyprqt6engine              # QT6 Theme Provider for Hyprland
+AddPackage --foreign maplemono-ttf              # Open source monospace font with round corner, ligatures and Nerd-Font for IDE and command line
+AddPackage --foreign otf-font-awesome-5         # Iconic font designed for Bootstrap (version 5.x)
+AddPackage --foreign psf-cozette                # A bitmap programming font optimized for coziness, console version (PSF format)
+AddPackage --foreign rose-pine-hyprcursor       # None
+AddPackage --foreign ttf-homecomputer-sixtyfour # Variable font based on the Commodore 64 system font
+AddPackage --foreign ttf-jura                   # Jura font
+AddPackage --foreign ttf-orbitron               # A geometric sans-serif font from the future
+AddPackage --foreign yay                        # Yet another yogurt. Pacman wrapper and AUR helper written in go.
 
 # packages we should ignore
 IgnorePackage arch-install-scripts   # Scripts to aid in installing Arch Linux

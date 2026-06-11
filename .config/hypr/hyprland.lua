@@ -376,13 +376,13 @@ hl.window_rule({
 
 -- Workspace names
 
-hl.workspace_rule({ workspace = "1", default_name = "A", monitor = "eDP-1" })
-hl.workspace_rule({ workspace = "2", default_name = "B", monitor = "eDP-1" })
-hl.workspace_rule({ workspace = "3", default_name = "C", monitor = "eDP-1" })
-hl.workspace_rule({ workspace = "4", default_name = "D", monitor = "eDP-1" })
-hl.workspace_rule({ workspace = "5", default_name = "E", monitor = "HDMI-A-1" })
-hl.workspace_rule({ workspace = "6", default_name = "F", monitor = "HDMI-A-1" })
-hl.workspace_rule({ workspace = "7", default_name = "G", monitor = "HDMI-A-1" })
-hl.workspace_rule({ workspace = "8", default_name = "H", monitor = "HDMI-A-1" })
-hl.workspace_rule({ workspace = "9", default_name = "I", monitor = "HDMI-A-1" })
-hl.workspace_rule({ workspace = "10", default_name = "J", monitor = "HDMI-A-1" })
+hl.workspace_rule({ workspace = "1", default_name = "󰼏", monitor = "eDP-1" })
+hl.workspace_rule({ workspace = "2", default_name = "󰼐", monitor = "eDP-1" })
+hl.workspace_rule({ workspace = "3", default_name = "󰼑", monitor = "eDP-1" })
+hl.workspace_rule({ workspace = "4", default_name = "󰼒", monitor = "eDP-1" })
+hl.workspace_rule({ workspace = "5", default_name = "󰼓", monitor = "HDMI-A-1" })
+hl.workspace_rule({ workspace = "6", default_name = "󰼔", monitor = "HDMI-A-1" })
+hl.workspace_rule({ workspace = "7", default_name = "󰼕", monitor = "HDMI-A-1" })
+hl.workspace_rule({ workspace = "8", default_name = "󰼖", monitor = "HDMI-A-1" })
+hl.workspace_rule({ workspace = "9", default_name = "󰼗", monitor = "HDMI-A-1" })
+hl.workspace_rule({ workspace = "10", default_name = "󰼎", monitor = "HDMI-A-1" })

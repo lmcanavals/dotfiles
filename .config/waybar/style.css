@@ -46,7 +46,7 @@ window#waybar {
 	background: alpha(@bg, .25);
 	font-family: sans-serif;
 	font-size: 1.25em;
-	text-shadow: 0 0 2px @bg, 0 0 4px @fg, 0 0 8 @fg;
+	text-shadow: 0 0 2px @bg, 0 0 4px @fg, 0 0 6px @accent;
 }
 window#waybar.hidden {
 	opacity: .1
