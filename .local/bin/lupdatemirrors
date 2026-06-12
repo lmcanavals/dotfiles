@@ -2,23 +2,26 @@
 
 safeupdatemirrors() {
 	local base="/etc/pacman.d"
-	if [ -f $base/mirrorlist.pacnew ]; then
-		local tempfile=$(mktemp)
-		echo $tempfile
-		sed '/#Server/ s|#|| ' -i $base/mirrorlist.pacnew
-		sed '/^#.*$/d' -i $base/mirrorlist.pacnew
-		cp $base/mirrorlist $tempfile
-		rankmirrors -n 6 $base/mirrorlist.pacnew >$base/mirrorlist
-		if [ $? -eq 0 ]; then
-			rm $base/mirrorlist.pacnew
-			echo "Mirror list updated"
-		else
-			cp $tempfile $base/mirrorlist
-			echo "Failed to update mirror list"
-		fi
-		rm $tempfile
+	local tempfile=$(mktemp)
+	local mirrorlist="https://archlinux.org/mirrorlist/"
+	local countries="country=all"
+	local protocol="protocol=https"
+	local ip_version="ip_version=4"
+	local use_status="use_mirror_status=on"
+
+	echo "Saving new mirrorlist to $tempfile"
+
+	curl -s "$mirrorlist?$countries&$protocol&$ip_version&$use_status" |
+		sed -e 's/^#Server/Server/' -e '/^#/d' |
+		rankmirrors -w -m 1 -p -n 6 - >$tempfile
+
+	if [ $? -eq 0 ]; then
+		echo "We got a nice list"
+		sudo cp "$tempfile" "$base/mirrorlist"
+		echo "Mirror list updated"
 	else
-		echo "There's no mirrorlist.pacnew. Doing nothing."
+		echo "Failed to update mirror list. Keeping the old one"
 	fi
+	rm $tempfile
 }
 safeupdatemirrors

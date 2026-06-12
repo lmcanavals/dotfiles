@@ -94,6 +94,7 @@ rust.sh
 .m2/
 .mplayer/
 .npm/
+.parallel/
 .pki/
 .putty/
 .rustup/
