@@ -59,11 +59,11 @@ config.background = {
 --]]
 
 -- fonts
-local base_font = "Iosevka" -- "Monaspace Argon" -- "Maple Mono NF"
-local str_font = "Iosevka Slab" -- "Monaspace Xenon" -- "FiraCode Nerd Font"
-local cmnt_font = "UbuntuMono Nerd Font" -- "Monaspace Radon" -- "Victor Mono Nerd Font"
-local half_font = "Terminus" -- "Monaspace Neon" -- "Fairfax HD"
-local diag_font = "Monofur Nerd Font" -- "Monaspace Krypton"
+local base_font = "JetBrainsMono Nerd Font" -- "Monaspace Argon" -- "Maple Mono NF"
+local str_font = "Fira Code" -- "Monaspace Xenon" -- "FiraCode Nerd Font"
+local cmnt_font = "Maple Mono" -- "Monaspace Radon" -- "Victor Mono Nerd Font"
+local half_font = "UbuntuMono Nerd Font" -- "Monaspace Neon" -- "Fairfax HD"
+local diag_font = "Terminus" -- "Monaspace Krypton"
 
 -- local maple_hb = { "cv02", "ss01", "ss02", "ss03", "ss04", "ss05" }
 --[[ local monaspace_hb = {
@@ -136,7 +136,7 @@ config.font_rules = {
 		}),
 	},
 }
-config.font_size = 14
+config.font_size = 12
 
 -- window
 config.initial_rows = 30

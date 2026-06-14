@@ -281,8 +281,12 @@
 		"tooltip-format": "RAM:\t{percentage}%\t{used:0.2f}/{total:0.2f}GB\nSWAP:\t{swapPercentage}%\t{swapUsed:0.2f}/{swapTotal:0.2f}GB"
 	},
 	"mpris": {
-		"format": "{player_icon} {title} - {artist}",
-		"format-paused": "{status_icon} {title} - {artist}",
+		"dynamic-order": [
+			"title",
+			"artist"
+		],
+		"format": "{player_icon} {dynamic}",
+		"format-paused": "{status_icon} {dynamic}",
 		"on-click": "lvolbri play_pause",
 		"on-click-middle": "lvolbri prev_track",
 		"on-click-right": "lvolbri next_track",

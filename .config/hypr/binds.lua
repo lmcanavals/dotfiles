@@ -137,9 +137,9 @@ local function hitAndReset(func)
 	end
 end
 hl.define_submap(grab, function()
-	hl.bind("Q", hl.dsp.submap(swappy))
-	hl.bind("W", hl.dsp.submap(save))
-	hl.bind("E", hl.dsp.submap(rec))
+	hl.bind("1", hl.dsp.submap(swappy))
+	hl.bind("2", hl.dsp.submap(save))
+	hl.bind("3", hl.dsp.submap(rec))
 	hl.bind("escape", hl.dsp.submap("reset"))
 	hl.define_submap(swappy, "reset", function()
 		hl.bind("1", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f'"))
