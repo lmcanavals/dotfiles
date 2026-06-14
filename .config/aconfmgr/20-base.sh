@@ -16,6 +16,8 @@ AddPackage openslide       # C library for reading virtual slide images
 AddPackage openssh         # SSH protocol implementation for remote login, command execution and file transfer
 AddPackage pacman-contrib  # Contributed scripts and tools for pacman systems
 AddPackage pacquery        # A CLI tool to get JSON output of pacman packages from the system's syncdb
+AddPackage parallel        # A shell tool for executing jobs in parallel
+AddPackage pkgstats        # Submit a list of installed packages to the Arch Linux project
 AddPackage powertop        # A tool to diagnose issues with power consumption and power management
 AddPackage socat           # Multipurpose relay
 AddPackage sshfs           # FUSE client based on the SSH File Transfer Protocol

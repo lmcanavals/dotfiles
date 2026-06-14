@@ -15,11 +15,12 @@ AddPackage fcitx5-gtk                      # Fcitx5 gtk im module and glib based
 AddPackage fcitx5-qt                       # Fcitx5 Qt Library (Qt5 & Qt6 integrations)
 AddPackage ffmpegthumbnailer               # Lightweight video thumbnailer that can be used by file managers
 AddPackage fuzzel                          # Application launcher for wlroots based Wayland compositors
-AddPackage ghostty                         # Fast, native, feature-rich terminal emulator pushing modern features
 AddPackage gnome-themes-extra              # Extra GNOME themes (legacy HighContrast icon theme and index files for Adwaita)
 AddPackage greetd                          # Generic greeter daemon
 AddPackage greetd-regreet                  # Clean and customizable greeter for greetd
 AddPackage grim                            # Screenshot utility for Wayland
+AddPackage gst-plugin-gif                  # Multimedia graph framework - gif plugin
+AddPackage gst-plugins-good                # Multimedia graph framework - good plugins
 AddPackage hypridle                        # hyprland’s idle daemon
 AddPackage hyprland                        # a highly customizable dynamic tiling Wayland compositor
 AddPackage hyprlock                        # hyprland’s GPU-accelerated screen locking utility
@@ -37,6 +38,7 @@ AddPackage networkmanager-dmenu            # Control Networkmanager via dmenu
 AddPackage nm-connection-editor            # NetworkManager GUI connection editor and widgets
 AddPackage noto-fonts-emoji                # Google Noto Color Emoji font
 AddPackage nwg-look                        # GTK settings editor adapted to work on wlroots-based compositors
+AddPackage otf-font-awesome                # Iconic font designed for Bootstrap - otf format
 AddPackage pavucontrol                     # PulseAudio Volume Control
 AddPackage pipewire-pulse                  # Low-latency audio/video router and processor - PulseAudio replacement
 AddPackage qt5-wayland                     # Provides APIs for Wayland
@@ -44,14 +46,12 @@ AddPackage qt6-tools                       # A cross-platform application and UI
 AddPackage qt6ct                           # Qt 6 Configuration Utility
 AddPackage slurp                           # Select a region in a Wayland compositor
 AddPackage tela-circle-icon-theme-orange   # A flat colorful design icon theme - orange variant
-AddPackage ttc-iosevka                     # Typeface family designed for coding, terminal use and technical documents
-AddPackage ttc-iosevka-slab                # Typeface family designed for coding, terminal use and technical documents (Slab variant)
 AddPackage ttf-caladea                     # A serif font family metric-compatible with Cambria font family
 AddPackage ttf-carlito                     # Google's Carlito font
 AddPackage ttf-croscore                    # Chrome OS core fonts
 AddPackage ttf-dejavu                      # Font family based on the Bitstream Vera Fonts with a wider range of characters
 AddPackage ttf-fira-code                   # Monospaced font with programming ligatures
-AddPackage ttf-jetbrains-mono              # Typeface for developers, by JetBrains
+AddPackage ttf-jetbrains-mono-nerd         # Patched font JetBrains Mono from nerd fonts library
 AddPackage ttf-liberation                  # Font family which aims at metric compatibility with Arial, Times New Roman, and Courier New
 AddPackage ttf-monofur-nerd                # Patched font Monofur from nerd fonts library
 AddPackage ttf-nerd-fonts-symbols          # High number of extra glyphs from popular 'iconic fonts'
@@ -66,7 +66,6 @@ AddPackage waybar                          # Highly customizable Wayland bar for
 AddPackage wev                             # A tool for debugging wayland events on a Wayland window, analagous to the X11 tool xev
 AddPackage wf-recorder                     # Screen recorder for wlroots-based compositors such as sway
 AddPackage wl-clipboard                    # Command-line copy/paste utilities for Wayland
-AddPackage woff2-font-awesome              # Iconic font designed for Bootstrap - woff2 format
 AddPackage wtype                           # xdotool type for wayland
 AddPackage xdg-desktop-portal              # Desktop integration portals for sandboxed apps
 AddPackage xdg-desktop-portal-hyprland     # xdg-desktop-portal backend for hyprland
