@@ -6,8 +6,15 @@ return {
 				sections = {
 					{
 						section = "terminal",
-						-- iosevka width to height ratio is 9/24 so 56x21 grid is nice square
-						cmd = "chafa $XDG_DATA_HOME/artwork/corplogo.png -f symbols -s 56x21 --stretch; sleep .1",
+						--[[
+						Do not attempt to generate the file here programatically. looks ugly
+						As of 2026-06-15 kitty and sixels don't work
+						example of how to generate the logo:
+						infile="$XDG_DATA_HOME/artwork/corplogo.png"
+						outfile="$XDG_DATA_HOME/artwork/logo.txt"
+						chafa $file -f symbols -s 46x21 --stretch > $outfile
+						--]]
+						cmd = "cat $XDG_DATA_HOME/artwork/logo.txt; sleep .1",
 						height = 21,
 					},
 					{
