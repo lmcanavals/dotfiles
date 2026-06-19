@@ -10,7 +10,6 @@ AddPackage font-manager          # A simple font management application for GTK+
 AddPackage fyi                   # A command line utility and notify-send alternative to send desktop notifications
 AddPackage fzf                   # Command-line fuzzy finder
 AddPackage gphoto2               # A digital camera download and access program.
-AddPackage gthumb                # Image browser and viewer for the GNOME Desktop
 AddPackage gutenprint            # Top quality printer drivers for POSIX systems
 AddPackage gvfs                  # Virtual filesystem implementation for GIO
 AddPackage gvfs-gphoto2          # Virtual filesystem implementation for GIO - gphoto2 backend (PTP camera, MTP media player)
@@ -62,17 +61,20 @@ IgnorePackage fastfetch              # A feature-rich and performance oriented n
 IgnorePackage foot                   # Fast, lightweight, and minimalistic Wayland terminal emulator
 IgnorePackage gnuplot                # Plotting package which outputs to X11, PostScript, PNG, GIF, and others
 IgnorePackage go                     # Core compiler tools for the Go programming language
+IgnorePackage gthumb                 # Image browser and viewer for the GNOME Desktop
 IgnorePackage guvcview               # Simple GTK+ interface for capturing and viewing video from v4l2 devices
 IgnorePackage intel-ucode            # Microcode update image for Intel CPUs
 IgnorePackage krita                  # Edit and paint images
 IgnorePackage lld                    # Linker from the LLVM project
 IgnorePackage lldb                   # Next generation, high-performance debugger
 IgnorePackage llvm                   # Compiler infrastructure
+IgnorePackage loupe                  # A simple image viewer for GNOME
 IgnorePackage network-manager-applet # Applet for managing network connections
 IgnorePackage obs-studio             # Free, open source software for live streaming and recording
 IgnorePackage openmp                 # LLVM OpenMP Runtime Library
 IgnorePackage qpwgraph               # PipeWire Graph Qt GUI Interface
 IgnorePackage ruby-erb               # An easy to use but powerful templating system for Ruby
+IgnorePackage snapshot               # Take pictures and videos
 IgnorePackage thunderbird            # Standalone mail and news reader from mozilla.org
 IgnorePackage wl-mirror              # a simple Wayland output mirror client
 IgnorePackage wofi                   # launcher for wlroots-based wayland compositors

@@ -60,9 +60,6 @@ end
 hl.on("hyprland.start", function()
 	hl.exec_cmd("mplayer $XDG_DATA_HOME/sounds/Smooth/stereo/desktop-login.oga")
 
-	hl.exec_cmd("dbus-update-activation-environment --all")
-	hl.exec_cmd("systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
-
 	hl.exec_cmd("systemctl --user is-enabled hypridle || systemctl --user enable --now hypridle")
 	hl.exec_cmd("systemctl --user is-enabled hyprpaper || systemctl --user enable --now hyprpaper")
 	hl.exec_cmd("systemctl --user is-enabled hyprpolkitagent || systemctl --user enable --now hyprpolkitagent")

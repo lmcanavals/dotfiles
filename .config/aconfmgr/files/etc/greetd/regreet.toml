@@ -1,18 +1,14 @@
 skip_selection = true
 
-[background]
-path = "/usr/share/backgrounds/greeter_background"
-fit = "Contain"
-
 [env]
-# ENV_VARIABLE = "value"
+ENV_VARIABLE = "lol we logged in nicely huh!"
 
 [GTK]
 application_prefer_dark_theme = true
 cursor_theme_name = "Adwaita"
 cursor_blink = true
-font_name = "Electrolize"
-icon_theme_name = "Adwaita"
+font_name = "Sixtyfour 14"
+icon_theme_name = "Reversal-dark"
 theme_name = "Adwaita-dark"
 
 [commands]

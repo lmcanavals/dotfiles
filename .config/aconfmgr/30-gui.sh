@@ -19,8 +19,6 @@ AddPackage gnome-themes-extra              # Extra GNOME themes (legacy HighCont
 AddPackage greetd                          # Generic greeter daemon
 AddPackage greetd-regreet                  # Clean and customizable greeter for greetd
 AddPackage grim                            # Screenshot utility for Wayland
-AddPackage gst-plugin-gif                  # Multimedia graph framework - gif plugin
-AddPackage gst-plugins-good                # Multimedia graph framework - good plugins
 AddPackage hypridle                        # hyprland’s idle daemon
 AddPackage hyprland                        # a highly customizable dynamic tiling Wayland compositor
 AddPackage hyprlock                        # hyprland’s GPU-accelerated screen locking utility

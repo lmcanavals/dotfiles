@@ -6,7 +6,6 @@ AddPackage efibootmgr      # Linux user-space application to modify the EFI Boot
 AddPackage fish            # Smart and user friendly shell intended mostly for interactive use
 AddPackage gptfdisk        # A text-mode partitioning tool that works on GUID Partition Table (GPT) disks
 AddPackage grml-zsh-config # grml's zsh setup
-AddPackage haveged         # Entropy harvesting daemon using CPU timings
 AddPackage linux           # The Linux kernel and modules
 AddPackage linux-firmware  # Firmware files for Linux - Default set
 AddPackage linux-headers   # Headers and scripts for building modules for the Linux kernel

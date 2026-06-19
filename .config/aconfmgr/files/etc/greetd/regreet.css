@@ -1,124 +1,12 @@
-/* Base container overlay spanning the screen */
-overlay {
-	background-color: #1e1e2e; /* Fallback baseline background color */
-}
-
-/* The background picture or video slot */
 picture {
-	/* Style background scaling if needed */
+	background-image: url("file:///usr/share/backgrounds/greeter_background");
+	filter: blur(10px);
 }
 
-/* Any frame acting as an interface wrapper */
 frame.background {
-	background-color: #2e344088;
-	border: 1px solid #4c566a;
-	border-radius: 10px;
+	background-color: #00000088;
 }
 
-/* Main login container wrapper */
-grid {
-}
-
-/* Header Message Label (Configured for Pango bold formatting) */
-label {
-	color: #d8dee9;
-	font-family: Sixtyfour;
-	font-size: 1.25rem;
-	text-shadow: 0 0 5px #ff8800, 0 0 10px #ff8800, 0 0 20px #ff8800, 0 0 40px #ff8800;
-}
-
-/* Input Fields (Entries and Dropdowns sharing grid space) */
-entry, combobox {
-	background-color: #3b4252;
-	color: #eceff4;
-	border: 1px solid #4c566a;
-	border-radius: 5px;
-	font-family: Sixtyfour;
-	font-size: 1.5rem;
-	text-shadow: 0 0 5px #ff8800, 0 0 10px #ff8800, 0 0 20px #ff8800, 0 0 40px #ff8800;
-}
-
-entry:focus, combobox:focus {
-	border-color: #88c0d0;
-}
-
-/* Specific styling for the password entry field */
-passwordentry {
-	/* Contains the entry and the peek icon */
-}
-
-/* Standard buttons (e.g., Cancel) */
-button {
-	border: 1px solid #4c566a;
-	color: #eceff4;
-	border-radius: 5px;
-	padding: 10px 20px;
-	opacity: 0.8;
-}
-
-button:hover {
-	opacity: 1;
-}
-
-/* Suggested Action (Login Button) */
-button.suggested-action {
-	color: #ffffff;
-	border-color: #5e81ac;
-}
-
-button.suggested-action:hover {
-}
-
-/* Destructive Actions (Reboot / Power Off) via WidgetTemplate EndButton */
-button.destructive-action {
-	color: #ffffff;
-	border-color: #bf616a;
-}
-
-/* Toggle Buttons for manual entry edits */
-togglebutton {
-	/* Standard icon button container */
-}
-togglebutton:checked {
-	background-color: #88c0d0;
-	color: #2e3440;
-}
-
-/* Notification Container */
-infobar {
-	padding: 10px;
-	border-radius: 5px;
-}
-
-/* Note: The template applies inline CSS to the top clock frame explicitly removing 
-top borders and radii. You can target its general properties here: */
 frame {
-	/* Target context for clock_frame */
-	padding: 10px 20px;
+	padding: 15px 20px;
 }
-/*
-#background { }
-
-#message_label { }
-#notif_info { }
-#notif_label { }
-
-#usernames_box { }
-#username_entry { }
-#sessions_box { }
-#session_entry { }
-#secret_entry { }
-#visible_entry { }
-
-#session_label { }
-#input_label { }
-
-#user_toggle { }
-#sess_toggle { }
-
-#cancel_button { }
-#login_button { }
-#clock_frame { }
-#reboot_button { }
-#poweroff_button { }
-*/
