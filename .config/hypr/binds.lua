@@ -3,23 +3,18 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 -- local tablet = "device[wacom-one-by-wacom-m-pen]"
 local ssfile = "$HOME/Pictures/Screenshots/$(date '+%Y%m%d_%H%M%S_%N').png"
 local srfile = "$HOME/Videos/Screencasts/$(date '+%Y%m%d_%H%M%S_%N').mp4"
+local myEsp = "x"
 
 -- programs we use
 local browser = "xdg-open https://google.com"
 local clipboardTool = 'cliphist list | fuzzel --placeholder="  clipboard" --dmenu | cliphist decode | wl-copy'
 local fileManager = "uwsm-app -- dolphin"
-local lvolbri = "uwsm-app -- lvolbri"
+local lvolbri = "lvolbri"
 local mailClient = "uwsm-app -- thunderbird"
-local menuDrun = 'uwsm-app -- fuzzel --placeholder="󰀻  applications" --show-actions'
+local menuDrun = 'fuzzel --placeholder="󰀻  applications" --show-actions'
 local menuRun = 'fuzzel --placeholder=" _ command" --list-executables-in-path'
-local fyi = "uwsm-app -- fyi -u low -i computer"
+local fyi = "fyi -u low -i computer"
 local terminal = "uwsm-app -- foot"
-
--- hyprzoom commands
-local zoomIn = "hyprctl -q keyword cursor:zoom_factor $(hyprctl getoption cursor:zoom_factor -j | jq '.float * 1.1')"
-local zoomOut =
-	"hyprctl -q keyword cursor:zoom_factor $(hyprctl getoption cursor:zoom_factor -j | jq '(.float * 0.9) | if . < 1 then 1 else . end')"
-local zoomReset = "hyprctl -q keyword cursor:zoom_factor 1"
 
 -- submap names
 local grab = "Screengrab: 󰬺 󱇣 ┃ 󰬻 󰉏 | 󰬼 "
@@ -30,16 +25,26 @@ local power = "Session: 󰬺  ┃ 󰬻 󰍃 ┃ 󰬼 󰒲 ┃ 󰬽 󰤄 ┃ �
 local window = "Move or resize (󰘶): 󰞗 ┃ 󰞖 ┃ 󰞙 ┃ 󰞘"
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
+if hl.get_config("general.layout") == "scrolling" then
+	hl.bind(mainMod .. " + left", hl.dsp.layout("focus left"))
+	hl.bind(mainMod .. " + right", hl.dsp.layout("focus right"))
+	hl.bind(mainMod .. " + page_up", hl.dsp.layout("colresize +conf"))
+	hl.bind(mainMod .. " + page_down", hl.dsp.layout("colresize -conf"))
+	hl.bind(mainMod .. " + space", hl.dsp.layout("fit all"))
+	hl.bind(mainMod .. " + SHIFT + left", hl.dsp.layout("swapcol l"))
+	hl.bind(mainMod .. " + SHIFT + right", hl.dsp.layout("swapcol r"))
+	hl.bind(mainMod .. " + SHIFT + page_up", hl.dsp.layout("consume_or_expel next"))
+	hl.bind(mainMod .. " + SHIFT + page_down", hl.dsp.layout("consume_or_expel prev"))
+else
+	hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
+	hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
+	hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
+end
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("killall -SIGUSR1 waybar"))
 hl.bind(mainMod .. " + C", hl.dsp.window.close())
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + G", hl.dsp.submap(grab))
 hl.bind(mainMod .. " + I", hl.dsp.exec_cmd(fyi .. ' Missing "Settings Win+I"'))
-if hl.get_config("general.layout") == "scrolling" then
-	hl.bind(mainMod .. " + J", hl.dsp.layout("swapcol r"))
-else
-	hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
-end
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("loginctl lock-session"))
 hl.bind(mainMod .. " + M", hl.dsp.submap(power))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
@@ -47,22 +52,16 @@ hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menuDrun))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + W", hl.dsp.submap(window))
-hl.bind(mainMod .. " + X", hl.dsp.workspace.toggle_special("󰯉"))
+hl.bind(mainMod .. " + X", hl.dsp.workspace.toggle_special(myEsp))
 hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd(clipboardTool))
 
 hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("systemctl --user reload waybar"))
-if hl.get_config("general.layout") == "scrolling" then
-	hl.bind(mainMod .. " + SHIFT + J", hl.dsp.layout("swapcol l"))
-end
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd(menuRun))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("lshot -f " .. ssfile .. "'swappy -f' -r"))
 hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.pin({ action = "toggle" }))
-hl.bind(mainMod .. " + SHIFT + X", hl.dsp.window.move({ workspace = "special:󰯉" }))
+hl.bind(mainMod .. " + SHIFT + X", hl.dsp.window.move({ workspace = "special:" .. myEsp }))
 
--- Move focus with mainMod + arrow keys
-hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
-hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
 
@@ -80,13 +79,29 @@ for i = 1, 10 do
 end
 
 -- Hyprzoom
-hl.bind(mainMod .. " + ALT + 0", hl.dsp.exec_cmd(zoomReset))
-hl.bind(mainMod .. " + ALT + mouse_down", hl.dsp.exec_cmd(zoomIn))
-hl.bind(mainMod .. " + ALT + mouse_up", hl.dsp.exec_cmd(zoomOut))
-hl.bind(mainMod .. " + ALT + equal", hl.dsp.exec_cmd(zoomIn), { repeating = true })
-hl.bind(mainMod .. " + ALT + minus", hl.dsp.exec_cmd(zoomOut), { repeating = true })
-hl.bind(mainMod .. " + ALT + KP_ADD", hl.dsp.exec_cmd(zoomIn), { repeating = true })
-hl.bind(mainMod .. " + ALT + KP_SUBTRACT", hl.dsp.exec_cmd(zoomOut), { repeating = true })
+local function hyprZoom(mode)
+	local currentZoom = hl.get_config("cursor.zoom_factor") or 1.0
+	local newZoom = 1.0
+	if mode == "in" then
+		newZoom = currentZoom * 1.1
+	elseif mode == "out" then
+		newZoom = currentZoom / 1.1
+		newZoom = newZoom < 1.0 and 1.0 or newZoom
+	end
+	hl.config({ cursor = { zoom_factor = newZoom } })
+end
+local function zoomHelper(mode)
+	return function()
+		hyprZoom(mode)
+	end
+end
+hl.bind(mainMod .. " + ALT + 0", zoomHelper("reset"))
+hl.bind(mainMod .. " + ALT + mouse_down", zoomHelper("in"))
+hl.bind(mainMod .. " + ALT + mouse_up", zoomHelper("out"))
+hl.bind(mainMod .. " + ALT + equal", zoomHelper("in"), { repeating = true })
+hl.bind(mainMod .. " + ALT + minus", zoomHelper("out"), { repeating = true })
+hl.bind(mainMod .. " + ALT + KP_ADD", zoomHelper("in"), { repeating = true })
+hl.bind(mainMod .. " + ALT + KP_SUBTRACT", zoomHelper("out"), { repeating = true })
 
 -- Scroll through existing workspaces with mainMod + scroll
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))

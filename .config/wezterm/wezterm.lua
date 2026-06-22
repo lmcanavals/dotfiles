@@ -59,11 +59,11 @@ config.background = {
 --]]
 
 -- fonts
-local base_font = "JetBrainsMono Nerd Font" -- "Monaspace Argon" -- "Maple Mono NF"
-local str_font = "Fira Code" -- "Monaspace Xenon" -- "FiraCode Nerd Font"
-local cmnt_font = "Maple Mono" -- "Monaspace Radon" -- "Victor Mono Nerd Font"
-local half_font = "UbuntuMono Nerd Font" -- "Monaspace Neon" -- "Fairfax HD"
-local diag_font = "Terminus" -- "Monaspace Krypton"
+local base_font = "JetBrainsMono Nerd Font"
+local str_font = "Fira Code Light"
+local cmnt_font = "Maple Mono"
+local half_font = "UbuntuMono Nerd Font"
+local diag_font = "Terminus"
 
 -- local maple_hb = { "cv02", "ss01", "ss02", "ss03", "ss04", "ss05" }
 --[[ local monaspace_hb = {
@@ -79,14 +79,25 @@ local diag_font = "Terminus" -- "Monaspace Krypton"
 	"ss09",
 	"liga",
 }
---]]
 local iosekva_hb = { "dlig", "ss12" }
+--]]
+local jb_hb = {
+	"ss02",
+	"cv03",
+	"cv04",
+	"cv12",
+	"cv15",
+	"cv16",
+	"cv18",
+	"cv19",
+	"cv20",
+}
 local no_hb = {}
-local base_hb = iosekva_hb -- monaspace_hb
-local str_hb = no_hb -- monaspace_hb
-local cmnt_hb = no_hb -- monaspace_hb
-local half_hb = no_hb -- monaspace_hb
-local diag_hb = no_hb -- monaspace_hb
+local base_hb = jb_hb
+local str_hb = no_hb
+local cmnt_hb = no_hb
+local half_hb = no_hb
+local diag_hb = no_hb
 
 config.font = wezterm.font_with_fallback({
 	{

@@ -1,4 +1,4 @@
-hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "1" })
+hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "1", mirror = "eDP-1" })
 
 hl.env("HYPRCURSOR_SIZE", "32")
 hl.env("HYPRCURSOR_THEME", "rose-pine-hyprcursor")

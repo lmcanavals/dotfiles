@@ -7,6 +7,7 @@
 ------------------
 
 -- See https://wiki.hypr.land/Configuring/Basics/Monitors/
+hl.monitor({ output = "HDMI-A-1", mode = "preferred", position = "auto-left", scale = "1" })
 hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "1" })
 
 --------------------
@@ -60,12 +61,16 @@ end
 hl.on("hyprland.start", function()
 	hl.exec_cmd("mplayer $XDG_DATA_HOME/sounds/Smooth/stereo/desktop-login.oga")
 
-	hl.exec_cmd("systemctl --user is-enabled hypridle || systemctl --user enable --now hypridle")
-	hl.exec_cmd("systemctl --user is-enabled hyprpaper || systemctl --user enable --now hyprpaper")
-	hl.exec_cmd("systemctl --user is-enabled hyprpolkitagent || systemctl --user enable --now hyprpolkitagent")
-	hl.exec_cmd("systemctl --user is-enabled hyprsunset || systemctl --user enable --now hyprsunset")
-	hl.exec_cmd("systemctl --user is-enabled waybar || systemctl --user enable --now waybar")
-	hl.exec_cmd("systemctl --user is-enabled lbatfyi || systemctl --user enable --now lbatfyi")
+	local function checkEnable(service)
+		local fmt = "systemctl --user is-enabled %s || systemctl --user enable --now %s"
+		hl.exec_cmd(string.format(fmt, service, service))
+	end
+	checkEnable("hypridle")
+	checkEnable("hyprpaper")
+	checkEnable("hyprpolkitagent")
+	checkEnable("hyprsunset")
+	checkEnable("waybar")
+	checkEnable("lbatfyi")
 
 	hl.exec_cmd("uwsm-app -- wl-paste --watch cliphist store")
 	hl.exec_cmd('rm "$HOME/.cache/cliphist/db"')
@@ -196,6 +201,8 @@ hl.config({
 -- See https://wiki.hypr.land/Configuring/Layouts/Scrolling-Layout/ for more
 hl.config({
 	scrolling = {
+		column_width = 0.667,
+		explicit_column_widths = "0.333, 0.5, 0.667, 1.0",
 		fullscreen_on_one_column = true,
 	},
 })
@@ -229,7 +236,6 @@ hl.config({
 
 		touchpad = {
 			natural_scroll = true,
-			--clickfinger_behaviour = true,
 		},
 
 		tablet = {
@@ -372,14 +378,11 @@ hl.window_rule({
 })
 
 -- Workspace names
-
-hl.workspace_rule({ workspace = "1", default_name = "󰼏", monitor = "eDP-1" })
-hl.workspace_rule({ workspace = "2", default_name = "󰼐", monitor = "eDP-1" })
-hl.workspace_rule({ workspace = "3", default_name = "󰼑", monitor = "eDP-1" })
-hl.workspace_rule({ workspace = "4", default_name = "󰼒", monitor = "eDP-1" })
-hl.workspace_rule({ workspace = "5", default_name = "󰼓", monitor = "HDMI-A-1" })
-hl.workspace_rule({ workspace = "6", default_name = "󰼔", monitor = "HDMI-A-1" })
-hl.workspace_rule({ workspace = "7", default_name = "󰼕", monitor = "HDMI-A-1" })
-hl.workspace_rule({ workspace = "8", default_name = "󰼖", monitor = "HDMI-A-1" })
-hl.workspace_rule({ workspace = "9", default_name = "󰼗", monitor = "HDMI-A-1" })
-hl.workspace_rule({ workspace = "10", default_name = "󰼎", monitor = "HDMI-A-1" })
+local workspace_names = { "󰬺", "󰬻", "󰬼", "󰬽", "󰬾", "󰬿", "󰭀", "󰭁", "󰭂", "󰿩" }
+for i, name in ipairs(workspace_names) do
+	hl.workspace_rule({
+		workspace = tostring(i),
+		default_name = name,
+		monitor = i < 8 and "HDMI-A-1" or "eDP-1",
+	})
+end
