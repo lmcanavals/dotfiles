@@ -207,6 +207,31 @@ hl.config({
 	},
 })
 
+------------------
+----  Groups  ----
+------------------
+
+hl.config({
+	group = {
+		groupbar = {
+			blur = true,
+			col = {
+				active = "rgba(" .. c.bg_dark .. "88)",
+				inactive = "rgba(" .. c.t8_bglight .. "88)",
+			},
+			font_size = 12,
+			gradients = true,
+			gradient_rounding = 5,
+			indicator_height = 0,
+			keep_upper_gap = false,
+			gaps_in = 0,
+			gaps_out = 0,
+			text_color = "rgb(" .. c.fg_widget .. ")",
+			text_color_inactive = "rgb(" .. c.t7_fgdark .. ")",
+		},
+	},
+})
+
 ----------------
 ----  MISC  ----
 ----------------

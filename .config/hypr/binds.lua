@@ -16,13 +16,14 @@ local menuRun = 'fuzzel --placeholder=" _ command" --list-executables-in-path
 local fyi = "fyi -u low -i computer"
 local terminal = "uwsm-app -- foot"
 
--- submap names
-local grab = "Screengrab: 󰬺 󱇣 ┃ 󰬻 󰉏 | 󰬼 "
-local swappy = "Edit: 󰬺 󰍺 ┃ 󰬻 󰍹 ┃ 󰬼  ┃ 󰬽 󰩭"
-local save = "Save: 󰬺 󰍺 ┃ 󰬻 󰍹 ┃ 󰬼  ┃ 󰬽 󰩭"
-local rec = "Record: 󰬺 󰍹 ┃ 󰬻 󰩭 | 󰬼 "
-local power = "Session: 󰬺  ┃ 󰬻 󰍃 ┃ 󰬼 󰒲 ┃ 󰬽 󰤄 ┃ 󰬾 󰜉 ┃ 󰬿 󰐥"
-local window = "Move or resize (󰘶): 󰞗 ┃ 󰞖 ┃ 󰞙 ┃ 󰞘"
+-- submap names 󰫮󰫯󰫰󰫱󰫲󰫳󰫴󰫵󰫶󰫷󰫸󰫹󰫺󰫻󰫼󰫽󰫾󰫿󰬀󰬁󰬂󰬃󰬄󰬅󰬆󰬇┃┊│
+local groups = "󰓩 : 󰬁 Togl │󰫹 Lck │󰌒 │ │"
+local power = " : 󰫹  │ 󰫾 󰍃 │ 󰬀 󰒲 │ 󰫵 󰤄 │ 󰫿 󰜉 │ 󰫽 󰐥"
+local scrGrab = "󰹑 : 󰫲 󱇣│󰬀 󰉏│󰫿 "
+local swappy = "󱇣 : 󰫮󰍺│󰫼󰍹│󰬄│󰫿󰩭"
+local save = "󰉏 : 󰫮󰍺│󰫼󰍹│󰬄│󰫿󰩭"
+local rec = " : 󰫼 󰍹│󰫿 󰩭│󰬀 "
+local window = " 󰙕 : 󰞗 │󰞖 │󰞙 │󰞘"
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 if hl.get_config("general.layout") == "scrolling" then
@@ -43,13 +44,14 @@ end
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("killall -SIGUSR1 waybar"))
 hl.bind(mainMod .. " + C", hl.dsp.window.close())
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + G", hl.dsp.submap(grab))
+hl.bind(mainMod .. " + G", hl.dsp.submap(groups))
 hl.bind(mainMod .. " + I", hl.dsp.exec_cmd(fyi .. ' Missing "Settings Win+I"'))
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("loginctl lock-session"))
 hl.bind(mainMod .. " + M", hl.dsp.submap(power))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menuDrun))
+hl.bind(mainMod .. " + S", hl.dsp.submap(scrGrab))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + W", hl.dsp.submap(window))
 hl.bind(mainMod .. " + X", hl.dsp.workspace.toggle_special(myEsp))
@@ -123,12 +125,11 @@ hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(lvolbri .. " brightness_up"), { l
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd(lvolbri .. " next_track"), { locked = true })
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd(lvolbri .. " play_pause"), { locked = true })
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd(lvolbri .. " play_pause"), { locked = true })
--- hl.bind("XF86AudioPlayPause", hl.dsp.exec_cmd(lvolbri .. " play_pause"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd(lvolbri .. " prev_track"), { locked = true })
 hl.bind("XF86AudioStop", hl.dsp.exec_cmd(lvolbri .. " play_stop"), { locked = true })
 
 -- Other special keys
-hl.bind("Print", hl.dsp.submap(grab), { locked = true })
+hl.bind("Print", hl.dsp.submap(scrGrab), { locked = true })
 hl.bind("XF86Calculator", hl.dsp.exec_cmd("uwsm-app -- qalculate-qt"), { locked = true })
 hl.bind("XF86Favorites", hl.dsp.exec_cmd(fyi .. " Missing Favorites"), { locked = true })
 hl.bind("XF86HomePage", hl.dsp.exec_cmd(fileManager), { locked = true })
@@ -151,49 +152,62 @@ local function hitAndReset(func)
 		hl.dispatch(hl.dsp.submap("reset"))
 	end
 end
-hl.define_submap(grab, function()
-	hl.bind("1", hl.dsp.submap(swappy))
-	hl.bind("2", hl.dsp.submap(save))
-	hl.bind("3", hl.dsp.submap(rec))
+
+hl.define_submap(groups, function()
+	hl.bind("T", hl.dsp.group.toggle())
+	hl.bind("L", hl.dsp.group.lock_active({ action = "toggle" }))
+	hl.bind("left", hl.dsp.window.move({ group_aware = true, direction = "l" }))
+	hl.bind("right", hl.dsp.window.move({ group_aware = true, direction = "r" }))
+	hl.bind("tab", hl.dsp.group.next())
+	hl.bind("SHIFT + left", hl.dsp.group.move_window({ forward = false }))
+	hl.bind("SHIFT + right", hl.dsp.group.move_window())
+	hl.bind("SHIFT + tab", hl.dsp.group.prev())
 	hl.bind("escape", hl.dsp.submap("reset"))
-	hl.define_submap(swappy, "reset", function()
-		hl.bind("1", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f'"))
-		hl.bind("2", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -o"))
-		hl.bind("3", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -w"))
-		hl.bind("4", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -r"))
-		hl.bind("SHIFT + 1", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -d 2"))
-		hl.bind("SHIFT + 2", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -d 2 -o"))
-		hl.bind("SHIFT + 3", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -d 2 -w"))
-		hl.bind("SHIFT + 4", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -d 2 -r"))
-		hl.bind("escape", hl.dsp.submap("reset"))
-	end)
-	hl.define_submap(save, "reset", function()
-		hl.bind("1", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c"))
-		hl.bind("2", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -o"))
-		hl.bind("3", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -w"))
-		hl.bind("4", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -r"))
-		hl.bind("SHIFT + 1", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -d 2"))
-		hl.bind("SHIFT + 2", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -d 2 -o"))
-		hl.bind("SHIFT + 3", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -d 2 -w"))
-		hl.bind("SHIFT + 4", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -d 2 -r"))
-		hl.bind("escape", hl.dsp.submap("reset"))
-	end)
-	hl.define_submap(rec, "reset", function()
-		hl.bind("1", hl.dsp.exec_cmd("lwfrec -f " .. srfile))
-		hl.bind("2", hl.dsp.exec_cmd("lwfrec -f " .. srfile .. " -r"))
-		hl.bind("3", hl.dsp.exec_cmd("lwfrec --stop"))
-		hl.bind("escape", hl.dsp.submap("reset"))
-	end)
 end)
 
 hl.define_submap(power, "reset", function()
-	hl.bind("1", hl.dsp.exec_cmd("loginctl lock-session"))
-	hl.bind("2", hl.dsp.exec_cmd("uwsm stop"))
-	hl.bind("3", hl.dsp.exec_cmd("systemctl -i suspend"))
-	hl.bind("4", hl.dsp.exec_cmd("systemctl -i hibernate"))
-	hl.bind("5", hl.dsp.exec_cmd("systemctl -i reboot"))
-	hl.bind("6", hl.dsp.exec_cmd("systemctl -i poweroff"))
+	hl.bind("L", hl.dsp.exec_cmd("loginctl lock-session"))
+	hl.bind("Q", hl.dsp.exec_cmd("uwsm stop"))
+	hl.bind("S", hl.dsp.exec_cmd("systemctl -i suspend"))
+	hl.bind("H", hl.dsp.exec_cmd("systemctl -i hibernate"))
+	hl.bind("R", hl.dsp.exec_cmd("systemctl -i reboot"))
+	hl.bind("P", hl.dsp.exec_cmd("systemctl -i poweroff"))
 	hl.bind("catchall", hl.dsp.submap("reset"))
+end)
+
+hl.define_submap(scrGrab, function()
+	hl.bind("E", hl.dsp.submap(swappy))
+	hl.bind("S", hl.dsp.submap(save))
+	hl.bind("R", hl.dsp.submap(rec))
+	hl.bind("escape", hl.dsp.submap("reset"))
+	hl.define_submap(swappy, "reset", function()
+		hl.bind("A", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f'"))
+		hl.bind("O", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -o"))
+		hl.bind("W", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -w"))
+		hl.bind("R", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -r"))
+		hl.bind("SHIFT + A", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -d 2"))
+		hl.bind("SHIFT + O", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -d 2 -o"))
+		hl.bind("SHIFT + W", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -d 2 -w"))
+		hl.bind("SHIFT + R", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -d 2 -r"))
+		hl.bind("escape", hl.dsp.submap("reset"))
+	end)
+	hl.define_submap(save, "reset", function()
+		hl.bind("A", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c"))
+		hl.bind("O", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -o"))
+		hl.bind("W", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -w"))
+		hl.bind("R", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -r"))
+		hl.bind("SHIFT + A", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -d 2"))
+		hl.bind("SHIFT + O", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -d 2 -o"))
+		hl.bind("SHIFT + W", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -d 2 -w"))
+		hl.bind("SHIFT + R", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -d 2 -r"))
+		hl.bind("escape", hl.dsp.submap("reset"))
+	end)
+	hl.define_submap(rec, "reset", function()
+		hl.bind("O", hl.dsp.exec_cmd("lwfrec -f " .. srfile))
+		hl.bind("R", hl.dsp.exec_cmd("lwfrec -f " .. srfile .. " -r"))
+		hl.bind("S", hl.dsp.exec_cmd("lwfrec --stop"))
+		hl.bind("escape", hl.dsp.submap("reset"))
+	end)
 end)
 
 hl.define_submap(window, function()
