@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+
+local raw_json=$(busctl --user --json=short call \
+	org.lmcs.DBus.UpdatesBtw \
+	/org/lmcs/DBus/UpdatesBtw/GetUpdates \
+	org.lmcs.DBus.UpdatesBtw.UpdatesInterface GetUpdates -- x -1)
+
+local num_updates=0
+if [[ "$raw_json" =~ '\\"count\\":([0-9]+)' ]]; then
+	num_updates=$match[1]
+fi
+
+if ((num_updates == 0)); then
+	print -r -- "󰮯 no updates"
+else
+	local suffix=""
+	((num_updates > 1)) && suffix="s"
+	print -r -- "󰮯 $num_updates update$suffix"
+fi

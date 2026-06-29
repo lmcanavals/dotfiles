@@ -1,192 +1,220 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 # based on https://gitlab.com/Nmoleo/i3-volume-brightness-indicator
 
-notification_timeout=1000
-download_album_art=true
-show_album_art=true
-show_music_in_volume_indicator=true
+local notif_timeout=1000
+local dwld_album_art=true
+local show_album_art=true
+local show_music_in_vol_notif=true
+local DEFAULT_SINK="@DEFAULT_AUDIO_SINK@"
+local DEFAULT_SOURCE="@DEFAULT_AUDIO_SOURCE@"
 
-# TODO: zsh this thing
-
-function get_volume_icon {
-	local mute=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | rg -Po 'MUTED')
+get_volume_icon() {
+	[[ $(wpctl get-volume "$DEFAULT_SINK") =~ 'MUTED' ]] && local mute=$MATCH
 	local icon
-	if [ "$1" -eq 0 ] || [ "$mute" == "MUTED" ]; then
+	if (( $1 == 0 )) || [[ "$mute" == "MUTED" ]]; then
+		icon=""
+	elif (( $1 < 25 )); then
 		icon=""
-	elif [ "$1" -lt 50 ]; then
+	elif (( $1 < 55 )); then
 		icon=""
 	else
 		icon=""
 	fi
-	echo $icon
+	print -r -- "$icon"
 }
 
-function get_mic_icon {
-	local mute=$(wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | rg -Po 'MUTED')
+get_mic_icon() {
+	[[ $(wpctl get-volume "$DEFAULT_SOURCE") =~ 'MUTED' ]] && local mute=$MATCH
 	local icon
-	if [ "$1" -eq 0 ] || [ "$mute" == "MUTED" ]; then
+	if (( $1 == 0 )) || [[ "$mute" == "MUTED" ]]; then
 		icon="󰍭"
 	else
 		icon="󰍬"
 	fi
-	echo $icon
+	print -r -- "$icon"
 }
 
-function get_brightness_icon {
-	local idx=$((($1 * 8 + 5) / 90))
+get_brightness_icon() {
+	local idx=$(( (($1 * 8 + 5) / 90) + 1 ))
 	local icons=("" "" "" "" "" "" "" "" "")
-	echo ${icons[$idx]}
+	print -r -- "${icons[$idx]}"
 }
 
-function get_album_art {
-	local url=$(playerctl -f "{{mpris:artUrl}}" metadata)
+get_album_art() {
+	local url=$(playerctl -f "{{mpris:artUrl}}" metadata 2>/dev/null)
 	local album_art
-	if [[ $url == "file://"* ]]; then
-		album_art="${url/file:\/\//}"
-	elif [[ $url == "http://"* ]] ||
-		[[ $url == "https://"* ]] &&
-		[[ $download_album_art == "true" ]]; then
-		local filename="$(echo $url | sed "s/.*\///")"
+	if [[ $url == file://* ]]; then
+		album_art="${url#file://}"
+	elif [[ $url == http://* || $url == https://* ]] && [[ $dwld_album_art == "true" ]]; then
+		local filename="${url##*/}"
 
-		if [ ! -f "/tmp/$filename" ]; then
-			curl -o "/tmp/$filename" "$url"
+		if [[ ! -f "/tmp/$filename" ]]; then
+			curl -s -o "/tmp/$filename" "$url"
 		fi
 
 		album_art="/tmp/$filename"
 	else
 		album_art="audio-speakers"
 	fi
-	echo $album_art
+	print -r -- "$album_art"
 }
 
-function show_volume_notif {
+show_volume_notif() {
 	local volume_icon=$(get_volume_icon $1)
+	local album_art="audio-speakers"
+	local current_song=""
 
-	if [[ $show_music_in_volume_indicator == "true" ]]; then
-		local current_song=$(playerctl -f "{{title}}<br><b>{{artist}}</b>" metadata)
+	if [[ $show_music_in_vol_notif == "true" ]]; then
+		current_song=$(playerctl -f "{{title}}<br><b>{{artist}}</b>" metadata 2>/dev/null)
 
 		if [[ $show_album_art == "true" ]]; then
-			local album_art=$(get_album_art)
+			album_art=$(get_album_art)
 		fi
-
-		fyi --hint=string:x-dunst-stack-tag:volume_notif --hint=int:value:$1 \
-			-i "$album_art" -t $notification_timeout "$1% $volume_icon" "$current_song"
-	else
-		fyi --hint=string:x-dunst-stack-tag:volume_notif --hint=int:value:$1 \
-			-i audio-speakers -t $notification_timeout "$1% $volume_icon"
 	fi
+
+	fyi --hint=string:x-dunst-stack-tag:volume_notif --hint=int:value:$1 \
+		-i "$album_art" -t $notif_timeout "$1% $volume_icon" ${current_song:+"$current_song"}
 }
 
-function show_mic_notif {
+show_mic_notif() {
 	local mic_icon=$(get_mic_icon $1)
 	fyi --hint=string:x-dunst-stack-tag:mic_notif --hint=int:value:$1 \
-		-i audio-input-microphone -t $notification_timeout "$1% $mic_icon"
+		-i audio-input-microphone -t $notif_timeout "$1% $mic_icon"
 }
 
-function show_music_notif {
+show_music_notif() {
 	local ready=false
-	for ((i = 1; i <= 15; i++)); do
-		status=$(playerctl status 2>/dev/null)
-		if [ "$status" != "Stopped" ] && [ -n "$status" ]; then
+	repeat 15 {
+		local player_status=$(playerctl status 2>/dev/null)
+		if [[ "$player_status" != "Stopped" && -n "$player_status" ]]; then
 			ready=true
 			break
 		fi
 		sleep 0.1
-	done
+	}
+
 	local album_art="music"
-	if not $ready; then
-		fyi --hint=string:x-dunst-stack-tag:music_notif -i \
-			"$album_art" -t $notification_timeout "Playerctl" "isn't ready"
+	if ! $ready; then
+		fyi --hint=string:x-dunst-stack-tag:music_notif \
+			-i "$album_art" -t $notif_timeout "Playerctl" "isn't ready"
+		return
 	fi
-	local song_title=$(playerctl -f "{{title}}" metadata)
-	local song_artist=$(playerctl -f "{{artist}}" metadata)
-	local song_album=$(playerctl -f "{{album}}" metadata)
+
+	local song_title=$(playerctl -f "{{title}}" metadata 2>/dev/null)
+	local song_artist=$(playerctl -f "{{artist}}" metadata 2>/dev/null)
+	local song_album=$(playerctl -f "{{album}}" metadata 2>/dev/null)
 
 	if [[ $show_album_art == "true" ]]; then
-		local album_art=$(get_album_art)
+		album_art=$(get_album_art)
 	fi
 	if [[ -n "$song_album" ]]; then
 		song_album="<br><b>$song_album</b>"
 	fi
 
 	fyi --hint=string:x-dunst-stack-tag:music_notif \
-		-i "$album_art" -t $notification_timeout "$song_title" "$song_artist$song_album"
+		-i "$album_art" -t $notif_timeout "$song_title" "$song_artist$song_album"
 }
 
-function show_brightness_notif {
-	local brightness=$(brightnessctl i | rg -Po '[0-9]{1,3}(?=%)' | head -n 1)
+show_brightness_notif() {
+	[[ $(brightnessctl i) =~ '([0-9]{1,3})%' ]] && local brightness=$match[1]
 	local brightness_icon=$(get_brightness_icon $brightness)
 	fyi --hint=string:x-dunst-stack-tag:brightness_notif --hint=int:value:$brightness \
-		-i display -t $notification_timeout "$brightness% $brightness_icon"
+		-i display-brightness-symbolic -t $notif_timeout "$brightness% $brightness_icon"
 }
 
-function volbri() {
-	local volume_step=5
-	local brightness_step=1
-	local max_volume=100
+local vol_step=5
+local bright_step=5
+local max_volume=100
+local action=""
 
-	# get audio device
-	case $1 in
-	mic_down | mic_mute | mic_up) local device="@DEFAULT_SOURCE@" ;;
-	volume_down | volume_mute | volume_up) local device="@DEFAULT_SINK@" ;;
-	esac
+local -A opts
+zparseopts -D -A opts -M \
+		m:=action -mode:=action \
+		s:=step   -step:=step \
+		h=help    -help=help
 
-	# get and update volume for device
-	case $1 in
-	mic_down | mic_mute | mic_up | volume_down | volume_mute | volume_up)
-		local volume=$(wpctl get-volume $device | awk '{printf "%.0f\n", $2 * 100}')
-		;;
-	esac
+if [[ -n ${opts[-h]} || -n ${opts[--help]} ]]; then
+		echo "Usage: volbri -m [action] [-s step_size]"
+		return 0
+fi
 
-	# calculate new volume level
-	case $1 in
-	mic_down | volume_down) volume=$((volume - volume_step)) ;;
-	mic_up | volume_up)
-		volume=$((volume + volume_step))
-		if [ $volume -gt $max_volume ]; then
-			volume=$max_volume
+# Override defaults if flags were passed
+action=${opts[-m]:-${opts[--mode]}}
+if [[ -n ${opts[-s]} || -n ${opts[--step]} ]]; then
+		local passed_step=${opts[-s]:-${opts[--step]}}
+		vol_step=$passed_step
+		bright_step=$passed_step
+fi
+
+# TODO: Remove
+# Fallback to positional argument if no flag was used (backwards compatibility)
+[[ -z "$action" ]] && action="$1"
+
+# 3. Guard clause: Ensure we actually have an action to perform
+if [[ -z "$action" ]]; then
+		echo "Error: No action specified." >&2
+		return 1
+fi
+
+# Get audio device
+case $action in
+	mic_down|mic_mute|mic_up) local device="$DEFAULT_SOURCE" ;;
+	vol_down|vol_mute|vol_up) local device="$DEFAULT_SINK" ;;
+esac
+
+# Get and update volume for device
+case $action in
+	mic_down|mic_mute|mic_up|vol_down|vol_mute|vol_up)
+		if [[ $(wpctl get-volume "$device") =~ '([0-9]\.[0-9]{1,2})' ]]; then
+			local raw_vol=${match/./}
+			((${#raw_vol} == 2)) && raw_vol="${raw_vol}0"
+				local volume="$((10#$raw_vol))"
 		fi
 		;;
-	esac
+esac
 
-	# update values
-	case $1 in
-	brightness_down) brightnessctl set $brightness_step%- ;;
-	brightness_up) brightnessctl set $brightness_step%+ ;;
-	mic_down | mic_up | volume_down | volume_up) wpctl set-volume $device $volume% ;;
-	mic_mute | volume_mute) wpctl set-mute $device toggle ;;
-	esac
+# Calculate new volume level
+case $action in
+	mic_down|vol_down) (( volume -= vol_step )) ;;
+	mic_up|vol_up)
+		(( volume += vol_step ))
+		(( volume > max_volume )) && volume=$max_volume
+		;;
+esac
 
-	# showing notifs
-	case $1 in
-	mic_down | mic_mute | mic_up) show_mic_notif $volume ;;
-	volume_down | volume_mute | volume_up) show_volume_notif $volume ;;
-	brightness_down | brightness_up) show_brightness_notif ;;
-	esac
+# Update system values
+case $action in
+	bright_down) brightnessctl set ${bright_step}%- ;;
+	bright_up) brightnessctl set ${bright_step}%+ ;;
+	mic_down|mic_up|vol_down|vol_up) wpctl set-volume $device ${volume}% ;;
+	mic_mute|vol_mute) wpctl set-mute $device toggle ;;
+esac
 
-	# media player control
-	case $1 in
+# Display notifications
+case $action in
+	mic_down|mic_mute|mic_up) show_mic_notif $volume ;;
+	vol_down|vol_mute|vol_up) show_volume_notif $volume ;;
+	bright_down|bright_up) show_brightness_notif ;;
+esac
+
+# Media player control
+case $action in
 	next_track)
 		playerctl next
 		show_music_notif
 		;;
-
 	prev_track)
 		playerctl previous
 		show_music_notif
 		;;
-
 	play_pause)
 		playerctl play-pause
 		show_music_notif
 		;;
-
 	play_stop)
 		show_music_notif
 		playerctl stop
 		;;
-	esac
-}
+esac
 
-volbri $@

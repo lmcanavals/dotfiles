@@ -16,6 +16,7 @@ max_icon_size = 128
 min_icon_size = 48
 markup = full
 mouse_right_click = context
+offset = (735, 10)
 progress_bar_corner_radius = 5
 progress_bar_height = 15
 transparency = 15

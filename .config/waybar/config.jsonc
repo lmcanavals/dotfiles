@@ -287,9 +287,9 @@
 		],
 		"format": "{player_icon} {dynamic}",
 		"format-paused": "{status_icon} {dynamic}",
-		"on-click": "lvolbri play_pause",
-		"on-click-middle": "lvolbri prev_track",
-		"on-click-right": "lvolbri next_track",
+		"on-click": "lvolbri -m play_pause",
+		"on-click-middle": "lvolbri -m prev_track",
+		"on-click-right": "lvolbri -m next_track",
 		"player-icons": {
 			"default": "󰓃",
 			"vivaldi": ""
@@ -349,10 +349,10 @@
 		"format-source": "󰍬 ",
 		"format-source-muted": "",
 		"on-click": "qpwgraph",
-		"on-click-middle": "lvolbri volume_mute",
-		"on-click-right": "lvolbri mic_mute",
-		"on-scroll-down": "lvolbri volume_down",
-		"on-scroll-up": "lvolbri volume_up",
+		"on-click-middle": "lvolbri -m vol_mute",
+		"on-click-right": "lvolbri -m mic_mute",
+		"on-scroll-down": "lvolbri -m vol_down",
+		"on-scroll-up": "lvolbri -m vol_up",
 		"scroll-step": 5,
 		"tooltip": true,
 		"tooltip-format": "Volume: <b>{volume}%</b>\r{desc}"
@@ -393,9 +393,9 @@
 		},
 		"node-type": "Audio/Sink",
 		"format-muted": "󰖁",
-		"on-click": "lvolbri volume_mute",
-		"on-scroll-down": "lvolbri volume_down",
-		"on-scroll-up": "lvolbri volume_up",
+		"on-click": "lvolbri -m vol_mute",
+		"on-scroll-down": "lvolbri -m vol_down",
+		"on-scroll-up": "lvolbri -m vol_up",
 		"tooltip-format": "Output: {volume:3}% {node_name}"
 	},
 	"wireplumber#source": {
@@ -417,9 +417,9 @@
 		},
 		"node-type": "Audio/Source",
 		"format-muted": "󰍭",
-		"on-click": "lvolbri mic_mute",
-		"on-scroll-down": "lvolbri mic_down",
-		"on-scroll-up": "lvolbri mic_up",
+		"on-click": "lvolbri -m mic_mute",
+		"on-scroll-down": "lvolbri -m mic_down",
+		"on-scroll-up": "lvolbri -m mic_up",
 		"tooltip-format": "Input: {source_volume:3}% {source_desc}"
 	}
 }

@@ -1,3 +1,1 @@
-#!/bin/sh
-
-python ~/Apps/repos/theme-manager/src/thm/main.py &
+/home/lmcs/Apps/repos/theme-manager/src/thm/main.py

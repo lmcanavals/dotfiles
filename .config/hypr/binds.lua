@@ -114,19 +114,19 @@ hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Laptop multimedia keys for volume and LCD brightness
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(lvolbri .. " volume_up"), { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(lvolbri .. " volume_down"), { locked = true, repeating = true })
-hl.bind("XF86AudioMute", hl.dsp.exec_cmd(lvolbri .. " volume_mute"), { locked = true, repeating = true })
-hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd(lvolbri .. " mic_mute"), { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(lvolbri .. " brightness_down"), { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(lvolbri .. " brightness_up"), { locked = true, repeating = true })
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(lvolbri .. " -m vol_up"), { locked = true, repeating = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(lvolbri .. " -m vol_down"), { locked = true, repeating = true })
+hl.bind("XF86AudioMute", hl.dsp.exec_cmd(lvolbri .. " -m vol_mute"), { locked = true, repeating = true })
+hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd(lvolbri .. " -m mic_mute"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(lvolbri .. " -m bright_down"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(lvolbri .. " -m bright_up"), { locked = true, repeating = true })
 
 -- Requires playerctl
-hl.bind("XF86AudioNext", hl.dsp.exec_cmd(lvolbri .. " next_track"), { locked = true })
-hl.bind("XF86AudioPause", hl.dsp.exec_cmd(lvolbri .. " play_pause"), { locked = true })
-hl.bind("XF86AudioPlay", hl.dsp.exec_cmd(lvolbri .. " play_pause"), { locked = true })
-hl.bind("XF86AudioPrev", hl.dsp.exec_cmd(lvolbri .. " prev_track"), { locked = true })
-hl.bind("XF86AudioStop", hl.dsp.exec_cmd(lvolbri .. " play_stop"), { locked = true })
+hl.bind("XF86AudioNext", hl.dsp.exec_cmd(lvolbri .. " -m next_track"), { locked = true })
+hl.bind("XF86AudioPause", hl.dsp.exec_cmd(lvolbri .. " -m play_pause"), { locked = true })
+hl.bind("XF86AudioPlay", hl.dsp.exec_cmd(lvolbri .. " -m play_pause"), { locked = true })
+hl.bind("XF86AudioPrev", hl.dsp.exec_cmd(lvolbri .. " -m prev_track"), { locked = true })
+hl.bind("XF86AudioStop", hl.dsp.exec_cmd(lvolbri .. " -m play_stop"), { locked = true })
 
 -- Other special keys
 hl.bind("Print", hl.dsp.submap(scrGrab), { locked = true })
