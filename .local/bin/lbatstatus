@@ -9,7 +9,7 @@ local icon_plugged=""
 local sys_paths=(/sys/class/power_supply/BAT*(N))
 
 if ((${#sys_paths} == 0)); then
-	echo "󰂑 not found"
+	print -r -- "󰂑 not found"
 	exit 1
 fi
 

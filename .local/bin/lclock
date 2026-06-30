@@ -24,7 +24,7 @@ ICON_UNTRACKED=$'\uf059' # 
 
 #
 tag() {
-	echo -n "<span foreground=\\\"$1\\\">$2</span>"
+	print -nr "<span foreground=\\\"$1\\\">$2</span>"
 }
 
 # Generates a compact, symbolic string representing the current Git repository status.

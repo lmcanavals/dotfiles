@@ -13,9 +13,9 @@ LOW_NOTIFIED=false
 CRIT_NOTIFIED=false
 
 # Cache the battery path once at startup
-BATTERY_PATH=$(upower -e | grep -m1 'BAT')
+BATTERY_PATH=$(upower -e | rg -m 1 'BAT')
 
-function send_battery_notif() {
+send_battery_notif() {
 	local title=$1 msg=$2 icon=$3 urgency=${4:-normal}
 	fyi -u "$urgency" -i "$icon" "$title" "$msg"
 }
@@ -27,38 +27,38 @@ get_battery_icon() {
 
 	if [[ "$state" == "discharging" ]]; then
 		if ((percentage >= THRESHOLD_FULL)); then
-			echo "battery-full"
+			print "battery-full"
 		elif ((percentage >= THRESHOLD_GOOD)); then
-			echo "battery-good"
+			print "battery-good"
 		elif ((percentage >= THRESHOLD_LOW)); then
-			echo "battery-low"
+			print "battery-low"
 		elif ((percentage >= THRESHOLD_CRITICAL)); then
-			echo "battery-caution"
+			print "battery-caution"
 		else
-			echo "battery-empty"
+			print "battery-empty"
 		fi
 	elif [[ "$state" == "charging" ]]; then
 		if ((percentage >= THRESHOLD_FULL)); then
-			echo "battery-full-charging"
+			print "battery-full-charging"
 		elif ((percentage >= THRESHOLD_GOOD)); then
-			echo "battery-good-charging"
+			print "battery-good-charging"
 		elif ((percentage >= THRESHOLD_LOW)); then
-			echo "battery-low-charging"
+			print "battery-low-charging"
 		elif ((percentage >= THRESHOLD_CRITICAL)); then
-			echo "battery-caution-charging"
+			print "battery-caution-charging"
 		else
-			echo "battery-empty-charging"
+			print "battery-empty-charging"
 		fi
 	elif [[ "$state" == "fully-charged" ]]; then
-		echo "battery-full"
+		print "battery-full"
 	elif [[ "$state" == "empty" ]]; then
-		echo "battery-empty"
+		print "battery-empty"
 	else
-		echo "battery-missing"
+		print "battery-missing"
 	fi
 }
 
-function check_battery() {
+check_battery() {
 	local state=$1
 	local percentage=$2
 
@@ -67,6 +67,7 @@ function check_battery() {
 
 	local current_icon=$(get_battery_icon "$state" "$percentage")
 
+	# TODO: transitions to consider from discharging to fully-charged
 	# Handle State Changes
 	if [[ "$state" != "$LAST_STATE" ]]; then
 		if [[ "$state" == "charging" ]]; then
@@ -97,7 +98,7 @@ function check_battery() {
 	LAST_LEVEL=$percentage
 }
 
-function the_main() {
+the_main() {
 	local state=""
 	local percentage=""
 
