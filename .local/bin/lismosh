@@ -1,50 +1,74 @@
 #!/usr/bin/env zsh
 
-# thanks https://unix.stackexchange.com/a/396888/29729
-
+# Pure Zsh ancestry check using the /proc filesystem (No pstree, no grep)
 has_ancestor_mosh() {
-	pstree -ps $1 | grep mosh-server
+	local target_pid=$1
+	local parent_pid=""
+	local comm=""
+
+	# Traverse up the process tree until PID 1 or 0
+	while ((target_pid > 1)); do
+		# Format of /proc/PID/stat: PID (executable_name) State PPID ...
+		if [[ ! -f "/proc/$target_pid/stat" ]]; then
+			break
+		fi
+
+		# Read the contents into a variable
+		local stat_content=$(<"/proc/$target_pid/stat")
+
+		# Extract executable name inside parentheses and PPID using Zsh regex
+		if [[ "$stat_content" =~ '^([0-9]+)\ \(([^)]+)\)\ [A-Z]\ ([0-9]+)' ]]; then
+			comm="${match[2]}"
+			parent_pid="${match[3]}"
+
+			# Check if this ancestor is the mosh-server
+			if [[ "$comm" == "mosh-server" ]]; then
+				return 0
+			fi
+			target_pid=$parent_pid
+		else
+			break
+		fi
+	done
+
+	return 1
 }
 
 is_mosh() {
-	# argument handling
+	local verbose=0
+
+	# Fast argument parsing using standard Zsh structures
+	local arg
 	for arg in "$@"; do
-		case $arg in
-		-v | --verbose) local VERBOSE=YES ;;
-		*) ;;
+		case "$arg" in
+		-v | --verbose) verbose=1 ;;
 		esac
 	done
 
+	local check_pid="$$"
+
+	# Handle TMUX environment natively without calling tmux list-clients if possible
 	if [[ -n "$TMUX" ]]; then
-		# current shell is under tmux
-		local tmux_current_session=$(tmux display-message -p '#S')
-		local tmux_client_id=$(tmux list-clients -t "${tmux_current_session}" -F '#{client_pid}')
-		# echo $tmux_current_session $tmux_client_id
-		local pid="$tmux_client_id"
-	else
-		local pid="$$"
+		# TMUX env variable contains: "path_to_socket,pid,session_index"
+		# We can extract the TMUX server/client PID natively using Zsh modifiers
+		check_pid="${${TMUX#*,}%*,}"
 	fi
 
-	local mosh_found=$(has_ancestor_mosh $pid) # or empty if not found
-	if [[ -z "$mosh_found" ]]; then
-		return 1 # exit code 1: not mosh
+	# Run the ultra-fast /proc check
+	if has_ancestor_mosh "$check_pid"; then
+		((verbose)) && print -r "mosh"
+		return 0
 	fi
 
-	test -n "$VERBOSE" && echo "mosh"
-	return 0 # exit code 0: is mosh
+	return 1
 }
 
-checkismosh() {
-	local sourced=0
-	if [ -n "$ZSH_EVAL_CONTEXT" ]; then
-		case $ZSH_EVAL_CONTEXT in *:file) sourced=1 ;; esac
-	elif [ -n "$BASH_VERSION" ]; then
-		[ "$0" != "$BASH_SOURCE" ] && sourced=1
-	else
-		case ${0##*/} in sh | dash) sourced=1 ;; esac
-	fi
-	if [[ $sourced == 0 ]]; then
-		is_mosh $@
-	fi
-}
-checkismosh $@
+# Determine if the script is being sourced or executed directly
+local sourced=0
+case "$ZSH_EVAL_CONTEXT" in
+*:file | *:toplevel) sourced=1 ;;
+esac
+
+if ((!sourced)); then
+	is_mosh "$@"
+fi

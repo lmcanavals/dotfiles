@@ -1,10 +1,11 @@
 #!/usr/bin/env zsh
 
-LCLR=$(<$XDG_CONFIG_HOME/lmcscolors)
+# Use standard XDG fallback if the variable is empty
+local color_file="${XDG_CONFIG_HOME:-$HOME/.config}/lmcscolors"
+local LCLR=""
+[[ -f "$color_file" ]] && LCLR=$(<"$color_file")
 
-# do a `echo $LCLR` to see how colors are stored
-# for ${LCLR:idx:len} idx = c * 8 where c is in {0..15} the 16 base colors
-# the len = 7 to include the # and the 6 hex digits of the RRGGBB color code.
+# Fixed length substrings using Zsh offset syntax
 COLOR_ADDED="${LCLR:16:7}"
 COLOR_CLEAN="${LCLR:96:7}"
 COLOR_DELETED="${LCLR:72:7}"
@@ -22,122 +23,117 @@ ICON_DIVERGED=$'\ue728'  # 
 ICON_MODIFIED=$'\uf14b'  # 
 ICON_UNTRACKED=$'\uf059' # 
 
-#
 tag() {
-	print -nr "<span foreground=\\\"$1\\\">$2</span>"
+	print -nr "<span foreground=\"$1\">$2</span>"
 }
 
-# Generates a compact, symbolic string representing the current Git repository status.
-# Output is formatted using Pango markup for use in Waybar.
 dotfiles_status() {
-	local dotfiles=("--git-dir=$HOME/.dotfiles.git" "--work-tree=$HOME")
+	local -a dotfiles=(--git-dir="$HOME/.dotfiles.git" --work-tree="$HOME")
 
 	# Check if we are inside a git repository
-	if ! git ${dotfiles[@]} rev-parse --is-inside-work-tree &>/dev/null; then
-		return 0
-	fi
+	git "${dotfiles[@]}" rev-parse --is-inside-work-tree &>/dev/null || return 0
 
-	# 1. Get the short, machine-readable status
-	local status_line=$(git ${dotfiles[@]} status -u --porcelain=v1 --branch 2>/dev/null)
+	# 1. Store porcelain status into a native Zsh array (line-by-line split)
+	local -a status_lines
+	status_lines=("${(@f)$(git "${dotfiles[@]}" status -u --porcelain=v1 --branch 2>/dev/null)}")
 
-	# 2. Extract branch/remote information from the first line
-	local branch_info=$(echo "$status_line" | head -n 1)
-
-	local current_branch
-	local ahead=0
-	local behind=0
+	local branch_info="${status_lines[1]}"
+	local current_branch=""
+	local -i ahead=0 behind=0 staged_count=0 modified_count=0 untracked_count=0
 	local branch_color="$COLOR_CLEAN"
 
-	# Parse branch name and remote status
-	if [[ "$branch_info" =~ '##' ]]; then
-		current_branch=$(echo "$branch_info" | sed -E 's/## ([^.]+).*/\1/')
-
-		# Note: Zsh matches are stored in the 'match' array automatically.
-		if [[ "$branch_info" =~ 'ahead ([0-9]+)' ]]; then
-			ahead="${match[1]}"
-		fi
-		if [[ "$branch_info" =~ 'behind ([0-9]+)' ]]; then
-			behind="${match[1]}"
-		fi
+	# 2. Pure Zsh regex matching
+	if [[ "$branch_info" =~ '^## ([^.]+)' ]]; then
+		current_branch="${match[1]}"
+		if [[ "$branch_info" =~ 'ahead ([0-9]+)' ]]; then ahead=${match[1]}; fi
+		if [[ "$branch_info" =~ 'behind ([0-9]+)' ]]; then behind=${match[1]}; fi
 	else
-		# Detached HEAD case (or simple local branch without remote info)
-		current_branch=$(git ${dotfiles[@]} rev-parse --short HEAD)
+		current_branch=$(git "${dotfiles[@]}" rev-parse --short HEAD 2>/dev/null)
 	fi
 
-	# Set branch color based on dirty status or divergence
-	if ((ahead > 0 || behind > 0)) || [[ -n "$(echo "$status_line" | tail -n +2)" ]]; then
+	# 3. Parse remaining lines natively
+	local line
+	for line in "${status_lines[@]:1}"; do
+		[[ -z "$line" ]] && continue
+		case "${line:0:2}" in
+		\?\?*) ((untracked_count++)) ;;
+		[MARCUD][\ ]*) ((staged_count++)) ;;
+		?*)
+			[[ "${line:0:1}" != " " ]] && ((staged_count++))
+			[[ "${line:1:1}" =~ '[MD]' ]] && ((modified_count++))
+			;;
+		esac
+	done
+
+	if ((ahead > 0 || behind > 0 || staged_count > 0 || modified_count > 0 || untracked_count > 0)); then
 		branch_color="$COLOR_MODIFIED"
 	fi
 
-	# Start the prompt string: [COLOR_BRANCH] [ICON] [BRANCH_NAME]
-	local output="$(tag $branch_color "$ICON_BRANCH $current_branch")"
+	local output
+	output="$(tag "$branch_color" "$ICON_BRANCH $current_branch")"
 
-	# 3. Handle ahead/behind/diverged status
 	if ((ahead > 0 && behind > 0)); then
-		output+=" $(tag $COLOR_DIVERGED $ICON_DIVERGED)"
+		output+=" $(tag "$COLOR_DIVERGED" "$ICON_DIVERGED")"
 	elif ((ahead > 0)); then
-		output+=" $(tag $COLOR_ADDED "$ICON_AHEAD $ahead")"
+		output+=" $(tag "$COLOR_ADDED" "$ICON_AHEAD $ahead")"
 	elif ((behind > 0)); then
-		output+=" $(tag $COLOR_DELETED "$ICON_BEHIND $behind")"
+		output+=" $(tag "$COLOR_DELETED" "$ICON_BEHIND $behind")"
 	fi
 
-	# 4. Count files in various states using --porcelain output (from line 2 onwards)
-	local unstaged_output=$(echo "$status_line" | tail -n +2)
-	local staged_count=$(echo "$unstaged_output" | grep -E '^[MARCUD]{1}' | wc -l)
-	local modified_count=$(echo "$unstaged_output" | grep -E '^.[MD]' | wc -l)
-	local untracked_count=$(echo "$unstaged_output" | grep -E '^\?\?' | wc -l)
+	# this is a workaround to inject \r on the output. waybar only accepts \r not \n. hyprlock doesn't care
+	local CR=$'\r'
 
-	# 5. Append symbols based on counts
-	if ((staged_count > 0)); then
-		output+="\r$(tag $COLOR_STAGED "$ICON_COMMITTED $staged_count staged") "
-	fi
-	if ((modified_count > 0)); then
-		output+="\r$(tag $COLOR_MODIFIED "$ICON_MODIFIED $modified_count modified") "
-	fi
-	if ((untracked_count > 0)); then
-		output+="\r$(tag $COLOR_UNTRACKED "$ICON_UNTRACKED $untracked_count untracked")"
-	fi
+	((staged_count > 0)) && output+="${CR}$(tag "$COLOR_STAGED" "$ICON_COMMITTED $staged_count staged") "
+	((modified_count > 0)) && output+="${CR}$(tag "$COLOR_MODIFIED" "$ICON_MODIFIED $modified_count modified") "
+	((untracked_count > 0)) && output+="${CR}$(tag "$COLOR_UNTRACKED" "$ICON_UNTRACKED $untracked_count untracked")"
 
-	# 6. Final status (clean or dirty)
-	if ((staged_count == 0 && modified_count == 0 && \
-		untracked_count == 0 && ahead == 0 && behind == 0)); then
-		output="$(tag $COLOR_CLEAN "<b>$ICON_CHECK  files synced</b>")\r${output}"
+	if ((staged_count == 0 && modified_count == 0 && untracked_count == 0 && ahead == 0 && behind == 0)); then
+		output="$(tag "$COLOR_CLEAN" "<b>$ICON_CHECK  files synced</b>")${CR}${output}"
 	else
-		output="$(tag $COLOR_MODIFIED "<b>$ICON_CHECK  files out of sync</b>")\r${output}"
+		output="$(tag "$COLOR_MODIFIED" "<b>$ICON_CHECK  files out of sync</b>")${CR}${output}"
 	fi
 
-	echo -n "$output"
+	print -nr -- "$output"
 }
 
-#    
-ICON_H0=$'\uf4c3' # 
-ICON_H1=$'\uf444' # 
-ICON_M0=$'\uf4c3' # 
-ICON_M1=$'\uf444' # 
-HOUR=({$ICON_H0,$ICON_H1}{$ICON_H0,$ICON_H1}{$ICON_H0,$ICON_H1}{$ICON_H0,$ICON_H1}{$ICON_H0,$ICON_H1})
-MINUTE=({$ICON_M0,$ICON_M1}{$ICON_M0,$ICON_M1}{$ICON_M0,$ICON_M1}{$ICON_M0,$ICON_M1}{$ICON_M0,$ICON_M1}{$ICON_M0,$ICON_M1})
+ICON_H0=$'\uf4c3' ICON_H1=$'\uf444'
+ICON_M0=$'\uf4c3' ICON_M1=$'\uf444'
+
+local -a HOUR=({${ICON_H0},${ICON_H1}}{${ICON_H0},${ICON_H1}}{${ICON_H0},${ICON_H1}}{${ICON_H0},${ICON_H1}}{${ICON_H0},${ICON_H1}})
+local -a MINUTE=({${ICON_M0},${ICON_M1}}{${ICON_M0},${ICON_M1}}{${ICON_M0},${ICON_M1}}{${ICON_M0},${ICON_M1}}{${ICON_M0},${ICON_M1}}{${ICON_M0},${ICON_M1}})
 
 cool_time() {
-	local hour=$(date +%H)
-	local minute=$(date +%M)
-	local second=$(date +%S)
+	local -a current_time=(${(f)"$(date +'%H%n%M')"})
+	local -i hr=$((10#${current_time[1]}))
+	local -i min=$((10#${current_time[2]}))
 
-	text="\"text\": \"<b>${HOUR[$hour + 1]}</b>:${MINUTE[$minute + 1]}\""
-	tooltip="\"tooltip\": \"$(dotfiles_status)\""
-	echo "{$text,$tooltip}"
+	print -nr -- "<b>${HOUR[hr + 1]}</b>:${MINUTE[min + 1]}"
 }
 
-lmcsbinclock() {
-	local once
-	zparseopts -E {-once,o}=once
-	if (($#once > 0)); then
-		cool_time
-		return 0
-	fi
-	while :; do
-		cool_time
+bclock_dotstatus() {
+	local tip="$(dotfiles_status)"
+	print -f '{"text": "%s", "tooltip": "%s"}\n' "$(cool_time)" "${tip//\"/\\\"}"
+}
+
+# Entry point
+local -a once=()
+local -a bclock=()
+local -a dotinfo=()
+local -a raw=()
+
+zparseopts -E {o,-once}=once {b,-bclock}=bclock {d,-dotinfo}=dotinfo {r,-raw}=raw
+
+if ((${#once} > 0)); then
+	bclock_dotstatus
+elif ((${#bclock} > 0)); then
+	print -f '%s\n' "$(cool_time)"
+elif ((${#dotinfo} > 0)); then
+	print -f '%s\n' "$(dotfiles_status)"
+elif ((${#raw} > 0)); then
+	print -f '%s\r%s\n' "$(cool_time)" "$(dotfiles_status)"
+else
+	while true; do
+		bclock_dotstatus
 		sleep 10
 	done
-}
-
-lmcsbinclock $@
+fi
