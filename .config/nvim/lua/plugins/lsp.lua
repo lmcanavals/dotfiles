@@ -1,5 +1,14 @@
 return {
-	-- Tell Mason to automatically install pgformatter
+	{
+		"neovim/nvim-lspconfig",
+		opts = {
+			servers = {
+				bashls = {
+					filetypes = { "bash", "sh", "zsh" },
+				},
+			},
+		},
+	},
 	{
 		"mason-org/mason.nvim",
 		opts = function(_, opts)
@@ -7,8 +16,6 @@ return {
 			table.insert(opts.ensure_installed, "pgformatter")
 		end,
 	},
-
-	-- Tell Conform to use pg_format for sql filetypes
 	{
 		"stevearc/conform.nvim",
 		opts = {

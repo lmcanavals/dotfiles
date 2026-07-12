@@ -26,4 +26,4 @@ set -gx FZF_DEFAULT_OPTS "$FZF_DEFAULT_OPTS \
   --color=separator:#{{accent_alt}} \
   --color=spinner:#{{accent_dim}}"
 
-fish_config theme choose {{fish_theme}} --color-theme={{light_or_dark}}
+fish_config theme choose "{{fish_theme}}" {% if fish_color_theme %}--color-theme={{fish_color_theme}}{% endif %}

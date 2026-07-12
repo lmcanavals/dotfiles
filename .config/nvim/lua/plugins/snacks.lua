@@ -28,12 +28,6 @@ return {
 				indent = {
 					char = "┆",
 				},
-				chunk = {
-					enabled = true,
-					char = {
-						arrow = "╼",
-					},
-				},
 			},
 		},
 	},

@@ -11,25 +11,22 @@ return {
 				lualine_y = {
 					{
 						function()
-							local names = {}
 							local clients = vim.lsp.get_clients({ buffer = 0 })
-							if next(clients) == nil then
+							if #clients == 0 then
 								return ""
 							end
+
+							local names = {}
 							for _, client in ipairs(clients) do
-								if not client.is_stopped(client) then
-									names[client.name] = true
+								if not client:is_stopped() then
+									table.insert(names, client.name)
 								end
 							end
-							local name_list = {}
-							for name, _ in pairs(names) do
-								table.insert(name_list, name)
-							end
 
-							return table.concat(name_list, " ")
+							return table.concat(names, " ")
 						end,
 						color = { gui = "italic,bold" },
-						icon = "󰒋",
+						icon = "",
 					},
 				},
 				lualine_z = {

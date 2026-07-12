@@ -5,6 +5,7 @@
     "wezterm_scheme": "GruvboxDark",
     "nvim_scheme": "gruvbox",
     "tokyonight_style": "dark",
+    "fish_color_theme": "dark",
     "fish_theme": "Gruvbox",
     "bat_theme": "gruvbox-dark",
     "palette": {

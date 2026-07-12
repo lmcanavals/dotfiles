@@ -1,7 +1,7 @@
 {
   "extras": [
+    "lazyvim.plugins.extras.ai.sidekick",
     "lazyvim.plugins.extras.dap.core",
-    "lazyvim.plugins.extras.dap.nlua",
     "lazyvim.plugins.extras.lang.clangd",
     "lazyvim.plugins.extras.lang.cmake",
     "lazyvim.plugins.extras.lang.docker",
@@ -15,6 +15,7 @@
     "lazyvim.plugins.extras.lang.tailwind",
     "lazyvim.plugins.extras.lang.typescript",
     "lazyvim.plugins.extras.lang.typescript.biome",
+    "lazyvim.plugins.extras.util.dot",
     "lazyvim.plugins.extras.util.octo"
   ],
   "install_version": 8,
