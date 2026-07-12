@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD013 -->
+
 # My dot files and setup guide 2025
 
 ## From installation media
@@ -14,8 +16,7 @@ setfont LatArCyrHeb-16  # better fonts for big monitors
 Multi boot is a thing of the past, check [legacy](legacy.md) for information.
 
 Use `gdisk` to partition, `${diskN}` could be `sdX` or `nvme0n1` or something else.
-Here we create a few variables to make the rest more generic and maybe later do an
-automatic installation script.
+Here we create a few variables to make the rest more generic and maybe later do an automatic installation script.
 
 ```sh
 export disk1=nvme01n1
@@ -32,12 +33,12 @@ gdisk /dev/$disk1
 
 ### BIOS Partition table
 
-| Dev |  Size | Mount point              | File system | gdisk type code |
-|:---:|------:|--------------------------|:-----------:|-----------------|
-| SSD |  1G   | EFI System Parition      | fat32       | EF00            |
-| SSD |       | `/`                      | ext4        | 8300            |
-| HDD |       | `/var`                   | btrfs       | var subvol    |
-| HDD |       | `/home/lmcs/archive`     | btrfs       | Archive subvol |
+| Dev | Size | Mount point          | File system | gdisk type code |
+| :-: | ---: | -------------------- | :---------: | --------------- |
+| SSD |   1G | EFI System Parition  |    fat32    | EF00            |
+| SSD |      | `/`                  |    ext4     | 8300            |
+| HDD |      | `/var`               |    btrfs    | var subvol      |
+| HDD |      | `/home/lmcs/archive` |    btrfs    | Archive subvol  |
 
 Swap is a file, instead of a partition, so it can be resized easily. It should
 be contained in the SSD. But should only be created or activated when there are

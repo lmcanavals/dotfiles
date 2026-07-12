@@ -29,6 +29,7 @@ return {
 					char = "┆",
 				},
 			},
+			statuscolumn = { enabled = true },
 		},
 	},
 }
