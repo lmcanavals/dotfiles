@@ -14,7 +14,7 @@ local mailClient = "uwsm-app -- thunderbird"
 local menuDrun = 'fuzzel --placeholder="󰀻  applications" --show-actions'
 local menuRun = 'fuzzel --placeholder=" _ command" --list-executables-in-path'
 local fyi = "fyi -u low -i computer"
-local terminal = "uwsm-app -- foot"
+local terminal = "uwsm-app -- kitty"
 
 -- submap names 󰫮󰫯󰫰󰫱󰫲󰫳󰫴󰫵󰫶󰫷󰫸󰫹󰫺󰫻󰫼󰫽󰫾󰫿󰬀󰬁󰬂󰬃󰬄󰬅󰬆󰬇┃┊│
 local groups = "󰓩 : 󰬁 Togl │󰫹 Lck │󰌒 │ │"

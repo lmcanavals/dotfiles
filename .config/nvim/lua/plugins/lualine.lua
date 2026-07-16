@@ -16,9 +16,11 @@ return {
 								return ""
 							end
 
+							local seen = {}
 							local names = {}
 							for _, client in ipairs(clients) do
-								if not client:is_stopped() then
+								if not seen[client.name] then
+									seen[client.name] = true
 									table.insert(names, client.name)
 								end
 							end
