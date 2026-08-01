@@ -40,7 +40,7 @@ function cool_folder() {
 		return 0
 	elif [[ "$full_path" == "$HOME/"* ]]; then
 		prefix="󱂵 /"
-		path_to_shorten="${full_path#$HOME/}"
+		path_to_shorten="${full_path#"$HOME"/}"
 	elif [[ "$full_path" == "/" ]]; then
 		echo "/"
 		return 0
@@ -53,17 +53,16 @@ function cool_folder() {
 		echo "${prefix%?}"
 		return 0
 	fi
-	local shortened_path=$(
-		echo "$path_to_shorten" | sed -e "s|\(\w\)\(\w\+\)/|\1/|g"
-	)
+	local shortened_path
+	shortened_path="${path_to_shorten//(#b)([[:alnum:]])[[:alnum:]]##\///${match}/}"
 
 	echo "${prefix}${shortened_path}"
 }
 function prompt_color() {
 	local c
-	[[ EUID -eq 0 ]] && c="red" || c="yellow"
+	[[ $EUID -eq 0 ]] && c="red" || c="yellow"
 	[[ $KEYMAP == vicmd ]] && c="blue"
-	print "%{$fg[$c]%}"
+	print "%F{$c}"
 }
 function rnd_adorn() {
 	local base="🬀🬁🬂🬃🬄🬅🬆🬇🬈🬉🬊🬋🬌🬍🬎🬏🬐🬑🬒🬓▌🬔🬕🬖🬗🬘🬙🬚🬛🬜🬝🬞🬟🬠🬡🬢🬣🬤🬥🬦🬧▐🬨🬩🬪🬫🬬🬭🬮🬯🬰🬱🬲🬳🬴🬵🬶🬷🬸🬹🬺🬻█"
@@ -71,8 +70,8 @@ function rnd_adorn() {
 		local adorn=""
 		local pos
 		RANDOM=$(date +"%N")
-		for i in {1..6}; do
-			pos=$((RANDOM % $num_chars + 1))
+		for _i in {1..6}; do
+			pos=$((RANDOM % num_chars + 1))
 			adorn+="${base[pos]}"
 		done
 		print "$adorn"
@@ -80,20 +79,21 @@ function rnd_adorn() {
 function left_prompt() {
 	local s
 	[[ $KEYMAP == vicmd ]] && s=":" || s="_"
-	print "$(prompt_color)$(rnd_adorn) %#$s%{$reset_color%} "
+	print "$(prompt_color)$(rnd_adorn) %#$s%f "
 }
 function right_prompt() {
 	local s
-	s="$(prompt_color)%n%{$fg[yellow]%}@%{$fg[cyan]%}%m:"
-	s+="%{$fg[blue]%}$(cool_folder)%{$reset_color%}"
+	s="$(prompt_color)%n%F{yellow}@%F{cyan}%m:"
+	s+="%F{blue}$(cool_folder)%f"
 	print "$s"
 }
 
 ZLE_RPROMPT_INDENT=0 # not buggy anymore
+export ZLE_RPROMPT_INDENT
 function prompt_lmcs_setup() {
-	PS2="$(prompt_color)$(rnd_adorn) %_┊%{$reset_color%} "
-	PS3="$(prompt_color)$(rnd_adorn) ?#┊%{$reset_color%} "
-	PS4="$(prompt_color)$(rnd_adorn) +%N:%i:%_┊%{$reset_color%} "
+	PS2="$(prompt_color)$(rnd_adorn) %_┊%f "
+	PS3="$(prompt_color)$(rnd_adorn) ?#┊%f "
+	PS4="$(prompt_color)$(rnd_adorn) +%N:%i:%_┊%f "
 
 	add-zsh-hook precmd prompt_lmcs_precmd
 }
@@ -101,8 +101,10 @@ function prompt_lmcs_precmd() {
 	if [[ $LCSTARSHIP -eq 0 ]]; then
 		PS1="$(left_prompt)"
 		RPS1="$(right_prompt)"
+		export RPS1
 	fi
-	set_title ${(%):-"%n@%m:$(cool_folder)"}
+	 # shellcheck disable=SC2296
+	set_title "${(%):-_:"%n@%m:\$(cool_folder)"}"
 }
 function prompt_lmcs_help() {
 	cat <<__EOF0__
@@ -117,8 +119,9 @@ __EOF0__
 function zle-keymap-select() {
 	if [[ $LCSTARSHIP -eq 0 ]]; then
 		PROMPT="$(left_prompt)"
+		export PROMPT
 	fi
-	() { return $__prompt_status }
+	#() { return $__prompt_status }
 	zle reset-prompt
 }
 function zle-line-init() {
@@ -128,6 +131,7 @@ zle -N zle-keymap-select
 zle -N zle-line-init
 
 prompt_themes+=( lmcs )
+# shellcheck disable=SC2296
 prompt_themes=( "${(@on)prompt_themes}" )
 
 prompt lmcs
@@ -188,26 +192,28 @@ alias enewdir="eza -rtdl *(/om[1,10]) .*(D/om[1,10])"
 alias eold="eza -rtl *(D.Om[1,10])"
 alias eolddir="eza -rtdl *(/Om[1,10]) .*(D/Om[1,10])"
 alias esmall="eza -rl *(.oL[1,10])"
-alias dotfiles="git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME "
+alias dotfiles='git --git-dir="$HOME/.dotfiles.git" --work-tree="$HOME" '
 alias tree="ee -T"
 
 #
 # some extra sources
 #
-[[ -s $ZDOTDIR/dynamic.zsh ]] && source $ZDOTDIR/dynamic.zsh
+[[ -s "$ZDOTDIR/dynamic.zsh" ]] && source "$ZDOTDIR/dynamic.zsh"
+# shellcheck disable=SC1090
 source <(fzf --zsh)
 
 #
 # various workarounds and utilities
 #
 _get_job_command() {
-		jobs -l $1 | sed -e 's/.*suspended *\(.*\)/\1/'
+		jobs -l "$1" | sed -e 's/.*suspended *\(.*\)/\1/'
 }
 fg() {
+	local job_command
     if [[ -n "$1" ]]; then
-        local job_command=$(_get_job_command "$1")
+        job_command=$(_get_job_command "$1")
     else
-        local job_command=$(_get_job_command "%%")
+        job_command=$(_get_job_command "%%")
     fi
     print -Pn "\e]2;$job_command \a"
 
@@ -216,57 +222,70 @@ fg() {
 
 #
 # plugin manager
-# TODO I need to document this crap or I will forget forever
 #
 function lmcs-plugman() {
-	local plug_gh_url
-	local plug_name
-	local oldpwd
-	local plug_folder
-	for fullname in $lmcs_plugins; do
-		plug_name=$(basename $fullname)
-		plug_gh_url="https://github.com/$fullname.git"
-		plug_folder="$ZDOTDIR/plugins/$plug_name"
-		case $@ in
-			install)
-				if [[ ! -d $ZDOTDIR/plugins/$plug_name ]]; then
-					echo "installing $plug_name"
-					git clone --depth 1 $plug_gh_url $plug_folder
-				else
-					echo "$plug_name is already installed, try $0 update" 
-				fi
-				;;
-			load)
-				if [[ ! -d $ZDOTDIR/plugins/$plug_name ]]; then
-					echo "$plug_name not installed... installing it..."
-					git clone --depth 1 $plug_gh_url $plug_folder
-				fi
-				source $ZDOTDIR/plugins/$plug_name/$plug_name.plugin.zsh
-				;;
-			update)
-				if [[ -d $ZDOTDIR/plugins/$plug_name ]]; then
-					echo "+--------------------------------------------------------------------+"
-					echo "updating $plug_name"
-					oldpwd=$(pwd)
-					cd $ZDOTDIR/plugins/$plug_name
-					git pull
-					cd $oldpwd
-					echo "+--------------------------------------------------------------------+"
-				else
-					echo "$plug_name not installed... installing it..."
-					git clone --depth 1 $plug_gh_url $plug_folder
-				fi
-				;;
-		esac
-	done
+  local action="${1:-load}"
+  local fullname plug_name plug_gh_url plug_folder init_file
+
+  # Fast-fail if no plugins are configured
+  (( ${#lmcs_plugins} == 0 )) && return
+
+  for fullname in $lmcs_plugins; do
+    # Modern Zsh modification instead of using the 'basename' subshell process
+    plug_name="${fullname:t}"
+    plug_gh_url="https://github.com/${fullname}.git"
+    plug_folder="${ZDOTDIR:-$HOME}/plugins/${plug_name}"
+
+    case "$action" in
+      install)
+        if [[ ! -d "$plug_folder" ]]; then
+          print "installing $plug_name..."
+          git clone --depth 1 "$plug_gh_url" "$plug_folder"
+        else
+          print "$plug_name is already installed. Try: lmcs-plugman update" 
+        fi
+        ;;
+
+      load)
+        if [[ ! -d "$plug_folder" ]]; then
+          print "$plug_name not installed... installing it..."
+          git clone --depth 1 "$plug_gh_url" "$plug_folder"
+        fi
+        
+        # Smart matching for init files (handles .plugin.zsh, .zsh, or .sh)
+				# shellcheck disable=SC1073,SC1072,SC1009,SC1036
+        init_file=( "$plug_folder"/${plug_name}.(plugin.zsh|zsh|sh)(N[1]) )
+        if [[ -f "$init_file" ]]; then
+          # shellcheck disable=SC1090
+          source "$init_file"
+        fi
+        ;;
+
+      update)
+        if [[ -d "$plug_folder" ]]; then
+          print "+--------------------------------------------------------------------+"
+          print "updating $plug_name..."
+          # Use Zsh directory stacking (pushd/popd) to avoid losing your terminal location
+          builtin pushd -q "$plug_folder" && {
+            git pull
+            builtin popd -q
+          }
+          print "+--------------------------------------------------------------------+"
+        else
+          print "$plug_name not installed... installing it..."
+          git clone --depth 1 "$plug_gh_url" "$plug_folder"
+        fi
+        ;;
+    esac
+  done
 }
 
 lmcs_plugins=(
-	zsh-users/zsh-autosuggestions
-	# zsh syntax highlighting recommends loading it last
-	# zsh-users/zsh-syntax-highlighting
-	zdharma-continuum/fast-syntax-highlighting
+  zsh-users/zsh-autosuggestions
+  zdharma-continuum/fast-syntax-highlighting
 )
+
 lmcs-plugman load
 
 # vim: set ts=2:sw=2:noet:sts=2:
+

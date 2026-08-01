@@ -21,14 +21,19 @@ return {
 			{
 				"<leader>Xh",
 				function()
-					require("nvim-highlight-colors").turnOn()
+					require("nvim-highlight-colors").toggle()
 				end,
-				desc = "Highlight colors",
+				desc = "Toggle highlight colors",
 			},
 		},
 		opts = {
 			render = "virtual",
 			virtual_symbol = "",
 		},
+		config = function(_, opts)
+			local nhc = require("nvim-highlight-colors")
+			nhc.setup(opts)
+			nhc.turnOff()
+		end,
 	},
 }

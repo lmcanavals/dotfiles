@@ -1,4 +1,5 @@
 # target: ~/.config/lmcscolors
+# reload: /usr/bin/zsh -c 'dbus-update-activation-environment --systemd LCLR="$(<~/.config/lmcscolors)"'
 #{{t0_bg}}
 #{{t1_red}}
 #{{t2_green}}

@@ -1,6 +1,7 @@
 # stuff for interactive shells, colors and the like
 
-export LCLR=$(<$ZDOTDIR/colors)
+LCLR=$(<"$ZDOTDIR/colors")
+export LCLR
 
 if [[ "$TERM" == "linux" ]]; then
 	echo -en "\e]P0${LCLR:1:6}" && clear # for background artifacting

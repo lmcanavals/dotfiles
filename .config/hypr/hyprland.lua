@@ -58,9 +58,28 @@ local function load_fonts(filepath)
 	return myfonts
 end
 
+local function load_lclr()
+	local home = os.getenv("HOME")
+	local filepath = home .. "/.config/lmcscolors"
+
+	local file = io.open(filepath, "r")
+	if not file then
+		return
+	end
+
+	local content = file:read("*all")
+	file:close()
+	content = content:gsub("%s+$", "")
+	content = content:gsub("\n", " ")
+
+	hl.env("LCLR", content) -- just in case for hyprland children
+	os.execute("dbus-update-activation-environment --systemd LCLR=" .. string.format("%q", content))
+end
+
 hl.on("hyprland.start", function()
 	hl.exec_cmd("mplayer $XDG_DATA_HOME/sounds/Smooth/stereo/desktop-login.oga")
 
+	load_lclr()
 	local function checkEnable(service)
 		local fmt = "systemctl --user is-enabled %s || systemctl --user enable --now %s"
 		hl.exec_cmd(string.format(fmt, service, service))

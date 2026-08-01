@@ -55,6 +55,7 @@ AddPackage --foreign yay                        # Yet another yogurt. Pacman wra
 IgnorePackage arch-install-scripts   # Scripts to aid in installing Arch Linux
 IgnorePackage arduino-cli            # Arduino command line interface
 IgnorePackage asciinema              # Record and share terminal sessions
+IgnorePackage ast-grep               # CLI tool for code structural search, lint and rewriting
 IgnorePackage blender                # A fully integrated 3D graphics creation suite
 IgnorePackage bottom                 # A graphical process/system monitor
 IgnorePackage fastfetch              # A feature-rich and performance oriented neofetch like system information tool
@@ -69,6 +70,7 @@ IgnorePackage lld                    # Linker from the LLVM project
 IgnorePackage lldb                   # Next generation, high-performance debugger
 IgnorePackage llvm                   # Compiler infrastructure
 IgnorePackage loupe                  # A simple image viewer for GNOME
+IgnorePackage lua51                  # Powerful lightweight programming language designed for extending applications
 IgnorePackage network-manager-applet # Applet for managing network connections
 IgnorePackage obs-studio             # Free, open source software for live streaming and recording
 IgnorePackage openmp                 # LLVM OpenMP Runtime Library
@@ -76,6 +78,7 @@ IgnorePackage qpwgraph               # PipeWire Graph Qt GUI Interface
 IgnorePackage ruby-erb               # An easy to use but powerful templating system for Ruby
 IgnorePackage snapshot               # Take pictures and videos
 IgnorePackage thunderbird            # Standalone mail and news reader from mozilla.org
+IgnorePackage wget                   # Network utility to retrieve files from the web
 IgnorePackage wl-mirror              # a simple Wayland output mirror client
 IgnorePackage wofi                   # launcher for wlroots-based wayland compositors
 IgnorePackage xorg-server            # Xorg X server
