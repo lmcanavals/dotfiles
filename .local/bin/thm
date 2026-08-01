@@ -1,1 +1,7 @@
-/home/lmcs/Apps/repos/theme-manager/src/thm/main.py
+#!/usr/bin/env zsh
+
+set -e
+
+cd "$HOME/Apps/repos/theme-manager"
+
+exec python -m src.thm.main "$@"
