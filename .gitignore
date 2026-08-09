@@ -147,6 +147,7 @@ rust.sh
 .config/keepassxc/
 .config/khtml/
 .config/ksnip/
+.config/lazysql/history/
 .config/libaccounts-glib/
 .config/lutris/
 .config/mc/
@@ -238,6 +239,7 @@ __pycache__/
 
 .local/bin/aconfmgr
 .local/bin/agy*
+.local/bin/lazysql
 .local/bin/networkmanager_dmenu
 .local/bin/spots
 .local/bin/testt.zsh

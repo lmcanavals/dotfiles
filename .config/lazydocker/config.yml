@@ -1,0 +1,13 @@
+gui:
+  scrollHeight: 2
+  border: "rounded"
+  theme:
+    activeBorderColor:
+      - "yellow"
+    inactiveBorderColor:
+      - "blue"
+      - "bold"
+    selectedLineBgColor:
+      - "blue"
+    optionsTextColor:
+      - "blue"
