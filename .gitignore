@@ -79,6 +79,7 @@ rust.sh
 .conan2/
 .conda/
 .designer/
+.docker/
 .dotfiles.git/
 .gemini/
 .gephi/
