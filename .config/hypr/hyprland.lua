@@ -25,20 +25,15 @@ local c = require("colors")
 -- Autostart necessary processes (like notifications daemons, status bars, etc.)
 -- Or execute your favorite apps at launch like this:
 
-local function load_fonts(filepath)
+local debugMsgs = {}
+
+local function load_fonts()
 	local myfonts = {}
-
-	filepath = filepath:gsub("%$([%w_]+)", function(var)
-		return os.getenv(var) or ""
-	end)
-
-	if filepath:sub(1, 1) == "~" then
-		filepath = os.getenv("HOME") .. filepath:sub(2)
-	end
+	local filepath = os.getenv("XDG_CONFIG_HOME") .. "/myfonts.conf"
 
 	local file = io.open(filepath, "r")
 	if not file then
-		print("Error: Could not open font configuration file at " .. filepath)
+		table.insert(debugMsgs, "Error: Could not open font configuration file at " .. filepath)
 		return nil
 	end
 
@@ -59,11 +54,11 @@ local function load_fonts(filepath)
 end
 
 local function load_lclr()
-	local home = os.getenv("HOME")
-	local filepath = home .. "/.config/lmcscolors"
+	local filepath = os.getenv("XDG_CONFIG_HOME") .. "/lmcscolors"
 
 	local file = io.open(filepath, "r")
 	if not file then
+		table.insert(debugMsgs, "Error: Could not open colors file at " .. filepath)
 		return
 	end
 
@@ -73,7 +68,7 @@ local function load_lclr()
 	content = content:gsub("\n", " ")
 
 	hl.env("LCLR", content) -- just in case for hyprland children
-	os.execute("dbus-update-activation-environment --systemd LCLR=" .. string.format("%q", content))
+	hl.exec_cmd("dbus-update-activation-environment --systemd LCLR=" .. string.format("%q", content))
 end
 
 hl.on("hyprland.start", function()
@@ -94,7 +89,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("uwsm-app -- wl-paste --watch cliphist store")
 	hl.exec_cmd('rm "$HOME/.cache/cliphist/db"')
 
-	local myfonts = load_fonts("$XDG_CONFIG_HOME/myfonts.conf")
+	local myfonts = load_fonts()
 	if myfonts then
 		hl.exec_cmd("gsettings set org.gnome.desktop.interface font-name '" .. myfonts["sans-serif"] .. "'")
 		hl.exec_cmd("gsettings set org.gnome.desktop.interface monospace-font-name '" .. myfonts["monospace"] .. "'")
@@ -436,5 +431,19 @@ for i, name in ipairs(workspace_names) do
 		workspace = tostring(i),
 		default_name = name,
 		monitor = i < 8 and "HDMI-A-1" or "eDP-1",
+	})
+end
+
+------------------------
+---- DEBUG MESSAGES ----
+------------------------
+
+if #debugMsgs > 0 then
+	hl.notification.create({
+		text = table.concat(debugMsgs, "\n"),
+		timeout = 5000,
+		icon = "confused",
+		color = "rgb(" .. c.warning .. ")",
+		font_size = 13,
 	})
 end

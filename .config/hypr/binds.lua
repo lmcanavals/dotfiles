@@ -81,20 +81,17 @@ for i = 1, 10 do
 end
 
 -- Hyprzoom
-local function hyprZoom(mode)
-	local currentZoom = hl.get_config("cursor.zoom_factor") or 1.0
-	local newZoom = 1.0
-	if mode == "in" then
-		newZoom = currentZoom * 1.1
-	elseif mode == "out" then
-		newZoom = currentZoom / 1.1
-		newZoom = newZoom < 1.0 and 1.0 or newZoom
-	end
-	hl.config({ cursor = { zoom_factor = newZoom } })
-end
 local function zoomHelper(mode)
 	return function()
-		hyprZoom(mode)
+		local currentZoom = hl.get_config("cursor.zoom_factor") or 1.0
+		local newZoom = 1.0
+		if mode == "in" then
+			newZoom = currentZoom * 1.1
+		elseif mode == "out" then
+			newZoom = currentZoom / 1.1
+			newZoom = newZoom < 1.0 and 1.0 or newZoom
+		end
+		hl.config({ cursor = { zoom_factor = newZoom } })
 	end
 end
 hl.bind(mainMod .. " + ALT + 0", zoomHelper("reset"))
