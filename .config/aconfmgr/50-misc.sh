@@ -52,6 +52,7 @@ AddPackage --foreign ttf-jura                   # Jura font
 AddPackage --foreign yay                        # Yet another yogurt. Pacman wrapper and AUR helper written in go.
 
 # packages we should ignore
+IgnorePackage abiword                # Fully-featured word processor
 IgnorePackage arch-install-scripts   # Scripts to aid in installing Arch Linux
 IgnorePackage arduino-cli            # Arduino command line interface
 IgnorePackage asciinema              # Record and share terminal sessions
@@ -62,6 +63,7 @@ IgnorePackage fastfetch              # A feature-rich and performance oriented n
 IgnorePackage foot                   # Fast, lightweight, and minimalistic Wayland terminal emulator
 IgnorePackage gnuplot                # Plotting package which outputs to X11, PostScript, PNG, GIF, and others
 IgnorePackage go                     # Core compiler tools for the Go programming language
+IgnorePackage graphviz               # Graph visualization software
 IgnorePackage gthumb                 # Image browser and viewer for the GNOME Desktop
 IgnorePackage guvcview               # Simple GTK+ interface for capturing and viewing video from v4l2 devices
 IgnorePackage intel-ucode            # Microcode update image for Intel CPUs
@@ -78,6 +80,7 @@ IgnorePackage qpwgraph               # PipeWire Graph Qt GUI Interface
 IgnorePackage ruby-erb               # An easy to use but powerful templating system for Ruby
 IgnorePackage snapshot               # Take pictures and videos
 IgnorePackage thunderbird            # Standalone mail and news reader from mozilla.org
+IgnorePackage wavemon                # Ncurses-based monitoring application for wireless network devices
 IgnorePackage wget                   # Network utility to retrieve files from the web
 IgnorePackage wl-mirror              # a simple Wayland output mirror client
 IgnorePackage wofi                   # launcher for wlroots-based wayland compositors

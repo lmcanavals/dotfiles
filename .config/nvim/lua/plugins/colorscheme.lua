@@ -28,6 +28,7 @@ return {
 				NormalFloat = { bold = true, italic = true, fg = "#ebdbb2" },
 				SnacksIndentScope = { fg = "#fe8019" },
 				String = { bold = true, italic = false, fg = "#b8bb26" },
+				SnacksPickerListCursorLine = { bg = "#665c54" },
 			},
 			transparent_mode = true,
 		},

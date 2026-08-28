@@ -171,6 +171,7 @@ rust.sh
 .config/solaar/
 .config/systemd/user/graphical-session.target.wants/
 .config/vlc/
+.config/wavemon/
 .config/xournalpp/metadata/
 .config/xsettingsd/
 .config/zsh/.zcompcache/

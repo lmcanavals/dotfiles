@@ -7,7 +7,7 @@
 ------------------
 
 -- See https://wiki.hypr.land/Configuring/Basics/Monitors/
-hl.monitor({ output = "HDMI-A-1", mode = "preferred", position = "auto-left", scale = "1" })
+hl.monitor({ output = "HDMI-A-1", mode = "preferred", position = "auto", scale = "1" })
 hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "1" })
 
 --------------------
@@ -430,7 +430,7 @@ for i, name in ipairs(workspace_names) do
 	hl.workspace_rule({
 		workspace = tostring(i),
 		default_name = name,
-		monitor = i < 8 and "HDMI-A-1" or "eDP-1",
+		monitor = i > 3 and "HDMI-A-1" or "eDP-1",
 	})
 end
 

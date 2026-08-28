@@ -1,6 +1,3 @@
-CreateDir /var/lib/cni/networks
-CreateDir /var/lib/containers/storage/tmp 700
-
 CopyFile /boot/loader/entries/arch-fallback.conf 700
 CopyFile /boot/loader/entries/arch-amd.conf 700
 CopyFile /boot/loader/entries/arch-intel.conf 700
@@ -27,6 +24,5 @@ CopyFile /var/lib/AccountsService/users/lmcs 600
 CreateLink /etc/localtime /usr/share/zoneinfo/America/Lima
 
 SetFileProperty /boot mode 700
-SetFileProperty /boot/amd-ucode.img mode 700
 SetFileProperty /boot/loader mode 700
 SetFileProperty /boot/loader/entries mode 700
