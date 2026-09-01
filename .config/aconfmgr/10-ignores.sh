@@ -1,3 +1,4 @@
+IgnorePath '/'
 IgnorePath '/boot/EFI/*'
 IgnorePath '/boot/amd-ucode.img'
 IgnorePath '/boot/initramfs-*'

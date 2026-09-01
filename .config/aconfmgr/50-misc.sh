@@ -1,91 +1,90 @@
-AddPackage 7zip                  # File archiver for extremely high compression
-AddPackage bat                   # Cat clone with syntax highlighting and git integration
-AddPackage btop                  # A monitor of system resources, bpytop ported to C++
-AddPackage chafa                 # Image-to-text converter supporting a wide range of symbols and palettes, transparency, animations, etc.
-AddPackage cups                  # OpenPrinting CUPS - daemon package
-AddPackage dust                  # A more intuitive version of du in rust
-AddPackage eza                   # A modern replacement for ls (community fork of exa)
-AddPackage fd                    # Simple, fast and user-friendly alternative to find
-AddPackage font-manager          # A simple font management application for GTK+ Desktop Environments
-AddPackage fyi                   # A command line utility and notify-send alternative to send desktop notifications
-AddPackage fzf                   # Command-line fuzzy finder
-AddPackage gphoto2               # A digital camera download and access program.
-AddPackage gutenprint            # Top quality printer drivers for POSIX systems
-AddPackage gvfs                  # Virtual filesystem implementation for GIO
-AddPackage gvfs-gphoto2          # Virtual filesystem implementation for GIO - gphoto2 backend (PTP camera, MTP media player)
-AddPackage imagemagick           # An image viewing/manipulation program
-AddPackage jq                    # Command-line JSON processor
-AddPackage less                  # A terminal based program for viewing text files
-AddPackage libvips               # A fast image processing library with low memory needs
-AddPackage lostfiles             # Find orphaned files not owned by any Arch packages
-AddPackage mc                    # A file manager that emulates Norton Commander
-AddPackage mosh                  # Mobile shell, surviving disconnects with local echo and line editing
-AddPackage ntfs-3g               # NTFS filesystem driver and utilities
-AddPackage procs                 # A modern replacement for ps written in Rust
-AddPackage qalculate-qt          # Qt frontend for libqalculate
-AddPackage ripgrep               # A search tool that combines the usability of ag with the raw speed of grep
-AddPackage sd                    # Intuitive find & replace
-AddPackage showmethekey          # A screenkey alternative that works under Wayland via libinput.
-AddPackage speech-dispatcher     # High-level device independent layer for speech synthesis interface
-AddPackage speedtest-cli         # Command line interface for testing internet bandwidth using speedtest.net
-AddPackage spirv-tools           # API and commands for processing SPIR-V modules
-AddPackage starship              # The cross-shell prompt for astronauts
-AddPackage swappy                # A Wayland native snapshot editing tool
-AddPackage system-config-printer # A CUPS printer configuration tool and status applet
-AddPackage tectonic              # Modernized, complete, self-contained TeX/LaTeX engine, powered by XeTeX and TeXLive
-AddPackage terminus-font         # Monospace bitmap font (for X11 and console)
-AddPackage unarchiver            # unar and lsar: Objective-C tools for uncompressing archive files
-AddPackage unrar                 # The RAR uncompression program
-AddPackage v4l2loopback-dkms     # v4l2-loopback device – module sources
-AddPackage zenity                # Display graphical dialog boxes from shell scripts
+AddPackage 7zip
+AddPackage bat
+AddPackage btop
+AddPackage chafa
+AddPackage cups
+AddPackage dust
+AddPackage eza
+AddPackage fd
+AddPackage font-manager
+AddPackage fyi
+AddPackage fzf
+AddPackage gphoto2
+AddPackage gvfs
+AddPackage gvfs-gphoto2
+AddPackage imagemagick
+AddPackage jq
+AddPackage less
+AddPackage libvips
+AddPackage lostfiles
+AddPackage mc
+AddPackage mosh
+AddPackage ntfs-3g
+AddPackage procs
+AddPackage qalculate-qt
+AddPackage ripgrep
+AddPackage sd
+AddPackage showmethekey
+AddPackage speech-dispatcher
+AddPackage speedtest-cli
+AddPackage spirv-tools
+AddPackage starship
+AddPackage swappy
+AddPackage tectonic
+AddPackage terminus-font
+AddPackage unarchiver
+AddPackage unrar
+AddPackage v4l2loopback-dkms
+AddPackage zenity
 
 # This are needed for https://github.com/CyberShadow/aconfmgr
-AddPackage expect   # A tool for automating interactive applications
-AddPackage pacutils # Helper tools for libalpm
+AddPackage expect
+AddPackage pacutils
 
-AddPackage --foreign hyprqt6engine              # QT6 Theme Provider for Hyprland
-AddPackage --foreign maplemono-ttf              # Open source monospace font with round corner, ligatures and Nerd-Font for IDE and command line
-AddPackage --foreign psf-cozette                # A bitmap programming font optimized for coziness, console version (PSF format)
-AddPackage --foreign rose-pine-hyprcursor       # None
-AddPackage --foreign ttf-homecomputer-sixtyfour # Variable font based on the Commodore 64 system font
-AddPackage --foreign ttf-jura                   # Jura font
-AddPackage --foreign yay                        # Yet another yogurt. Pacman wrapper and AUR helper written in go.
+AddPackage --foreign hyprqt6engine
+AddPackage --foreign maplemono-ttf
+AddPackage --foreign psf-cozette
+AddPackage --foreign rose-pine-hyprcursor
+AddPackage --foreign ttf-homecomputer-sixtyfour
+AddPackage --foreign ttf-jura
+AddPackage --foreign yay
 
 # packages we should ignore
-IgnorePackage abiword                # Fully-featured word processor
-IgnorePackage arch-install-scripts   # Scripts to aid in installing Arch Linux
-IgnorePackage arduino-cli            # Arduino command line interface
-IgnorePackage asciinema              # Record and share terminal sessions
-IgnorePackage ast-grep               # CLI tool for code structural search, lint and rewriting
-IgnorePackage blender                # A fully integrated 3D graphics creation suite
-IgnorePackage bottom                 # A graphical process/system monitor
-IgnorePackage fastfetch              # A feature-rich and performance oriented neofetch like system information tool
-IgnorePackage foot                   # Fast, lightweight, and minimalistic Wayland terminal emulator
-IgnorePackage gnuplot                # Plotting package which outputs to X11, PostScript, PNG, GIF, and others
-IgnorePackage go                     # Core compiler tools for the Go programming language
-IgnorePackage graphviz               # Graph visualization software
-IgnorePackage gthumb                 # Image browser and viewer for the GNOME Desktop
-IgnorePackage guvcview               # Simple GTK+ interface for capturing and viewing video from v4l2 devices
-IgnorePackage intel-ucode            # Microcode update image for Intel CPUs
-IgnorePackage krita                  # Edit and paint images
-IgnorePackage lld                    # Linker from the LLVM project
-IgnorePackage lldb                   # Next generation, high-performance debugger
-IgnorePackage llvm                   # Compiler infrastructure
-IgnorePackage loupe                  # A simple image viewer for GNOME
-IgnorePackage lua51                  # Powerful lightweight programming language designed for extending applications
-IgnorePackage network-manager-applet # Applet for managing network connections
-IgnorePackage obs-studio             # Free, open source software for live streaming and recording
-IgnorePackage openmp                 # LLVM OpenMP Runtime Library
-IgnorePackage qpwgraph               # PipeWire Graph Qt GUI Interface
-IgnorePackage ruby-erb               # An easy to use but powerful templating system for Ruby
-IgnorePackage snapshot               # Take pictures and videos
-IgnorePackage thunderbird            # Standalone mail and news reader from mozilla.org
-IgnorePackage wavemon                # Ncurses-based monitoring application for wireless network devices
-IgnorePackage wget                   # Network utility to retrieve files from the web
-IgnorePackage wl-mirror              # a simple Wayland output mirror client
-IgnorePackage wofi                   # launcher for wlroots-based wayland compositors
-IgnorePackage xorg-server            # Xorg X server
-IgnorePackage xournalpp              # Handwriting notetaking software with PDF annotation support
+IgnorePackage abiword
+IgnorePackage arch-install-scripts
+IgnorePackage arduino-cli
+IgnorePackage asciinema
+IgnorePackage ast-grep
+IgnorePackage blender
+IgnorePackage bottom
+IgnorePackage fastfetch
+IgnorePackage foot
+IgnorePackage gnuplot
+IgnorePackage go
+IgnorePackage graphviz
+IgnorePackage gthumb
+IgnorePackage guvcview
+IgnorePackage intel-ucode
+IgnorePackage krita
+IgnorePackage lld
+IgnorePackage lldb
+IgnorePackage llvm
+IgnorePackage loupe
+IgnorePackage lua51
+IgnorePackage network-manager-applet
+IgnorePackage obs-studio
+IgnorePackage openbsd-netcat
+IgnorePackage openmp
+IgnorePackage qpwgraph
+IgnorePackage ruby-erb
+IgnorePackage snapshot
+IgnorePackage thunderbird
+IgnorePackage wavemon
+IgnorePackage wget
+IgnorePackage wl-mirror
+IgnorePackage wofi
+IgnorePackage xorg-server
+IgnorePackage xournalpp
 
 # here some packages that are optional form others but might not be that important?
 # lvm2 ddcutil libopenraw glib2-devel foomatic-db-gutenprint-ppds meson btrfs-progs usbmuxd geoclue

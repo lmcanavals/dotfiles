@@ -3,7 +3,7 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 -- local tablet = "device[wacom-one-by-wacom-m-pen]"
 local ssfile = "$HOME/Pictures/Screenshots/$(date '+%Y%m%d_%H%M%S_%N').png"
 local srfile = "$HOME/Videos/Screencasts/$(date '+%Y%m%d_%H%M%S_%N').mp4"
-local myEsp = "x"
+local myEsp = "X"
 
 -- programs we use
 local browser = "xdg-open https://google.com"
@@ -42,7 +42,6 @@ else
 	hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
 end
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("killall -SIGUSR1 waybar"))
-hl.bind(mainMod .. " + C", hl.dsp.window.close())
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + G", hl.dsp.submap(groups))
 hl.bind(mainMod .. " + I", hl.dsp.exec_cmd(fyi .. ' Missing "Settings Win+I"'))
@@ -79,6 +78,8 @@ for i = 1, 10 do
 	hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
 	hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
+
+hl.bind(mainMod .. " + F4", hl.dsp.window.close())
 
 -- Hyprzoom
 local function zoomHelper(mode)
