@@ -36,7 +36,7 @@ gdisk /dev/$disk1
 | Dev | Size | Mount point          | File system | gdisk type code |
 | :-: | ---: | -------------------- | :---------: | --------------- |
 | SSD |   1G | EFI System Parition  |    fat32    | EF00            |
-| SSD |      | `/`                  |    ext4     | 8300            |
+| SSD |      | `/`                  |     xfs     | 2000            |
 | HDD |      | `/var`               |    btrfs    | var subvol      |
 | HDD |      | `/home/lmcs/archive` |    btrfs    | Archive subvol  |
 
@@ -50,7 +50,7 @@ Format partitions, for example:
 
 ```sh
 mkfs.fat -F32 /dev/$part1
-mkfs.ext4 /dev/$part2
+mkfs.xfs -f /dev/$part2
 ```
 
 In case we have extra storage, we can use `btrfs` or plain old `ext4`s
@@ -86,7 +86,7 @@ it might be recommended to create `/mnt/etc` and copy the local copy of
 `vconsole.conf` and `cozette12x26` there.
 
 ```sh
-pacstrap -KP /mnt base linux linux-firmware
+pacstrap -KP /mnt base linux linux-firmware xfsprogs
 ```
 
 `chroot` into the new system:

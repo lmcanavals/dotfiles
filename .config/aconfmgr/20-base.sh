@@ -20,4 +20,5 @@ AddPackage pkgstats
 AddPackage powertop
 AddPackage socat
 AddPackage sshfs
+AddPackage xfsprogs
 AddPackage zsh

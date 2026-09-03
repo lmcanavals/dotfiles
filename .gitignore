@@ -29,6 +29,7 @@ rust.sh
 .config/dunst/dunstrc.d/colors.conf
 .config/emaildefaults
 .config/emailidentities
+.config/fish/fish_variables
 .config/font-manager/Sources.xml
 .config/fontconfig/conf.d/09-Directories.conf
 .config/fontconfig/conf.d/39-Aliases.conf
