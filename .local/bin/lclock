@@ -81,7 +81,7 @@ dotfiles_status() {
 	fi
 
 	# this is a workaround to inject \r on the output. waybar only accepts \r not \n. hyprlock doesn't care
-	local CR=$'\r'
+	local CR="\n"
 
 	((staged_count > 0)) && output+="${CR}$(tag "$COLOR_STAGED" "$ICON_COMMITTED $staged_count staged") "
 	((modified_count > 0)) && output+="${CR}$(tag "$COLOR_MODIFIED" "$ICON_MODIFIED $modified_count modified") "
@@ -112,6 +112,7 @@ cool_time() {
 
 bclock_dotstatus() {
 	local tip="$(dotfiles_status)"
+	#print -f '{"text": "%s", "tooltip": "%s"}\n' "$(cool_time)" "${tip//\"/\\\"}"
 	print -f '{"text": "%s", "tooltip": "%s"}\n' "$(cool_time)" "${tip//\"/\\\"}"
 }
 
@@ -130,7 +131,7 @@ elif ((${#bclock} > 0)); then
 elif ((${#dotinfo} > 0)); then
 	print -f '%s\n' "$(dotfiles_status)"
 elif ((${#raw} > 0)); then
-	print -f '%s\r%s\n' "$(cool_time)" "$(dotfiles_status)"
+	print -f '%s\n%s\n' "$(cool_time)" "$(dotfiles_status)"
 else
 	while true; do
 		bclock_dotstatus

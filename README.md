@@ -190,8 +190,8 @@ Clone `aconfmgr` link it and run it.
 mkdir -p Apps/repos/
 cd Apps/repos/
 git clone --depth 1 https://github.com/CyberShadow/aconfmgr.git
+ln -s /home/lmcs/Apps/repos/aconfmgr/aconfmgr ~/.local/bin/
 <ctrl-d>
-ln -s /home/lmcs/Apps/repos/aconfmgr/aconfmgr /usr/bin/
 ln -s /home/lmcs/Apps/repos/aconfmgr/src/ /usr/lib/aconfmgr
 su - lmcs
 # cha cha chaaaan
@@ -213,5 +213,5 @@ passwd
 ### Configuring the boot loader
 
 ```sh
-
+bootctl install
 ```
