@@ -122,7 +122,7 @@
 			"low": 45,
 			"critical": 15
 		},
-		"tooltip-format": "{capacity}%\r{timeTo}"
+		"tooltip-format": "{capacity}%\n{timeTo}"
 	},
 	"bluetooth": {
 		"format-device-preference": [
@@ -319,7 +319,7 @@
 		"format-wifi": "{icon}",
 		"on-click-middle": "networkmanager_dmenu",
 		"on-click-right": "nm-connection-editor",
-		"tooltip-format": "<span size=\"x-large\"> </span><b>Details</b>\nESSID:\t{essid}\rIP:\t{ipaddr}\rMask:\t{netmask}\rGateway:\t{gwaddr}:{cidr}\r<b>Speed:</b>\rUp:\t{bandwidthUpBytes}\rDown:\t{bandwidthDownBytes}\rTotal:\t{bandwidthTotalBytes}",
+		"tooltip-format": "<span size=\"x-large\"> </span><b>Details</b>\nESSID:\t{essid}\nIP:\t{ipaddr}\nMask:\t{netmask}\nGateway:\t{gwaddr}:{cidr}\n<b>Speed:</b>\nUp:\t{bandwidthUpBytes}\nDown:\t{bandwidthDownBytes}\nTotal:\t{bandwidthTotalBytes}",
 		"tooltip-format-disconnected": "<span size=\"x-large\">󰌙 </span><b>No signal</b>",
 		"tooltip-format-ethernet": "<span size=\"x-large\">󰌘 </span><b>Good ol' ethernet</b>",
 		"tooltip-format-wifi": "<span size=\"x-large\">{icon} </span><b>{essid} ({signalStrength}%)</b>"
@@ -355,7 +355,7 @@
 		"on-scroll-up": "lvolbri -m vol_up",
 		"scroll-step": 5,
 		"tooltip": true,
-		"tooltip-format": "Volume: <b>{volume}%</b>\r{desc}"
+		"tooltip-format": "Volume: <b>{volume}%</b>\n{desc}"
 	},
 	"temperature": {
 		"critical-threshold": 85,
