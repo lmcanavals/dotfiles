@@ -2,12 +2,12 @@
 
 ## Firefox
 
-Copy the folder `chrome` to the firefox profile folder. 
+Copy the folder `chrome` to the Firefox profile folder.
 
-```
+```bash
 cp -r .specialconfigs/chrome .mozilla/firefox/<profile folder>/
 ```
 
 Contains the following:
 
-* A stylesheet with configurationo to hide the tab bar.
+- A style sheet with configuration to hide the tab bar.
