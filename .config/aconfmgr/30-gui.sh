@@ -1,5 +1,6 @@
 if [ "${ARCH_ROLE:-desktop}" = "headless" ]; then return 0 2>/dev/null || exit 0; fi
 
+AddPackage accountsservice
 AddPackage adobe-source-han-sans-otc-fonts
 AddPackage archlinux-xdg-menu
 AddPackage ark
@@ -33,6 +34,7 @@ AddPackage kamera
 AddPackage kded
 AddPackage kitty
 AddPackage kvantum
+AddPackage libva-utils
 AddPackage mplayer
 AddPackage networkmanager-dmenu
 AddPackage nm-connection-editor
@@ -61,7 +63,7 @@ AddPackage ttf-roboto-mono
 AddPackage ttf-ubuntu-mono-nerd
 AddPackage uwsm
 AddPackage vivaldi
-AddPackage vulkan-radeon
+AddPackage vulkan-tools
 AddPackage waybar
 AddPackage wev
 AddPackage wf-recorder
@@ -71,3 +73,14 @@ AddPackage xdg-desktop-portal
 AddPackage xdg-desktop-portal-hyprland
 AddPackage xdg-user-dirs
 AddPackage xf86-input-wacom
+
+if lspci -k 2>/dev/null | grep -iE "vga|3d|display" | grep -iq "nvidia"; then
+	AddPackage egl-wayland
+	AddPackage nvidia-dkms
+	AddPackage nvidia-utils
+elif lspci -k 2>/dev/null | grep -iE "vga|3d|display" | grep -iqE "amd|advanced micro devices"; then
+	AddPackage vulkan-radeon
+elif lspci -k 2>/dev/null | grep -iE "vga|3d|display" | grep -iq "intel"; then
+	AddPackage intel-media-driver
+	AddPackage vulkan-intel
+fi
