@@ -1,3 +1,5 @@
+if [ "${ARCH_ROLE:-desktop}" = "headless" ]; then return 0 2>/dev/null || exit 0; fi
+
 AddPackage adobe-source-han-sans-otc-fonts
 AddPackage archlinux-xdg-menu
 AddPackage ark

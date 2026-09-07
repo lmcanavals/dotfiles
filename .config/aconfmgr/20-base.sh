@@ -1,5 +1,9 @@
 AddPackage accountsservice
-AddPackage amd-ucode
+if grep -q "AuthenticAMD" /proc/cpuinfo; then
+	AddPackage amd-ucode
+elif grep -q "GenuineIntel" /proc/cpuinfo; then
+	AddPackage intel-ucode
+fi
 AddPackage base
 AddPackage dosfstools
 AddPackage efibootmgr
