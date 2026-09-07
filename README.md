@@ -46,7 +46,7 @@ RAM issues.
 
 ### Formatting partitions
 
-Format partitions, for example:
+Format partitions, for example (add `-s 2` for old systems from early UEFI days):
 
 ```sh
 mkfs.fat -F32 /dev/$part1
@@ -104,7 +104,7 @@ pacman -S base-devel {amd or intel}-ucode
 Installing some bare bones stuff:
 
 ```sh
-pacman -S efibootmgr git github-cli neovim zsh
+pacman -S efibootmgr git github-cli neovim zsh fish
 ```
 
 ## Preparing system for `aconfmgr`
@@ -117,7 +117,7 @@ Making swap a file lets us resize it later if needed, but need to use
 ```sh
 fallocate -l 32G /swapfile
 chmod 600 /swapfile
-mkswap /swapfile
+mkswap -L switcheroo /swapfile
 swapon /swapfile
 ```
 
@@ -143,12 +143,18 @@ sure to `chroot` back in.
 arch-chroot /mnt
 ```
 
+## Don't forget the root password
+
+```sh
+passwd
+```
+
 ### User creation: replicating my awesome curated setup
 
 We create the normal user:
 
 ```sh
-useradd -m -s $(which zsh) lmcs
+useradd -m -s $(which fish) lmcs
 chfn lmcs
 passwd lmcs
 ```
