@@ -193,28 +193,42 @@ export GIT_WORK_TREE=$HOME
 
 Now we need to checkout selectively, as a regular full graphical or as a headless box
 
-#### headless box
+Headless box:
 
 ```sh
 # Headless box: sparse checks out
 git sparse-checkout init --cone
 git sparse-checkout set \
   .config/aconfmgr \
-  .config/nvim \
-  .config/fish \
-  .config/zsh \
-  .config/tmux \
-  .config/btop \
+  .config/asciinema \
+  .config/bat \
   .config/bottom \
+  .config/btop \
+  .config/clangd \
+  .config/eza \
+  .config/fish \
+  .config/gh \
+  .config/lazydocker \
+  .config/lazysql \
+  .config/nvim \
   .config/starship.toml \
+  .config/tmux \
+  .config/zsh \
   .local/bin \
+  .bash_logout \
+  .bash_profile \
   .bashrc \
-  .zshenv \
-  .tmux.conf
+  .gitconfig \
+  .gitignore \
+  .gitignore_global \
+  .inputrc \
+  .tmux.conf \
+  .toprc \
+  .zshenv
 git checkout -f
 ```
 
-#### full graphical box
+Full graphical box:
 
 ```sh
 # Full graphical box: checks out everything
@@ -224,14 +238,23 @@ git checkout
 Clone `aconfmgr` link it and run it.
 
 ```sh
+# ctrl + D and then su - lmcs to clear temporal environment vars
 mkdir -p Apps/repos/
 cd Apps/repos/
 git clone --depth 1 https://github.com/CyberShadow/aconfmgr.git
-ln -s /home/lmcs/Apps/repos/aconfmgr/aconfmgr ~/.local/bin/
-<ctrl-d>
-ln -s /home/lmcs/Apps/repos/aconfmgr/src/ /usr/lib/aconfmgr
-su - lmcs
-# cha cha chaaaan
+```
+
+Same as for git bare repo checkout, we need to pick the right profile for `aconfmgr`
+
+For headless box:
+
+```sh
+ARCH_ROLE=headless aconfmgr apply
+```
+
+Full graphical devil:
+
+```sh
 aconfmgr apply
 ```
 
