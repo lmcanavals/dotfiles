@@ -1,4 +1,3 @@
-AddPackage accountsservice
 if grep -q "AuthenticAMD" /proc/cpuinfo; then
 	AddPackage amd-ucode
 elif grep -q "GenuineIntel" /proc/cpuinfo; then
@@ -15,7 +14,6 @@ AddPackage linux-firmware
 AddPackage linux-headers
 AddPackage networkmanager
 AddPackage ntp
-AddPackage openslide
 AddPackage openssh
 AddPackage pacman-contrib
 AddPackage pacquery

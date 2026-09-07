@@ -16,4 +16,3 @@ AddPackage npm
 AddPackage tokei
 AddPackage tree-sitter-cli
 AddPackage uv
-AddPackage xsel

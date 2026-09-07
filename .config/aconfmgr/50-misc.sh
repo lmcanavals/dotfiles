@@ -32,38 +32,40 @@ AddPackage pacutils
 AddPackage --foreign psf-cozette
 AddPackage --foreign yay
 
-# packages we should ignore
+# packages we should ignore (GUI)
 IgnorePackage abiword
-IgnorePackage arch-install-scripts
-IgnorePackage arduino-cli
 IgnorePackage asciinema
-IgnorePackage ast-grep
 IgnorePackage blender
-IgnorePackage bottom
-IgnorePackage fastfetch
 IgnorePackage foot
 IgnorePackage gnuplot
-IgnorePackage go
-IgnorePackage graphviz
 IgnorePackage gthumb
 IgnorePackage guvcview
 IgnorePackage krita
-IgnorePackage lld
-IgnorePackage lldb
-IgnorePackage llvm
 IgnorePackage loupe
-IgnorePackage lua51
 IgnorePackage network-manager-applet
 IgnorePackage obs-studio
-IgnorePackage openbsd-netcat
-IgnorePackage openmp
 IgnorePackage qpwgraph
-IgnorePackage ruby-erb
 IgnorePackage snapshot
 IgnorePackage thunderbird
-IgnorePackage wavemon
-IgnorePackage wget
 IgnorePackage wl-mirror
 IgnorePackage wofi
 IgnorePackage xorg-server
 IgnorePackage xournalpp
+
+# packages we should ignore (generic)
+IgnorePackage arch-install-scripts
+IgnorePackage arduino-cli
+IgnorePackage ast-grep
+IgnorePackage bottom
+IgnorePackage fastfetch
+IgnorePackage go
+IgnorePackage graphviz
+IgnorePackage lld
+IgnorePackage lldb
+IgnorePackage llvm
+IgnorePackage lua51
+IgnorePackage openbsd-netcat
+IgnorePackage openmp
+IgnorePackage ruby-erb
+IgnorePackage wavemon
+IgnorePackage wget

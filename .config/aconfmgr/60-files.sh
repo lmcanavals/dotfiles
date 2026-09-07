@@ -74,6 +74,7 @@ CopyFile /etc/locale.conf
 CopyFile /etc/makepkg.conf
 CopyFile /etc/makepkg.conf.d/fortran.conf
 CopyFile /etc/motd
+
 gpu_modules=""
 if [ "${ARCH_ROLE:-desktop}" != "headless" ]; then
 	if lspci -k 2>/dev/null | grep -iE "vga|3d|display" | grep -iq "nvidia"; then
@@ -102,6 +103,7 @@ FILES=()
 # HOOKS
 HOOKS=(base systemd autodetect microcode modconf kms keyboard sd-vconsole block filesystems fsck)
 EOF
+
 CopyFile /etc/pacman.conf
 CopyFile /etc/sudoers.d/10-auth-lmcs 440
 CopyFile /etc/sudoers.d/20-silence-true 440

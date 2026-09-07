@@ -84,6 +84,7 @@ AddPackage xdg-desktop-portal
 AddPackage xdg-desktop-portal-hyprland
 AddPackage xdg-user-dirs
 AddPackage xf86-input-wacom
+AddPackage xsel
 AddPackage zenity
 
 AddPackage --foreign hyprqt6engine
