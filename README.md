@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD013 -->
 
-# My dot files and setup guide 2025
+# My dot files and setup guide 2026
 
 ## From installation media
 
@@ -33,10 +33,10 @@ gdisk /dev/$disk1
 
 ### BIOS Partition table
 
-| Dev | Size | Mount point          | File system | gdisk type code |
+| Dev | Size | Mount point          | File system | fdisk type code |
 | :-: | ---: | -------------------- | :---------: | --------------- |
-| SSD |   1G | EFI System Parition  |    fat32    | EF00            |
-| SSD |      | `/`                  |     xfs     | 2000            |
+| SSD |   1G | EFI System Parition  |    fat32    | 1               |
+| SSD |      | `/`                  |     xfs     | 20              |
 | HDD |      | `/var`               |    btrfs    | var subvol      |
 | HDD |      | `/home/lmcs/archive` |    btrfs    | Archive subvol  |
 
@@ -168,10 +168,8 @@ chown -R lmcs:users /home/lmcs/Documents
 Now we add the user to `sudoers`
 
 ```sh
-EDITOR=nvim visudo
+echo "lmcs ALL= ALL" >> /etc/sudoers.d/10-auth-lmcs
 ```
-
-Add `lmcs ALL= ALL` somewhere and exit `:wq`.
 
 ### Authenticating with `github` and cloning and restoring the needed stuff
 
@@ -187,7 +185,40 @@ Clone and checkout the bare repository with the dot files.
 ```sh
 git clone --bare https://github.com/lmcanavals/dotfiles.git .dotfiles.git
 rm .gitconfig .config/gh/config.yml .bash*
-git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME checkout
+
+# temporal environment vars
+export GIT_DIR=$HOME/.dotfiles.git
+export GIT_WORK_TREE=$HOME
+```
+
+Now we need to checkout selectively, as a regular full graphical or as a headless box
+
+#### headless box
+
+```sh
+# Headless box: sparse checks out
+git sparse-checkout init --cone
+git sparse-checkout set \
+  .config/aconfmgr \
+  .config/nvim \
+  .config/fish \
+  .config/zsh \
+  .config/tmux \
+  .config/btop \
+  .config/bottom \
+  .config/starship.toml \
+  .local/bin \
+  .bashrc \
+  .zshenv \
+  .tmux.conf
+git checkout -f
+```
+
+#### full graphical box
+
+```sh
+# Full graphical box: checks out everything
+git checkout
 ```
 
 Clone `aconfmgr` link it and run it.

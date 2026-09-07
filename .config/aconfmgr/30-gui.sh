@@ -21,6 +21,7 @@ AddPackage ffmpegthumbnailer
 AddPackage font-manager
 AddPackage fuzzel
 AddPackage fyi
+AddPackage glfw
 AddPackage gnome-themes-extra
 AddPackage gphoto2
 AddPackage greetd

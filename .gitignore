@@ -240,7 +240,6 @@ __pycache__/
 .config/asciinema/*
 !.config/asciinema/config.toml
 
-.local/bin/aconfmgr
 .local/bin/agy*
 .local/bin/lazysql
 .local/bin/networkmanager_dmenu

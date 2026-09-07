@@ -6,7 +6,6 @@ AddPackage docker-buildx
 AddPackage docker-compose
 AddPackage git
 AddPackage github-cli
-AddPackage glfw
 AddPackage hyperfine
 AddPackage lazydocker
 AddPackage lazygit
