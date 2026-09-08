@@ -103,6 +103,7 @@ rust.sh
 .ssh/
 .steam/
 .swt/
+.terminfo/
 .thunderbird/
 .var/
 .vscode-server/
@@ -198,6 +199,7 @@ rust.sh
 .local/share/icons/
 .local/share/jupyter/
 .local/share/keyrings/
+.local/share/kitty-ssh-kitten/
 .local/share/krita/
 .local/share/kxmlgui5/
 .local/share/libfm-qt/
@@ -245,6 +247,7 @@ __pycache__/
 .local/bin/networkmanager_dmenu
 .local/bin/spots
 .local/bin/testt.zsh
+.local/bin/thm
 .local/bin/wezterm
 
 !.local/share/applications/

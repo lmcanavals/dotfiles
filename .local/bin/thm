@@ -1,7 +1,0 @@
-#!/usr/bin/env zsh
-
-set -e
-
-cd "$HOME/Apps/repos/theme-manager"
-
-exec uv run python -m src.thm.main "$@"
