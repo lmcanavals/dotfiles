@@ -80,7 +80,7 @@ format = "[$state($progress_current/$progress_total)]($style)"
 style = "bg:black bright-yellow"
 
 [git_status]
-format = "([$all_status$ahead_behind ]($style))"
+format = "([$all_status$ahead_behind]($style))"
 style = "bg:black red"
 
 [golang]
@@ -90,7 +90,7 @@ symbol = " "
 version_format = "${major}.${minor}"
 
 [hostname]
-format = "[$hostname]($style):"
+format = "[$hostname:]($style)"
 style = "bg:black bright-yellow"
 
 [java]

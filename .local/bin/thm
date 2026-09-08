@@ -4,4 +4,4 @@ set -e
 
 cd "$HOME/Apps/repos/theme-manager"
 
-exec python -m src.thm.main "$@"
+exec uv run python -m src.thm.main "$@"

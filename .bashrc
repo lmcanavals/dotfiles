@@ -7,4 +7,5 @@
 
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
-. "$HOME/.cargo/env"
+[[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
+export PATH="/home/lmcs/.local/bin:$PATH"

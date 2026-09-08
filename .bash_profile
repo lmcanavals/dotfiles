@@ -2,6 +2,4 @@
 # ~/.bash_profile
 #
 
-[[ -f ~/.bashrc ]] && . ~/.bashrc
-
-. "$HOME/.cargo/env"
+[[ -f "$HOME/.bashrc" ]] && . "$HOME/.bashrc"
