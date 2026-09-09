@@ -6,6 +6,8 @@ return {
 				"css",
 				"go",
 				"latex",
+				"qmljs",
+				"qmldir",
 				"rust",
 				"wgsl",
 				"zsh",

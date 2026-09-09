@@ -43,6 +43,7 @@ rust.sh
 .config/kwallet
 .config/lazygit/config.yml
 .config/lmcscolors
+.config/lmcscolors.json
 .config/mailtransports
 .config/mimeapps.list
 .config/nvim/lazy-lock.json
@@ -245,6 +246,7 @@ __pycache__/
 .local/bin/agy*
 .local/bin/lazysql
 .local/bin/networkmanager_dmenu
+.local/bin/qmllint
 .local/bin/spots
 .local/bin/testt.zsh
 .local/bin/thm

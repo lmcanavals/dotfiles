@@ -1,0 +1,9 @@
+/* target: ~/.config/lmcscolors.json */
+{
+{{ colors.items()
+    | map('string')
+    | map('replace', "('", '  "')
+    | map('replace', "', '", '": "#')
+    | map('replace', "')", '"')
+    | join(',\n') }}
+}
