@@ -7,7 +7,13 @@ return {
 					filetypes = { "bash", "sh", "zsh" },
 				},
 				qmlls = {
-					cmd = { "qmlls6" },
+					cmd = {
+						"qmlls6",
+						"-I",
+						".",
+						"-I",
+						"/usr/lib/qt6/qml",
+					},
 				},
 			},
 		},
@@ -47,6 +53,12 @@ return {
 				qmllint = {
 					cmd = "/usr/lib/qt6/bin/qmllint",
 					stdin = false,
+					args = {
+						"-I",
+						".",
+						"-I",
+						"/usr/lib/qt6/qml",
+					},
 					parser = require("lint.parser").from_errorformat(
 						"%f:%l:%c: %trror: %m,%f:%l:%c: %twarning: %m",
 						{ source = "qmllint" }

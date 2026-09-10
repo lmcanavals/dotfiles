@@ -1,0 +1,5 @@
+module Primitives
+
+SurfaceCard 1.0 SurfaceCard.qml
+StyledText 1.0 StyledText.qml
+StyledButton 1.0 StyledButton.qml

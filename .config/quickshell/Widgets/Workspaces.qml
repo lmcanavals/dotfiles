@@ -4,31 +4,28 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Hyprland
-import ".."
+import Core
+import Primitives
 
 RowLayout {
-    id: row
+    id: root
 
     required property ShellScreen screen
-
-    anchors.margins: Config.margin
+    spacing: Config.spacing
 
     Repeater {
-        id: repeater
-
         model: {
-            Hyprland.workspaces.values.filter(d => d ? d.monitor.name == row.screen.name : false);
+            const list = Hyprland.workspaces.values.filter(ws => ws && ws.monitor && ws.monitor.name === root.screen.name);
+            return list.slice().sort((a, b) => a.id - b.id);
         }
 
         delegate: StyledButton {
-            id: btn
-
             required property HyprlandWorkspace modelData
 
-            focused: modelData?.focused ?? false
+            active: modelData.focused
             text: {
-                const workspaceName = modelData?.name ?? "bye";
-                return workspaceName.replace(/special:/, "");
+                const name = modelData.name ?? `${modelData.id}`;
+                return name.replace(/^special:/, "");
             }
 
             onClicked: {

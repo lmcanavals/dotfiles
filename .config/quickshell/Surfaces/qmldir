@@ -1,0 +1,6 @@
+module Surfaces
+
+Bar 1.0 Bar.qml
+BatteryPopup 1.0 BatteryPopup.qml
+SubmapIndicator 1.0 SubmapIndicator.qml
+VolumeOsd 1.0 VolumeOsd.qml

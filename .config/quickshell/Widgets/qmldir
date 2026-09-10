@@ -1,0 +1,9 @@
+module Widgets
+
+ActiveWindow 1.0 ActiveWindow.qml
+Batteries 1.0 Batteries.qml
+BinaryClock 1.0 BinaryClock.qml
+OsIcon 1.0 OsIcon.qml
+SysTray 1.0 SysTray.qml
+TimeDate 1.0 TimeDate.qml
+Workspaces 1.0 Workspaces.qml
