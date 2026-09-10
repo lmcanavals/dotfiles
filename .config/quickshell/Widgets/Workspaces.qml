@@ -22,14 +22,19 @@ RowLayout {
         delegate: StyledButton {
             required property HyprlandWorkspace modelData
 
-            active: modelData.focused
+            focused: modelData?.focused ?? false
+            active: modelData?.active ?? false
+            urgent: modelData?.urgent ?? false
+            implicitWidth: Math.max(Config.workspaceButtonWidth, labelItem.implicitWidth + Config.padding)
+
             text: {
-                const name = modelData.name ?? `${modelData.id}`;
+                if (!modelData) return "";
+                const name = modelData.name ?? `${modelData.id ?? ""}`;
                 return name.replace(/^special:/, "");
             }
 
             onClicked: {
-                if (!modelData.focused) {
+                if (modelData && !modelData.focused) {
                     modelData.activate();
                 }
             }

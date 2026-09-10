@@ -2,7 +2,6 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
-import Quickshell
 import Quickshell.Services.UPower
 import Core
 import Primitives
@@ -10,8 +9,6 @@ import Surfaces
 
 SurfaceCard {
     id: root
-
-    required property PanelWindow bar
 
     readonly property var batteryList: UPower.devices.values.filter(d => d && d.isPresent && d.type === UPowerDeviceType.Battery)
     visible: batteryList.length > 0
@@ -49,7 +46,6 @@ SurfaceCard {
 
                 onExited: {
                     popup.visible = false;
-                    popup.targetItem = null;
                 }
 
                 StyledText {

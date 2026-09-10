@@ -49,10 +49,9 @@ PanelWindow {
         }
 
         Item {
-            // Spacer to keep right-side widgets right-aligned if no active window
+            // Flexible spacer to keep right-side widgets right-aligned
             Layout.fillWidth: true
             Layout.minimumWidth: 0
-            visible: !activeWindow.visible
         }
 
         TimeDate {
@@ -63,7 +62,6 @@ PanelWindow {
 
         Batteries {
             id: batteries
-            bar: panel
             Layout.fillWidth: false
             Layout.alignment: Qt.AlignVCenter
         }

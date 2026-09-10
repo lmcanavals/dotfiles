@@ -10,15 +10,11 @@ PopupWindow {
     property UPowerDevice currentDevice: null
     property Item targetItem: null
 
-    anchor.window: targetItem ? targetItem.Window.window : null
-    anchor.rect: {
-        if (!targetItem) {
-            return Qt.rect(0, 0, 0, 0);
-        }
-        const pos = targetItem.mapToItem(null, 0, 0);
-        const win = targetItem.Window.window;
-        const barH = win ? win.height : 0;
-        return Qt.rect(pos.x, barH + 2, targetItem.width, targetItem.height);
+    // qmllint disable missing-type
+    anchor {
+        item: root.targetItem
+        edges: Edges.Bottom
+        gravity: Edges.Bottom
     }
 
     color: "transparent"

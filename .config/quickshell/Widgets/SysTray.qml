@@ -36,16 +36,16 @@ SurfaceCard {
 
                 onClicked: event => {
                     if (event.button === Qt.LeftButton) {
-                        modelData.activate();
-                    } else if (modelData.hasMenu) {
+                        modelData?.activate();
+                    } else if (modelData?.hasMenu) {
                         const globalPos = itemArea.mapToItem(null, 0, 0);
-                        modelData.display(root.bar, globalPos.x, globalPos.y + root.bar.height);
+                        modelData.display(root.bar, globalPos.x, globalPos.y + itemArea.height);
                     }
                 }
 
                 IconImage {
                     anchors.fill: parent
-                    source: itemArea.modelData.icon
+                    source: itemArea.modelData ? itemArea.modelData.icon : ""
                     asynchronous: true
                 }
             }
