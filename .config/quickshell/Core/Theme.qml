@@ -13,6 +13,10 @@ QtObject {
         return base + "/lmcscolors.json";
     }
 
+    function alpha(c: color, a: real): color {
+        return Qt.rgba(c.r, c.g, c.b, Math.max(0.0, Math.min(1.0, a)));
+    }
+
     // Concrete typed palette component so qmllint has full visibility into properties
     component Palette: QtObject {
         property color bg: "#32302f"

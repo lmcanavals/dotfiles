@@ -23,7 +23,6 @@ SurfaceCard {
         width: Math.max(0, parent.width - Config.padding * 2)
         text: root.titleText
         elide: Text.ElideRight
-        color: Theme.colors.fg_dark
     }
 }
 // vim: set ts=4 sw=4 et sts=0 :

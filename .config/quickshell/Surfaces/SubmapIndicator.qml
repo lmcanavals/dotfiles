@@ -12,11 +12,11 @@ Scope {
     LazyLoader {
         active: root.active
 
-        // qmllint disable unqualified uncreatable-type
+        // qmllint disable uncreatable-type
         PanelWindow {
-            anchors.top: true
+            anchors.bottom: true
             // qmllint disable unqualified unresolved-type
-            margins.top: 48
+            margins.bottom: (screen?.height ?? 1080) / 6
             exclusiveZone: 0
 
             implicitWidth: content.implicitWidth
@@ -28,7 +28,7 @@ Scope {
             SurfaceCard {
                 id: content
 
-                color: Theme.colors.error
+                color: Theme.colors.bg_widget_r
                 radius: Config.radius
                 implicitWidth: label.implicitWidth + Config.padding * 3
                 implicitHeight: Config.widgetHeight + 4
@@ -37,9 +37,8 @@ Scope {
                     id: label
 
                     anchors.centerIn: parent
-                    text: `MODE: ${root.submap.toUpperCase()}`
+                    text: root.submap
                     color: Theme.colors.fg_widget_r
-                    font.bold: true
                 }
             }
         }

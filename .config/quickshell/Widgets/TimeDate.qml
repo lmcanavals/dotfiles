@@ -14,8 +14,6 @@ SurfaceCard {
 
         anchors.centerIn: parent
         text: TimeService.formattedTime
-        color: Theme.colors.fg
-        font.bold: true
     }
 }
 // vim: set ts=4 sw=4 et sts=0 :

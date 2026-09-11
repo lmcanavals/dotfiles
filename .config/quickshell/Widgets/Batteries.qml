@@ -51,7 +51,7 @@ SurfaceCard {
                         } else if (itemArea.modelData.state === UPowerDeviceState.Charging) {
                             return Theme.colors.success;
                         }
-                        return Theme.colors.fg;
+                        return Theme.colors.fg_widget;
                     }
 
                     text: {

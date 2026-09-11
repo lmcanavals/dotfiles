@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Services.UPower
+import Quickshell.Widgets
 import Core
 import Primitives
 import Services
@@ -50,7 +51,6 @@ PopupWindow {
 
                 StyledText {
                     text: "Quick Controls"
-                    color: Theme.colors.fg
                     font.bold: true
                 }
 
@@ -83,7 +83,6 @@ PopupWindow {
                             const state = UPowerDeviceState.toString(dev.state);
                             return `${dev.model || "Battery"}: ${Math.round(dev.percentage * 100)}% (${state})`;
                         }
-                        color: Theme.colors.fg
                     }
 
                     StyledText {
@@ -94,8 +93,7 @@ PopupWindow {
                             const mins = Math.round(dev.timeToEmpty / 60);
                             return `${mins} minutes remaining`;
                         }
-                        color: Theme.colors.fg_dark
-                        font.pixelSize: 10
+                        font.pixelSize: Config.fontSize - 2
                         visible: text.length > 0
                     }
                 }
@@ -104,7 +102,7 @@ PopupWindow {
             // Volume Control Slider
             RowLayout {
                 Layout.fillWidth: true
-                spacing: Config.spacing
+                spacing: Config.spacing * 2
 
                 MouseArea {
                     implicitWidth: muteIcon.implicitWidth + 4
@@ -112,11 +110,10 @@ PopupWindow {
                     cursorShape: Qt.PointingHandCursor
                     onClicked: AudioService.toggleMute()
 
-                    StyledText {
+                    IconImage {
                         id: muteIcon
-                        anchors.centerIn: parent
-                        text: AudioService.muted ? "󰝟" : "󰕾"
-                        color: AudioService.muted ? Theme.colors.comment : Theme.colors.accent
+                        implicitSize: 22
+                        source: Quickshell.iconPath(AudioService.muted ? "audio-volume-muted-symbolic" : "audio-volume-high-symbolic")
                     }
                 }
 
@@ -125,11 +122,13 @@ PopupWindow {
                     Layout.fillWidth: true
                     implicitHeight: 8
                     radius: 4
-                    color: Theme.colors.bg_highlight
+                    color: Theme.colors.bg_widget
 
                     Rectangle {
+                        anchors.left: parent.left
+                        anchors.top: parent.top
+                        anchors.bottom: parent.bottom
                         width: parent.width * Math.min(1.0, AudioService.volume)
-                        height: parent.height
                         radius: 4
                         color: AudioService.muted ? Theme.colors.comment : Theme.colors.accent
                     }
@@ -157,10 +156,7 @@ PopupWindow {
 
                 StyledText {
                     text: `${Math.round(AudioService.volume * 100)}%`
-                    color: Theme.colors.fg_dark
-                    font.pixelSize: 11
-                    Layout.preferredWidth: 32
-                    horizontalAlignment: Text.AlignRight
+                    color: Theme.colors.fg_widget
                 }
             }
         }

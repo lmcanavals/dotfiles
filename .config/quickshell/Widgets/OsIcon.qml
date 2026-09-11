@@ -13,8 +13,6 @@ SurfaceCard {
 
         anchors.centerIn: parent
         text: Config.osIcon
-        color: Theme.colors.accent
         font.bold: true
-        font.pixelSize: 14
     }
 }

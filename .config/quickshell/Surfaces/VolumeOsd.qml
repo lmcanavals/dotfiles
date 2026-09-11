@@ -35,7 +35,7 @@ Scope {
     LazyLoader {
         active: root.showOsd
 
-        // qmllint disable unqualified uncreatable-type
+        // qmllint disable uncreatable-type
         PanelWindow {
             anchors.bottom: true
             // qmllint disable unqualified unresolved-type
@@ -51,13 +51,13 @@ Scope {
             SurfaceCard {
                 anchors.fill: parent
                 color: Theme.colors.bg_dark
-                radius: height / 2
+                radius: Config.radius
 
                 RowLayout {
                     anchors.fill: parent
                     anchors.leftMargin: 16
                     anchors.rightMargin: 16
-                    spacing: 12
+                    spacing: Config.spacing * 2
 
                     IconImage {
                         implicitSize: 22
@@ -68,7 +68,7 @@ Scope {
                         Layout.fillWidth: true
                         implicitHeight: 8
                         radius: 4
-                        color: Theme.colors.bg_highlight
+                        color: Theme.colors.bg_widget
 
                         Rectangle {
                             anchors.left: parent.left
@@ -82,8 +82,7 @@ Scope {
 
                     StyledText {
                         text: `${Math.round(AudioService.volume * 100)}%`
-                        color: Theme.colors.fg
-                        font.bold: true
+                        color: Theme.colors.fg_widget
                     }
                 }
             }

@@ -14,5 +14,6 @@ QtObject {
     readonly property string dateFormat: "ddd, d MMMM HH:mm"
     readonly property string timeFormat: "HH:mm"
     readonly property string fontFamily: "sans-serif, Symbols Nerd Font"
+    readonly property int fontSize: 16
 }
 // vim: set ts=4 sw=4 et sts=0 :

@@ -9,22 +9,17 @@ SurfaceCard {
     property bool urgent: false
     property alias text: label.text
     property alias labelItem: label
-    property color focusedColor: Theme.colors.accent
-    property color activeColor: Theme.colors.accent_dim
-    property color urgentColor: Theme.colors.error
-    property color hoverColor: Theme.colors.bg_highlight
-    property color normalColor: Theme.colors.bg_widget
 
     signal clicked(var mouse)
 
     color: {
         if (urgent)
-            return urgentColor;
+            return Theme.colors.bg_highlight;
         if (focused)
-            return focusedColor;
+            return Theme.colors.bg_widget_r;
         if (active)
-            return activeColor;
-        return mouseArea.containsMouse ? hoverColor : normalColor;
+            return Theme.colors.accent_dim;
+        return mouseArea.containsMouse ? Theme.colors.bg_widget_r : Theme.colors.bg_widget;
     }
 
     Behavior on color {
@@ -52,7 +47,7 @@ SurfaceCard {
         color: {
             if (root.urgent || root.focused)
                 return Theme.colors.fg_widget_r;
-            return Theme.colors.fg;
+            return Theme.colors.fg_widget;
         }
         font.bold: root.focused || root.active
     }

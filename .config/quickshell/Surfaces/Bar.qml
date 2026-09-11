@@ -20,7 +20,7 @@ PanelWindow {
     }
 
     implicitHeight: Config.barHeight + Config.margin * 2
-    color: Theme.colors.bg
+    color: Theme.alpha(Theme.colors.bg, 0.4)
 
     WlrLayershell.layer: WlrLayer.Top
     WlrLayershell.namespace: "quickshell:topbar"

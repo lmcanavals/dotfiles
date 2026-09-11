@@ -4,9 +4,9 @@ import Core
 Text {
     id: root
 
-    color: Theme.colors.fg
+    color: Theme.colors.fg_widget
     font.family: Config.fontFamily
-    font.pixelSize: 12
+    font.pixelSize: Config.fontSize
     verticalAlignment: Text.AlignVCenter
     renderType: Text.NativeRendering
 }
