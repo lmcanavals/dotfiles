@@ -5,7 +5,7 @@ import QtQuick.Layouts
 import Quickshell.Services.UPower
 import Core
 import Primitives
-import Surfaces
+import Services
 
 SurfaceCard {
     id: root
@@ -15,10 +15,6 @@ SurfaceCard {
 
     implicitWidth: layout.implicitWidth + Config.padding * 2
     implicitHeight: Config.widgetHeight
-
-    BatteryPopup {
-        id: popup
-    }
 
     RowLayout {
         id: layout
@@ -36,16 +32,10 @@ SurfaceCard {
 
                 implicitHeight: Config.widgetHeight
                 implicitWidth: label.implicitWidth + 4
-                hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
 
-                onEntered: {
-                    popup.currentDevice = itemArea.modelData;
-                    popup.targetItem = itemArea;
-                    popup.visible = true;
-                }
-
-                onExited: {
-                    popup.visible = false;
+                onClicked: {
+                    DashboardService.toggle(itemArea);
                 }
 
                 StyledText {

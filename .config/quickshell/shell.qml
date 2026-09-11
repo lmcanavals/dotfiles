@@ -1,13 +1,20 @@
 //@ pragma UseQApplication
-
+import QtQuick
 import Quickshell
 import Surfaces
+import Services
 
 ShellRoot {
     Variants {
         model: Quickshell.screens
+        delegate: Component {
+            Bar {}
+        }
+    }
 
-        Bar {}
+    LazyLoader {
+        active: DashboardService.open
+        Dashboard {}
     }
 
     VolumeOsd {}
