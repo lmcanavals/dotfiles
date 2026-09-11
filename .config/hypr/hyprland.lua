@@ -310,7 +310,7 @@ require("binds")
 
 hl.layer_rule({
 	name = "blur-layer",
-	match = { namespace = "(?:waybar|launcher|notifications)" },
+	match = { namespace = "(?:waybar|launcher|notifications|quickshell.*)" },
 
 	blur = true,
 	blur_popups = true,
