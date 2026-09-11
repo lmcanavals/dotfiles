@@ -28,7 +28,7 @@ Scope {
             SurfaceCard {
                 id: content
 
-                color: Theme.colors.bg_widget_r
+                color: Theme.alpha(Theme.colors.bg_widget_r, 0.7)
                 radius: Config.radius
                 implicitWidth: label.implicitWidth + Config.padding * 3
                 implicitHeight: Config.widgetHeight + 4

@@ -15,7 +15,7 @@ QtObject {
         function onRawEvent(event) {
             if (event.name === "submap") {
                 const parts = event.parse(1);
-                root.currentSubmap = (parts && parts.length > 0) ? parts[0].trim() : "";
+                root.currentSubmap = (parts?.length > 0) ? parts[0].trim() : "";
             }
         }
     }

@@ -2,29 +2,29 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Services.UPower
-import Quickshell.Widgets
 import Core
 import Primitives
 import Services
+import Widgets
 
 PopupWindow {
     id: root
 
-    implicitWidth: 340
+    implicitWidth: contentLayout.implicitWidth + Config.padding * 4
     implicitHeight: contentLayout.implicitHeight + Config.padding * 4
 
-    visible: DashboardService.open && DashboardService.targetItem !== null
+    visible: QuickSettingsService.open && QuickSettingsService.targetItem !== null
     grabFocus: true
 
     onVisibleChanged: {
-        if (!visible && DashboardService.open) {
-            DashboardService.close();
+        if (!visible && QuickSettingsService.open) {
+            QuickSettingsService.close();
         }
     }
 
     // qmllint disable missing-type
     anchor {
-        item: DashboardService.targetItem
+        item: QuickSettingsService.targetItem
         edges: Edges.Bottom
         gravity: Edges.Bottom
     }
@@ -34,7 +34,7 @@ PopupWindow {
     SurfaceCard {
         id: mainCard
         anchors.fill: parent
-        color: Theme.colors.bg_dark
+        color: Theme.alpha(Theme.colors.bg_dark, 0.4)
         border.color: Theme.colors.border
         border.width: 1
         radius: Config.radius * 2
@@ -45,24 +45,8 @@ PopupWindow {
             anchors.margins: Config.padding * 2
             spacing: Config.spacing * 2
 
-            // Header: Title & Close Action
-            RowLayout {
-                Layout.fillWidth: true
-
-                StyledText {
-                    text: "Quick Controls"
-                    font.bold: true
-                }
-
-                Item {
-                    Layout.fillWidth: true
-                }
-
-                StyledButton {
-                    text: "󰅖"
-                    onClicked: DashboardService.close()
-                }
-            }
+            // Header Section: User@Host, System Uptime, TimeDate
+            HeaderSection {}
 
             // Battery Information Card
             Rectangle {
@@ -110,10 +94,11 @@ PopupWindow {
                     cursorShape: Qt.PointingHandCursor
                     onClicked: AudioService.toggleMute()
 
-                    IconImage {
+                    StyledText {
                         id: muteIcon
-                        implicitSize: 22
-                        source: Quickshell.iconPath(AudioService.muted ? "audio-volume-muted-symbolic" : "audio-volume-high-symbolic")
+
+                        text: AudioService.glyph
+                        color: AudioService.muted ? Theme.colors.comment : Theme.colors.fg_widget
                     }
                 }
 
@@ -130,7 +115,7 @@ PopupWindow {
                         anchors.bottom: parent.bottom
                         width: parent.width * Math.min(1.0, AudioService.volume)
                         radius: 4
-                        color: AudioService.muted ? Theme.colors.comment : Theme.colors.accent
+                        color: AudioService.muted ? Theme.colors.comment : Theme.colors.fg_widget
                     }
 
                     MouseArea {
@@ -156,7 +141,7 @@ PopupWindow {
 
                 StyledText {
                     text: `${Math.round(AudioService.volume * 100)}%`
-                    color: Theme.colors.fg_widget
+                    color: AudioService.muted ? Theme.colors.comment : Theme.colors.fg_widget
                 }
             }
         }

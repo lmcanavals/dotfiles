@@ -5,14 +5,13 @@ import Quickshell.Wayland
 import Core
 import Widgets
 
-// qmllint disable unqualified uncreatable-type
+// qmllint disable uncreatable-type
 PanelWindow {
     id: panel
 
     property var modelData: null
     screen: modelData
 
-    // anchors
     anchors {
         top: true
         left: true
@@ -49,15 +48,8 @@ PanelWindow {
         }
 
         Item {
-            // Flexible spacer to keep right-side widgets right-aligned
             Layout.fillWidth: true
             Layout.minimumWidth: 0
-        }
-
-        TimeDate {
-            id: timeDate
-            Layout.fillWidth: false
-            Layout.alignment: Qt.AlignVCenter
         }
 
         Batteries {
@@ -66,15 +58,15 @@ PanelWindow {
             Layout.alignment: Qt.AlignVCenter
         }
 
-        SysTray {
-            id: sysTray
-            bar: panel
+        BinaryClock {
+            id: binaryClock
             Layout.fillWidth: false
             Layout.alignment: Qt.AlignVCenter
         }
 
-        BinaryClock {
-            id: binaryClock
+        SysTray {
+            id: sysTray
+            bar: panel
             Layout.fillWidth: false
             Layout.alignment: Qt.AlignVCenter
         }

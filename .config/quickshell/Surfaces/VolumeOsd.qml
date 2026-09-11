@@ -50,7 +50,7 @@ Scope {
 
             SurfaceCard {
                 anchors.fill: parent
-                color: Theme.colors.bg_dark
+                color: Theme.alpha(Theme.colors.bg_dark, 0.4)
                 radius: Config.radius
 
                 RowLayout {
@@ -59,9 +59,9 @@ Scope {
                     anchors.rightMargin: 16
                     spacing: Config.spacing * 2
 
-                    IconImage {
-                        implicitSize: 22
-                        source: Quickshell.iconPath(AudioService.muted ? "audio-volume-muted-symbolic" : "audio-volume-high-symbolic")
+                    StyledText {
+                        text: AudioService.glyph
+                        color: AudioService.muted ? Theme.colors.comment : Theme.colors.fg_widget
                     }
 
                     Rectangle {
@@ -76,13 +76,13 @@ Scope {
                             anchors.bottom: parent.bottom
                             width: parent.width * Math.min(1.0, AudioService.volume)
                             radius: 4
-                            color: AudioService.muted ? Theme.colors.comment : Theme.colors.accent
+                            color: AudioService.muted ? Theme.colors.comment : Theme.colors.fg_widget
                         }
                     }
 
                     StyledText {
                         text: `${Math.round(AudioService.volume * 100)}%`
-                        color: Theme.colors.fg_widget
+                        color: AudioService.muted ? Theme.colors.comment : Theme.colors.fg_widget
                     }
                 }
             }

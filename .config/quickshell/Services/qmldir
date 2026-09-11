@@ -1,7 +1,9 @@
 module Services
 
 singleton AudioService 1.0 AudioService.qml
-singleton DashboardService 1.0 DashboardService.qml
-singleton HyprlandService 1.0 HyprlandService.qml
 singleton BinaryClockService 1.0 BinaryClockService.qml
+singleton HyprlandService 1.0 HyprlandService.qml
+singleton PowerService 1.0 PowerService.qml
+singleton QuickSettingsService 1.0 QuickSettingsService.qml
+singleton SystemInfoService 1.0 SystemInfoService.qml
 singleton TimeService 1.0 TimeService.qml

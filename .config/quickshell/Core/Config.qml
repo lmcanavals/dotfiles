@@ -10,10 +10,10 @@ QtObject {
     readonly property int padding: 8
     readonly property int margin: 2
     readonly property int spacing: 5
-    readonly property string osIcon: ""
-    readonly property string dateFormat: "ddd, d MMMM HH:mm"
+    readonly property string osIcon: "󰣇"
+    readonly property string dateFormat: "dddd, d MMMM yyyy"
     readonly property string timeFormat: "HH:mm"
-    readonly property string fontFamily: "sans-serif, Symbols Nerd Font"
+    readonly property string fontFamily: "sans-serif, Font Awesome 7 Free, Symbols Nerd Font"
     readonly property int fontSize: 16
 }
 // vim: set ts=4 sw=4 et sts=0 :

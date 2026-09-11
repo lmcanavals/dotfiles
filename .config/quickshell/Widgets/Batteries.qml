@@ -35,7 +35,7 @@ SurfaceCard {
                 cursorShape: Qt.PointingHandCursor
 
                 onClicked: {
-                    DashboardService.toggle(itemArea);
+                    QuickSettingsService.toggle(itemArea);
                 }
 
                 StyledText {
@@ -55,16 +55,10 @@ SurfaceCard {
                     }
 
                     text: {
-                        const icons = ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"];
-                        let pct = itemArea.modelData.percentage ?? 0.0;
-                        pct = Math.max(0.0, Math.min(0.99, pct));
-                        const idx = Math.floor(pct * icons.length);
-                        let icon = icons[idx] ?? "󰁹";
-
-                        if (itemArea.modelData.state === UPowerDeviceState.Charging) {
-                            icon += " 󱐋";
-                        }
-                        return `${icon} ${Math.round(pct * 100)}%`;
+                        const icon = PowerService.glyphForDevice(itemArea.modelData);
+                        const pct = itemArea.modelData.percentage ?? 0.0;
+                        const pctLabel = pct > 0.97 ? "" : ` ${Math.round((itemArea.modelData.percentage ?? 0.0) * 100)}%`;
+                        return `${icon}${pctLabel}`;
                     }
                 }
             }

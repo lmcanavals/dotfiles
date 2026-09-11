@@ -13,8 +13,8 @@ ShellRoot {
     }
 
     LazyLoader {
-        active: DashboardService.open
-        Dashboard {}
+        active: QuickSettingsService.open
+        QuickSettings {}
     }
 
     VolumeOsd {}

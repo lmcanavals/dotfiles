@@ -14,11 +14,11 @@ SurfaceCard {
 
     color: {
         if (urgent)
-            return Theme.colors.bg_highlight;
+            return Theme.colors.accent_dim;
         if (focused)
             return Theme.colors.bg_widget_r;
         if (active)
-            return Theme.colors.accent_dim;
+            return Theme.colors.bg_highlight;
         return mouseArea.containsMouse ? Theme.colors.bg_widget_r : Theme.colors.bg_widget;
     }
 
