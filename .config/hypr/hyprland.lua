@@ -83,9 +83,10 @@ hl.on("hyprland.start", function()
 	checkEnable("hyprpaper")
 	checkEnable("hyprpolkitagent")
 	checkEnable("hyprsunset")
-	checkEnable("waybar")
+	-- checkEnable("waybar")
 	checkEnable("lbatfyi")
 
+	hl.exec_cmd("uwsm-app -- quickshell")
 	hl.exec_cmd("uwsm-app -- wl-paste --watch cliphist store")
 	hl.exec_cmd('rm "$HOME/.cache/cliphist/db"')
 

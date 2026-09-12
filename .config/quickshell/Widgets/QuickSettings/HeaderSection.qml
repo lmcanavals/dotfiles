@@ -10,7 +10,7 @@ ColumnLayout {
     Layout.fillWidth: true
     spacing: Config.spacing
 
-    // Host & User label + Close action
+    // Account and uptime
     RowLayout {
         Layout.fillWidth: true
 
@@ -36,7 +36,7 @@ ColumnLayout {
         }
     }
 
-    // TimeDate & System Uptime
+    // Date and time
     RowLayout {
         Layout.fillWidth: true
 

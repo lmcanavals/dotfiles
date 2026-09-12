@@ -46,7 +46,7 @@ SurfaceCard {
                 IconImage {
                     anchors.fill: parent
                     source: itemArea.modelData ? itemArea.modelData.icon : ""
-                    asynchronous: true
+                    asynchronous: false
                 }
             }
         }

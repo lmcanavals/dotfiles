@@ -45,7 +45,6 @@ PopupWindow {
             anchors.margins: Config.padding * 2
             spacing: Config.spacing * 2
 
-            // Header Section: User@Host, System Uptime, TimeDate
             HeaderSection {}
 
             // Battery Information Card
@@ -83,67 +82,7 @@ PopupWindow {
                 }
             }
 
-            // Volume Control Slider
-            RowLayout {
-                Layout.fillWidth: true
-                spacing: Config.spacing * 2
-
-                MouseArea {
-                    implicitWidth: muteIcon.implicitWidth + 4
-                    implicitHeight: muteIcon.implicitHeight + 4
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: AudioService.toggleMute()
-
-                    StyledText {
-                        id: muteIcon
-
-                        text: AudioService.glyph
-                        color: AudioService.muted ? Theme.colors.comment : Theme.colors.fg_widget
-                    }
-                }
-
-                Rectangle {
-                    id: track
-                    Layout.fillWidth: true
-                    implicitHeight: 8
-                    radius: 4
-                    color: Theme.colors.bg_widget
-
-                    Rectangle {
-                        anchors.left: parent.left
-                        anchors.top: parent.top
-                        anchors.bottom: parent.bottom
-                        width: parent.width * Math.min(1.0, AudioService.volume)
-                        radius: 4
-                        color: AudioService.muted ? Theme.colors.comment : Theme.colors.fg_widget
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-
-                        function updateVolume(mouseX) {
-                            const frac = Math.max(0.0, Math.min(1.0, mouseX / track.width));
-                            AudioService.setVolume(frac);
-                        }
-
-                        onClicked: mouse => updateVolume(mouse.x)
-                        onPositionChanged: mouse => {
-                            if (pressed)
-                                updateVolume(mouse.x);
-                        }
-                        onWheel: wheel => {
-                            const delta = wheel.angleDelta.y > 0 ? 0.05 : -0.05;
-                            AudioService.setVolume(AudioService.volume + delta);
-                        }
-                    }
-                }
-
-                StyledText {
-                    text: `${Math.round(AudioService.volume * 100)}%`
-                    color: AudioService.muted ? Theme.colors.comment : Theme.colors.fg_widget
-                }
-            }
+            SlidersSection {}
         }
     }
 }
