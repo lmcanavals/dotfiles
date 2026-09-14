@@ -83,6 +83,8 @@ PopupWindow {
             }
 
             SlidersSection {}
+
+            TogglesSection {}
         }
     }
 }
