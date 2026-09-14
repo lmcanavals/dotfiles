@@ -87,6 +87,12 @@ PopupWindow {
             SlidersSection {}
 
             TogglesSection {}
+
+            Item {
+                Layout.fillHeight: true
+            }
+
+            SessionSection {}
         }
     }
 }

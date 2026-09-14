@@ -18,7 +18,7 @@ local terminal = "uwsm-app -- kitty"
 
 -- submap names 󰫮󰫯󰫰󰫱󰫲󰫳󰫴󰫵󰫶󰫷󰫸󰫹󰫺󰫻󰫼󰫽󰫾󰫿󰬀󰬁󰬂󰬃󰬄󰬅󰬆󰬇┃┊│
 local groups = "󰓩 : 󰬁 Togl │󰫹 Lck │󰌒 │ │"
-local power = " : 󰫹  │ 󰫾 󰍃 │ 󰬀 󰒲 │ 󰫵 󰤄 │ 󰫿 󰜉 │ 󰫽 󰐥"
+local power = " : 󰫹  │ 󰫾 󰍃 │ 󰬀 󰤄 │ 󰫵  │ 󰫿 󰜉 │ 󰫽 󰐥"
 local scrGrab = "󰹑 : 󰫲 󱇣│󰬀 󰉏│󰫿 "
 local swappy = "󱇣 : 󰫮󰍺│󰫼󰍹│󰬄│󰫿󰩭"
 local save = "󰉏 : 󰫮󰍺│󰫼󰍹│󰬄│󰫿󰩭"

@@ -1,6 +1,7 @@
 module Primitives
 
 QuickToggle 1.0 QuickToggle.qml
+SessionButton 1.0 SessionButton.qml
 SliderRow 1.0 SliderRow.qml
 SurfaceCard 1.0 SurfaceCard.qml
 StyledText 1.0 StyledText.qml
