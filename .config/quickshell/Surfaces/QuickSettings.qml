@@ -47,6 +47,8 @@ PopupWindow {
 
             HeaderSection {}
 
+            NetworkSection {}
+
             // Battery Information Card
             Rectangle {
                 Layout.fillWidth: true
