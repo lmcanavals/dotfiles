@@ -68,7 +68,7 @@ hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
 
 hl.bind(mainMod .. " + escape", hl.dsp.submap("reset"), { submap_universal = true })
 hl.bind(mainMod .. " + period", hl.dsp.exec_cmd("uwsm-app -- lmojis"))
-hl.bind(mainMod .. " + tab", hl.dsp.exec_cmd(fyi .. " Missing Win+Tab"))
+hl.bind(mainMod .. " + tab", hl.dsp.focus({ workspace = "previous" }))
 hl.bind("ALT + CTRL + tab", hl.dsp.exec_cmd(fyi .. " Missing Alt+Ctrl+Tab"))
 
 -- Switch workspaces with mainMod + [0-9]
