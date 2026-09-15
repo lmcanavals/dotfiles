@@ -14,13 +14,17 @@ Scope {
         target: AudioService
 
         function onVolumeChanged() {
-            root.showOsd = true;
-            hideTimer.restart();
+            if (!QuickSettingsService.open) {
+                root.showOsd = true;
+                hideTimer.restart();
+            }
         }
 
         function onMutedChanged() {
-            root.showOsd = true;
-            hideTimer.restart();
+            if (!QuickSettingsService.open) {
+                root.showOsd = true;
+                hideTimer.restart();
+            }
         }
     }
 

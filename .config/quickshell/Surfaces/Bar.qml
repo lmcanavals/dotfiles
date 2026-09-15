@@ -44,6 +44,7 @@ PanelWindow {
 
         ActiveWindow {
             id: activeWindow
+            screen: panel.screen
             Layout.alignment: Qt.AlignVCenter
         }
 

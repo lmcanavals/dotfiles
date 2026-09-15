@@ -58,10 +58,21 @@ QtObject {
     property Timer pollTimer: Timer {
         interval: 4000
         repeat: true
-        running: true
+        running: QuickSettingsService.open
         triggeredOnStart: true
         onTriggered: root.refresh()
     }
+
+    property Connections openWatcher: Connections {
+        target: QuickSettingsService
+        function onOpenChanged() {
+            if (QuickSettingsService.open) {
+                root.refresh();
+            }
+        }
+    }
+
+    Component.onCompleted: root.refresh()
 
     function refresh(): void {
         if (!poller.running) {

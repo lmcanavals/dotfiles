@@ -5,11 +5,16 @@ import Quickshell.Services.Pipewire
 
 QtObject {
     id: root
-    // 󰍬 󰍭
-
+    // Sink (Output)
     readonly property PwNode sink: Pipewire.defaultAudioSink
     readonly property real volume: Pipewire.defaultAudioSink?.audio?.volume ?? 0.0
     readonly property bool muted: Pipewire.defaultAudioSink?.audio?.muted ?? false
+
+    // Source (Input / Microphone)
+    readonly property PwNode source: Pipewire.defaultAudioSource
+    readonly property real micVolume: Pipewire.defaultAudioSource?.audio?.volume ?? 0.0
+    readonly property bool micMuted: Pipewire.defaultAudioSource?.audio?.muted ?? false
+    readonly property string micGlyph: root.micMuted ? "󰍭" : "󰍬"
 
     readonly property string sinkType: {
         const desc = sink?.description.toLowerCase() ?? "";
@@ -40,7 +45,7 @@ QtObject {
     }
 
     property PwObjectTracker tracker: PwObjectTracker {
-        objects: root.sink ? [root.sink] : []
+        objects: [root.sink, root.source]
     }
 
     function setVolume(val: real): void {
@@ -52,6 +57,18 @@ QtObject {
     function toggleMute(): void {
         if (sink?.audio) {
             sink.audio.muted = !sink.audio.muted;
+        }
+    }
+
+    function setMicVolume(val: real): void {
+        if (source?.audio) {
+            source.audio.volume = Math.max(0.0, Math.min(1.0, val));
+        }
+    }
+
+    function toggleMicMute(): void {
+        if (source?.audio) {
+            source.audio.muted = !source.audio.muted;
         }
     }
 }

@@ -14,7 +14,7 @@ QtObject {
     function execute(cmd: list<string>): void {
         QuickSettingsService.close();
         actionProc.command = cmd;
-        actionProc.running = true;
+        actionProc.startDetached();
     }
 
     function logout(): void {

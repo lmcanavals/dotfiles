@@ -76,6 +76,12 @@ QtObject {
         }
     }
 
+    function refresh(): void {
+        if (!reader.running) {
+            reader.running = true;
+        }
+    }
+
     function adjust(delta: real): void {
         setBrightness(root.brightness + delta);
     }

@@ -3,6 +3,7 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import Services
 
 QtObject {
     id: root
@@ -20,6 +21,8 @@ QtObject {
         id: procUptime
         path: "/proc/uptime"
         blockLoading: true
+
+        onLoaded: root.updateUptime()
     }
 
     function formatUptime(totalSeconds: real): string {
@@ -34,8 +37,7 @@ QtObject {
         return `${minutes}m`;
     }
 
-    function refresh(): void {
-        procUptime.reload();
+    function updateUptime(): void {
         const raw = procUptime.text().trim();
         if (raw.length > 0) {
             const parts = raw.split(" ");
@@ -46,12 +48,27 @@ QtObject {
         }
     }
 
+    function refresh(): void {
+        procUptime.reload();
+    }
+
+    Component.onCompleted: root.updateUptime()
+
     property Timer pollTimer: Timer {
         interval: 60000
         repeat: true
-        running: true
+        running: QuickSettingsService.open
         triggeredOnStart: true
         onTriggered: root.refresh()
+    }
+
+    property Connections openWatcher: Connections {
+        target: QuickSettingsService
+        function onOpenChanged() {
+            if (QuickSettingsService.open) {
+                root.refresh();
+            }
+        }
     }
 }
 // vim: set ts=4 sw=4 et sts=0 :

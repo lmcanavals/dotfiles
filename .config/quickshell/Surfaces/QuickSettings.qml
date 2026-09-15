@@ -10,7 +10,7 @@ import Widgets
 PopupWindow {
     id: root
 
-    implicitWidth: contentLayout.implicitWidth + Config.padding * 4
+    implicitWidth: 360
     implicitHeight: contentLayout.implicitHeight + Config.padding * 4
 
     visible: QuickSettingsService.open && QuickSettingsService.targetItem !== null
@@ -19,6 +19,8 @@ PopupWindow {
     onVisibleChanged: {
         if (!visible && QuickSettingsService.open) {
             QuickSettingsService.close();
+        } else if (visible) {
+            BrightnessService.refresh();
         }
     }
 
