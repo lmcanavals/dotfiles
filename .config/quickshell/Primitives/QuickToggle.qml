@@ -39,7 +39,7 @@ Rectangle {
         StyledText {
             text: root.glyph
             color: root.active ? root.activeColor : Theme.colors.fg_dark
-            font.pixelSize: 16
+            font.pixelSize: Config.fontSize + 4
         }
 
         ColumnLayout {
@@ -50,14 +50,14 @@ Rectangle {
                 text: root.label
                 color: root.active ? Theme.colors.fg : Theme.colors.fg_dark
                 font.bold: root.active
-                font.pixelSize: 11
+                font.pixelSize: Config.fontSize - 2
                 elide: Text.ElideRight
             }
 
             StyledText {
                 text: root.active ? "On" : "Off"
                 color: root.active ? root.activeColor : Theme.colors.comment
-                font.pixelSize: 9
+                font.pixelSize: Config.fontSize - 4
             }
         }
     }

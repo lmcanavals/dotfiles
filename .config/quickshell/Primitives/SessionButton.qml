@@ -30,7 +30,7 @@ Rectangle {
         anchors.centerIn: parent
         text: root.glyph
         color: mouseArea.containsMouse ? root.hoverColor : root.glyphColor
-        font.pixelSize: 15
+        font.pixelSize: Config.fontSize + 4
     }
 }
 // vim: set ts=4 sw=4 et sts=0 :

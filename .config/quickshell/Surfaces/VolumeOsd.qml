@@ -40,9 +40,11 @@ Scope {
 
         // qmllint disable uncreatable-type
         PanelWindow {
+            // qmllint enable uncreatable-type
             anchors.bottom: true
             // qmllint disable unqualified unresolved-type
             margins.bottom: (screen?.height ?? 1080) / 6
+            // qmllint enable unqualified unresolved-type
             exclusiveZone: 0
 
             implicitWidth: 320
@@ -56,37 +58,14 @@ Scope {
                 color: Theme.alpha(Theme.colors.bg_dark, 0.4)
                 radius: Config.radius
 
-                RowLayout {
+                MetricBar {
                     anchors.fill: parent
-                    anchors.leftMargin: 16
-                    anchors.rightMargin: 16
-                    spacing: Config.spacing * 2
-
-                    StyledText {
-                        text: AudioService.glyph
-                        color: AudioService.muted ? Theme.colors.comment : Theme.colors.fg_widget
-                    }
-
-                    Rectangle {
-                        Layout.fillWidth: true
-                        implicitHeight: 8
-                        radius: 4
-                        color: Theme.colors.bg_widget
-
-                        Rectangle {
-                            anchors.left: parent.left
-                            anchors.top: parent.top
-                            anchors.bottom: parent.bottom
-                            width: parent.width * Math.min(1.0, AudioService.volume)
-                            radius: 4
-                            color: AudioService.muted ? Theme.colors.comment : Theme.colors.fg_widget
-                        }
-                    }
-
-                    StyledText {
-                        text: `${Math.round(AudioService.volume * 100)}%`
-                        color: AudioService.muted ? Theme.colors.comment : Theme.colors.fg_widget
-                    }
+                    anchors.leftMargin: Config.padding * 2
+                    anchors.rightMargin: Config.padding * 2
+                    Layout.fillWidth: true
+                    glyph: AudioService.glyph
+                    value: AudioService.volume
+                    barColor: AudioService.muted ? Theme.colors.comment : Theme.colors.fg_widget
                 }
             }
         }

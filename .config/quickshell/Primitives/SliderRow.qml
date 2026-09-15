@@ -25,7 +25,6 @@ RowLayout {
             anchors.centerIn: parent
             text: root.glyph
             color: root.muted ? Theme.colors.comment : root.accentColor
-            font.pixelSize: 16
         }
     }
 
@@ -43,6 +42,13 @@ RowLayout {
             width: parent.width * Math.max(0.0, Math.min(1.0, root.value))
             radius: 4
             color: root.muted ? Theme.colors.comment : root.accentColor
+
+            Behavior on width {
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.OutCubic
+                }
+            }
         }
 
         MouseArea {
@@ -68,7 +74,7 @@ RowLayout {
     }
 
     StyledText {
-        // horizontalAlignment: Text.AlignRight
+        horizontalAlignment: Text.AlignRight
         text: `${Math.round(root.value * 100)}%`
         color: root.muted ? Theme.colors.comment : root.accentColor
     }
