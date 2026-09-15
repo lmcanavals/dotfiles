@@ -1,8 +1,9 @@
 module Primitives
 
+MetricBar 1.0 MetricBar.qml
 QuickToggle 1.0 QuickToggle.qml
 SessionButton 1.0 SessionButton.qml
 SliderRow 1.0 SliderRow.qml
-SurfaceCard 1.0 SurfaceCard.qml
-StyledText 1.0 StyledText.qml
 StyledButton 1.0 StyledButton.qml
+StyledText 1.0 StyledText.qml
+SurfaceCard 1.0 SurfaceCard.qml

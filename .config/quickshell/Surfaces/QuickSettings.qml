@@ -86,6 +86,8 @@ PopupWindow {
                 }
             }
 
+            MetricsSection {}
+
             SlidersSection {}
 
             TogglesSection {}

@@ -8,6 +8,7 @@ SysTray 1.0 SysTray.qml
 Workspaces 1.0 Workspaces.qml
 
 HeaderSection 1.0 QuickSettings/HeaderSection.qml
+MetricsSection 1.0 QuickSettings/MetricsSection.qml
 NetworkSection 1.0 QuickSettings/NetworkSection.qml
 SessionSection 1.0 QuickSettings/SessionSection.qml
 SlidersSection 1.0 QuickSettings/SlidersSection.qml
