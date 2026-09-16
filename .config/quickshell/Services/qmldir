@@ -4,6 +4,7 @@ singleton AudioService 1.0 AudioService.qml
 singleton BinaryClockService 1.0 BinaryClockService.qml
 singleton BluetoothService 1.0 BluetoothService.qml
 singleton BrightnessService 1.0 BrightnessService.qml
+singleton DotfilesService 1.0 DotfilesService.qml
 singleton EnvironmentService 1.0 EnvironmentService.qml
 singleton HardwareService 1.0 HardwareService.qml
 singleton HyprlandService 1.0 HyprlandService.qml

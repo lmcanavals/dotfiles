@@ -86,6 +86,8 @@ PopupWindow {
                 }
             }
 
+            DotfilesCard {}
+
             MetricsSection {}
 
             SlidersSection {}
