@@ -110,7 +110,7 @@ QtObject {
 
     function openLazygit(): void {
         QuickSettingsService.close();
-        lazygitProcess.command = ["kitty", "--title", "Dotfiles Lazygit", "lazygit", `--git-dir=${root.gitDir}`, `--work-tree=${root.workTree}`];
+        lazygitProcess.command = ["kitty", "--title", "  Lazygit: dotfiles", "lazygit", `--git-dir=${root.gitDir}`, `--work-tree=${root.workTree}`];
         lazygitProcess.startDetached();
     }
 

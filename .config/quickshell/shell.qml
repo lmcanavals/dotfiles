@@ -17,6 +17,11 @@ ShellRoot {
         QuickSettings {}
     }
 
+    LazyLoader {
+        active: UpdatesService.open
+        UpdatesPopup {}
+    }
+
     VolumeOsd {}
 
     SubmapIndicator {}
