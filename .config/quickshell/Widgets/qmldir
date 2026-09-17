@@ -7,6 +7,7 @@ OsIcon 1.0 OsIcon.qml
 SysTray 1.0 SysTray.qml
 Workspaces 1.0 Workspaces.qml
 
+BatterySection 1.0 QuickSettings/BatterySection.qml
 DotfilesCard 1.0 QuickSettings/DotfilesCard.qml
 HeaderSection 1.0 QuickSettings/HeaderSection.qml
 MetricsSection 1.0 QuickSettings/MetricsSection.qml
