@@ -14,3 +14,4 @@ singleton QuickSettingsService 1.0 QuickSettingsService.qml
 singleton SessionService 1.0 SessionService.qml
 singleton SystemInfoService 1.0 SystemInfoService.qml
 singleton TimeService 1.0 TimeService.qml
+singleton UpdatesService 1.0 UpdatesService.qml

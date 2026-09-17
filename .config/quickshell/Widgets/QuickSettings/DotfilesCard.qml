@@ -34,7 +34,7 @@ SurfaceCard {
             spacing: Config.spacing
 
             StyledText {
-                text: `󱁻 ${DotfilesService.branch}`
+                text: `󱁻 ${DotfilesService.branch}`
                 font.bold: true
                 color: Theme.colors.accent
             }

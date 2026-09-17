@@ -383,10 +383,9 @@ hl.window_rule({
 
 hl.window_rule({
 	name = "float-by-title",
-	match = { title = "^.*(?:Developer Tools).*$" },
+	match = { title = "^.*(?:Developer Tools|  ).*$" },
 
 	float = true,
-	size = "monitor_w/2 monitor_h/2",
 })
 
 -- Example windowrules that are useful

@@ -4,3 +4,4 @@ Bar 1.0 Bar.qml
 QuickSettings 1.0 QuickSettings.qml
 SubmapIndicator 1.0 SubmapIndicator.qml
 VolumeOsd 1.0 VolumeOsd.qml
+UpdatesPopup 1.0 UpdatesPopup.qml
