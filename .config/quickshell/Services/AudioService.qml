@@ -1,6 +1,7 @@
 pragma Singleton
 
 import QtQuick
+import Quickshell.Io
 import Quickshell.Services.Pipewire
 
 QtObject {
@@ -70,5 +71,47 @@ QtObject {
 		if (source?.audio) {
 			source.audio.muted = !source.audio.muted;
 		}
+	}
+
+	// Filtered lists
+	readonly property var sinks: (Pipewire.nodes && Pipewire.nodes.values) ? Pipewire.nodes.values.filter(n => n && n.isSink && !n.isStream) : []
+
+	readonly property var sources: (Pipewire.nodes && Pipewire.nodes.values) ? Pipewire.nodes.values.filter(n => n && (n.isSource || (!n.isSink && !n.isStream && (n.audio || n.properties?.["media.class"] === "Audio/Source")))) : []
+
+	function nodeLabel(node: var): string {
+		if (!node)
+			return "";
+		return node.description || node.name || ("Node #" + node.id);
+	}
+
+	property Process wpctlProc: Process {
+		id: wpctlProcess
+		running: false
+	}
+
+	function setSink(node: var): void {
+		if (!node)
+			return;
+		// qmllint disable missing-property
+		if (typeof Pipewire.setDefaultAudioSink === "function") {
+			Pipewire.setDefaultAudioSink(node);
+		} else {
+			wpctlProcess.command = ["wpctl", "set-default", String(node.id)];
+			wpctlProcess.startDetached();
+		}
+		// qmllint enable missing-property
+	}
+
+	function setSource(node: var): void {
+		if (!node)
+			return;
+		// qmllint disable missing-property
+		if (typeof Pipewire.setDefaultAudioSource === "function") {
+			Pipewire.setDefaultAudioSource(node);
+		} else {
+			wpctlProcess.command = ["wpctl", "set-default", String(node.id)];
+			wpctlProcess.startDetached();
+		}
+		// qmllint enable missing-property
 	}
 }

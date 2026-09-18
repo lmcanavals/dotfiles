@@ -12,6 +12,7 @@ RowLayout {
 
 	signal valueModified(real newValue)
 	signal iconClicked
+	signal iconRightClicked
 
 	spacing: Config.spacing
 
@@ -19,7 +20,14 @@ RowLayout {
 		implicitWidth: 26
 		implicitHeight: 26
 		cursorShape: Qt.PointingHandCursor
-		onClicked: root.iconClicked()
+		acceptedButtons: Qt.LeftButton | Qt.RightButton
+		onClicked: mouse => {
+			if (mouse.button === Qt.LeftButton) {
+				root.iconClicked();
+			} else if (mouse.button === Qt.RightButton) {
+				root.iconRightClicked();
+			}
+		}
 
 		StyledText {
 			anchors.centerIn: parent

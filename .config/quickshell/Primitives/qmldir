@@ -1,5 +1,6 @@
 module Primitives
 
+AudioNodePicker 1.0 AudioNodePicker.qml
 BatteryDeviceRow 1.0 BatteryDeviceRow.qml
 MetricBar 1.0 MetricBar.qml
 QuickToggle 1.0 QuickToggle.qml
