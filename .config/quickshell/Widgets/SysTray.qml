@@ -9,47 +9,46 @@ import Core
 import Primitives
 
 SurfaceCard {
-    id: root
+	id: root
 
-    required property PanelWindow bar
+	required property PanelWindow bar
 
-    implicitWidth: layout.implicitWidth + Config.padding * 2
-    implicitHeight: Config.widgetHeight
+	implicitWidth: layout.implicitWidth + Config.padding * 2
+	implicitHeight: Config.widgetHeight
 
-    RowLayout {
-        id: layout
+	RowLayout {
+		id: layout
 
-        anchors.centerIn: parent
-        spacing: Config.spacing
+		anchors.centerIn: parent
+		spacing: Config.spacing
 
-        Repeater {
-            model: SystemTray.items
+		Repeater {
+			model: SystemTray.items
 
-            delegate: MouseArea {
-                id: itemArea
+			delegate: MouseArea {
+				id: itemArea
 
-                required property SystemTrayItem modelData
+				required property SystemTrayItem modelData
 
-                acceptedButtons: Qt.LeftButton | Qt.RightButton
-                implicitWidth: Config.widgetHeight - 6
-                implicitHeight: Config.widgetHeight - 6
+				acceptedButtons: Qt.LeftButton | Qt.RightButton
+				implicitWidth: Config.widgetHeight - 6
+				implicitHeight: Config.widgetHeight - 6
 
-                onClicked: event => {
-                    if (event.button === Qt.LeftButton) {
-                        modelData?.activate();
-                    } else if (modelData?.hasMenu) {
-                        const globalPos = itemArea.mapToItem(null, 0, 0);
-                        modelData.display(root.bar, globalPos.x, globalPos.y + itemArea.height);
-                    }
-                }
+				onClicked: event => {
+					if (event.button === Qt.LeftButton) {
+						modelData?.activate();
+					} else if (modelData?.hasMenu) {
+						const globalPos = itemArea.mapToItem(null, 0, 0);
+						modelData.display(root.bar, globalPos.x, globalPos.y + itemArea.height);
+					}
+				}
 
-                IconImage {
-                    anchors.fill: parent
-                    source: itemArea.modelData ? itemArea.modelData.icon : ""
-                    asynchronous: false
-                }
-            }
-        }
-    }
+				IconImage {
+					anchors.fill: parent
+					source: itemArea.modelData ? itemArea.modelData.icon : ""
+					asynchronous: false
+				}
+			}
+		}
+	}
 }
-// vim: set ts=4 sw=4 et sts=0 :

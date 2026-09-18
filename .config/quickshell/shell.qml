@@ -5,25 +5,29 @@ import Surfaces
 import Services
 
 ShellRoot {
-    Variants {
-        model: Quickshell.screens
-        delegate: Component {
-            Bar {}
-        }
-    }
+	Variants {
+		model: Quickshell.screens
+		delegate: Component {
+			Bar {}
+		}
+	}
 
-    LazyLoader {
-        active: QuickSettingsService.open
-        QuickSettings {}
-    }
+	LazyLoader {
+		active: QuickSettingsService.open
+		QuickSettings {}
+	}
 
-    LazyLoader {
-        active: UpdatesService.open
-        UpdatesPopup {}
-    }
+	LazyLoader {
+		active: UpdatesService.open
+		UpdatesPopup {}
+	}
 
-    VolumeOsd {}
+	LazyLoader {
+		active: MediaService.open
+		MediaPopup {}
+	}
 
-    SubmapIndicator {}
+	VolumeOsd {}
+
+	SubmapIndicator {}
 }
-// vim: set ts=4 sw=4 et sts=0 :

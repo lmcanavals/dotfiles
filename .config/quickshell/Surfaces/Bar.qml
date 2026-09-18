@@ -1,76 +1,78 @@
+import Core
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
-import Core
 import Widgets
 
 // qmllint disable uncreatable-type
 PanelWindow {
-    id: panel
+	id: panel
 
-    property var modelData: null
-    screen: modelData
+	property var modelData: null
 
-    anchors {
-        top: true
-        left: true
-        right: true
-    }
+	WlrLayershell.layer: WlrLayer.Top
+	WlrLayershell.namespace: "quickshell:topbar"
+	color: Theme.alpha(Theme.colors.bg, 0.4)
+	implicitHeight: Config.barHeight + Config.margin * 2
+	screen: modelData
 
-    implicitHeight: Config.barHeight + Config.margin * 2
-    color: Theme.alpha(Theme.colors.bg, 0.4)
+	anchors {
+		left: true
+		right: true
+		top: true
+	}
+	RowLayout {
+		anchors.fill: parent
+		anchors.margins: Config.margin
+		spacing: Config.spacing
 
-    WlrLayershell.layer: WlrLayer.Top
-    WlrLayershell.namespace: "quickshell:topbar"
+		OsIcon {
+			id: osIcon
 
-    RowLayout {
-        anchors.fill: parent
-        anchors.margins: Config.margin
-        spacing: Config.spacing
+			Layout.alignment: Qt.AlignVCenter
+			Layout.fillWidth: false
+		}
+		Workspaces {
+			id: workspaces
 
-        OsIcon {
-            id: osIcon
-            Layout.fillWidth: false
-            Layout.alignment: Qt.AlignVCenter
-        }
+			Layout.alignment: Qt.AlignVCenter
+			Layout.fillWidth: false
+			screen: panel.screen
+		}
+		ActiveWindow {
+			id: activeWindow
 
-        Workspaces {
-            id: workspaces
-            screen: panel.screen
-            Layout.fillWidth: false
-            Layout.alignment: Qt.AlignVCenter
-        }
+			Layout.alignment: Qt.AlignVCenter
+			screen: panel.screen
+		}
+		MediaPill {
+			id: mediaPill
 
-        ActiveWindow {
-            id: activeWindow
-            screen: panel.screen
-            Layout.alignment: Qt.AlignVCenter
-        }
+			Layout.alignment: Qt.AlignVCenter
+		}
+		Item {
+			Layout.fillWidth: true
+			Layout.minimumWidth: 0
+		}
+		Batteries {
+			id: batteries
 
-        Item {
-            Layout.fillWidth: true
-            Layout.minimumWidth: 0
-        }
+			Layout.alignment: Qt.AlignVCenter
+			Layout.fillWidth: false
+		}
+		BinaryClock {
+			id: binaryClock
 
-        Batteries {
-            id: batteries
-            Layout.fillWidth: false
-            Layout.alignment: Qt.AlignVCenter
-        }
+			Layout.alignment: Qt.AlignVCenter
+			Layout.fillWidth: false
+		}
+		SysTray {
+			id: sysTray
 
-        BinaryClock {
-            id: binaryClock
-            Layout.fillWidth: false
-            Layout.alignment: Qt.AlignVCenter
-        }
-
-        SysTray {
-            id: sysTray
-            bar: panel
-            Layout.fillWidth: false
-            Layout.alignment: Qt.AlignVCenter
-        }
-    }
+			Layout.alignment: Qt.AlignVCenter
+			Layout.fillWidth: false
+			bar: panel
+		}
+	}
 }
-// vim: set ts=4 sw=4 et sts=0 :

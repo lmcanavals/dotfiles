@@ -4,16 +4,15 @@ import Services
 import Primitives
 
 SurfaceCard {
-    id: root
+	id: root
 
-    implicitWidth: label.implicitWidth + Config.padding * 2
-    implicitHeight: Config.widgetHeight
+	implicitWidth: label.implicitWidth + Config.padding * 2
+	implicitHeight: Config.widgetHeight
 
-    StyledText {
-        id: label
+	StyledText {
+		id: label
 
-        anchors.centerIn: parent
-        text: BinaryClockService.timeString
-    }
+		anchors.centerIn: parent
+		text: BinaryClockService.timeString
+	}
 }
-// vim: set ts=4 sw=4 et sts=0 :
