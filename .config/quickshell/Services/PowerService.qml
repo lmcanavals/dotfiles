@@ -16,6 +16,7 @@ QtObject {
 	readonly property string primaryName: deviceName(root.displayDevice)
 	readonly property string primaryTimeEstimate: timeEstimate(root.displayDevice)
 	readonly property string primaryPercentText: percentText(root.displayDevice)
+	readonly property bool primaryShowPercent: showPercent(root.displayDevice)
 
 	// Peripheral devices collection
 	readonly property var peripheralDevices: {
@@ -61,14 +62,14 @@ QtObject {
 
 	function colorForDevice(dev: UPowerDevice): color {
 		if (!dev || !dev.isPresent)
-			return Theme.colors.fg;
+			return Theme.colors.fg_widget;
 		if (dev.state === UPowerDeviceState.Charging)
 			return Theme.colors.success;
 		if (dev.percentage < 0.20)
 			return Theme.colors.error;
 		if (dev.percentage < 0.40)
 			return Theme.colors.warning;
-		return Theme.colors.fg;
+		return Theme.colors.fg_widget;
 	}
 
 	function deviceName(dev: UPowerDevice): string {
@@ -101,5 +102,15 @@ QtObject {
 		if (!dev)
 			return "0%";
 		return `${Math.round((dev.percentage ?? 0.0) * 100)}%`;
+	}
+
+	function showPercent(dev: UPowerDevice): bool {
+		if (!dev || !dev.isPresent) {
+			return false;
+		}
+		if (dev.state === UPowerDeviceState.FullyCharged || dev.state === UPowerDeviceState.PendingCharge) {
+			return false;
+		}
+		return true;
 	}
 }

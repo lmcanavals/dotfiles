@@ -9,6 +9,12 @@ SurfaceCard {
 	implicitWidth: label.implicitWidth + Config.padding * 2
 	implicitHeight: Config.widgetHeight
 
+	MouseArea {
+		anchors.fill: parent
+		cursorShape: Qt.PointingHandCursor
+		onClicked: QuickSettingsService.toggle(root)
+	}
+
 	StyledText {
 		id: label
 
