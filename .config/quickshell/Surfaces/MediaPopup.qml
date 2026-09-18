@@ -92,11 +92,22 @@ PopupWindow {
 					font.bold: true
 					text: MediaService.title.length > 0 ? MediaService.title : "No Media"
 				}
-				StyledText {
+				RowLayout {
 					Layout.fillWidth: true
-					elide: Text.ElideRight
-					font.pixelSize: Config.fontSize - 2
-					text: MediaService.artist.length > 0 ? MediaService.artist : "Unknown Artist"
+					spacing: Config.spacing
+					StyledText {
+						Layout.fillWidth: true
+						elide: Text.ElideRight
+						font.pixelSize: Config.fontSize - 2
+						text: MediaService.artist.length > 0 ? MediaService.artist : "Unknown Artist"
+					}
+					StyledText {
+						Layout.fillWidth: true
+						elide: Text.ElideRight
+						font.pixelSize: Config.fontSize - 2
+						text: MediaService.album
+						horizontalAlignment: Text.AlignRight
+					}
 				}
 
 				// Interactive Seek Track

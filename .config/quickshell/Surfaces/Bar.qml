@@ -51,9 +51,11 @@ PanelWindow {
 
 			Layout.alignment: Qt.AlignVCenter
 		}
-		Item {
-			Layout.fillWidth: true
-			Layout.minimumWidth: 0
+		KeyboardLayout {
+			id: keyboardLayout
+
+			Layout.alignment: Qt.AlignVCenter
+			Layout.fillWidth: false
 		}
 		Batteries {
 			id: batteries

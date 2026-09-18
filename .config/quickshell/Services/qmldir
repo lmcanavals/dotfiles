@@ -8,6 +8,7 @@ singleton DotfilesService 1.0 DotfilesService.qml
 singleton EnvironmentService 1.0 EnvironmentService.qml
 singleton HardwareService 1.0 HardwareService.qml
 singleton HyprlandService 1.0 HyprlandService.qml
+singleton KeyboardService 1.0 KeyboardService.qml
 singleton MediaService 1.0 MediaService.qml
 singleton NetworkService 1.0 NetworkService.qml
 singleton PowerService 1.0 PowerService.qml
