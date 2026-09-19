@@ -17,14 +17,14 @@ QtObject {
 	readonly property string artUrl: activePlayer?.trackArtUrl ?? ""
 	readonly property string artist: activePlayer?.trackArtist ?? ""
 	readonly property bool hasPlayer: activePlayer !== null
-	readonly property bool isPlaying: activePlayer !== null && activePlayer.playbackState === MprisPlaybackState.Playing
-	readonly property real length: activePlayer ? (activePlayer.length ?? 0) : 0
+	readonly property bool isPlaying: activePlayer?.playbackState === MprisPlaybackState.Playing
+	readonly property real length: activePlayer?.length ?? 0
+	readonly property real position: activePlayer?.position ?? 0
+	readonly property string title: activePlayer?.trackTitle ?? ""
 	property bool open: false
-	readonly property real position: {
-		root.positionTick;
-		return activePlayer ? (activePlayer.position ?? 0) : 0;
-	}
 	property int positionTick: 0
+	property Item targetItem: null
+
 	property Timer positionTimer: Timer {
 		interval: 1000
 		repeat: true
@@ -37,8 +37,6 @@ QtObject {
 			return 0.0;
 		return Math.max(0.0, Math.min(1.0, root.position / root.length));
 	}
-	property Item targetItem: null
-	readonly property string title: activePlayer?.trackTitle ?? ""
 
 	function adjustVolume(delta: real): void {
 		if (!activePlayer)
@@ -57,7 +55,7 @@ QtObject {
 	}
 
 	function playPause(): void {
-		if (!activePlayer)
+		if (!activePlayer || !activePlayer.canPlay)
 			return;
 		if (root.isPlaying) {
 			activePlayer.pause();

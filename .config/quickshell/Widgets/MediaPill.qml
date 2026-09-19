@@ -35,6 +35,7 @@ SurfaceCard {
 			MediaService.adjustVolume(step);
 		}
 	}
+
 	RowLayout {
 		id: layout
 
@@ -47,6 +48,7 @@ SurfaceCard {
 			color: MediaService.isPlaying ? Theme.colors.accent : Theme.colors.fg_widget
 			text: MediaService.isPlaying ? "󰏤" : "󰐊"
 		}
+
 		StyledText {
 			readonly property string trackLabel: {
 				if (MediaService.artist.length > 0 && MediaService.title.length > 0)

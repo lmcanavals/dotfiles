@@ -19,8 +19,6 @@ PopupWindow {
 		return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
 	}
 
-	// qmllint enable missing-type
-
 	color: "transparent"
 	grabFocus: true
 	implicitHeight: contentLayout.implicitHeight + Config.padding * 4
@@ -39,6 +37,7 @@ PopupWindow {
 		gravity: Edges.Bottom
 		item: MediaService.targetItem
 	}
+
 	SurfaceCard {
 		id: mainCard
 
@@ -57,29 +56,47 @@ PopupWindow {
 			spacing: Config.spacing * 2
 
 			Rectangle {
+				id: artContainer
 				clip: true
-				color: Theme.colors.bg_highlight
-				implicitHeight: artImage.status === Image.Ready ? artImage.sourceSize.height : 64
-				implicitWidth: artImage.status === Image.Ready ? artImage.sourceSize.width : 64
 				radius: Config.radius
+				color: Theme.colors.bg_highlight
+
+				property real realAspectRatio: artImage.status === Image.Ready ? artImage.sourceSize.width / artImage.sourceSize.height : 1
+
+				property real minAspect: 1.0
+				property real maxAspect: 2.39
+				property real clampedAspect: Math.max(minAspect, Math.min(maxAspect, realAspectRatio))
+
+				property real finalHeight: Math.max(64, Math.min(100, artImage.sourceSize.height))
+				property real finalWidth: finalHeight * clampedAspect
+
+				property int finalFillMode: {
+					if (realAspectRatio > maxAspect || realAspectRatio < minAspect)
+						return Image.PreserveAspectCrop;
+					return Image.PreserveAspectFit;
+				}
+
+				implicitWidth: artImage.status === Image.Ready ? finalWidth : 64
+				implicitHeight: artImage.status === Image.Ready ? finalHeight : 64
 
 				Image {
 					id: artImage
-
 					anchors.fill: parent
 					asynchronous: false
-					fillMode: Image.Pad
+					fillMode: artContainer.finalFillMode
 					source: MediaService.artUrl
 					visible: status === Image.Ready
 				}
+
 				StyledText {
 					anchors.centerIn: parent
 					color: Theme.colors.comment
-					font.pixelSize: Config.fontSize * 2
+					font.pixelSize: Config.fontSize * 3
 					text: "󰎈"
 					visible: artImage.status !== Image.Ready
 				}
 			}
+
 			ColumnLayout {
 				Layout.alignment: Qt.AlignVCenter
 				Layout.fillWidth: true
@@ -90,17 +107,20 @@ PopupWindow {
 					color: Theme.colors.fg
 					elide: Text.ElideRight
 					font.bold: true
-					text: MediaService.title.length > 0 ? MediaService.title : "No Media"
+					text: MediaService.title
 				}
+
 				RowLayout {
 					Layout.fillWidth: true
 					spacing: Config.spacing
+
 					StyledText {
 						Layout.fillWidth: true
 						elide: Text.ElideRight
 						font.pixelSize: Config.fontSize - 2
-						text: MediaService.artist.length > 0 ? MediaService.artist : "Unknown Artist"
+						text: MediaService.artist
 					}
+
 					StyledText {
 						Layout.fillWidth: true
 						elide: Text.ElideRight
@@ -131,6 +151,7 @@ PopupWindow {
 							radius: 3
 							width: parent.width * MediaService.progress
 						}
+
 						MouseArea {
 							function handleSeek(mouseX: real): void {
 								const ratio = Math.max(0.0, Math.min(1.0, mouseX / seekTrack.width));
@@ -147,6 +168,7 @@ PopupWindow {
 							}
 						}
 					}
+
 					RowLayout {
 						Layout.fillWidth: true
 
@@ -155,9 +177,11 @@ PopupWindow {
 							font.pixelSize: Config.fontSize - 4
 							text: root.formatTime(MediaService.position)
 						}
+
 						Item {
 							Layout.fillWidth: true
 						}
+
 						StyledText {
 							color: Theme.colors.comment
 							font.pixelSize: Config.fontSize - 4
@@ -176,11 +200,13 @@ PopupWindow {
 
 						onClicked: MediaService.previous()
 					}
+
 					StyledButton {
 						text: MediaService.isPlaying ? "󰏤" : "󰐊"
 
 						onClicked: MediaService.playPause()
 					}
+
 					StyledButton {
 						text: "󰒭"
 
