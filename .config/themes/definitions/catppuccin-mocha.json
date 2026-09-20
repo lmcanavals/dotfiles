@@ -82,6 +82,7 @@
         "te_aqua": "blue1",
         "tf_fg": "blue6",
         "tg_redish": "orange",
-        "th_crimson": "red1"
+        "th_crimson": "red1",
+        "muted": "comment"
     }
 }

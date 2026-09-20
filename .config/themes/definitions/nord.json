@@ -65,6 +65,7 @@
         "te_aqua": "nord7",
         "tf_fg": "nord6",
         "tg_redish": "nord12",
-        "th_crimson": "nord11"
+        "th_crimson": "nord11",
+        "muted": "nord2"
     }
 }
