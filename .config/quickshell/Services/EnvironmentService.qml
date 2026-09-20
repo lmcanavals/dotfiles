@@ -17,32 +17,11 @@ QtObject {
 		root.idleInhibited = !root.idleInhibited;
 	}
 
-	// --- Do Not Disturb (Dunstctl IPC) ---
+	// --- Do Not Disturb (Native Quickshell) ---
 	property bool dndActive: false
-
-	property Process dndChecker: Process {
-		command: ["dunstctl", "is-paused"]
-		running: true
-		stdout: StdioCollector {
-			onStreamFinished: {
-				root.dndActive = (this.text.trim() === "true");
-			}
-		}
-	}
-
-	property Process dndSetter: Process {
-		running: false
-		// qmllint disable signal-handler-parameters
-		onExited: exitCode => {
-			root.dndChecker.running = true;
-		}
-		// qmllint enable signal-handler-parameters
-	}
 
 	function toggleDnd(): void {
 		root.dndActive = !root.dndActive;
-		dndSetter.command = ["dunstctl", "set-paused", "toggle"];
-		dndSetter.running = true;
 	}
 
 	// --- Night Light Hyprsunset IPC ---

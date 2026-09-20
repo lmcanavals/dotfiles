@@ -14,6 +14,7 @@ DotfilesCard 1.0 QuickSettings/DotfilesCard.qml
 HeaderSection 1.0 QuickSettings/HeaderSection.qml
 MetricsSection 1.0 QuickSettings/MetricsSection.qml
 NetworkSection 1.0 QuickSettings/NetworkSection.qml
+NotificationHistorySection 1.0 QuickSettings/NotificationHistorySection.qml
 SessionSection 1.0 QuickSettings/SessionSection.qml
 SlidersSection 1.0 QuickSettings/SlidersSection.qml
 TogglesSection 1.0 QuickSettings/TogglesSection.qml

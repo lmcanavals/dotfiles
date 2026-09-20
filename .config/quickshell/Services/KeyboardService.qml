@@ -95,4 +95,3 @@ QtObject {
 		queryProcess.running = true;
 	}
 }
-// vim: set ts=4 sw=4 et sts=0 :

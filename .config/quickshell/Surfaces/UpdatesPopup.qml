@@ -10,7 +10,7 @@ import Services
 PopupWindow {
 	id: root
 
-	implicitWidth: 380
+	implicitWidth: 440
 	implicitHeight: 440
 
 	visible: UpdatesService.open && UpdatesService.targetItem !== null
@@ -124,70 +124,60 @@ PopupWindow {
 						required property int index
 
 						width: listView.width
-						implicitHeight: 28
-
-						Rectangle {
-							anchors.fill: parent
-							color: delegateRoot.index % 2 === 0 ? Theme.alpha(Theme.colors.bg_highlight, 0.2) : "transparent"
-							radius: Config.radius
-
-							RowLayout {
-								id: rowLayout
-								anchors.fill: parent
-								anchors.leftMargin: Config.padding
-								anchors.rightMargin: Config.padding
-								spacing: Config.spacing
-
-								readonly property var parts: {
-									const m = delegateRoot.modelData.match(/^(\S+)\s+(.+?)\s+->\s+(\S+)$/);
-									if (m) {
-										return {
-											name: m[1],
-											oldVer: m[2],
-											newVer: m[3]
-										};
-									}
-									return {
-										name: delegateRoot.modelData,
-										oldVer: "",
-										newVer: ""
-									};
-								}
-
-								StyledText {
-									text: rowLayout.parts.name
-									font.pixelSize: Config.fontSize - 4
-									color: Theme.colors.fg
-									elide: Text.ElideRight
-									Layout.fillWidth: true
-								}
-
-								StyledText {
-									visible: rowLayout.parts.oldVer.length > 0
-									text: rowLayout.parts.oldVer
-									font.pixelSize: Config.fontSize - 4
-									color: Theme.colors.fg
-									horizontalAlignment: Text.AlignRight
-								}
-
-								StyledText {
-									visible: rowLayout.parts.newVer.length > 0
-									text: ""
-									font.pixelSize: Config.fontSize - 4
-									color: Theme.colors.fg
-									horizontalAlignment: Text.AlignHCenter
-								}
-
-								StyledText {
-									visible: rowLayout.parts.newVer.length > 0
-									text: rowLayout.parts.newVer
-									font.bold: true
-									font.pixelSize: Config.fontSize - 2
-									color: Theme.colors.accent
-									horizontalAlignment: Text.AlignRight
-									Layout.preferredWidth: 80
-								}
+						implicitHeight: oldVer.implicitHeight + Config.spacing / 2
+						readonly property var parts: {
+							const m = delegateRoot.modelData.match(/^(\S+)\s+(.+?)\s+->\s+(\S+)$/);
+							if (m) {
+								return {
+									name: m[1],
+									oldVer: m[2],
+									newVer: m[3]
+								};
 							}
+							return {
+								name: delegateRoot.modelData,
+								oldVer: "",
+								newVer: ""
+							};
+						}
+
+						StyledText {
+							text: delegateRoot.parts.name
+							font.pixelSize: Config.fontSize - 4
+							elide: Text.ElideRight
+							Layout.fillWidth: true
+							anchors.left: delegateRoot.left
+						}
+
+						StyledText {
+							visible: delegateRoot.parts.oldVer.length > 0
+							text: delegateRoot.parts.oldVer
+							font.pixelSize: Config.fontSize - 4
+							horizontalAlignment: Text.AlignRight
+							anchors.right: arrow.left
+						}
+
+						StyledText {
+							id: arrow
+							visible: delegateRoot.parts.newVer.length > 0
+							text: ""
+							font.pixelSize: Config.fontSize - 4
+							color: Theme.colors.fg
+							horizontalAlignment: Text.AlignHCenter
+							anchors.right: oldVer.left
+							width: 20
+						}
+
+						StyledText {
+							id: oldVer
+							visible: delegateRoot.parts.newVer.length > 0
+							text: delegateRoot.parts.newVer
+							font.bold: true
+							font.pixelSize: Config.fontSize - 2
+							color: Theme.colors.success
+							horizontalAlignment: Text.AlignRight
+							width: Math.max(80, implicitWidth)
+							anchors.right: delegateRoot.right
 						}
 					}
 				}

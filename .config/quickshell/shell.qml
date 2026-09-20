@@ -30,4 +30,6 @@ ShellRoot {
 	VolumeOsd {}
 
 	SubmapIndicator {}
+
+	NotificationOsd {}
 }

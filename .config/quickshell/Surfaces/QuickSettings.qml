@@ -64,6 +64,8 @@ PopupWindow {
 				Layout.fillHeight: true
 			}
 
+			NotificationHistorySection {}
+
 			SessionSection {}
 		}
 	}

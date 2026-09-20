@@ -9,7 +9,7 @@ QtObject {
 	readonly property int radius: 5
 	readonly property int padding: 8
 	readonly property int margin: 2
-	readonly property int spacing: 5
+	readonly property int spacing: 6
 	readonly property string osIcon: "󰣇"
 	readonly property string dateFormat: "dddd, d MMMM yyyy"
 	readonly property string timeFormat: "HH:mm"
