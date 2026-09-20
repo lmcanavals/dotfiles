@@ -27,20 +27,12 @@ RowLayout {
 		color: Theme.colors.fg
 	}
 
-	Rectangle {
+	ProgressBar {
 		implicitWidth: 70
 		implicitHeight: 6
-		radius: 3
-		color: Theme.colors.bg_highlight
-
-		Rectangle {
-			anchors.left: parent.left
-			anchors.top: parent.top
-			anchors.bottom: parent.bottom
-			width: parent.width * Math.max(0.0, Math.min(1.0, root.device?.percentage ?? 0.0))
-			radius: 3
-			color: PowerService.colorForDevice(root.device)
-		}
+		fillRadius: 3
+		fillColor: PowerService.colorForDevice(root.device)
+		value: root.device?.percentage ?? 0.0
 	}
 
 	StyledText {

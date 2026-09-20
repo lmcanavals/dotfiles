@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Layouts
 import Core
@@ -23,28 +25,12 @@ RowLayout {
 		}
 	}
 
-	Rectangle {
-		id: track
+	ProgressBar {
 		Layout.fillWidth: true
 		implicitHeight: 8
-		radius: 4
-		color: Theme.colors.bg_highlight
-
-		Rectangle {
-			anchors.left: parent.left
-			anchors.top: parent.top
-			anchors.bottom: parent.bottom
-			width: parent.width * Math.max(0.0, Math.min(1.0, root.value))
-			radius: 4
-			color: root.barColor
-
-			Behavior on width {
-				NumberAnimation {
-					duration: 250
-					easing.type: Easing.OutCubic
-				}
-			}
-		}
+		fillRadius: 4
+		fillColor: root.barColor
+		value: root.value
 	}
 
 	StyledText {
