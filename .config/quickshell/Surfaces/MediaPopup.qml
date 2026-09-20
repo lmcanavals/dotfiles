@@ -135,38 +135,12 @@ PopupWindow {
 					Layout.fillWidth: true
 					spacing: 4
 
-					Rectangle {
-						id: seekTrack
-
+					TrackSlider {
 						Layout.fillWidth: true
-						color: Theme.colors.bg_highlight
 						implicitHeight: 6
-						radius: 3
-
-						Rectangle {
-							anchors.bottom: parent.bottom
-							anchors.left: parent.left
-							anchors.top: parent.top
-							color: Theme.colors.accent
-							radius: 3
-							width: parent.width * MediaService.progress
-						}
-
-						MouseArea {
-							function handleSeek(mouseX: real): void {
-								const ratio = Math.max(0.0, Math.min(1.0, mouseX / seekTrack.width));
-								MediaService.seek(ratio);
-							}
-
-							anchors.fill: parent
-							cursorShape: Qt.PointingHandCursor
-
-							onClicked: mouse => handleSeek(mouse.x)
-							onPositionChanged: mouse => {
-								if (pressed)
-									handleSeek(mouse.x);
-							}
-						}
+						value: MediaService.progress
+						accentColor: Theme.colors.accent
+						onValueModified: ratio => MediaService.seek(ratio)
 					}
 
 					RowLayout {

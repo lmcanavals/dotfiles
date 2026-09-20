@@ -1,6 +1,9 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Layouts
 import Core
+import Primitives
 
 RowLayout {
 	id: root
@@ -36,49 +39,12 @@ RowLayout {
 		}
 	}
 
-	Rectangle {
-		id: track
+	TrackSlider {
 		Layout.fillWidth: true
-		implicitHeight: 8
-		radius: 4
-		color: Theme.colors.bg_highlight
-
-		Rectangle {
-			anchors.left: parent.left
-			anchors.top: parent.top
-			anchors.bottom: parent.bottom
-			width: parent.width * Math.max(0.0, Math.min(1.0, root.value))
-			radius: 4
-			color: root.muted ? Theme.colors.comment : root.accentColor
-
-			Behavior on width {
-				NumberAnimation {
-					duration: 250
-					easing.type: Easing.OutCubic
-				}
-			}
-		}
-
-		MouseArea {
-			anchors.fill: parent
-			cursorShape: Qt.PointingHandCursor
-
-			function applyPosition(mouseX: real): void {
-				const ratio = Math.max(0.0, Math.min(1.0, mouseX / track.width));
-				root.valueModified(ratio);
-			}
-
-			onClicked: mouse => applyPosition(mouse.x)
-			onPositionChanged: mouse => {
-				if (pressed)
-					applyPosition(mouse.x);
-			}
-			onWheel: wheel => {
-				wheel.accepted = true;
-				const step = wheel.angleDelta.y > 0 ? 0.05 : -0.05;
-				root.valueModified(Math.max(0.0, Math.min(1.0, root.value + step)));
-			}
-		}
+		value: root.value
+		accentColor: root.accentColor
+		muted: root.muted
+		onValueModified: val => root.valueModified(val)
 	}
 
 	StyledText {

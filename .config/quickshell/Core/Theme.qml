@@ -29,6 +29,7 @@ QtObject {
 		property color fg_widget: "#fabd2f"
 		property color fg_widget_r: "#32302f"
 		property color comment: "#7c6f64"
+		property color muted: "#7c6f64"
 		property color accent: "#83a598"
 		property color accent_dim: "#458588"
 		property color accent_alt: "#fe8019"
