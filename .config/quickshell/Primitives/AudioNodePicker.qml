@@ -17,7 +17,7 @@ PopupWindow {
 
 	visible: false
 
-	implicitWidth: 260
+	implicitWidth: 280
 	implicitHeight: contentLayout.implicitHeight + Config.padding * 4
 
 	// qmllint disable missing-type
@@ -33,7 +33,7 @@ PopupWindow {
 	SurfaceCard {
 		id: mainCard
 		anchors.fill: parent
-		color: Theme.colors.bg_dark
+		color: Theme.alpha(Theme.colors.bg_dark, 0.4)
 		border.color: Theme.colors.border
 		border.width: 1
 		radius: Config.radius * 2
@@ -47,8 +47,8 @@ PopupWindow {
 			StyledText {
 				text: root.isSourcePicker ? "Audio Inputs" : "Audio Outputs"
 				font.bold: true
-				font.pixelSize: 11
-				color: Theme.colors.comment
+				font.pixelSize: Config.fontSizeLarge
+				color: Theme.colors.accent
 			}
 
 			Rectangle {
@@ -61,7 +61,7 @@ PopupWindow {
 				visible: !root.modelList || root.modelList.length === 0
 				text: "No devices found"
 				color: Theme.colors.comment
-				font.pixelSize: 10
+				font.pixelSize: Config.fontSizeSmall
 			}
 
 			Repeater {
@@ -108,6 +108,7 @@ PopupWindow {
 							text: itemRect.isSelected ? "󰄬" : ""
 							color: Theme.colors.accent
 							font.bold: true
+							font.pixelSize: Config.fontSizeSmall
 							Layout.preferredWidth: 16
 						}
 
@@ -115,7 +116,7 @@ PopupWindow {
 							text: AudioService.nodeLabel(itemRect.modelData)
 							color: itemRect.isSelected ? Theme.colors.fg : Theme.colors.fg_dark
 							font.bold: itemRect.isSelected
-							font.pixelSize: Config.fontSize - 2
+							font.pixelSize: Config.fontSizeSmall
 							elide: Text.ElideRight
 							Layout.fillWidth: true
 						}

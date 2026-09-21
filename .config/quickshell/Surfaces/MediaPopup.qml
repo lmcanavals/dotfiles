@@ -55,46 +55,13 @@ PopupWindow {
 			anchors.margins: Config.padding * 2
 			spacing: Config.spacing * 2
 
-			Rectangle {
+			ThumbnailImage {
 				id: artContainer
-				clip: true
-				radius: Config.radius
-				color: Theme.colors.bg_highlight
-
-				property real realAspectRatio: artImage.status === Image.Ready ? artImage.sourceSize.width / artImage.sourceSize.height : 1
-
-				property real minAspect: 1.0
-				property real maxAspect: 2.39
-				property real clampedAspect: Math.max(minAspect, Math.min(maxAspect, realAspectRatio))
-
-				property real finalHeight: Math.max(64, Math.min(100, artImage.sourceSize.height))
-				property real finalWidth: finalHeight * clampedAspect
-
-				property int finalFillMode: {
-					if (realAspectRatio > maxAspect || realAspectRatio < minAspect)
-						return Image.PreserveAspectCrop;
-					return Image.PreserveAspectFit;
-				}
-
-				implicitWidth: artImage.status === Image.Ready ? finalWidth : 64
-				implicitHeight: artImage.status === Image.Ready ? finalHeight : 64
-
-				Image {
-					id: artImage
-					anchors.fill: parent
-					asynchronous: false
-					fillMode: artContainer.finalFillMode
-					source: MediaService.artUrl
-					visible: status === Image.Ready
-				}
-
-				StyledText {
-					anchors.centerIn: parent
-					color: Theme.colors.comment
-					font.pixelSize: Config.fontSize * 3
-					text: "󰎈"
-					visible: artImage.status !== Image.Ready
-				}
+				source: MediaService.artUrl
+				fallbackIcon: "󰎈"
+				minHeight: 64
+				maxHeight: 100
+				showFallback: true
 			}
 
 			ColumnLayout {
@@ -107,6 +74,7 @@ PopupWindow {
 					color: Theme.colors.fg
 					elide: Text.ElideRight
 					font.bold: true
+					font.pixelSize: Config.fontSizeLarge
 					text: MediaService.title
 				}
 
@@ -117,14 +85,14 @@ PopupWindow {
 					StyledText {
 						Layout.fillWidth: true
 						elide: Text.ElideRight
-						font.pixelSize: Config.fontSize - 2
+						font.pixelSize: Config.fontSizeSmall
 						text: MediaService.artist
 					}
 
 					StyledText {
 						Layout.fillWidth: true
 						elide: Text.ElideRight
-						font.pixelSize: Config.fontSize - 2
+						font.pixelSize: Config.fontSizeSmall
 						text: MediaService.album
 						horizontalAlignment: Text.AlignRight
 					}
@@ -148,7 +116,7 @@ PopupWindow {
 
 						StyledText {
 							color: Theme.colors.comment
-							font.pixelSize: Config.fontSize - 4
+							font.pixelSize: Config.fontSizeTiny
 							text: root.formatTime(MediaService.position)
 						}
 
@@ -158,7 +126,7 @@ PopupWindow {
 
 						StyledText {
 							color: Theme.colors.comment
-							font.pixelSize: Config.fontSize - 4
+							font.pixelSize: Config.fontSizeTiny
 							text: root.formatTime(MediaService.length)
 						}
 					}

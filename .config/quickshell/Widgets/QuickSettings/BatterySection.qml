@@ -30,15 +30,15 @@ SurfaceCard {
 
 				StyledText {
 					text: PowerService.primaryGlyph
-					font.pixelSize: 14
+					font.pixelSize: Config.fontSizeBase
 					color: PowerService.primaryColor
 				}
 
 				StyledText {
 					text: PowerService.deviceLabelWithState(PowerService.displayDevice)
 					font.bold: true
-					font.pixelSize: 11
-					color: Theme.colors.fg
+					font.pixelSize: Config.fontSizeLarge
+					color: PowerService.primaryColor
 					Layout.fillWidth: true
 					elide: Text.ElideRight
 				}
@@ -46,15 +46,15 @@ SurfaceCard {
 				StyledText {
 					visible: PowerService.primaryTimeEstimate.length > 0
 					text: PowerService.primaryTimeEstimate
-					font.pixelSize: 10
+					font.pixelSize: Config.fontSizeTiny
 					color: Theme.colors.comment
 				}
 
 				StyledText {
 					text: PowerService.primaryPercentText
 					font.bold: true
-					font.pixelSize: 11
-					color: Theme.colors.fg
+					font.pixelSize: Config.fontSizeSmall
+					color: PowerService.primaryColor
 				}
 			}
 		}
@@ -67,14 +67,14 @@ SurfaceCard {
 
 			StyledText {
 				text: "󰚥"
-				font.pixelSize: 14
+				font.pixelSize: Config.fontSizeBase
 				color: Theme.colors.fg_dark
 			}
 
 			StyledText {
 				text: "AC Powered"
 				font.bold: true
-				font.pixelSize: 11
+				font.pixelSize: Config.fontSizeLarge
 				color: Theme.colors.fg_dark
 				Layout.fillWidth: true
 			}

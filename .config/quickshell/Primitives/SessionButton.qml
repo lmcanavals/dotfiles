@@ -30,6 +30,6 @@ Rectangle {
 		anchors.centerIn: parent
 		text: root.glyph
 		color: mouseArea.containsMouse ? root.hoverColor : root.glyphColor
-		font.pixelSize: Config.fontSize + 4
+		font.pixelSize: Config.fontSizeXL
 	}
 }

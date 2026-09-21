@@ -6,7 +6,7 @@ Text {
 
 	color: Theme.colors.fg_widget
 	font.family: Config.fontFamily
-	font.pixelSize: Config.fontSize
+	font.pixelSize: Config.fontSizeBase
 	verticalAlignment: Text.AlignVCenter
 	renderType: Text.NativeRendering
 }

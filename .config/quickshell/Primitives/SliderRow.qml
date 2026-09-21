@@ -50,6 +50,7 @@ RowLayout {
 	StyledText {
 		horizontalAlignment: Text.AlignRight
 		text: `${Math.round(root.value * 100)}%`
+		font.pixelSize: Config.fontSizeSmall
 		color: root.muted ? Theme.colors.comment : root.accentColor
 	}
 }

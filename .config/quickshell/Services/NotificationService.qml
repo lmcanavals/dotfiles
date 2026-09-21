@@ -18,12 +18,7 @@ QtObject {
 		keepOnReload: true
 
 		onNotification: notif => {
-			const rawTag = (notif.hints && (
-				notif.hints["x-dunst-stack-tag"] ||
-				notif.hints["tag"] ||
-				notif.hints["synchronous"] ||
-				notif.hints["x-canonical-private-synchronous"]
-			)) || "";
+			const rawTag = (notif.hints && (notif.hints["x-dunst-stack-tag"] || notif.hints["tag"] || notif.hints["synchronous"] || notif.hints["x-canonical-private-synchronous"])) || "";
 			const tag = String(rawTag).trim();
 
 			const rawVal = notif.hints ? notif.hints["value"] : undefined;
@@ -32,7 +27,16 @@ QtObject {
 			const appName = String(notif.appName || "System");
 			const summary = String(notif.summary || "");
 			const body = String(notif.body || "");
-			const appIcon = String(notif.appIcon || "");
+
+			let iconSrc = "";
+			if (notif.image && String(notif.image).trim().length > 0) {
+				iconSrc = String(notif.image).trim();
+			} else if (notif.appIcon && String(notif.appIcon).trim().length > 0) {
+				iconSrc = String(notif.appIcon).trim();
+			} else if (notif.hints && (notif.hints["image-path"] || notif.hints["image_path"])) {
+				iconSrc = String(notif.hints["image-path"] || notif.hints["image_path"]).trim();
+			}
+
 			const time = new Date().toLocaleTimeString([], {
 				hour: "2-digit",
 				minute: "2-digit"
@@ -45,12 +49,7 @@ QtObject {
 				activeIdx = root.activeList.findIndex(item => item && item.tag === tag);
 			}
 			if (activeIdx === -1) {
-				activeIdx = root.activeList.findIndex(item =>
-					item &&
-					item.appName === appName &&
-					item.baseSummary === summary &&
-					item.body === body
-				);
+				activeIdx = root.activeList.findIndex(item => item && item.appName === appName && item.baseSummary === summary && item.body === body);
 			}
 
 			let itemToStore = null;
@@ -72,7 +71,7 @@ QtObject {
 					summary: displaySummary,
 					baseSummary: summary,
 					body: body,
-					appIcon: appIcon.length > 0 ? appIcon : (existing.appIcon || ""),
+					appIcon: iconSrc.length > 0 ? iconSrc : (existing.appIcon || ""),
 					tag: tag,
 					count: count,
 					value: value,
@@ -91,7 +90,7 @@ QtObject {
 					summary: summary,
 					baseSummary: summary,
 					body: body,
-					appIcon: appIcon,
+					appIcon: iconSrc,
 					tag: tag,
 					count: 1,
 					value: value,
@@ -106,7 +105,8 @@ QtObject {
 
 			// 2. Update historyList (deduplicate and move latest to top)
 			const filteredHistory = root.historyList.filter(item => {
-				if (!item) return false;
+				if (!item)
+					return false;
 				if (tag.length > 0) {
 					return item.tag !== tag;
 				}

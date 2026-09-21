@@ -72,10 +72,26 @@ QtObject {
 		return Theme.colors.fg_widget;
 	}
 
+	function _decodeHexAscii(str) {
+		// Match sequences like: 0x4C 0x31 0x39 ...
+		const regex = /(0x[0-9A-Fa-f]{2})/g;
+		const matches = str.match(regex);
+		if (!matches)
+			return str;
+
+		let out = "";
+		for (const m of matches) {
+			const byte = parseInt(m.slice(2), 16);
+			if (byte === 0)
+				out += " ";
+			out += String.fromCharCode(byte);
+		}
+		return out.trim();
+	}
 	function deviceName(dev: UPowerDevice): string {
-		if (!dev)
+		if (!dev || !dev.model || dev.model.length === 0)
 			return "Battery";
-		return (dev.model && dev.model.length > 0) ? dev.model : "Battery";
+		return _decodeHexAscii(dev.model);
 	}
 
 	function deviceLabelWithState(dev: UPowerDevice): string {

@@ -54,6 +54,8 @@ PopupWindow {
 				StyledText {
 					text: "System Updates"
 					font.bold: true
+					font.pixelSize: Config.fontSizeLarge
+					color: Theme.colors.accent
 				}
 
 				Rectangle {
@@ -69,6 +71,7 @@ PopupWindow {
 						id: countText
 						anchors.centerIn: parent
 						text: `${UpdatesService.count}`
+						font.pixelSize: Config.fontSizeSmall
 						color: Theme.colors.warning
 					}
 				}
@@ -107,6 +110,7 @@ PopupWindow {
 					text: "System is up to date"
 					color: Theme.colors.success
 					font.bold: true
+					font.pixelSize: Config.fontSizeBase
 				}
 
 				ListView {
@@ -143,7 +147,7 @@ PopupWindow {
 
 						StyledText {
 							text: delegateRoot.parts.name
-							font.pixelSize: Config.fontSize - 4
+							font.pixelSize: Config.fontSizeSmall
 							elide: Text.ElideRight
 							Layout.fillWidth: true
 							anchors.left: delegateRoot.left
@@ -152,7 +156,8 @@ PopupWindow {
 						StyledText {
 							visible: delegateRoot.parts.oldVer.length > 0
 							text: delegateRoot.parts.oldVer
-							font.pixelSize: Config.fontSize - 4
+							font.pixelSize: Config.fontSizeTiny
+							color: Theme.colors.comment
 							horizontalAlignment: Text.AlignRight
 							anchors.right: arrow.left
 						}
@@ -161,8 +166,8 @@ PopupWindow {
 							id: arrow
 							visible: delegateRoot.parts.newVer.length > 0
 							text: ""
-							font.pixelSize: Config.fontSize - 4
-							color: Theme.colors.fg
+							font.pixelSize: Config.fontSizeTiny
+							color: Theme.colors.comment
 							horizontalAlignment: Text.AlignHCenter
 							anchors.right: oldVer.left
 							width: 20
@@ -173,7 +178,7 @@ PopupWindow {
 							visible: delegateRoot.parts.newVer.length > 0
 							text: delegateRoot.parts.newVer
 							font.bold: true
-							font.pixelSize: Config.fontSize - 2
+							font.pixelSize: Config.fontSizeSmall
 							color: Theme.colors.success
 							horizontalAlignment: Text.AlignRight
 							width: Math.max(80, implicitWidth)
@@ -181,18 +186,18 @@ PopupWindow {
 						}
 					}
 				}
-
-				// Subtle scrollbar indicator
-				Rectangle {
-					anchors.right: parent.right
-					y: listView.visibleArea.yPosition * listView.height
-					height: Math.max(16, listView.visibleArea.heightRatio * listView.height)
-					width: 3
-					radius: 1.5
-					color: Theme.colors.border
-					visible: listView.visibleArea.heightRatio < 1.0 && UpdatesService.updates.length > 0
-				}
 			}
+		}
+
+		// Subtle scrollbar indicator
+		Rectangle {
+			anchors.left: contentLayout.right
+			y: listView.visibleArea.yPosition * listView.height + 80
+			height: Math.max(16, listView.visibleArea.heightRatio * listView.height)
+			width: 3
+			radius: 1.5
+			color: Theme.colors.border
+			visible: listView.visibleArea.heightRatio < 1.0 && UpdatesService.updates.length > 0
 		}
 	}
 }

@@ -20,5 +20,12 @@ QtObject {
 	readonly property string dateFormat: "dddd, d MMMM yyyy"
 	readonly property string timeFormat: "HH:mm"
 	readonly property string fontFamily: "sans-serif, Font Awesome 7 Free, Symbols Nerd Font"
-	readonly property int fontSize: 16
+
+	// Central Typography Scale
+	readonly property int fontSize: 14
+	readonly property int fontSizeTiny: fontSize - 4
+	readonly property int fontSizeSmall: fontSize - 2
+	readonly property int fontSizeBase: fontSize
+	readonly property int fontSizeLarge: fontSize + 2
+	readonly property int fontSizeXL: fontSize + 6
 }

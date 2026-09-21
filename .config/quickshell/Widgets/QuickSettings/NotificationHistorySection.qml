@@ -26,8 +26,8 @@ SurfaceCard {
 			StyledText {
 				text: "Notifications"
 				font.bold: true
-				font.pixelSize: 11
-				color: Theme.colors.fg
+				font.pixelSize: Config.fontSizeLarge
+				color: Theme.colors.accent
 			}
 
 			Rectangle {
@@ -44,7 +44,7 @@ SurfaceCard {
 					anchors.centerIn: parent
 					text: `${NotificationService.unreadCount}`
 					font.bold: true
-					font.pixelSize: 9
+					font.pixelSize: Config.fontSizeTiny
 					color: Theme.colors.accent
 				}
 			}
@@ -77,7 +77,7 @@ SurfaceCard {
 				anchors.centerIn: parent
 				text: "No notifications"
 				color: Theme.colors.comment
-				font.pixelSize: 11
+				font.pixelSize: Config.fontSizeSmall
 			}
 		}
 
@@ -115,6 +115,15 @@ SurfaceCard {
 					anchors.rightMargin: Config.padding
 					spacing: Config.spacing
 
+					ThumbnailImage {
+						source: itemCard.modelData ? (itemCard.modelData.appIcon || "") : ""
+						minHeight: 32
+						maxHeight: 32
+						radius: Config.radiusSmall
+						showFallback: false
+						Layout.alignment: Qt.AlignVCenter
+					}
+
 					ColumnLayout {
 						Layout.fillWidth: true
 						spacing: 2
@@ -126,21 +135,21 @@ SurfaceCard {
 							StyledText {
 								text: itemCard.modelData.appName || "Notification"
 								font.bold: true
-								font.pixelSize: 10
+								font.pixelSize: Config.fontSizeSmall
 								color: Theme.colors.accent
 								elide: Text.ElideRight
 							}
 
 							StyledText {
 								text: itemCard.modelData.time || ""
-								font.pixelSize: 9
+								font.pixelSize: Config.fontSizeTiny
 								color: Theme.colors.comment
 							}
 						}
 
 						StyledText {
 							text: itemCard.modelData.summary || ""
-							font.pixelSize: 11
+							font.pixelSize: Config.fontSizeSmall
 							color: Theme.colors.fg
 							elide: Text.ElideRight
 							Layout.fillWidth: true
@@ -160,7 +169,7 @@ SurfaceCard {
 
 					StyledText {
 						text: "󰅖"
-						font.pixelSize: 11
+						font.pixelSize: Config.fontSizeSmall
 						color: Theme.colors.fg_dark
 
 						MouseArea {

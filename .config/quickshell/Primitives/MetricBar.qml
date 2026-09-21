@@ -36,6 +36,6 @@ RowLayout {
 	StyledText {
 		horizontalAlignment: Text.AlignRight
 		text: root.valueText
-		font.pixelSize: Config.fontSize - 2
+		font.pixelSize: Config.fontSizeSmall
 	}
 }

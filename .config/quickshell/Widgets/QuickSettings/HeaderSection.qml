@@ -17,6 +17,7 @@ ColumnLayout {
 		StyledText {
 			text: ` ${SystemInfoService.username}@${SystemInfoService.hostname}`
 			font.bold: true
+			font.pixelSize: Config.fontSizeLarge
 			color: Theme.colors.accent
 		}
 
@@ -27,7 +28,7 @@ ColumnLayout {
 		StyledText {
 			text: `󱎫 ${SystemInfoService.uptime}`
 			color: Theme.colors.comment
-			font.pixelSize: Config.fontSize - 2
+			font.pixelSize: Config.fontSizeSmall
 		}
 
 		StyledButton {

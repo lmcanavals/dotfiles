@@ -15,20 +15,20 @@ RowLayout {
 
 	StyledText {
 		text: PowerService.glyphForDevice(root.device)
-		font.pixelSize: 14
+		font.pixelSize: Config.fontSizeBase
 		color: PowerService.colorForDevice(root.device)
 	}
 
 	StyledText {
 		text: PowerService.deviceName(root.device)
-		font.pixelSize: 11
+		font.pixelSize: Config.fontSizeSmall
 		Layout.fillWidth: true
 		elide: Text.ElideRight
 		color: Theme.colors.fg
 	}
 
 	ProgressBar {
-		implicitWidth: 70
+		implicitWidth: 120
 		implicitHeight: 6
 		fillRadius: 3
 		fillColor: PowerService.colorForDevice(root.device)
@@ -37,7 +37,7 @@ RowLayout {
 
 	StyledText {
 		text: PowerService.percentText(root.device)
-		font.pixelSize: 10
+		font.pixelSize: Config.fontSizeTiny
 		horizontalAlignment: Text.AlignRight
 		color: Theme.colors.fg_dark
 	}

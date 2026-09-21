@@ -10,4 +10,5 @@ SliderRow 1.0 SliderRow.qml
 StyledButton 1.0 StyledButton.qml
 StyledText 1.0 StyledText.qml
 SurfaceCard 1.0 SurfaceCard.qml
+ThumbnailImage 1.0 ThumbnailImage.qml
 TrackSlider 1.0 TrackSlider.qml

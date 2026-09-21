@@ -26,7 +26,7 @@ PanelWindow {
 	}
 	// qmllint enable unqualified unresolved-type
 
-	implicitWidth: 340
+	implicitWidth: Config.popupWidth
 	implicitHeight: notifColumn.implicitHeight
 	color: "transparent"
 
@@ -70,7 +70,7 @@ PanelWindow {
 						StyledText {
 							text: "󰂚 " + (card.modelData.appName || "Notification")
 							font.bold: true
-							font.pixelSize: 10
+							font.pixelSize: Config.fontSizeTiny
 							color: Theme.colors.comment
 							Layout.fillWidth: true
 							elide: Text.ElideRight
@@ -78,7 +78,7 @@ PanelWindow {
 
 						StyledText {
 							text: "󰅖"
-							font.pixelSize: 11
+							font.pixelSize: Config.fontSizeSmall
 							color: Theme.colors.fg_dark
 
 							MouseArea {
@@ -89,22 +89,42 @@ PanelWindow {
 						}
 					}
 
-					StyledText {
-						text: card.modelData.summary
-						font.bold: true
-						font.pixelSize: 12
-						color: Theme.colors.fg
+					RowLayout {
 						Layout.fillWidth: true
-						elide: Text.ElideRight
-					}
+						spacing: Config.spacing
 
-					StyledText {
-						visible: card.modelData.body.length > 0
-						text: card.modelData.body
-						font.pixelSize: 11
-						color: Theme.colors.fg_dark
-						wrapMode: Text.Wrap
-						Layout.fillWidth: true
+						ThumbnailImage {
+							id: notifThumb
+							source: card.modelData ? (card.modelData.appIcon || "") : ""
+							minHeight: 64
+							maxHeight: 80
+							showFallback: false
+							Layout.alignment: Qt.AlignTop
+						}
+
+						ColumnLayout {
+							Layout.fillWidth: true
+							Layout.alignment: Qt.AlignVCenter
+							spacing: 2
+
+							StyledText {
+								text: card.modelData.summary
+								font.bold: true
+								font.pixelSize: Config.fontSizeLarge
+								color: Theme.colors.fg
+								Layout.fillWidth: true
+								elide: Text.ElideRight
+							}
+
+							StyledText {
+								visible: card.modelData.body.length > 0
+								text: card.modelData.body
+								font.pixelSize: Config.fontSizeSmall
+								color: Theme.colors.fg_dark
+								wrapMode: Text.Wrap
+								Layout.fillWidth: true
+							}
+						}
 					}
 
 					ProgressBar {

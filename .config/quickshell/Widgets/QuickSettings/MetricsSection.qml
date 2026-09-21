@@ -14,7 +14,7 @@ ColumnLayout {
 		Layout.fillWidth: true
 		glyph: "󰻠"
 		value: HardwareService.cpuUsage
-		barColor: Theme.colors.accent
+		barColor: HardwareService.cpuColor
 	}
 
 	MetricBar {
@@ -22,7 +22,7 @@ ColumnLayout {
 		glyph: "󰘚"
 		value: HardwareService.memUsage
 		valueText: HardwareService.memUsedGb
-		barColor: Theme.colors.accent_alt
+		barColor: HardwareService.memColor
 	}
 
 	MetricBar {
@@ -30,6 +30,6 @@ ColumnLayout {
 		glyph: "󰔏"
 		value: Math.min(1.0, HardwareService.temperature / 100.0)
 		valueText: `${HardwareService.temperature}°C`
-		barColor: Theme.colors.warning
+		barColor: HardwareService.tempColor
 	}
 }

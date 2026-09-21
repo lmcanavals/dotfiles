@@ -2,6 +2,7 @@ pragma Singleton
 
 import QtQuick
 import Quickshell.Io
+import Core
 import Services
 
 QtObject {
@@ -11,6 +12,26 @@ QtObject {
 	property real memUsage: 0.0
 	property string memUsedGb: "0.0 GiB / 0.0 GiB"
 	property int temperature: 0
+
+	readonly property color cpuColor: colorForUsage(cpuUsage)
+	readonly property color memColor: colorForUsage(memUsage)
+	readonly property color tempColor: colorForTemp(temperature)
+
+	function colorForUsage(ratio: real): color {
+		if (ratio >= 0.80)
+			return Theme.colors.error;
+		if (ratio >= 0.60)
+			return Theme.colors.warning;
+		return Theme.colors.accent;
+	}
+
+	function colorForTemp(celsius: int): color {
+		if (celsius >= 80)
+			return Theme.colors.error;
+		if (celsius >= 60)
+			return Theme.colors.warning;
+		return Theme.colors.accent;
+	}
 
 	property real _prevTotal: 0.0
 	property real _prevIdle: 0.0
