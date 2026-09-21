@@ -9,12 +9,13 @@ local myEsp = "X"
 local browser = "xdg-open https://google.com"
 local clipboardTool = 'cliphist list | fuzzel --placeholder="  clipboard" --dmenu | cliphist decode | wl-copy'
 local fileManager = "uwsm-app -- dolphin"
-local lvolbri = "lvolbri"
 local mailClient = "uwsm-app -- thunderbird"
 local menuDrun = 'fuzzel --placeholder="󰀻  applications" --show-actions'
 local menuRun = 'fuzzel --placeholder=" _ command" --list-executables-in-path'
 local fyi = "fyi -u low -i computer"
 local terminal = "uwsm-app -- kitty"
+local resetBar = "fyi Quickbar not_implemented_yet"
+local hideBar = "fyi Quickbar not_implemented_yet"
 
 -- submap names 󰫮󰫯󰫰󰫱󰫲󰫳󰫴󰫵󰫶󰫷󰫸󰫹󰫺󰫻󰫼󰫽󰫾󰫿󰬀󰬁󰬂󰬃󰬄󰬅󰬆󰬇┃┊│
 local groups = "󰓩 : 󰬁 Togl │󰫹 Lck │󰌒 │ │"
@@ -23,6 +24,7 @@ local scrGrab = "󰹑 : 󰫲 󱇣│󰬀 󰉏│󰫿 "
 local swappy = "󱇣 : 󰫮󰍺│󰫼󰍹│󰬄│󰫿󰩭"
 local save = "󰉏 : 󰫮󰍺│󰫼󰍹│󰬄│󰫿󰩭"
 local rec = " : 󰫼 󰍹│󰫿 󰩭│󰬀 "
+local testKeys = "Test keys"
 local window = " 󰙕 : 󰞗 │󰞖 │󰞙 │󰞘"
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
@@ -41,7 +43,7 @@ else
 	hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
 	hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
 end
-hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("killall -SIGUSR1 waybar"))
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(hideBar))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + G", hl.dsp.submap(groups))
 hl.bind(mainMod .. " + I", hl.dsp.exec_cmd(fyi .. ' Missing "Settings Win+I"'))
@@ -56,7 +58,7 @@ hl.bind(mainMod .. " + W", hl.dsp.submap(window))
 hl.bind(mainMod .. " + X", hl.dsp.workspace.toggle_special(myEsp))
 hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd(clipboardTool))
 
-hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("systemctl --user reload waybar"))
+hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd(resetBar))
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd(menuRun))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("lshot -f " .. ssfile .. "'swappy -f' -r"))
@@ -111,20 +113,38 @@ hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
--- Laptop multimedia keys for volume and LCD brightness
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(lvolbri .. " -m vol_up"), { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(lvolbri .. " -m vol_down"), { locked = true, repeating = true })
-hl.bind("XF86AudioMute", hl.dsp.exec_cmd(lvolbri .. " -m vol_mute"), { locked = true, repeating = true })
-hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd(lvolbri .. " -m mic_mute"), { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(lvolbri .. " -m bright_down"), { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(lvolbri .. " -m bright_up"), { locked = true, repeating = true })
+-- Laptop multimedia keys for volume
+hl.bind(
+	"XF86AudioRaiseVolume",
+	hl.dsp.exec_cmd("wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+"),
+	{ locked = true, repeating = true }
+)
+hl.bind(
+	"XF86AudioLowerVolume",
+	hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),
+	{ locked = true, repeating = true }
+)
+hl.bind(
+	"XF86AudioMute",
+	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),
+	{ locked = true, repeating = true }
+)
+hl.bind(
+	"XF86AudioMicMute",
+	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),
+	{ locked = true, repeating = true }
+)
+
+-- Requieres brightnessctl
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 5%-"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl set 5%+"), { locked = true, repeating = true })
 
 -- Requires playerctl
-hl.bind("XF86AudioNext", hl.dsp.exec_cmd(lvolbri .. " -m next_track"), { locked = true })
-hl.bind("XF86AudioPause", hl.dsp.exec_cmd(lvolbri .. " -m play_pause"), { locked = true })
-hl.bind("XF86AudioPlay", hl.dsp.exec_cmd(lvolbri .. " -m play_pause"), { locked = true })
-hl.bind("XF86AudioPrev", hl.dsp.exec_cmd(lvolbri .. " -m prev_track"), { locked = true })
-hl.bind("XF86AudioStop", hl.dsp.exec_cmd(lvolbri .. " -m play_stop"), { locked = true })
+hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
+hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl pause"), { locked = true })
+hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
+hl.bind("XF86AudioStop", hl.dsp.exec_cmd("playerctl stop"), { locked = true })
 
 -- Other special keys
 hl.bind("Print", hl.dsp.submap(scrGrab), { locked = true })
@@ -142,6 +162,12 @@ for i = 9, 12 do
 end
 
 -- Submaps
+
+-- Special submap to test keys
+hl.bind(mainMod .. " + SHIFT + ALT + K", hl.dsp.submap(testKeys))
+hl.define_submap(testKeys, function()
+	hl.bind(mainMod .. " + SHIFT + ALT + K", hl.dsp.submap("reset"))
+end)
 
 -- Helper function to auto close submap after hitting a key when catchall is not an option
 local function hitAndReset(func)
