@@ -2,6 +2,7 @@ pragma Singleton
 pragma ComponentBehavior: Bound
 
 import QtQuick
+import Quickshell
 import Quickshell.Services.Notifications
 import Services
 
@@ -12,10 +13,71 @@ QtObject {
 	property var historyList: []
 	readonly property int unreadCount: historyList.length
 
+	readonly property string iconCacheDir: {
+		const xdg = Quickshell.env("XDG_CACHE_HOME");
+		const base = (xdg && xdg.length > 0) ? xdg : (Quickshell.env("HOME") + "/.cache");
+		return base + "/quickshell/notification-icons";
+	}
+
+	Component.onCompleted: {
+		Quickshell.execDetached(["mkdir", "-p", root.iconCacheDir]);
+		Quickshell.execDetached(["find", root.iconCacheDir, "-type", "f", "-mtime", "+3", "-delete"]);
+	}
+
+	function sanitizeAndCacheIcon(rawIcon: string, notifId: int): var {
+		if (!rawIcon || rawIcon.length === 0) {
+			return {
+				source: "",
+				cachedFile: ""
+			};
+		}
+
+		let clean = rawIcon.trim();
+		if (clean.startsWith("image://icon//")) {
+			clean = clean.substring(13);
+		} else if (clean.startsWith("image://icon/file://")) {
+			clean = clean.substring(18);
+		} else if (clean.startsWith("image://icon/")) {
+			clean = clean.substring(13);
+		}
+		if (clean.startsWith("file://")) {
+			clean = clean.substring(7);
+		}
+
+		const isTemp = clean.startsWith("/tmp/") || clean.startsWith("/var/tmp/") || clean.startsWith("/run/user/");
+		if (!isTemp) {
+			return {
+				source: rawIcon.trim(),
+				cachedFile: ""
+			};
+		}
+
+		const lastDot = clean.lastIndexOf(".");
+		const ext = (lastDot !== -1 && lastDot > clean.lastIndexOf("/")) ? clean.substring(lastDot) : ".png";
+		const safeExt = /^\.[a-zA-Z0-9]+$/.test(ext) ? ext : ".png";
+		const destFile = root.iconCacheDir + "/" + notifId + "_" + Date.now() + safeExt;
+
+		Quickshell.execDetached(["cp", clean, destFile]);
+
+		return {
+			source: "file://" + destFile,
+			cachedFile: destFile
+		};
+	}
+
 	property NotificationServer server: NotificationServer {
 		id: server
 		property bool running: true
 		keepOnReload: true
+		persistenceSupported: true
+		bodySupported: true
+		bodyMarkupSupported: true
+		bodyHyperlinksSupported: true
+		bodyImagesSupported: true
+		actionsSupported: true
+		actionIconsSupported: true
+		imageSupported: true
+		inlineReplySupported: true
 
 		onNotification: notif => {
 			const rawTag = (notif.hints && (notif.hints["x-dunst-stack-tag"] || notif.hints["tag"] || notif.hints["synchronous"] || notif.hints["x-canonical-private-synchronous"])) || "";
@@ -36,6 +98,52 @@ QtObject {
 			} else if (notif.hints && (notif.hints["image-path"] || notif.hints["image_path"])) {
 				iconSrc = String(notif.hints["image-path"] || notif.hints["image_path"]).trim();
 			}
+
+			// Extract actions safely
+			let defaultInvoke = null;
+			const activeActions = [];
+			const historyActions = [];
+
+			if (notif.actions && notif.actions.length > 0) {
+				for (let i = 0; i < notif.actions.length; i++) {
+					const act = notif.actions[i];
+					if (!act)
+						continue;
+					const idStr = String(act.identifier || "");
+					const textStr = String(act.text || idStr);
+
+					if (idStr === "default") {
+						defaultInvoke = () => {
+							try {
+								act.invoke();
+							} catch (e) {}
+						};
+					} else {
+						activeActions.push({
+							id: idStr,
+							text: textStr,
+							invoke: () => {
+								try {
+									act.invoke();
+								} catch (e) {}
+							}
+						});
+						historyActions.push({
+							id: idStr,
+							text: textStr
+						});
+					}
+				}
+			}
+
+			// Extract inline reply
+			const hasInlineReply = Boolean(notif.hasInlineReply);
+			const replyPlaceholder = String(notif.inlineReplyPlaceholder || "Type a reply...");
+			const sendReplyFn = hasInlineReply ? replyText => {
+				try {
+					notif.sendInlineReply(String(replyText));
+				} catch (e) {}
+			} : null;
 
 			const time = new Date().toLocaleTimeString([], {
 				hour: "2-digit",
@@ -64,6 +172,20 @@ QtObject {
 					displaySummary = `(${count}) ${summary}`;
 				}
 
+				let finalSource = "";
+				let finalCachedFile = "";
+				if (iconSrc.length > 0) {
+					const cached = root.sanitizeAndCacheIcon(iconSrc, notif.id);
+					finalSource = cached.source;
+					finalCachedFile = cached.cachedFile;
+					if (existing.cachedFile && existing.cachedFile.length > 0 && existing.cachedFile !== finalCachedFile) {
+						Quickshell.execDetached(["rm", "-f", existing.cachedFile]);
+					}
+				} else {
+					finalSource = existing.appIcon || "";
+					finalCachedFile = existing.cachedFile || "";
+				}
+
 				itemToStore = {
 					id: notif.id,
 					previousId: existing.id,
@@ -71,18 +193,32 @@ QtObject {
 					summary: displaySummary,
 					baseSummary: summary,
 					body: body,
-					appIcon: iconSrc.length > 0 ? iconSrc : (existing.appIcon || ""),
+					appIcon: finalSource,
+					cachedFile: finalCachedFile,
 					tag: tag,
 					count: count,
 					value: value,
 					time: time,
-					timestamp: timestamp
+					timestamp: timestamp,
+					actions: activeActions,
+					defaultInvoke: defaultInvoke,
+					hasInlineReply: hasInlineReply,
+					replyPlaceholder: replyPlaceholder,
+					sendReply: sendReplyFn
 				};
 
 				const newActive = [...root.activeList];
 				newActive[activeIdx] = itemToStore;
 				root.activeList = newActive;
 			} else {
+				let finalSource = "";
+				let finalCachedFile = "";
+				if (iconSrc.length > 0) {
+					const cached = root.sanitizeAndCacheIcon(iconSrc, notif.id);
+					finalSource = cached.source;
+					finalCachedFile = cached.cachedFile;
+				}
+
 				itemToStore = {
 					id: notif.id,
 					previousId: notif.id,
@@ -90,12 +226,18 @@ QtObject {
 					summary: summary,
 					baseSummary: summary,
 					body: body,
-					appIcon: iconSrc,
+					appIcon: finalSource,
+					cachedFile: finalCachedFile,
 					tag: tag,
 					count: 1,
 					value: value,
 					time: time,
-					timestamp: timestamp
+					timestamp: timestamp,
+					actions: activeActions,
+					defaultInvoke: defaultInvoke,
+					hasInlineReply: hasInlineReply,
+					replyPlaceholder: replyPlaceholder,
+					sendReply: sendReplyFn
 				};
 
 				if (!EnvironmentService.dndActive) {
@@ -103,7 +245,35 @@ QtObject {
 				}
 			}
 
-			// 2. Update historyList (deduplicate and move latest to top)
+			// 2. Update historyList (deduplicate and move latest to top, sanitized pure data)
+			const historyItem = {
+				id: itemToStore.id,
+				previousId: itemToStore.previousId,
+				appName: itemToStore.appName,
+				summary: itemToStore.summary,
+				baseSummary: itemToStore.baseSummary,
+				body: itemToStore.body,
+				appIcon: itemToStore.appIcon,
+				cachedFile: itemToStore.cachedFile,
+				tag: itemToStore.tag,
+				count: itemToStore.count,
+				value: itemToStore.value,
+				time: itemToStore.time,
+				timestamp: itemToStore.timestamp,
+				actions: historyActions,
+				hasInlineReply: false
+			};
+
+			for (let i = 0; i < root.historyList.length; i++) {
+				const it = root.historyList[i];
+				if (!it)
+					continue;
+				const matches = (tag.length > 0) ? (it.tag === tag) : (it.appName === appName && it.baseSummary === summary && it.body === body);
+				if (matches && it.cachedFile && it.cachedFile.length > 0 && it.cachedFile !== historyItem.cachedFile) {
+					Quickshell.execDetached(["rm", "-f", it.cachedFile]);
+				}
+			}
+
 			const filteredHistory = root.historyList.filter(item => {
 				if (!item)
 					return false;
@@ -112,7 +282,17 @@ QtObject {
 				}
 				return !(item.appName === appName && item.baseSummary === summary && item.body === body);
 			});
-			root.historyList = [itemToStore, ...filteredHistory].slice(0, 50);
+
+			const newHistory = [historyItem, ...filteredHistory];
+			if (newHistory.length > 50) {
+				const dropped = newHistory.slice(50);
+				for (let i = 0; i < dropped.length; i++) {
+					if (dropped[i] && dropped[i].cachedFile && dropped[i].cachedFile.length > 0) {
+						Quickshell.execDetached(["rm", "-f", dropped[i].cachedFile]);
+					}
+				}
+			}
+			root.historyList = newHistory.slice(0, 50);
 		}
 	}
 
@@ -131,14 +311,32 @@ QtObject {
 	}
 
 	function clearHistory(): void {
+		for (let i = 0; i < root.historyList.length; i++) {
+			const it = root.historyList[i];
+			if (it && it.cachedFile && it.cachedFile.length > 0) {
+				Quickshell.execDetached(["rm", "-f", it.cachedFile]);
+			}
+		}
 		root.historyList = [];
 	}
 
 	function removeHistory(id: int): void {
+		const toRemove = root.historyList.filter(n => n && (n.id === id || n.previousId === id));
+		for (let i = 0; i < toRemove.length; i++) {
+			if (toRemove[i] && toRemove[i].cachedFile && toRemove[i].cachedFile.length > 0) {
+				Quickshell.execDetached(["rm", "-f", toRemove[i].cachedFile]);
+			}
+		}
 		root.historyList = root.historyList.filter(n => n && n.id !== id && n.previousId !== id);
 	}
 
 	function invokeAction(item: var, actionId: string): void {
+		if (item && item.actions) {
+			const act = item.actions.find(a => a && a.id === actionId);
+			if (act && typeof act.invoke === "function") {
+				act.invoke();
+			}
+		}
 		if (item && item.id !== undefined) {
 			root.dismissActive(item.id);
 		}

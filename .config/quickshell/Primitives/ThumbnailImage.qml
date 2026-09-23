@@ -20,6 +20,10 @@ Rectangle {
 		const src = root.source ? String(root.source).trim() : "";
 		if (src.length === 0)
 			return "";
+		if (src.startsWith("image://icon//"))
+			return "file://" + src.substring(13);
+		if (src.startsWith("image://icon/file://"))
+			return src.substring(13);
 		if (src.startsWith("file://") || src.startsWith("http://") || src.startsWith("https://") || src.startsWith("image://"))
 			return src;
 		if (src.startsWith("/"))
@@ -38,9 +42,9 @@ Rectangle {
 
 	clip: true
 	radius: Config.radius
-	color: Theme.colors.bg_highlight
+	color: "transparent"
 
-	visible: root.showFallback || hasValidImage
+	visible: hasValidImage || (root.showFallback && artImage.status !== Image.Error)
 
 	implicitWidth: hasValidImage ? calculatedWidth : root.minHeight
 	implicitHeight: calculatedHeight
@@ -52,6 +56,30 @@ Rectangle {
 		fillMode: (root.realAspectRatio > root.maxAspect || root.realAspectRatio < root.minAspect) ? Image.PreserveAspectCrop : Image.PreserveAspectFit
 		source: root.actualSource
 		visible: status === Image.Ready
+
+		onStatusChanged: {
+			if (status === Image.Error && retryTimer.retries < 3 && root.actualSource.startsWith("file://")) {
+				retryTimer.retries++;
+				retryTimer.start();
+			}
+		}
+	}
+
+	Timer {
+		id: retryTimer
+		interval: 100
+		repeat: false
+		property int retries: 0
+		onTriggered: {
+			const s = artImage.source;
+			artImage.source = "";
+			artImage.source = s;
+		}
+	}
+
+	onActualSourceChanged: {
+		retryTimer.retries = 0;
+		retryTimer.stop();
 	}
 
 	StyledText {
@@ -59,6 +87,6 @@ Rectangle {
 		color: Theme.colors.comment
 		font.pixelSize: Config.fontSizeXL
 		text: root.fallbackIcon
-		visible: root.showFallback && artImage.status !== Image.Ready
+		visible: root.showFallback && artImage.status !== Image.Ready && artImage.status !== Image.Error
 	}
 }
