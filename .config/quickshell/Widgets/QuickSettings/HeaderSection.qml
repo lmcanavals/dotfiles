@@ -12,7 +12,7 @@ RowLayout {
 
 	ThumbnailImage {
 		id: artContainer
-		source: "file:///home/lmcs/.face"
+		source: SystemInfoService.userIcon
 		fallbackIcon: ""
 		minHeight: 48
 		maxHeight: 64
@@ -24,7 +24,7 @@ RowLayout {
 			Layout.fillWidth: true
 
 			StyledText {
-				text: SystemInfoService.username
+				text: SystemInfoService.realName || SystemInfoService.username
 				font.bold: true
 				font.pixelSize: Config.fontSizeLarge
 				color: Theme.colors.accent
