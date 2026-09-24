@@ -9,17 +9,17 @@ Rectangle {
 	required property string glyph
 	required property string label
 	property bool active: false
-	property color activeColor: Theme.colors.accent
 
 	signal clicked
+	signal rightClicked
+	signal middleClicked
 
 	implicitWidth: 140
 	implicitHeight: 42
 	radius: Config.radius
 
-	color: active ? Theme.alpha(activeColor, 0.5) : (mouseArea.containsMouse ? Theme.bgControlHover : Theme.bgControl)
-
-	border.color: active ? activeColor : Theme.colors.border
+	color: active ? Theme.colors.bg_widget_r : (mouseArea.containsMouse ? Theme.bgControlHover : Theme.bgControl)
+	border.color: Theme.colors.border
 	border.width: 1
 
 	MouseArea {
@@ -27,19 +27,28 @@ Rectangle {
 		anchors.fill: parent
 		hoverEnabled: true
 		cursorShape: Qt.PointingHandCursor
-		onClicked: root.clicked()
+		acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
+		onClicked: mouse => {
+			if (mouse.button === Qt.RightButton) {
+				root.rightClicked();
+			} else if (mouse.button === Qt.MiddleButton) {
+				root.middleClicked();
+			} else {
+				root.clicked();
+			}
+		}
 	}
 
 	RowLayout {
 		anchors.fill: parent
-		anchors.leftMargin: 12
-		anchors.rightMargin: 12
-		spacing: 10
+		anchors.leftMargin: Config.padding
+		anchors.rightMargin: Config.padding
 
 		StyledText {
 			text: root.glyph
-			color: root.active ? root.activeColor : Theme.colors.fg_dark
+			color: root.active ? Theme.colors.fg_widget_r : Theme.colors.comment
 			font.pixelSize: Config.fontSizeXL
+			Layout.preferredWidth: 24
 		}
 
 		ColumnLayout {
@@ -48,17 +57,20 @@ Rectangle {
 
 			StyledText {
 				text: root.label
-				color: root.active ? Theme.colors.fg : Theme.colors.fg_dark
+				color: root.active ? Theme.colors.fg_widget_r : Theme.colors.comment
 				font.bold: root.active
 				font.pixelSize: Config.fontSizeSmall
-				elide: Text.ElideRight
 			}
 
 			StyledText {
 				text: root.active ? "On" : "Off"
-				color: root.active ? root.activeColor : Theme.colors.comment
+				color: Theme.colors.comment
 				font.pixelSize: Config.fontSizeTiny
 			}
+		}
+
+		Item {
+			Layout.fillWidth: true
 		}
 	}
 }

@@ -56,13 +56,7 @@ PopupWindow {
 
 			SlidersSection {}
 
-			NetworkSection {}
-
 			TogglesSection {}
-
-			Item {
-				Layout.fillHeight: true
-			}
 
 			NotificationHistorySection {}
 

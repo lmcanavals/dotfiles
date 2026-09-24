@@ -12,12 +12,33 @@ GridLayout {
 	rowSpacing: Config.spacing
 	Layout.fillWidth: true
 
+	// Wi-Fi Toggle
+	QuickToggle {
+		Layout.fillWidth: true
+		glyph: NetworkService.glyph
+		label: NetworkService.connected ? NetworkService.ssid : (NetworkService.enabled ? "Disconnected" : "Wi-Fi Off")
+		active: NetworkService.enabled
+		onClicked: NetworkService.toggleWifi()
+		onRightClicked: NetworkService.openPicker()
+		onMiddleClicked: NetworkService.refresh()
+	}
+
+	// Bluetooth Toggle
+	QuickToggle {
+		Layout.fillWidth: true
+		glyph: BluetoothService.glyph
+		label: BluetoothService.connected ? BluetoothService.connectedDevice : (BluetoothService.enabled ? "Disconnected" : "Bluetooth Off")
+		active: BluetoothService.enabled
+		onClicked: BluetoothService.toggleBluetooth()
+		onRightClicked: BluetoothService.openPicker()
+		onMiddleClicked: BluetoothService.refresh()
+	}
+
 	QuickToggle {
 		Layout.fillWidth: true
 		glyph: EnvironmentService.dndActive ? "󰂛" : "󰂚"
 		label: "Do Not Disturb"
 		active: EnvironmentService.dndActive
-		activeColor: Theme.colors.warning
 		onClicked: EnvironmentService.toggleDnd()
 	}
 
@@ -26,7 +47,6 @@ GridLayout {
 		glyph: EnvironmentService.idleInhibited ? "󰅶" : "󰾪"
 		label: "Keep Awake"
 		active: EnvironmentService.idleInhibited
-		activeColor: Theme.colors.accent
 		onClicked: EnvironmentService.toggleIdleInhibit()
 	}
 
@@ -35,7 +55,6 @@ GridLayout {
 		glyph: EnvironmentService.nightLightActive ? "󰖔" : "󰖙"
 		label: "Hyprsunset"
 		active: EnvironmentService.nightLightActive
-		activeColor: Theme.colors.accent_alt
 		onClicked: EnvironmentService.toggleNightLight()
 	}
 
@@ -44,7 +63,6 @@ GridLayout {
 		glyph: "󰌾"
 		label: "Lock Screen"
 		active: false
-		activeColor: Theme.colors.info
 		onClicked: {
 			QuickSettingsService.close();
 			EnvironmentService.lockSession();
