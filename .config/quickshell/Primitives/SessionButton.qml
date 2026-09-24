@@ -14,7 +14,7 @@ Rectangle {
 	implicitWidth: 36
 	implicitHeight: 36
 	radius: Config.radius
-	color: mouseArea.containsMouse ? Theme.alpha(hoverColor, 0.5) : Theme.alpha(Theme.colors.bg_widget, 0.2)
+	color: mouseArea.containsMouse ? Theme.alpha(hoverColor, 0.5) : Theme.bgControl
 	border.color: mouseArea.containsMouse ? hoverColor : Theme.colors.border
 	border.width: 1
 

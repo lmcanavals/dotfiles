@@ -33,7 +33,7 @@ PopupWindow {
 	SurfaceCard {
 		id: mainCard
 		anchors.fill: parent
-		color: Theme.alpha(Theme.colors.bg_dark, 0.4)
+		color: Theme.bgSurface
 		border.color: Theme.colors.border
 		border.width: 1
 		radius: Config.radius * 2
@@ -80,7 +80,7 @@ PopupWindow {
 					Layout.fillWidth: true
 					implicitHeight: 26
 					radius: Config.radius
-					color: itemMouseArea.containsMouse ? Theme.alpha(Theme.colors.bg_highlight, 0.5) : "transparent"
+					color: itemMouseArea.containsMouse ? Theme.bgControlHover : "transparent"
 
 					MouseArea {
 						id: itemMouseArea

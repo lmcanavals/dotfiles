@@ -45,6 +45,14 @@ QtObject {
 		id: paletteInstance
 	}
 
+	// Semantic background colors with consistent transparency levels
+	readonly property color bgBar: root.alpha(root.colors.bg, 0.85)
+	readonly property color bgSurface: root.alpha(root.colors.bg_dark, 0.85)
+	readonly property color bgCard: root.alpha(root.colors.bg_widget, 0.6)
+	readonly property color bgControl: root.alpha(root.colors.bg_widget, 0.2)
+	readonly property color bgControlHover: root.alpha(root.colors.bg_highlight, 0.4)
+	readonly property color bgTrack: root.alpha(root.colors.fg_dark, 0.2)
+
 	property FileView fileView: FileView {
 		path: root.configPath
 		watchChanges: true

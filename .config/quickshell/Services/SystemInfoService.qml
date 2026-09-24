@@ -30,10 +30,7 @@ QtObject {
 
 	property Process accountProc: Process {
 		id: accountProcess
-		command: [
-			"sh", "-c",
-			"icon=$(busctl get-property org.freedesktop.Accounts /org/freedesktop/Accounts/User$(id -u) org.freedesktop.Accounts.User IconFile --json=short 2>/dev/null | jq -r '.data // empty'); realname=$(busctl get-property org.freedesktop.Accounts /org/freedesktop/Accounts/User$(id -u) org.freedesktop.Accounts.User RealName --json=short 2>/dev/null | jq -r '.data // empty'); if [ -z \"$icon\" ] || [ ! -f \"$icon\" ]; then if [ -f \"$HOME/.face\" ]; then icon=\"$HOME/.face\"; elif [ -f \"$HOME/.face.icon\" ]; then icon=\"$HOME/.face.icon\"; else icon=\"\"; fi; fi; printf '%s\\n%s\\n' \"$icon\" \"$realname\""
-		]
+		command: ["sh", "-c", "icon=$(busctl get-property org.freedesktop.Accounts /org/freedesktop/Accounts/User$(id -u) org.freedesktop.Accounts.User IconFile --json=short 2>/dev/null | jq -r '.data // empty'); realname=$(busctl get-property org.freedesktop.Accounts /org/freedesktop/Accounts/User$(id -u) org.freedesktop.Accounts.User RealName --json=short 2>/dev/null | jq -r '.data // empty'); if [ -z \"$icon\" ] || [ ! -f \"$icon\" ]; then if [ -f \"$HOME/.face\" ]; then icon=\"$HOME/.face\"; elif [ -f \"$HOME/.face.icon\" ]; then icon=\"$HOME/.face.icon\"; else icon=\"\"; fi; fi; printf '%s\\n%s\\n' \"$icon\" \"$realname\""]
 		running: false
 
 		stdout: StdioCollector {

@@ -13,7 +13,7 @@ PanelWindow {
 
 	WlrLayershell.layer: WlrLayer.Top
 	WlrLayershell.namespace: "quickshell:topbar"
-	color: Theme.alpha(Theme.colors.bg, 0.4)
+	color: Theme.bgBar
 	implicitHeight: Config.barHeight + Config.margin * 2
 	screen: modelData
 

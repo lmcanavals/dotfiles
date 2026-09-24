@@ -100,7 +100,7 @@ SurfaceCard {
 				width: ListView.view ? ListView.view.width : 300
 				implicitHeight: rowLayout.implicitHeight + 8
 				radius: Config.radius
-				color: itemMouseArea.containsMouse ? Theme.alpha(Theme.colors.bg_highlight, 0.4) : Theme.alpha(Theme.colors.bg_highlight, 0.2)
+				color: itemMouseArea.containsMouse ? Theme.bgControlHover : Theme.bgControl
 
 				MouseArea {
 					id: itemMouseArea
@@ -162,7 +162,7 @@ SurfaceCard {
 							implicitHeight: 3
 							fillRadius: 1
 							fillColor: Theme.colors.accent
-							trackColor: Theme.alpha(Theme.colors.fg_dark, 0.2)
+							trackColor: Theme.bgTrack
 							value: (itemCard.modelData && itemCard.modelData.value !== undefined) ? (Number(itemCard.modelData.value) / 100.0) : 0.0
 						}
 					}

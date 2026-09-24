@@ -35,7 +35,7 @@ PopupWindow {
 	SurfaceCard {
 		id: mainCard
 		anchors.fill: parent
-		color: Theme.alpha(Theme.colors.bg_dark, 0.4)
+		color: Theme.bgSurface
 		border.color: Theme.colors.border
 		border.width: 1
 		radius: Config.radius * 2

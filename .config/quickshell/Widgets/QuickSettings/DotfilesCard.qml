@@ -10,7 +10,7 @@ SurfaceCard {
 	Layout.fillWidth: true
 	implicitHeight: 40
 
-	color: mouseArea.containsMouse ? Theme.alpha(Theme.colors.bg_highlight, 0.4) : Theme.alpha(Theme.colors.bg_widget, 0.2)
+	color: mouseArea.containsMouse ? Theme.bgControlHover : Theme.bgControl
 	border.color: mouseArea.containsMouse ? Theme.colors.accent : Theme.colors.border
 	border.width: 1
 	radius: Config.radius

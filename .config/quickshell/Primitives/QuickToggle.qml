@@ -17,7 +17,7 @@ Rectangle {
 	implicitHeight: 42
 	radius: Config.radius
 
-	color: active ? Theme.alpha(activeColor, 0.5) : Theme.alpha(mouseArea.containsMouse ? Theme.colors.bg_highlight : Theme.colors.bg_widget, 0.2)
+	color: active ? Theme.alpha(activeColor, 0.5) : (mouseArea.containsMouse ? Theme.bgControlHover : Theme.bgControl)
 
 	border.color: active ? activeColor : Theme.colors.border
 	border.width: 1

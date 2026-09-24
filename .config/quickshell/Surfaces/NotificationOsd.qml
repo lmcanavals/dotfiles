@@ -45,6 +45,7 @@ PanelWindow {
 				id: card
 				required property var modelData
 
+				color: Theme.bgSurface
 				Layout.fillWidth: true
 				implicitHeight: innerLayout.implicitHeight + (Config.padding * 2)
 
@@ -239,7 +240,7 @@ PanelWindow {
 						implicitHeight: 4
 						fillRadius: 2
 						fillColor: Theme.colors.accent
-						trackColor: Theme.alpha(Theme.colors.fg_dark, 0.25)
+						trackColor: Theme.bgTrack
 						value: (card.modelData && card.modelData.value !== undefined) ? (Number(card.modelData.value) / 100.0) : 0.0
 					}
 				}

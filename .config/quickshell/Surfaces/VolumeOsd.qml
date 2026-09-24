@@ -55,7 +55,7 @@ Scope {
 
 			SurfaceCard {
 				anchors.fill: parent
-				color: Theme.alpha(Theme.colors.bg_dark, 0.4)
+				color: Theme.bgSurface
 				radius: Config.radius
 
 				MetricBar {
