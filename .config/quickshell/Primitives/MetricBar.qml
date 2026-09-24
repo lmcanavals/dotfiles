@@ -13,16 +13,12 @@ RowLayout {
 	required property color barColor
 	property string valueText: `${Math.round(Math.max(0.0, Math.min(1.0, root.value)) * 100)}%`
 
-	spacing: Config.spacing * 2
+	spacing: Config.spacing
 
-	RowLayout {
-		Layout.preferredWidth: 26
-		spacing: Config.spacing
-
-		StyledText {
-			text: root.glyph
-			color: root.barColor
-		}
+	StyledText {
+		text: root.glyph
+		color: root.barColor
+		Layout.minimumWidth: 20
 	}
 
 	ProgressBar {

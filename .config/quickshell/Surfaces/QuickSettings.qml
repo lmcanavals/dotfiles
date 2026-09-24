@@ -48,8 +48,6 @@ PopupWindow {
 
 			HeaderSection {}
 
-			NetworkSection {}
-
 			BatterySection {}
 
 			DotfilesCard {}
@@ -57,6 +55,8 @@ PopupWindow {
 			MetricsSection {}
 
 			SlidersSection {}
+
+			NetworkSection {}
 
 			TogglesSection {}
 

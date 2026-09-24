@@ -18,25 +18,14 @@ RowLayout {
 		maxHeight: 64
 		showFallback: true
 	}
+
 	ColumnLayout {
 
 		RowLayout {
 			Layout.fillWidth: true
 
 			StyledText {
-				text: SystemInfoService.realName || SystemInfoService.username
-				font.bold: true
-				font.pixelSize: Config.fontSizeLarge
-				color: Theme.colors.accent
-			}
-
-			StyledText {
-				text: ""
-				font.pixelSize: Config.fontSizeLarge
-			}
-
-			StyledText {
-				text: SystemInfoService.hostname
+				text: SystemInfoService.realName
 				font.bold: true
 				font.pixelSize: Config.fontSizeLarge
 				color: Theme.colors.accent
@@ -47,7 +36,13 @@ RowLayout {
 			}
 
 			StyledText {
-				text: `󱎫 ${SystemInfoService.uptime}`
+				text: "󱎫"
+				color: Theme.colors.comment
+				font.pixelSize: Config.fontSizeSmall
+			}
+
+			StyledText {
+				text: SystemInfoService.uptime
 				color: Theme.colors.comment
 				font.pixelSize: Config.fontSizeSmall
 			}
@@ -62,7 +57,19 @@ RowLayout {
 			Layout.fillWidth: true
 
 			StyledText {
-				text: TimeService.formattedTime
+				text: SystemInfoService.username
+				font.bold: true
+				color: Theme.colors.success
+			}
+
+			StyledText {
+				text: ""
+				color: Theme.colors.fg
+			}
+
+			StyledText {
+				text: SystemInfoService.hostname
+				font.bold: true
 			}
 
 			Item {
@@ -72,6 +79,18 @@ RowLayout {
 			StyledText {
 				text: TimeService.shortTime
 				font.bold: true
+			}
+		}
+
+		RowLayout {
+			Layout.fillWidth: true
+
+			Item {
+				Layout.fillWidth: true
+			}
+
+			StyledText {
+				text: TimeService.formattedTime
 			}
 		}
 	}

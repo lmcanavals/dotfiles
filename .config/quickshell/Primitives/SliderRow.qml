@@ -19,23 +19,22 @@ RowLayout {
 
 	spacing: Config.spacing
 
-	MouseArea {
-		implicitWidth: 26
-		implicitHeight: 26
-		cursorShape: Qt.PointingHandCursor
-		acceptedButtons: Qt.LeftButton | Qt.RightButton
-		onClicked: mouse => {
-			if (mouse.button === Qt.LeftButton) {
-				root.iconClicked();
-			} else if (mouse.button === Qt.RightButton) {
-				root.iconRightClicked();
-			}
-		}
+	StyledText {
+		text: root.glyph
+		color: root.muted ? Theme.colors.comment : root.accentColor
+		Layout.minimumWidth: 20
 
-		StyledText {
-			anchors.centerIn: parent
-			text: root.glyph
-			color: root.muted ? Theme.colors.comment : root.accentColor
+		MouseArea {
+			anchors.fill: parent
+			cursorShape: Qt.PointingHandCursor
+			acceptedButtons: Qt.LeftButton | Qt.RightButton
+			onClicked: mouse => {
+				if (mouse.button === Qt.LeftButton) {
+					root.iconClicked();
+				} else if (mouse.button === Qt.RightButton) {
+					root.iconRightClicked();
+				}
+			}
 		}
 	}
 
