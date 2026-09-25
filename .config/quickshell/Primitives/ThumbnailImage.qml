@@ -28,16 +28,20 @@ Rectangle {
 			return src;
 		if (src.startsWith("/"))
 			return "file://" + src;
-		if (Quickshell.hasThemeIcon(src))
-			return Quickshell.iconPath(src);
-		const p = Quickshell.iconPath(src);
-		return (p && p.length > 0) ? p : src;
+
+		const iconPath = Quickshell.hasThemeIcon(src) ? Quickshell.iconPath(src) : (Quickshell.iconPath(src) || "");
+		if (iconPath && iconPath.length > 0) {
+			if (iconPath.startsWith("/"))
+				return "file://" + iconPath;
+			return iconPath;
+		}
+		return src;
 	}
 
 	readonly property bool hasValidImage: artImage.status === Image.Ready
-	readonly property real realAspectRatio: (hasValidImage && artImage.sourceSize.height > 0) ? (artImage.sourceSize.width / artImage.sourceSize.height) : 1.0
+	readonly property real realAspectRatio: (hasValidImage && artImage.implicitHeight > 0) ? (artImage.implicitWidth / artImage.implicitHeight) : 1.0
 	readonly property real clampedAspect: Math.max(root.minAspect, Math.min(root.maxAspect, root.realAspectRatio))
-	readonly property real calculatedHeight: (hasValidImage && artImage.sourceSize.height > 0) ? Math.max(root.minHeight, Math.min(root.maxHeight, artImage.sourceSize.height)) : root.minHeight
+	readonly property real calculatedHeight: hasValidImage ? (root.realAspectRatio > 1.2 ? root.maxHeight : root.minHeight) : (root.showFallback ? root.minHeight : 0)
 	readonly property real calculatedWidth: calculatedHeight * clampedAspect
 
 	clip: true
@@ -46,14 +50,14 @@ Rectangle {
 
 	visible: hasValidImage || (root.showFallback && artImage.status !== Image.Error)
 
-	implicitWidth: hasValidImage ? calculatedWidth : root.minHeight
+	implicitWidth: hasValidImage ? calculatedWidth : (root.showFallback ? root.minHeight : 0)
 	implicitHeight: calculatedHeight
 
 	Image {
 		id: artImage
 		anchors.fill: parent
-		asynchronous: false
-		fillMode: (root.realAspectRatio > root.maxAspect || root.realAspectRatio < root.minAspect) ? Image.PreserveAspectCrop : Image.PreserveAspectFit
+		asynchronous: true
+		fillMode: Image.PreserveAspectCrop
 		source: root.actualSource
 		visible: status === Image.Ready
 
@@ -87,6 +91,6 @@ Rectangle {
 		color: Theme.colors.comment
 		font.pixelSize: Config.fontSizeXL
 		text: root.fallbackIcon
-		visible: root.showFallback && artImage.status !== Image.Ready && artImage.status !== Image.Error
+		visible: root.showFallback && artImage.status !== Image.Ready
 	}
 }
