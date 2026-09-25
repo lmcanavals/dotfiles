@@ -4,32 +4,36 @@ import Core
 import Primitives
 import Services
 
-ColumnLayout {
+RowLayout {
 	id: root
 
 	Layout.fillWidth: true
 	spacing: Config.spacing * 2
 
-	MetricBar {
-		Layout.fillWidth: true
+	RadarChart {
+		Layout.preferredWidth: 116
+		Layout.preferredHeight: 96
+
 		glyph: "󰻠"
-		value: HardwareService.cpuUsage
-		barColor: HardwareService.cpuColor
+		lineColor: HardwareService.cpuColor
+		values: HardwareService.coresUsage
+		total: HardwareService.cpuUsage
 	}
+	ColumnLayout {
+		MetricBar {
+			Layout.fillWidth: true
+			glyph: "󰘚"
+			value: HardwareService.memUsage
+			valueText: HardwareService.memUsedGb
+			barColor: HardwareService.memColor
+		}
 
-	MetricBar {
-		Layout.fillWidth: true
-		glyph: "󰘚"
-		value: HardwareService.memUsage
-		valueText: HardwareService.memUsedGb
-		barColor: HardwareService.memColor
-	}
-
-	MetricBar {
-		Layout.fillWidth: true
-		glyph: "󰔏"
-		value: Math.min(1.0, HardwareService.temperature / 100.0)
-		valueText: `${HardwareService.temperature}°C`
-		barColor: HardwareService.tempColor
+		MetricBar {
+			Layout.fillWidth: true
+			glyph: "󰔏"
+			value: Math.min(1.0, HardwareService.temperature / 100.0)
+			valueText: `${HardwareService.temperature}°C`
+			barColor: HardwareService.tempColor
+		}
 	}
 }

@@ -9,6 +9,7 @@ QtObject {
 	id: root
 
 	property real cpuUsage: 0.0
+	property var coresUsage: []
 	property real memUsage: 0.0
 	property string memUsedGb: "0.0 GiB / 0.0 GiB"
 	property int temperature: 0
@@ -33,9 +34,6 @@ QtObject {
 		return Theme.colors.accent;
 	}
 
-	property real _prevTotal: 0.0
-	property real _prevIdle: 0.0
-
 	property FileView statFile: FileView {
 		id: procStat
 		path: "/proc/stat"
@@ -57,41 +55,49 @@ QtObject {
 		onLoaded: root.parseTemp()
 	}
 
+	property var _lastCores: []
+
+	function _getUsage(line, idxDelta): void {
+		const fields = line.split(/\s+/).slice(1).map(Number);
+		const idle = fields[3] + fields[4];
+		const nonIdle = fields[0] + fields[1] + fields[2] + fields[5] + fields[6] + fields[7];
+		const sum = idle + nonIdle;
+
+		const dSum = sum - _lastCores[idxDelta].sum;
+		const dIdle = idle - _lastCores[idxDelta].idle;
+
+		_lastCores[idxDelta].sum = sum;
+		_lastCores[idxDelta].idle = idle;
+
+		return Math.max(0, Math.min(1, (dSum - dIdle) / dSum));
+	}
+
 	function parseCpu(): void {
 		const text = procStat.text();
-		if (!text || text.length === 0)
-			return;
+		const lines = text.trim().split("\n");
 
-		const firstLine = text.split("\n")[0] || "";
-		if (!firstLine.startsWith("cpu "))
-			return;
-
-		const parts = firstLine.trim().split(/\s+/).slice(1).map(Number);
-		if (parts.length < 8)
-			return;
-
-		const user = parts[0];
-		const nice = parts[1];
-		const system = parts[2];
-		const idle = parts[3];
-		const iowait = parts[4];
-		const irq = parts[5];
-		const softirq = parts[6];
-		const steal = parts[7];
-
-		const total = user + nice + system + idle + iowait + irq + softirq + steal;
-		const idle_all = idle + iowait;
-
-		if (root._prevTotal > 0) {
-			const deltaTotal = total - root._prevTotal;
-			const deltaIdle = idle_all - root._prevIdle;
-			if (deltaTotal > 0) {
-				root.cpuUsage = Math.max(0.0, Math.min(1.0, (deltaTotal - deltaIdle) / deltaTotal));
-			}
+		if (_lastCores.length === 0) {
+			_lastCores.push({
+				"sum": 0,
+				"idle": 0
+			});
+		} else {
+			root.cpuUsage = _getUsage(lines[0], 0);
 		}
 
-		root._prevTotal = total;
-		root._prevIdle = idle_all;
+		for (let i = 1; i < lines.length; i++) {
+			if (!lines[i].startsWith("cpu"))
+				break;
+			if (_lastCores.length === i) {
+				_lastCores.push({
+					"sum": 0,
+					"idle": 0
+				});
+				root.coresUsage.push(0);
+			} else {
+				root.coresUsage[i - 1] = _getUsage(lines[i], i);
+			}
+		}
 	}
 
 	function parseMem(): void {

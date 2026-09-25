@@ -41,7 +41,7 @@ Rectangle {
 	readonly property bool hasValidImage: artImage.status === Image.Ready
 	readonly property real realAspectRatio: (hasValidImage && artImage.implicitHeight > 0) ? (artImage.implicitWidth / artImage.implicitHeight) : 1.0
 	readonly property real clampedAspect: Math.max(root.minAspect, Math.min(root.maxAspect, root.realAspectRatio))
-	readonly property real calculatedHeight: hasValidImage ? (root.realAspectRatio > 1.2 ? root.maxHeight : root.minHeight) : (root.showFallback ? root.minHeight : 0)
+	readonly property real calculatedHeight: hasValidImage ? Math.max(root.minHeight, Math.min(root.maxHeight, artImage.sourceSize.height > 0 ? (artImage.sourceSize.height / 2) : root.minHeight)) : (root.showFallback ? root.minHeight : 0)
 	readonly property real calculatedWidth: calculatedHeight * clampedAspect
 
 	clip: true

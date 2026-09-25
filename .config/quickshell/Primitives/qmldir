@@ -5,6 +5,7 @@ BatteryDeviceRow 1.0 BatteryDeviceRow.qml
 MetricBar 1.0 MetricBar.qml
 ProgressBar 1.0 ProgressBar.qml
 QuickToggle 1.0 QuickToggle.qml
+RadarChart 1.0 RadarChart.qml
 SessionButton 1.0 SessionButton.qml
 SliderRow 1.0 SliderRow.qml
 StyledButton 1.0 StyledButton.qml

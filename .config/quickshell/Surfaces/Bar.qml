@@ -46,6 +46,10 @@ PanelWindow {
 			Layout.alignment: Qt.AlignVCenter
 			screen: panel.screen
 		}
+		Item {
+			Layout.fillWidth: true
+			visible: !activeWindow.visible && !mediaPill.visible
+		}
 		MediaPill {
 			id: mediaPill
 
