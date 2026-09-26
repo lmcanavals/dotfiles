@@ -95,7 +95,7 @@ QtObject {
 				});
 				root.coresUsage.push(0);
 			} else {
-				root.coresUsage[i - 1] = _getUsage(lines[i], i);
+				root.coresUsage[i - 1] = Math.sqrt(_getUsage(lines[i], i));
 			}
 		}
 	}

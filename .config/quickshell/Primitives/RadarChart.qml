@@ -8,13 +8,12 @@ Canvas {
 	property real total: 0.
 	property real maxValue: 1.
 
-	// Appearance
 	property color gridColor: Theme.colors.border
 	property color spokeColor: Theme.colors.border
-	property color areaColor: Theme.bgControlHover
 	property color lineColor: Theme.colors.success
+	property color areaColor: Theme.alpha(lineColor, .35)
 	property real lineWidth: 1.
-	property int gridLevels: 2
+	property int gridLevels: 3
 	property string glyph: "R"
 
 	antialiasing: true
@@ -31,7 +30,7 @@ Canvas {
 		if (count < 3)
 			return;
 
-		// 0. Draw top-left label
+		// glyph and percentage
 		ctx.fillStyle = lineColor;
 		ctx.font = "12px monospace";
 		ctx.textBaseline = "top";
@@ -42,13 +41,13 @@ Canvas {
 		ctx.textAlign = "left";
 		ctx.fillText(glyph, 0, height);
 
+		// total cpu usage bar
 		const barX = 4;
-		const barY = 8;
+		const barY = 6;
 		const barW = 8;
-		const barH = height - 38;
+		const barH = Math.max(height - 40, 0);
 
 		if (barH > 0) {
-			// background bar
 			ctx.strokeStyle = gridColor;
 			ctx.lineWidth = barW;
 			ctx.lineCap = "round";
@@ -57,7 +56,6 @@ Canvas {
 			ctx.lineTo(barX + barW / 2, barY + barH);
 			ctx.stroke();
 
-			// filled portion
 			const clampedTotal = Math.max(0, Math.min(root.total, 1.0));
 			const fillH = barH * clampedTotal;
 
@@ -83,23 +81,15 @@ Canvas {
 		ctx.strokeStyle = gridColor;
 		ctx.lineWidth = 1.0;
 		for (let level = 1; level <= gridLevels; ++level) {
-			const levelRadius = (radius / gridLevels) * level;
+			const levelRadius = radius * Math.sqrt(level / gridLevels);
 			ctx.beginPath();
-			for (let i = 0; i < count; ++i) {
-				const angle = startOffset + i * angleStep;
-				const x = centerX + levelRadius * Math.cos(angle);
-				const y = centerY + levelRadius * Math.sin(angle);
-				if (i === 0)
-					ctx.moveTo(x, y);
-				else
-					ctx.lineTo(x, y);
-			}
-			ctx.closePath();
+			ctx.ellipse(centerX - levelRadius, centerY - levelRadius, levelRadius * 2, levelRadius * 2, 0, 0, 2 * Math.PI);
 			ctx.stroke();
 		}
 
 		// 2. Draw radial spokes from center
 		ctx.strokeStyle = spokeColor;
+		ctx.lineWidth = lineWidth;
 		for (let i = 0; i < count; ++i) {
 			const angle = startOffset + i * angleStep;
 			ctx.beginPath();
