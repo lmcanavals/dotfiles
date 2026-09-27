@@ -22,10 +22,18 @@ RowLayout {
 	ColumnLayout {
 		MetricBar {
 			Layout.fillWidth: true
-			glyph: "󰘚"
+			glyph: `󰍛 ${HardwareService.memTotal}GiB`
 			value: HardwareService.memUsage
-			valueText: HardwareService.memUsedGb
+			valueText: `${Math.round(Math.max(0.0, Math.min(1.0, HardwareService.memUsage)) * 100)}%`
 			barColor: HardwareService.memColor
+		}
+
+		MetricBar {
+			Layout.fillWidth: true
+			glyph: `󰾴 ${HardwareService.swapTotal}GiB`
+			value: HardwareService.swapUsage
+			valueText: `${Math.round(Math.max(0.0, Math.min(1.0, HardwareService.swapUsage)) * 100)}%`
+			barColor: HardwareService.swapColor
 		}
 
 		MetricBar {

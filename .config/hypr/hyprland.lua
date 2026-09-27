@@ -383,7 +383,7 @@ hl.window_rule({
 
 hl.window_rule({
 	name = "float-by-title",
-	match = { title = "^.*(?:Developer Tools|  ).*$" },
+	match = { title = "^.*(?:Developer Tools|󰣇  ).*$" },
 
 	float = true,
 })

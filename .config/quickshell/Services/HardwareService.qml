@@ -10,12 +10,15 @@ QtObject {
 
 	property real cpuUsage: 0.0
 	property var coresUsage: []
+	property real memTotal: 0.0
 	property real memUsage: 0.0
-	property string memUsedGb: "0.0 GiB / 0.0 GiB"
+	property real swapTotal: 0.0
+	property real swapUsage: 0.0
 	property int temperature: 0
 
 	readonly property color cpuColor: colorForUsage(cpuUsage)
 	readonly property color memColor: colorForUsage(memUsage)
+	readonly property color swapColor: colorForUsage(swapUsage)
 	readonly property color tempColor: colorForTemp(temperature)
 
 	function colorForUsage(ratio: real): color {
@@ -55,7 +58,8 @@ QtObject {
 		onLoaded: root.parseTemp()
 	}
 
-	property var _lastCores: []
+	property var _lastSums: []
+	property var _lastIdles: []
 
 	function _getUsage(line, idxDelta): void {
 		const fields = line.split(/\s+/).slice(1).map(Number);
@@ -63,11 +67,11 @@ QtObject {
 		const nonIdle = fields[0] + fields[1] + fields[2] + fields[5] + fields[6] + fields[7];
 		const sum = idle + nonIdle;
 
-		const dSum = sum - _lastCores[idxDelta].sum;
-		const dIdle = idle - _lastCores[idxDelta].idle;
+		const dSum = sum - _lastSums[idxDelta];
+		const dIdle = idle - _lastIdles[idxDelta];
 
-		_lastCores[idxDelta].sum = sum;
-		_lastCores[idxDelta].idle = idle;
+		_lastSums[idxDelta] = sum;
+		_lastIdles[idxDelta] = idle;
 
 		return Math.max(0, Math.min(1, (dSum - dIdle) / dSum));
 	}
@@ -76,11 +80,9 @@ QtObject {
 		const text = procStat.text();
 		const lines = text.trim().split("\n");
 
-		if (_lastCores.length === 0) {
-			_lastCores.push({
-				"sum": 0,
-				"idle": 0
-			});
+		if (_lastSums.length === 0) {
+			_lastSums.push(0);
+			_lastIdles.push(0);
 		} else {
 			root.cpuUsage = _getUsage(lines[0], 0);
 		}
@@ -88,11 +90,9 @@ QtObject {
 		for (let i = 1; i < lines.length; i++) {
 			if (!lines[i].startsWith("cpu"))
 				break;
-			if (_lastCores.length === i) {
-				_lastCores.push({
-					"sum": 0,
-					"idle": 0
-				});
+			if (_lastSums.length === i) {
+				_lastSums.push(0);
+				_lastIdles.push(0);
 				root.coresUsage.push(0);
 			} else {
 				root.coresUsage[i - 1] = Math.sqrt(_getUsage(lines[i], i));
@@ -107,17 +107,25 @@ QtObject {
 
 		const totalMatch = text.match(/MemTotal:\s+(\d+)\s+kB/);
 		const availMatch = text.match(/MemAvailable:\s+(\d+)\s+kB/);
+		const swapMatch = text.match(/SwapTotal:\s+(\d+)\s+kB/);
+		const freeSwapMatch = text.match(/SwapFree:\s+(\d+)\s+kB/);
 
 		if (totalMatch && availMatch) {
 			const totalKb = parseInt(totalMatch[1], 10);
 			const availKb = parseInt(availMatch[1], 10);
 			const usedKb = totalKb - availKb;
-
 			if (totalKb > 0) {
 				root.memUsage = Math.max(0.0, Math.min(1.0, usedKb / totalKb));
-				const usedGb = (usedKb / 1048576).toFixed(1);
-				const totalGb = (totalKb / 1048576).toFixed(1);
-				root.memUsedGb = `${usedGb} GiB / ${totalGb} GiB`;
+				root.memTotal = (totalKb / 1048576).toFixed(1);
+			}
+		}
+		if (swapMatch && freeSwapMatch) {
+			const swapKb = parseInt(swapMatch[1], 10);
+			const freeSwapKb = parseInt(freeSwapMatch[1], 10);
+			const usedSwapKb = swapKb - freeSwapKb;
+			if (swapKb > 0) {
+				root.swapUsage = Math.max(0.0, Math.min(1.0, usedSwapKb / swapKb));
+				root.swapTotal = (swapKb / 1048576).toFixed(1);
 			}
 		}
 	}

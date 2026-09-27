@@ -76,7 +76,7 @@ QtObject {
 
 	function triggerUpgrade(): void {
 		root.close();
-		upgradeProcess.command = ["kitty", "--title", "  System Upgrade", "sh", "-c", "yay; echo 'Press enter to exit'; read"];
+		upgradeProcess.command = ["kitty", "--title", "󰣇  System Upgrade", "sh", "-c", "yay; echo 'Press enter to exit'; read"];
 		upgradeProcess.startDetached();
 	}
 
