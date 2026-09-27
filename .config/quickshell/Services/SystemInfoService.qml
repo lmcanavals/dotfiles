@@ -46,7 +46,10 @@ QtObject {
 						root.userIcon = "";
 					}
 					root.realName = rName;
-				} catch (e) {}
+				} catch (e) {
+					console.log(`Error on SystemInfoService ${accountProcess.command}
+					${e}`);
+				}
 				root.isQueryingAccount = false;
 			}
 		}

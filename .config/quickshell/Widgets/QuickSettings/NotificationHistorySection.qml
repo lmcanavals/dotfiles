@@ -96,6 +96,7 @@ SurfaceCard {
 				id: itemCard
 				required property var modelData
 				required property int index
+				property bool expanded: false
 
 				width: ListView.view ? ListView.view.width : 300
 				implicitHeight: rowLayout.implicitHeight + 8
@@ -106,6 +107,8 @@ SurfaceCard {
 					id: itemMouseArea
 					anchors.fill: parent
 					hoverEnabled: true
+					cursorShape: (itemCard.modelData && itemCard.modelData.body && itemCard.modelData.body.length > 0) ? Qt.PointingHandCursor : Qt.ArrowCursor
+					onClicked: itemCard.expanded = !itemCard.expanded
 				}
 
 				RowLayout {
@@ -151,7 +154,17 @@ SurfaceCard {
 							text: itemCard.modelData.summary || ""
 							font.pixelSize: Config.fontSizeSmall
 							color: Theme.colors.fg
-							elide: Text.ElideRight
+							elide: itemCard.expanded ? Text.ElideNone : Text.ElideRight
+							wrapMode: itemCard.expanded ? Text.Wrap : Text.NoWrap
+							Layout.fillWidth: true
+						}
+
+						StyledText {
+							visible: itemCard.expanded && itemCard.modelData && itemCard.modelData.body && itemCard.modelData.body.length > 0
+							text: itemCard.modelData ? (itemCard.modelData.body || "") : ""
+							font.pixelSize: Config.fontSizeTiny
+							color: Theme.colors.fg_dark
+							wrapMode: Text.Wrap
 							Layout.fillWidth: true
 						}
 

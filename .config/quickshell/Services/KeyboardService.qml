@@ -74,7 +74,8 @@ QtObject {
 						root.updateLayout(mainKb.active_keymap);
 					}
 				} catch (e) {
-					// Ignore parse error
+					console.log(`Error on KeyboardService ${queryProcess.command}
+					${e}`);
 				}
 			}
 		}

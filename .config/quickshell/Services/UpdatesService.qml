@@ -49,7 +49,8 @@ QtObject {
 						}
 					}
 				} catch (e) {
-					// Ignore parse errors silently
+					console.log(`Error on UpdatesService ${busctlProcess.command}
+					${e}`);
 				}
 				root.isChecking = false;
 			}

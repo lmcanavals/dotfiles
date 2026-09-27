@@ -89,7 +89,8 @@ QtObject {
 				}
 			}
 		} catch (e) {
-			// Retain fallback state on corrupted/partial file writes
+			console.log(`Error on Theme:
+			${e}`);
 		}
 	}
 

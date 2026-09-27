@@ -45,7 +45,10 @@ PanelWindow {
 				id: card
 				required property var modelData
 
+				readonly property bool isActionable: Boolean(card.modelData && card.modelData.hasDefaultAction)
+
 				color: Theme.bgSurface
+				border.color: (card.isActionable && cardMouseArea.containsMouse) ? Theme.colors.accent : Theme.colors.border
 				Layout.fillWidth: true
 				implicitHeight: innerLayout.implicitHeight + (Config.padding * 2)
 
@@ -53,7 +56,7 @@ PanelWindow {
 					id: dismissTimer
 					interval: 5000
 					running: !(replyRow.visible && replyInput.activeFocus)
-					onTriggered: NotificationService.dismissActive(card.modelData.id)
+					onTriggered: NotificationService.expireActive(card.modelData.id)
 				}
 
 				property double lastTimestamp: (card.modelData && card.modelData.timestamp) ? card.modelData.timestamp : 0
@@ -61,14 +64,13 @@ PanelWindow {
 
 				// Card-level click for default action
 				MouseArea {
+					id: cardMouseArea
 					anchors.fill: parent
-					cursorShape: (card.modelData && typeof card.modelData.defaultInvoke === "function") ? Qt.PointingHandCursor : Qt.ArrowCursor
-					enabled: card.modelData && typeof card.modelData.defaultInvoke === "function"
+					hoverEnabled: true
+					cursorShape: card.isActionable ? Qt.PointingHandCursor : Qt.ArrowCursor
+					enabled: card.isActionable
 					onClicked: {
-						if (card.modelData && typeof card.modelData.defaultInvoke === "function") {
-							card.modelData.defaultInvoke();
-							NotificationService.dismissActive(card.modelData.id);
-						}
+						NotificationService.invokeDefault(card.modelData.id);
 					}
 				}
 
@@ -89,6 +91,13 @@ PanelWindow {
 							color: Theme.colors.comment
 							Layout.fillWidth: true
 							elide: Text.ElideRight
+						}
+
+						StyledText {
+							visible: card.isActionable
+							text: "󰌹"
+							font.pixelSize: Config.fontSizeSmall
+							color: cardMouseArea.containsMouse ? Theme.colors.accent : Theme.colors.comment
 						}
 
 						StyledText {
@@ -162,10 +171,7 @@ PanelWindow {
 
 								text: actionBtn.modelData.text
 								onClicked: {
-									if (typeof actionBtn.modelData.invoke === "function") {
-										actionBtn.modelData.invoke();
-									}
-									NotificationService.dismissActive(card.modelData.id);
+									NotificationService.invokeAction(card.modelData.id, actionBtn.modelData.id);
 								}
 							}
 						}
@@ -208,10 +214,7 @@ PanelWindow {
 
 								onAccepted: {
 									if (replyInput.text.trim().length > 0) {
-										if (card.modelData && typeof card.modelData.sendReply === "function") {
-											card.modelData.sendReply(replyInput.text);
-										}
-										NotificationService.dismissActive(card.modelData.id);
+										NotificationService.sendReply(card.modelData.id, replyInput.text);
 									}
 								}
 							}
@@ -222,10 +225,7 @@ PanelWindow {
 							implicitHeight: 28
 							onClicked: {
 								if (replyInput.text.trim().length > 0) {
-									if (card.modelData && typeof card.modelData.sendReply === "function") {
-										card.modelData.sendReply(replyInput.text);
-									}
-									NotificationService.dismissActive(card.modelData.id);
+									NotificationService.sendReply(card.modelData.id, replyInput.text);
 								}
 							}
 						}

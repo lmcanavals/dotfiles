@@ -24,6 +24,17 @@ QtObject {
 		Quickshell.execDetached(["find", root.iconCacheDir, "-type", "f", "-mtime", "+3", "-delete"]);
 	}
 
+	function sanitizeNotificationText(text: string): string {
+		if (!text || text.length === 0)
+			return "";
+		let clean = text;
+		// Strip leading HTML anchors like <a href="...">origin</a>
+		clean = clean.replace(/^\s*<a\s+[^>]*href=["'][^"']*["'][^>]*>[^<]*<\/a>[\s\r\n]*/i, "");
+		// Strip leading origin domain headers (e.g. "mail.google.com\n\n")
+		clean = clean.replace(/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?::\d+)?[\s\r\n]+/i, "");
+		return clean.trim();
+	}
+
 	function sanitizeAndCacheIcon(rawIcon: string, notifId: int): var {
 		if (!rawIcon || rawIcon.length === 0) {
 			return {
@@ -32,17 +43,7 @@ QtObject {
 			};
 		}
 
-		let clean = rawIcon.trim();
-		if (clean.startsWith("image://icon//")) {
-			clean = clean.substring(13);
-		} else if (clean.startsWith("image://icon/file://")) {
-			clean = clean.substring(18);
-		} else if (clean.startsWith("image://icon/")) {
-			clean = clean.substring(13);
-		}
-		if (clean.startsWith("file://")) {
-			clean = clean.substring(7);
-		}
+		let clean = rawIcon.trim().replace(/^image:\/\/icon\/(file:\/\/)?/, "").replace(/^file:\/\//, "");
 
 		const isTemp = clean.startsWith("/tmp/") || clean.startsWith("/var/tmp/") || clean.startsWith("/run/user/");
 		if (!isTemp) {
@@ -80,6 +81,9 @@ QtObject {
 		inlineReplySupported: true
 
 		onNotification: notif => {
+			// Mark tracked immediately to prevent C++ from discarding/closing it
+			notif.tracked = true;
+
 			const rawTag = (notif.hints && (notif.hints["x-dunst-stack-tag"] || notif.hints["tag"] || notif.hints["synchronous"] || notif.hints["x-canonical-private-synchronous"])) || "";
 			const tag = String(rawTag).trim();
 
@@ -87,8 +91,8 @@ QtObject {
 			const value = (rawVal !== undefined && rawVal !== null && !isNaN(Number(rawVal))) ? Number(rawVal) : -1;
 
 			const appName = String(notif.appName || "System");
-			const summary = String(notif.summary || "");
-			const body = String(notif.body || "");
+			const summary = root.sanitizeNotificationText(String(notif.summary || ""));
+			const body = root.sanitizeNotificationText(String(notif.body || ""));
 
 			let iconSrc = "";
 			if (notif.image && String(notif.image).trim().length > 0) {
@@ -99,11 +103,12 @@ QtObject {
 				iconSrc = String(notif.hints["image-path"] || notif.hints["image_path"]).trim();
 			}
 
-			// Extract actions safely
-			let defaultInvoke = null;
+			// Extract actions info
+			let hasDefaultAction = false;
 			const activeActions = [];
 			const historyActions = [];
 
+			// qmllint disable unresolved-type
 			if (notif.actions && notif.actions.length > 0) {
 				for (let i = 0; i < notif.actions.length; i++) {
 					const act = notif.actions[i];
@@ -113,20 +118,11 @@ QtObject {
 					const textStr = String(act.text || idStr);
 
 					if (idStr === "default") {
-						defaultInvoke = () => {
-							try {
-								act.invoke();
-							} catch (e) {}
-						};
+						hasDefaultAction = true;
 					} else {
 						activeActions.push({
 							id: idStr,
-							text: textStr,
-							invoke: () => {
-								try {
-									act.invoke();
-								} catch (e) {}
-							}
+							text: textStr
 						});
 						historyActions.push({
 							id: idStr,
@@ -134,16 +130,19 @@ QtObject {
 						});
 					}
 				}
+
+				if (!hasDefaultAction && notif.actions.length > 0) {
+					const first = notif.actions[0];
+					if (first && (first.identifier === "" || first.identifier === "0")) {
+						hasDefaultAction = true;
+					}
+				}
 			}
+			// qmllint enable unresolved-type
 
 			// Extract inline reply
 			const hasInlineReply = Boolean(notif.hasInlineReply);
 			const replyPlaceholder = String(notif.inlineReplyPlaceholder || "Type a reply...");
-			const sendReplyFn = hasInlineReply ? replyText => {
-				try {
-					notif.sendInlineReply(String(replyText));
-				} catch (e) {}
-			} : null;
 
 			const time = new Date().toLocaleTimeString([], {
 				hour: "2-digit",
@@ -164,6 +163,13 @@ QtObject {
 
 			if (activeIdx !== -1) {
 				const existing = root.activeList[activeIdx];
+				// Dismiss the older notification instance that is being replaced
+				if (existing && existing.rawNotif && existing.rawNotif !== notif) {
+					try {
+						existing.rawNotif.dismiss();
+					} catch (e) {}
+				}
+
 				let displaySummary = summary;
 				let count = 1;
 
@@ -189,6 +195,8 @@ QtObject {
 				itemToStore = {
 					id: notif.id,
 					previousId: existing.id,
+					rawNotif: notif,
+					hasDefaultAction: hasDefaultAction,
 					appName: appName,
 					summary: displaySummary,
 					baseSummary: summary,
@@ -201,10 +209,8 @@ QtObject {
 					time: time,
 					timestamp: timestamp,
 					actions: activeActions,
-					defaultInvoke: defaultInvoke,
 					hasInlineReply: hasInlineReply,
-					replyPlaceholder: replyPlaceholder,
-					sendReply: sendReplyFn
+					replyPlaceholder: replyPlaceholder
 				};
 
 				const newActive = [...root.activeList];
@@ -222,6 +228,8 @@ QtObject {
 				itemToStore = {
 					id: notif.id,
 					previousId: notif.id,
+					rawNotif: notif,
+					hasDefaultAction: hasDefaultAction,
 					appName: appName,
 					summary: summary,
 					baseSummary: summary,
@@ -234,10 +242,8 @@ QtObject {
 					time: time,
 					timestamp: timestamp,
 					actions: activeActions,
-					defaultInvoke: defaultInvoke,
 					hasInlineReply: hasInlineReply,
-					replyPlaceholder: replyPlaceholder,
-					sendReply: sendReplyFn
+					replyPlaceholder: replyPlaceholder
 				};
 
 				if (!EnvironmentService.dndActive) {
@@ -245,7 +251,7 @@ QtObject {
 				}
 			}
 
-			// 2. Update historyList (deduplicate and move latest to top, sanitized pure data)
+			// 2. Update historyList (deduplicate and move latest to top, sanitized pure data log)
 			const historyItem = {
 				id: itemToStore.id,
 				previousId: itemToStore.previousId,
@@ -301,12 +307,105 @@ QtObject {
 
 		function onDndActiveChanged() {
 			if (EnvironmentService.dndActive) {
+				for (let i = 0; i < root.activeList.length; i++) {
+					const it = root.activeList[i];
+					if (it && it.rawNotif) {
+						try {
+							it.rawNotif.expire();
+						} catch (e) {}
+					}
+				}
 				root.activeList = [];
 			}
 		}
 	}
 
+	function invokeDefault(id: int): void {
+		const item = root.activeList.find(n => n && (n.id === id || n.previousId === id));
+		if (item && item.rawNotif) {
+			let invoked = false;
+			try {
+				let act = null;
+				if (item.rawNotif.actions && item.rawNotif.actions.length > 0) {
+					act = item.rawNotif.actions.find(a => a && a.identifier === "default");
+					if (!act) {
+						const first = item.rawNotif.actions[0];
+						if (first && (first.identifier === "" || first.identifier === "0")) {
+							act = first;
+						}
+					}
+				}
+				if (act) {
+					act.invoke();
+					invoked = true;
+				}
+			} catch (e) {
+				console.log("Error invoking default action:", e);
+			}
+
+			// In Desktop Notifications spec, Quickshell automatically destroys non-resident notifications on invoke.
+			// Calling notif.dismiss() after invoke causes "Cannot close destroyed notification".
+			if (invoked && !item.rawNotif.resident) {
+				root.activeList = root.activeList.filter(n => n && n.id !== id && n.previousId !== id);
+				return;
+			}
+		}
+		root.dismissActive(id);
+	}
+
+	function invokeAction(id: int, actionId: string): void {
+		const item = root.activeList.find(n => n && (n.id === id || n.previousId === id));
+		if (item && item.rawNotif) {
+			let invoked = false;
+			try {
+				if (item.rawNotif.actions && item.rawNotif.actions.length > 0) {
+					const act = item.rawNotif.actions.find(a => a && a.identifier === actionId);
+					if (act) {
+						act.invoke();
+						invoked = true;
+					}
+				}
+			} catch (e) {
+				console.log("Error invoking action:", actionId, e);
+			}
+
+			if (invoked && !item.rawNotif.resident) {
+				root.activeList = root.activeList.filter(n => n && n.id !== id && n.previousId !== id);
+				return;
+			}
+		}
+		root.dismissActive(id);
+	}
+
+	function sendReply(id: int, replyText: string): void {
+		const item = root.activeList.find(n => n && (n.id === id || n.previousId === id));
+		if (item && item.rawNotif) {
+			try {
+				item.rawNotif.sendInlineReply(String(replyText));
+			} catch (e) {
+				console.log("Error sending reply:", e);
+			}
+		}
+		root.dismissActive(id);
+	}
+
 	function dismissActive(id: int): void {
+		const item = root.activeList.find(n => n && (n.id === id || n.previousId === id));
+		if (item && item.rawNotif) {
+			try {
+				item.rawNotif.dismiss();
+			} catch (e) {}
+		}
+		root.activeList = root.activeList.filter(n => n && n.id !== id && n.previousId !== id);
+	}
+
+	function expireActive(id: int): void {
+		const item = root.activeList.find(n => n && (n.id === id || n.previousId === id));
+		if (item && item.rawNotif) {
+			try {
+				item.rawNotif.expire();
+			} catch (e) {}
+		}
 		root.activeList = root.activeList.filter(n => n && n.id !== id && n.previousId !== id);
 	}
 
@@ -328,17 +427,5 @@ QtObject {
 			}
 		}
 		root.historyList = root.historyList.filter(n => n && n.id !== id && n.previousId !== id);
-	}
-
-	function invokeAction(item: var, actionId: string): void {
-		if (item && item.actions) {
-			const act = item.actions.find(a => a && a.id === actionId);
-			if (act && typeof act.invoke === "function") {
-				act.invoke();
-			}
-		}
-		if (item && item.id !== undefined) {
-			root.dismissActive(item.id);
-		}
 	}
 }
