@@ -58,22 +58,11 @@ PopupWindow {
 					color: Theme.colors.accent
 				}
 
-				Rectangle {
+				StyledText {
+					id: countText
+					text: `(${UpdatesService.count})`
+					font.pixelSize: Config.fontSizeSmall
 					visible: UpdatesService.count > 0
-					implicitWidth: countText.implicitWidth + Config.padding * 2
-					implicitHeight: 26
-					radius: Config.radius
-					color: Theme.alpha(Theme.colors.warning, 0.2)
-					border.color: Theme.colors.warning
-					border.width: 1
-
-					StyledText {
-						id: countText
-						anchors.centerIn: parent
-						text: `${UpdatesService.count}`
-						font.pixelSize: Config.fontSizeSmall
-						color: Theme.colors.warning
-					}
 				}
 
 				Item {

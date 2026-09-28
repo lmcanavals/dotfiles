@@ -5,5 +5,5 @@ MediaPopup 1.0 MediaPopup.qml
 NotificationOsd 1.0 NotificationOsd.qml
 QuickSettings 1.0 QuickSettings.qml
 SubmapIndicator 1.0 SubmapIndicator.qml
+SystemOsd 1.0 SystemOsd.qml
 UpdatesPopup 1.0 UpdatesPopup.qml
-VolumeOsd 1.0 VolumeOsd.qml

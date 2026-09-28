@@ -30,23 +30,11 @@ SurfaceCard {
 				color: Theme.colors.accent
 			}
 
-			Rectangle {
+			StyledText {
+				id: countText
+				text: `(${NotificationService.unreadCount})`
+				font.pixelSize: Config.fontSizeSmall
 				visible: NotificationService.unreadCount > 0
-				implicitWidth: countText.implicitWidth + 8
-				implicitHeight: 16
-				radius: 8
-				color: Theme.alpha(Theme.colors.accent, 0.2)
-				border.color: Theme.colors.accent
-				border.width: 1
-
-				StyledText {
-					id: countText
-					anchors.centerIn: parent
-					text: `${NotificationService.unreadCount}`
-					font.bold: true
-					font.pixelSize: Config.fontSizeTiny
-					color: Theme.colors.accent
-				}
 			}
 
 			Item {
@@ -180,16 +168,9 @@ SurfaceCard {
 						}
 					}
 
-					StyledText {
+					StyledButton {
 						text: "󰅖"
-						font.pixelSize: Config.fontSizeSmall
-						color: Theme.colors.fg_dark
-
-						MouseArea {
-							anchors.fill: parent
-							cursorShape: Qt.PointingHandCursor
-							onClicked: NotificationService.removeHistory(itemCard.modelData.id)
-						}
+						onClicked: NotificationService.removeHistory(itemCard.modelData.id)
 					}
 				}
 			}

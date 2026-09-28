@@ -61,6 +61,41 @@ QtObject {
 		}
 	}
 
+	property Timer debounceTimer: Timer {
+		interval: 30
+		repeat: false
+		onTriggered: root.refresh()
+	}
+
+	property Timer restartTimer: Timer {
+		interval: 2000
+		repeat: false
+		onTriggered: {
+			if (!monitorProc.running) {
+				monitorProc.running = true;
+			}
+		}
+	}
+
+	property Process monitorProc: Process {
+		id: monitorProc
+		command: ["udevadm", "monitor", "-k", "-s", "backlight"]
+		running: true
+
+		stdout: SplitParser {
+			splitMarker: "\n"
+			onRead: data => {
+				if (data && /\bchange\b/.test(data)) {
+					root.debounceTimer.restart();
+				}
+			}
+		}
+
+		onExited: (exitCode, exitStatus) => {
+			root.restartTimer.restart();
+		}
+	}
+
 	function setBrightness(pct: real): void {
 		const clamped = Math.max(0.01, Math.min(1.0, pct));
 		root.brightness = clamped; // Immediate local update: never snapped back by stale cache

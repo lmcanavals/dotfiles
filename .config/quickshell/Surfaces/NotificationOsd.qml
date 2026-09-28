@@ -100,16 +100,9 @@ PanelWindow {
 							color: cardMouseArea.containsMouse ? Theme.colors.accent : Theme.colors.comment
 						}
 
-						StyledText {
+						StyledButton {
 							text: "󰅖"
-							font.pixelSize: Config.fontSizeSmall
-							color: Theme.colors.fg_dark
-
-							MouseArea {
-								anchors.fill: parent
-								cursorShape: Qt.PointingHandCursor
-								onClicked: NotificationService.dismissActive(card.modelData.id)
-							}
+							onClicked: NotificationService.dismissActive(card.modelData.id)
 						}
 					}
 

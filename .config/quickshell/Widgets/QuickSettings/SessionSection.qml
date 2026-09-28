@@ -10,38 +10,33 @@ RowLayout {
 	Layout.fillWidth: true
 	spacing: Config.spacing
 
-	SessionButton {
+	StyledButton {
 		Layout.fillWidth: true
-		glyph: "󰍃"
-		hoverColor: Theme.colors.warning
+		text: "󰍃"
 		onClicked: SessionService.logout()
 	}
 
-	SessionButton {
+	StyledButton {
 		Layout.fillWidth: true
-		glyph: "󰤄"
-		hoverColor: Theme.colors.accent_alt
+		text: "󰤄"
 		onClicked: SessionService.suspend()
 	}
 
-	SessionButton {
+	StyledButton {
 		Layout.fillWidth: true
-		glyph: ""
-		hoverColor: Theme.colors.info
+		text: ""
 		onClicked: SessionService.hibernate()
 	}
 
-	SessionButton {
+	StyledButton {
 		Layout.fillWidth: true
-		glyph: "󰜉"
-		hoverColor: Theme.colors.accent
+		text: "󰜉"
 		onClicked: SessionService.reboot()
 	}
 
-	SessionButton {
+	StyledButton {
 		Layout.fillWidth: true
-		glyph: "󰐥"
-		hoverColor: Theme.colors.error
+		text: "󰐥"
 		onClicked: SessionService.poweroff()
 	}
 }
