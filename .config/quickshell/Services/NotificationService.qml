@@ -380,10 +380,18 @@ QtObject {
 	function sendReply(id: int, replyText: string): void {
 		const item = root.activeList.find(n => n && (n.id === id || n.previousId === id));
 		if (item && item.rawNotif) {
+			let sent = false;
 			try {
 				item.rawNotif.sendInlineReply(String(replyText));
+				item.invoked = true;
+				sent = true;
 			} catch (e) {
 				console.log("Error sending reply:", e);
+			}
+
+			if (sent && !item.rawNotif.resident) {
+				root.activeList = root.activeList.filter(n => n && n.id !== id && n.previousId !== id);
+				return;
 			}
 		}
 		root.dismissActive(id);

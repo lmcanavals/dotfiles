@@ -1,45 +1,48 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import Quickshell
+import Quickshell.Wayland
 import Core
 import Services
 import Primitives
 
-Scope {
+LazyLoader {
 	id: root
+
 	readonly property string submap: HyprlandService.currentSubmap
-	readonly property bool active: submap.length > 0
 
-	LazyLoader {
-		active: root.active
+	active: submap !== ""
 
-		// qmllint disable uncreatable-type
-		PanelWindow {
-			anchors.bottom: true
-			// qmllint disable unqualified unresolved-type
-			margins.bottom: (screen?.height ?? 1080) / 6
-			exclusiveZone: 0
+	// qmllint disable uncreatable-type
+	PanelWindow { // qmllint enable uncreatable-type
+		anchors.bottom: true
+		// qmllint disable unqualified unresolved-type
+		margins.bottom: (screen?.height ?? 1080) / 6 // qmllint enable unqualified unresolved-type
+		exclusiveZone: 0
 
-			implicitWidth: content.implicitWidth
-			implicitHeight: content.implicitHeight
-			color: "transparent"
+		implicitWidth: content.implicitWidth + Config.padding
+		implicitHeight: content.implicitHeight
+		color: "transparent"
 
-			mask: Region {}
+		WlrLayershell.layer: WlrLayer.Overlay
+		WlrLayershell.namespace: "quickshell:osd"
 
-			SurfaceCard {
-				id: content
+		mask: Region {}
 
-				color: Theme.alpha(Theme.colors.bg_widget_r, 0.7)
-				radius: Config.radius
-				implicitWidth: label.implicitWidth + Config.padding * 3
-				implicitHeight: Config.widgetHeight + 4
+		SurfaceCard {
+			id: content
 
-				StyledText {
-					id: label
+			implicitWidth: label.implicitWidth + Config.padding * 4
+			implicitHeight: label.implicitHeight + Config.padding * 2
 
-					anchors.centerIn: parent
-					text: root.submap
-					color: Theme.colors.fg_widget_r
-				}
+			StyledText {
+				id: label
+
+				anchors.centerIn: parent
+				text: root.submap
+				font.pixelSize: Config.fontSizeLarge
+				color: Theme.colors.fg_widget
 			}
 		}
 	}

@@ -30,8 +30,12 @@ PanelWindow {
 	implicitHeight: notifColumn.implicitHeight
 	color: "transparent"
 
+	property Item focusedReplyInput: null
+	readonly property bool hasActiveReplyFocus: focusedReplyInput !== null && focusedReplyInput.activeFocus
+
 	WlrLayershell.layer: WlrLayer.Overlay
 	WlrLayershell.namespace: "quickshell:notifications"
+	WlrLayershell.keyboardFocus: root.hasActiveReplyFocus ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
 
 	ColumnLayout {
 		id: notifColumn
@@ -196,6 +200,25 @@ PanelWindow {
 								font.pixelSize: Config.fontSizeSmall
 								clip: true
 
+								onActiveFocusChanged: {
+									if (replyInput.activeFocus) {
+										root.focusedReplyInput = replyInput;
+									} else if (root.focusedReplyInput === replyInput) {
+										root.focusedReplyInput = null;
+									}
+								}
+
+								Component.onDestruction: {
+									if (root.focusedReplyInput === replyInput) {
+										root.focusedReplyInput = null;
+									}
+								}
+
+								Keys.onEscapePressed: event => {
+									replyInput.focus = false;
+									event.accepted = true;
+								}
+
 								StyledText {
 									anchors.fill: parent
 									verticalAlignment: Text.AlignVCenter
@@ -206,8 +229,10 @@ PanelWindow {
 								}
 
 								onAccepted: {
-									if (replyInput.text.trim().length > 0) {
-										NotificationService.sendReply(card.modelData.id, replyInput.text);
+									const text = replyInput.text.trim();
+									replyInput.focus = false;
+									if (text.length > 0) {
+										NotificationService.sendReply(card.modelData.id, text);
 									}
 								}
 							}
@@ -217,8 +242,10 @@ PanelWindow {
 							text: "󰒊"
 							implicitHeight: 28
 							onClicked: {
-								if (replyInput.text.trim().length > 0) {
-									NotificationService.sendReply(card.modelData.id, replyInput.text);
+								const text = replyInput.text.trim();
+								replyInput.focus = false;
+								if (text.length > 0) {
+									NotificationService.sendReply(card.modelData.id, text);
 								}
 							}
 						}

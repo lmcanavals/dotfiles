@@ -99,12 +99,10 @@ Scope {
 		active: root.showOsd
 
 		// qmllint disable uncreatable-type
-		PanelWindow {
-			// qmllint enable uncreatable-type
+		PanelWindow { // qmllint enable uncreatable-type
 			anchors.bottom: true
 			// qmllint disable unqualified unresolved-type
-			margins.bottom: (screen?.height ?? 1080) / 6
-			// qmllint enable unqualified unresolved-type
+			margins.bottom: (screen?.height ?? 1080) / 6 // qmllint enable unqualified unresolved-type
 			exclusiveZone: 0
 
 			implicitWidth: 320
@@ -119,7 +117,6 @@ Scope {
 			SurfaceCard {
 				anchors.fill: parent
 				color: Theme.bgSurface
-				radius: Config.radius
 
 				MetricBar {
 					anchors.fill: parent

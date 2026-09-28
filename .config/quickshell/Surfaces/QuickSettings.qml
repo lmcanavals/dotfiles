@@ -36,9 +36,6 @@ PopupWindow {
 		id: mainCard
 		anchors.fill: parent
 		color: Theme.bgSurface
-		border.color: Theme.colors.border
-		border.width: 1
-		radius: Config.radius * 2
 
 		ColumnLayout {
 			id: contentLayout

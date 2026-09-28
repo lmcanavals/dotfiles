@@ -1,7 +1,6 @@
 pragma Singleton
 
 import QtQuick
-import Quickshell.Io
 import Quickshell.Services.Pipewire
 
 QtObject {
@@ -84,34 +83,25 @@ QtObject {
 		return node.description || node.name || ("Node #" + node.id);
 	}
 
-	property Process wpctlProc: Process {
-		id: wpctlProcess
-		running: false
-	}
-
 	function setSink(node: var): void {
 		if (!node)
 			return;
-		// qmllint disable missing-property
-		if (typeof Pipewire.setDefaultAudioSink === "function") {
-			Pipewire.setDefaultAudioSink(node);
-		} else {
-			wpctlProcess.command = ["wpctl", "set-default", String(node.id)];
-			wpctlProcess.startDetached();
+
+		try {
+			Pipewire.preferredDefaultAudioSink = node;
+		} catch (e) {
+			console.log("Error setting preferredDefaultAudioSink:", e);
 		}
-		// qmllint enable missing-property
 	}
 
 	function setSource(node: var): void {
 		if (!node)
 			return;
-		// qmllint disable missing-property
-		if (typeof Pipewire.setDefaultAudioSource === "function") {
-			Pipewire.setDefaultAudioSource(node);
-		} else {
-			wpctlProcess.command = ["wpctl", "set-default", String(node.id)];
-			wpctlProcess.startDetached();
+
+		try {
+			Pipewire.preferredDefaultAudioSource = node;
+		} catch (e) {
+			console.log("Error setting preferredDefaultAudioSource:", e);
 		}
-		// qmllint enable missing-property
 	}
 }

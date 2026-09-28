@@ -42,10 +42,7 @@ PopupWindow {
 		id: mainCard
 
 		anchors.fill: parent
-		border.color: Theme.colors.border
-		border.width: 1
 		color: Theme.bgSurface
-		radius: Config.radius * 2
 
 		// Top Row: Album Art & Track Metadata
 		RowLayout {

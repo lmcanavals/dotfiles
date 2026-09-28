@@ -16,6 +16,7 @@ PopupWindow {
 	property bool isSourcePicker: false
 
 	visible: false
+	grabFocus: true
 
 	implicitWidth: 280
 	implicitHeight: contentLayout.implicitHeight + Config.padding * 4
@@ -34,9 +35,6 @@ PopupWindow {
 		id: mainCard
 		anchors.fill: parent
 		color: Theme.bgSurface
-		border.color: Theme.colors.border
-		border.width: 1
-		radius: Config.radius * 2
 
 		ColumnLayout {
 			id: contentLayout
@@ -87,6 +85,7 @@ PopupWindow {
 						anchors.fill: parent
 						hoverEnabled: true
 						cursorShape: Qt.PointingHandCursor
+						z: 1
 
 						onClicked: {
 							if (root.isSourcePicker) {
