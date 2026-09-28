@@ -22,10 +22,9 @@ RowLayout {
 		delegate: StyledButton {
 			required property HyprlandWorkspace modelData
 
-			focused: modelData?.focused ?? false
-			active: modelData?.active ?? false
-			urgent: modelData?.urgent ?? false
-			implicitWidth: Math.max(Config.workspaceButtonWidth, labelItem.implicitWidth + Config.padding)
+			minWidth: Config.workspaceButtonWidth
+			bg: modelData?.focused ? Theme.colors.bg_widget_r : modelData?.urgent ? Theme.colors.accent_dim : modelData?.active ? Theme.colors.bg_highlight : Theme.colors.bg_widget
+			fg: modelData?.focused ? Theme.colors.fg_widget_r : Theme.colors.fg_widget
 
 			text: {
 				if (!modelData)
@@ -34,11 +33,7 @@ RowLayout {
 				return name.replace(/^special:/, "");
 			}
 
-			onClicked: {
-				if (modelData && !modelData.focused) {
-					modelData.activate();
-				}
-			}
+			onClicked: (modelData && !modelData.focused) && modelData.activate()
 		}
 	}
 }

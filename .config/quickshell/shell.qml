@@ -27,7 +27,7 @@ ShellRoot {
 		MediaPopup {}
 	}
 
-	VolumeOsd {}
+	SystemOsd {}
 
 	SubmapIndicator {}
 

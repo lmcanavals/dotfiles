@@ -4,23 +4,17 @@ import Core
 SurfaceCard {
 	id: root
 
-	property bool focused: false
-	property bool active: false
-	property bool urgent: false
-	property alias text: label.text
-	property alias labelItem: label
+	property string text: "Btn"
+	property int minWidth: 30
+	property color bg: Theme.bgControl
+	property color bgHover: Theme.bgControlHover
+	property color fg: Theme.colors.fg
+	property color fgHover: Theme.colors.fg_widget
+	property int fontSize: Config.fontSizeBase
 
-	signal clicked(var mouse)
+	signal clicked
 
-	color: {
-		if (urgent)
-			return Theme.colors.accent_dim;
-		if (focused)
-			return Theme.colors.bg_widget_r;
-		if (active)
-			return Theme.colors.bg_highlight;
-		return mouseArea.containsMouse ? Theme.colors.bg_widget_r : Theme.colors.bg_widget;
-	}
+	color: mouseArea.containsMouse ? bgHover : bg
 
 	Behavior on color {
 		ColorAnimation {
@@ -28,8 +22,8 @@ SurfaceCard {
 		}
 	}
 
-	implicitWidth: label.implicitWidth + Config.padding * 2
-	implicitHeight: Config.widgetHeight
+	implicitWidth: Math.max(minWidth, label.implicitWidth + Config.padding * 2)
+	implicitHeight: Math.max(Config.widgetHeight, label.implicitHeight + Config.padding)
 
 	MouseArea {
 		id: mouseArea
@@ -37,18 +31,15 @@ SurfaceCard {
 		anchors.fill: parent
 		hoverEnabled: true
 		cursorShape: Qt.PointingHandCursor
-		onClicked: mouse => root.clicked(mouse)
+		onClicked: mouse => root.clicked()
 	}
 
 	StyledText {
 		id: label
 
 		anchors.centerIn: parent
-		color: {
-			if (root.urgent || root.focused)
-				return Theme.colors.fg_widget_r;
-			return Theme.colors.fg_widget;
-		}
-		font.bold: root.focused || root.active
+		text: root.text
+		color: mouseArea.containsMouse ? root.fgHover : root.fg
+		font.pixelSize: root.fontSize
 	}
 }
