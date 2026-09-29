@@ -9,9 +9,9 @@ import Services
 SurfaceCard {
 	id: root
 
-	Layout.fillWidth: true
-	Layout.minimumWidth: 60
+	implicitWidth: Math.min(360, layout.implicitWidth + Config.padding * 2)
 	implicitHeight: Config.widgetHeight
+	Layout.maximumWidth: 360
 	visible: MediaService.hasPlayer
 
 	MouseArea {

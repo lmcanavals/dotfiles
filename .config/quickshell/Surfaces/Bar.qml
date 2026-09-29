@@ -48,7 +48,7 @@ PanelWindow {
 		}
 		Item {
 			Layout.fillWidth: true
-			visible: !activeWindow.visible && !mediaPill.visible
+			visible: !activeWindow.visible
 		}
 		MediaPill {
 			id: mediaPill
