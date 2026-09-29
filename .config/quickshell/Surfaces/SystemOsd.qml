@@ -1,19 +1,35 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import Core
 import Services
 import Primitives
 
-Scope {
+// qmllint disable uncreatable-type
+PanelWindow { // qmllint enable uncreatable-type
 	id: root
 
 	property bool showOsd: false
 	property string currentMode: "volume" // "volume" | "mic" | "brightness"
 	property bool ready: false
+
+	visible: root.showOsd
+
+	anchors.bottom: true
+	// qmllint disable unqualified unresolved-type
+	margins.bottom: (screen?.height ?? 1080) / 6 // qmllint enable unqualified unresolved-type
+	exclusiveZone: 0
+
+	implicitWidth: 320
+	implicitHeight: 46
+	color: "transparent"
+
+	WlrLayershell.layer: WlrLayer.Overlay
+	WlrLayershell.namespace: "quickshell:osd"
+
+	mask: Region {}
 
 	Component.onCompleted: {
 		Qt.callLater(() => {
@@ -95,40 +111,18 @@ Scope {
 		return AudioService.muted ? "Muted" : `${Math.round(AudioService.volume * 100)}%`;
 	}
 
-	LazyLoader {
-		active: root.showOsd
+	SurfaceCard {
+		anchors.fill: parent
+		color: Theme.bgSurface
 
-		// qmllint disable uncreatable-type
-		PanelWindow { // qmllint enable uncreatable-type
-			anchors.bottom: true
-			// qmllint disable unqualified unresolved-type
-			margins.bottom: (screen?.height ?? 1080) / 6 // qmllint enable unqualified unresolved-type
-			exclusiveZone: 0
-
-			implicitWidth: 320
-			implicitHeight: 46
-			color: "transparent"
-
-			WlrLayershell.layer: WlrLayer.Overlay
-			WlrLayershell.namespace: "quickshell:osd"
-
-			mask: Region {}
-
-			SurfaceCard {
-				anchors.fill: parent
-				color: Theme.bgSurface
-
-				MetricBar {
-					anchors.fill: parent
-					anchors.leftMargin: Config.padding * 2
-					anchors.rightMargin: Config.padding * 2
-					Layout.fillWidth: true
-					glyph: root.activeGlyph
-					value: root.activeValue
-					barColor: root.activeBarColor
-					valueText: root.activeValueText
-				}
-			}
+		MetricBar {
+			anchors.fill: parent
+			anchors.leftMargin: Config.padding * 2
+			anchors.rightMargin: Config.padding * 2
+			glyph: root.activeGlyph
+			value: root.activeValue
+			barColor: root.activeBarColor
+			valueText: root.activeValueText
 		}
 	}
 }

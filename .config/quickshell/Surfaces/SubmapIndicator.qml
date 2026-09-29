@@ -7,43 +7,41 @@ import Core
 import Services
 import Primitives
 
-LazyLoader {
+// qmllint disable uncreatable-type
+PanelWindow { // qmllint enable uncreatable-type
 	id: root
 
 	readonly property string submap: HyprlandService.currentSubmap
 
-	active: submap !== ""
+	visible: root.submap !== ""
 
-	// qmllint disable uncreatable-type
-	PanelWindow { // qmllint enable uncreatable-type
-		anchors.bottom: true
-		// qmllint disable unqualified unresolved-type
-		margins.bottom: (screen?.height ?? 1080) / 6 // qmllint enable unqualified unresolved-type
-		exclusiveZone: 0
+	anchors.bottom: true
+	// qmllint disable unqualified unresolved-type
+	margins.bottom: (screen?.height ?? 1080) / 6 // qmllint enable unqualified unresolved-type
+	exclusiveZone: 0
 
-		implicitWidth: content.implicitWidth + Config.padding
-		implicitHeight: content.implicitHeight
-		color: "transparent"
+	implicitWidth: content.implicitWidth + Config.padding
+	implicitHeight: content.implicitHeight
+	color: "transparent"
 
-		WlrLayershell.layer: WlrLayer.Overlay
-		WlrLayershell.namespace: "quickshell:osd"
+	WlrLayershell.layer: WlrLayer.Overlay
+	WlrLayershell.namespace: "quickshell:osd"
 
-		mask: Region {}
+	mask: Region {}
 
-		SurfaceCard {
-			id: content
+	SurfaceCard {
+		id: content
 
-			implicitWidth: label.implicitWidth + Config.padding * 4
-			implicitHeight: label.implicitHeight + Config.padding * 2
+		implicitWidth: label.implicitWidth + Config.padding * 4
+		implicitHeight: label.implicitHeight + Config.padding * 2
 
-			StyledText {
-				id: label
+		StyledText {
+			id: label
 
-				anchors.centerIn: parent
-				text: root.submap
-				font.pixelSize: Config.fontSizeLarge
-				color: Theme.colors.fg_widget
-			}
+			anchors.centerIn: parent
+			text: root.submap
+			font.pixelSize: Config.fontSizeLarge
+			color: Theme.colors.fg_widget
 		}
 	}
 }
