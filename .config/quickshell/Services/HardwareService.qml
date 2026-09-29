@@ -10,6 +10,7 @@ QtObject {
 
 	property real cpuUsage: 0.0
 	property var coresUsage: []
+	property var _coresUsage: []
 	property real memTotal: 0.0
 	property real memUsage: 0.0
 	property real swapTotal: 0.0
@@ -61,11 +62,17 @@ QtObject {
 	property var _lastSums: []
 	property var _lastIdles: []
 
-	function _getUsage(line, idxDelta): void {
+	function _getUsage(line: string, idxDelta: int): real {
 		const fields = line.split(/\s+/).slice(1).map(Number);
 		const idle = fields[3] + fields[4];
 		const nonIdle = fields[0] + fields[1] + fields[2] + fields[5] + fields[6] + fields[7];
 		const sum = idle + nonIdle;
+
+		if (_lastSums.length <= idxDelta || _lastSums[idxDelta] === undefined) {
+			_lastSums[idxDelta] = sum;
+			_lastIdles[idxDelta] = idle;
+			return 0.0;
+		}
 
 		const dSum = sum - _lastSums[idxDelta];
 		const dIdle = idle - _lastIdles[idxDelta];
@@ -73,31 +80,38 @@ QtObject {
 		_lastSums[idxDelta] = sum;
 		_lastIdles[idxDelta] = idle;
 
-		return Math.max(0, Math.min(1, (dSum - dIdle) / dSum));
+		if (dSum <= 0)
+			return 0.0;
+
+		return Math.max(0.0, Math.min(1.0, (dSum - dIdle) / dSum));
 	}
 
 	function parseCpu(): void {
 		const text = procStat.text();
-		const lines = text.trim().split("\n");
+		if (!text || text.length === 0)
+			return;
 
-		if (_lastSums.length === 0) {
-			_lastSums.push(0);
-			_lastIdles.push(0);
-		} else {
-			root.cpuUsage = _getUsage(lines[0], 0);
-		}
+		const lines = text.trim().split("\n");
+		if (lines.length === 0)
+			return;
+
+		root.cpuUsage = _getUsage(lines[0], 0);
 
 		for (let i = 1; i < lines.length; i++) {
 			if (!lines[i].startsWith("cpu"))
 				break;
-			if (_lastSums.length === i) {
-				_lastSums.push(0);
-				_lastIdles.push(0);
+			const coreIdx = i - 1;
+			if (root.coresUsage.length <= coreIdx)
 				root.coresUsage.push(0);
-			} else {
-				root.coresUsage[i - 1] = Math.sqrt(_getUsage(lines[i], i));
-			}
+			if (root._coresUsage.length <= coreIdx)
+				root._coresUsage.push(0);
+
+			root._coresUsage[coreIdx] = Math.sqrt(_getUsage(lines[i], i));
 		}
+
+		const temp = root.coresUsage;
+		root.coresUsage = root._coresUsage;
+		root._coresUsage = temp;
 	}
 
 	function parseMem(): void {
@@ -116,7 +130,7 @@ QtObject {
 			const usedKb = totalKb - availKb;
 			if (totalKb > 0) {
 				root.memUsage = Math.max(0.0, Math.min(1.0, usedKb / totalKb));
-				root.memTotal = (totalKb / 1048576).toFixed(1);
+				root.memTotal = totalKb / 1048576;
 			}
 		}
 		if (swapMatch && freeSwapMatch) {
@@ -125,7 +139,7 @@ QtObject {
 			const usedSwapKb = swapKb - freeSwapKb;
 			if (swapKb > 0) {
 				root.swapUsage = Math.max(0.0, Math.min(1.0, usedSwapKb / swapKb));
-				root.swapTotal = (swapKb / 1048576).toFixed(1);
+				root.swapTotal = swapKb / 1048576;
 			}
 		}
 	}
