@@ -66,15 +66,6 @@ QtObject {
 		onTriggered: root.refresh()
 	}
 
-	property Connections openWatcher: Connections {
-		target: QuickSettingsService
-		function onOpenChanged() {
-			if (QuickSettingsService.open) {
-				root.refresh();
-			}
-		}
-	}
-
 	Component.onCompleted: root.refresh()
 
 	function refresh(): void {
