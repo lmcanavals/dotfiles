@@ -19,19 +19,33 @@ QtObject {
 	readonly property bool hasPlayer: activePlayer !== null
 	readonly property bool isPlaying: activePlayer?.playbackState === MprisPlaybackState.Playing
 	readonly property real length: activePlayer?.length ?? 0
-	readonly property real position: activePlayer?.position ?? 0
+	property real position: 0
 	readonly property string title: activePlayer?.trackTitle ?? ""
 	property bool open: false
-	property int positionTick: 0
 	property Item targetItem: null
+
+	// INFO: there is a chance that position is updated twice, by timer and naturally by
+	// signal from mpris, but some apps appear to not update at the same rate. Youtube only
+	// updates on demand, while hbo+ updates automatically even without timer
+	function updatePosition(): void {
+		root.position = activePlayer?.position ?? 0;
+	}
 
 	property Timer positionTimer: Timer {
 		interval: 1000
 		repeat: true
 		running: root.isPlaying && root.open
 
-		onTriggered: root.positionTick++
+		onTriggered: root.updatePosition()
 	}
+
+	onActivePlayerChanged: root.updatePosition()
+	onOpenChanged: {
+		if (root.open) {
+			root.updatePosition();
+		}
+	}
+
 	readonly property real progress: {
 		if (!activePlayer || root.length <= 0)
 			return 0.0;
@@ -74,6 +88,7 @@ QtObject {
 			return;
 		const clamped = Math.max(0.0, Math.min(1.0, ratio));
 		activePlayer.position = clamped * root.length;
+		root.updatePosition();
 	}
 
 	function toggle(target: Item): void {
