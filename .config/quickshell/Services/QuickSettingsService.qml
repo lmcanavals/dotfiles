@@ -6,7 +6,14 @@ QtObject {
 	id: root
 
 	property bool open: false
+	property bool hasOpened: false
 	property Item targetItem: null
+
+	onOpenChanged: {
+		if (root.open) {
+			root.hasOpened = true;
+		}
+	}
 
 	function toggle(item: Item) {
 		if (root.open && root.targetItem === item) {

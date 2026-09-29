@@ -17,6 +17,15 @@ ColumnLayout {
 		}
 	}
 
+	Connections {
+		target: QuickSettingsService
+		function onOpenChanged() {
+			if (!QuickSettingsService.open) {
+				root.activeDrawer = "";
+			}
+		}
+	}
+
 	Layout.fillWidth: true
 	spacing: Config.spacing
 

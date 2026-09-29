@@ -13,7 +13,7 @@ ShellRoot {
 	}
 
 	LazyLoader {
-		active: QuickSettingsService.open
+		active: QuickSettingsService.hasOpened
 		QuickSettings {}
 	}
 
@@ -23,7 +23,7 @@ ShellRoot {
 	}
 
 	LazyLoader {
-		active: MediaService.open
+		active: MediaService.hasOpened
 		MediaPopup {}
 	}
 

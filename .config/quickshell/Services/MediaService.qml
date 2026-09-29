@@ -22,6 +22,7 @@ QtObject {
 	property real position: 0
 	readonly property string title: activePlayer?.trackTitle ?? ""
 	property bool open: false
+	property bool hasOpened: false
 	property Item targetItem: null
 
 	// INFO: there is a chance that position is updated twice, by timer and naturally by
@@ -42,6 +43,7 @@ QtObject {
 	onActivePlayerChanged: root.updatePosition()
 	onOpenChanged: {
 		if (root.open) {
+			root.hasOpened = true;
 			root.updatePosition();
 		}
 	}
