@@ -12,10 +12,13 @@ RowLayout {
 	required property real value
 	required property color accentColor
 	property bool muted: false
+	property bool expandable: false
+	property bool expanded: false
 
 	signal valueModified(real newValue)
 	signal iconClicked
 	signal iconRightClicked
+	signal chevronClicked
 
 	spacing: Config.spacing
 
@@ -51,5 +54,23 @@ RowLayout {
 		text: `${Math.round(root.value * 100)}%`
 		font.pixelSize: Config.fontSizeSmall
 		color: root.muted ? Theme.colors.comment : root.accentColor
+		Layout.preferredWidth: 38
+	}
+
+	StyledText {
+		visible: root.expandable
+		text: root.expanded ? "󰅀" : "󰅂"
+		font.pixelSize: Config.fontSizeSmall
+		color: chevronMouseArea.containsMouse ? Theme.colors.accent : Theme.colors.comment
+		Layout.preferredWidth: 16
+		horizontalAlignment: Text.AlignHCenter
+
+		MouseArea {
+			id: chevronMouseArea
+			anchors.fill: parent
+			hoverEnabled: true
+			cursorShape: Qt.PointingHandCursor
+			onClicked: root.chevronClicked()
+		}
 	}
 }

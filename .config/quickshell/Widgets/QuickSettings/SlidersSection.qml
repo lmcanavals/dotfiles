@@ -7,8 +7,18 @@ import Services
 ColumnLayout {
 	id: root
 
+	property string activeDrawer: "" // "" | "sink" | "source"
+
+	function toggleDrawer(name: string): void {
+		if (root.activeDrawer === name) {
+			root.activeDrawer = "";
+		} else {
+			root.activeDrawer = name;
+		}
+	}
+
 	Layout.fillWidth: true
-	spacing: Config.spacing * 2
+	spacing: Config.spacing
 
 	SliderRow {
 		id: sinkSlider
@@ -17,18 +27,27 @@ ColumnLayout {
 		value: AudioService.volume
 		muted: AudioService.muted
 		accentColor: Theme.colors.fg_widget
+		expandable: true
+		expanded: root.activeDrawer === "sink"
 
 		onIconClicked: AudioService.toggleMute()
-		onIconRightClicked: sinkPicker.visible = !sinkPicker.visible
+		onIconRightClicked: root.toggleDrawer("sink")
+		onChevronClicked: root.toggleDrawer("sink")
 		onValueModified: val => AudioService.setVolume(val)
 	}
 
-	AudioNodePicker {
-		id: sinkPicker
-		anchorItem: sinkSlider
+	InlineSelectionDrawer {
+		id: sinkDrawer
+		Layout.fillWidth: true
+		visible: root.activeDrawer === "sink"
+		title: "Audio Outputs"
 		modelList: AudioService.sinks
-		activeNode: AudioService.sink
-		isSourcePicker: false
+		selectedItem: AudioService.sink
+		itemLabelFunc: node => AudioService.nodeLabel(node)
+		onItemSelected: node => {
+			AudioService.setSink(node);
+			root.activeDrawer = "";
+		}
 	}
 
 	SliderRow {
@@ -38,18 +57,27 @@ ColumnLayout {
 		value: AudioService.micVolume
 		muted: AudioService.micMuted
 		accentColor: Theme.colors.fg_widget
+		expandable: true
+		expanded: root.activeDrawer === "source"
 
 		onIconClicked: AudioService.toggleMicMute()
-		onIconRightClicked: sourcePicker.visible = !sourcePicker.visible
+		onIconRightClicked: root.toggleDrawer("source")
+		onChevronClicked: root.toggleDrawer("source")
 		onValueModified: val => AudioService.setMicVolume(val)
 	}
 
-	AudioNodePicker {
-		id: sourcePicker
-		anchorItem: sourceSlider
+	InlineSelectionDrawer {
+		id: sourceDrawer
+		Layout.fillWidth: true
+		visible: root.activeDrawer === "source"
+		title: "Audio Inputs"
 		modelList: AudioService.sources
-		activeNode: AudioService.source
-		isSourcePicker: true
+		selectedItem: AudioService.source
+		itemLabelFunc: node => AudioService.nodeLabel(node)
+		onItemSelected: node => {
+			AudioService.setSource(node);
+			root.activeDrawer = "";
+		}
 	}
 
 	SliderRow {
