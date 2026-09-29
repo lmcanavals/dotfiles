@@ -425,11 +425,9 @@ hl.window_rule({
 })
 
 -- Workspace names
-local workspace_names = { "󰬺", "󰬻", "󰬼", "󰬽", "󰬾", "󰬿", "󰭀", "󰭁", "󰭂", "󰿩" }
-for i, name in ipairs(workspace_names) do
+for i = 1, 10 do
 	hl.workspace_rule({
 		workspace = tostring(i),
-		default_name = name,
 		monitor = i > 3 and "HDMI-A-1" or "eDP-1",
 	})
 end

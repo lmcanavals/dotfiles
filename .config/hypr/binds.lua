@@ -17,14 +17,14 @@ local terminal = "uwsm-app -- kitty"
 local resetBar = "fyi Quickbar not_implemented_yet"
 local hideBar = "fyi Quickbar not_implemented_yet"
 
--- submap names 󰫮󰫯󰫰󰫱󰫲󰫳󰫴󰫵󰫶󰫷󰫸󰫹󰫺󰫻󰫼󰫽󰫾󰫿󰬀󰬁󰬂󰬃󰬄󰬅󰬆󰬇┃┊│
-local groups = "󰓩 : 󰬁 Togl │󰫹 Lck │󰌒 │ │"
-local power = " : 󰫹  │ 󰫾 󰍃 │ 󰬀 󰤄 │ 󰫵  │ 󰫿 󰜉 │ 󰫽 󰐥"
-local scrGrab = "󰹑 : 󰫲 󱇣│󰬀 󰉏│󰫿 "
-local swappy = "󱇣 : 󰫮󰍺│󰫼󰍹│󰬄│󰫿󰩭"
-local save = "󰉏 : 󰫮󰍺│󰫼󰍹│󰬄│󰫿󰩭"
-local rec = " : 󰫼 󰍹│󰫿 󰩭│󰬀 "
-local testKeys = "Test keys"
+-- submap names
+local groups = "󰓩 :  Toggle │  Lock │󰌒 │ │"
+local power = " :  Lock │ 󰍃 Quit │ 󰤄 Sleep │  Hibernate │ 󰜉 Reboot │ 󰐥 Poweroff"
+local scrGrab = "󰹑 : 󱇣 Edit │ 󰉏 Save │  Record"
+local swappy = "󱇣 : 󰍺 All │ 󰍹 Output │  Window │ 󰩭 Region"
+local save = "󰉏 : 󰍺 All │ 󰍹 Output │  Window │ 󰩭 Region"
+local rec = " : 󰍹 Output │ 󰩭 Region │  Stop"
+local testKeys = "Test keys with wev"
 local window = " 󰙕 : 󰞗 │󰞖 │󰞙 │󰞘"
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
