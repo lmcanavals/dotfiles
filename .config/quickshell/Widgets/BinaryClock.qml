@@ -19,6 +19,6 @@ SurfaceCard {
 		id: label
 
 		anchors.centerIn: parent
-		text: BinaryClockService.timeString
+		text: TimeService.binaryTime
 	}
 }
