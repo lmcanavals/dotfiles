@@ -22,62 +22,39 @@ PanelWindow {
 		right: true
 		top: true
 	}
+
 	RowLayout {
 		anchors.fill: parent
 		anchors.margins: Config.margin
 		spacing: Config.spacing
 
-		OsIcon {
-			id: osIcon
+		OsIcon {}
 
-			Layout.alignment: Qt.AlignVCenter
-			Layout.fillWidth: false
-		}
 		Workspaces {
-			id: workspaces
-
-			Layout.alignment: Qt.AlignVCenter
-			Layout.fillWidth: false
 			screen: panel.screen
 		}
+
 		ActiveWindow {
 			id: activeWindow
 
-			Layout.alignment: Qt.AlignVCenter
+			Layout.fillWidth: true
 			screen: panel.screen
 		}
+
 		Item {
 			Layout.fillWidth: true
 			visible: !activeWindow.visible
 		}
-		MediaPill {
-			id: mediaPill
 
-			Layout.alignment: Qt.AlignVCenter
-		}
-		KeyboardLayout {
-			id: keyboardLayout
+		MediaPill {}
 
-			Layout.alignment: Qt.AlignVCenter
-			Layout.fillWidth: false
-		}
-		Batteries {
-			id: batteries
+		KeyboardLayout {}
 
-			Layout.alignment: Qt.AlignVCenter
-			Layout.fillWidth: false
-		}
-		BinaryClock {
-			id: binaryClock
+		Batteries {}
 
-			Layout.alignment: Qt.AlignVCenter
-			Layout.fillWidth: false
-		}
+		BinaryClock {}
+
 		SysTray {
-			id: sysTray
-
-			Layout.alignment: Qt.AlignVCenter
-			Layout.fillWidth: false
 			bar: panel
 		}
 	}

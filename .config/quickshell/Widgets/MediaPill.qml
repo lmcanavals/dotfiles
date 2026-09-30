@@ -6,34 +6,19 @@ import QtQuick
 import QtQuick.Layouts
 import Services
 
-SurfaceCard {
+BarPill {
 	id: root
 
 	implicitWidth: Math.min(360, layout.implicitWidth + Config.padding * 3)
-	implicitHeight: Config.widgetHeight
 	Layout.maximumWidth: 360
 	visible: MediaService.hasPlayer
 
-	MouseArea {
-		id: mouseArea
-
-		acceptedButtons: Qt.LeftButton | Qt.MiddleButton
-		anchors.fill: parent
-		cursorShape: Qt.PointingHandCursor
-		hoverEnabled: true
-
-		onClicked: mouse => {
-			if (mouse.button === Qt.LeftButton) {
-				MediaService.toggle(root);
-			} else if (mouse.button === Qt.MiddleButton) {
-				MediaService.playPause();
-			}
-		}
-		onWheel: wheel => {
-			wheel.accepted = true;
-			const step = wheel.angleDelta.y > 0 ? 0.05 : -0.05;
-			MediaService.adjustVolume(step);
-		}
+	onClicked: MediaService.toggle(root)
+	onMiddleClicked: MediaService.playPause()
+	onWheel: wheel => {
+		wheel.accepted = true;
+		const step = wheel.angleDelta.y > 0 ? 0.05 : -0.05;
+		MediaService.adjustVolume(step);
 	}
 
 	RowLayout {

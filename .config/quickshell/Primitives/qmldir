@@ -1,5 +1,6 @@
 module Primitives
 
+BarPill 1.0 BarPill.qml
 BatteryDeviceRow 1.0 BatteryDeviceRow.qml
 InlineSelectionDrawer 1.0 InlineSelectionDrawer.qml
 MetricBar 1.0 MetricBar.qml

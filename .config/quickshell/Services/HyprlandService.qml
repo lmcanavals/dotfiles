@@ -19,4 +19,23 @@ QtObject {
 			}
 		}
 	}
+
+	function titleForScreen(screen): string {
+		if (!screen)
+			return HyprlandService.activeTitle;
+
+		const monitor = Hyprland.monitorFor(screen);
+		if (!monitor || !monitor.activeWorkspace)
+			return "";
+
+		if (monitor.focused && Hyprland.activeToplevel)
+			return Hyprland.activeToplevel.title ?? "";
+
+		const toplevels = monitor.activeWorkspace.toplevels?.values ?? [];
+		if (toplevels.length === 0)
+			return "";
+
+		const activeClient = toplevels.find(tl => tl && tl.activated) || toplevels[0];
+		return activeClient?.title ?? "";
+	}
 }

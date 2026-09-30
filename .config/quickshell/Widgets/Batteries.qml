@@ -6,11 +6,10 @@ import Core
 import Primitives
 import Services
 
-SurfaceCard {
+BarPill {
 	id: root
 
-	implicitWidth: layout.implicitWidth + Config.padding * 2
-	implicitHeight: Config.widgetHeight
+	clickable: false
 
 	RowLayout {
 		id: layout

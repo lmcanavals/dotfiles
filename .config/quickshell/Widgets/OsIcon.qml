@@ -4,25 +4,12 @@ import Core
 import Primitives
 import Services
 
-SurfaceCard {
+BarPill {
 	id: root
 
-	implicitWidth: layout.implicitWidth + Config.padding * 2
-	implicitHeight: Config.widgetHeight
-
-	MouseArea {
-		anchors.fill: parent
-		cursorShape: Qt.PointingHandCursor
-		acceptedButtons: Qt.LeftButton | Qt.MiddleButton | Qt.RightButton
-
-		onClicked: mouse => {
-			if (mouse.button === Qt.LeftButton) {
-				UpdatesService.toggle(root);
-			} else if (mouse.button === Qt.MiddleButton || mouse.button === Qt.RightButton) {
-				UpdatesService.refresh();
-			}
-		}
-	}
+	onClicked: UpdatesService.toggle(root)
+	onMiddleClicked: UpdatesService.refresh()
+	onRightClicked: UpdatesService.refresh()
 
 	RowLayout {
 		id: layout
