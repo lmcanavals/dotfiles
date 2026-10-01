@@ -28,6 +28,22 @@ QtObject {
 		root.open = false;
 	}
 
+	function _parseEntry(entry: string): var {
+		const m = entry.match(/^(\S+)\s+(.+?)\s+->\s+(\S+)$/);
+		if (m) {
+			return {
+				name: m[1],
+				oldVer: m[2],
+				newVer: m[3]
+			};
+		}
+		return {
+			name: entry,
+			oldVer: "",
+			newVer: ""
+		};
+	}
+
 	property Process busctlProc: Process {
 		id: busctlProcess
 		command: ["busctl", "--user", "call", "org.lmcs.DBus.UpdatesBtw", "/org/lmcs/DBus/UpdatesBtw/GetUpdates", "org.lmcs.DBus.UpdatesBtw.UpdatesInterface", "GetUpdates", "x", "0", "--json=short"]
@@ -43,7 +59,8 @@ QtObject {
 							const inner = JSON.parse(parsed.data[0]);
 							if (inner) {
 								root.count = (typeof inner.count === "number") ? inner.count : (inner.updates ? inner.updates.length : 0);
-								root.updates = Array.isArray(inner.updates) ? inner.updates : [];
+								const rawList = Array.isArray(inner.updates) ? inner.updates : [];
+								root.updates = rawList.map(item => (typeof item === "string") ? root._parseEntry(item) : item);
 								root.lastUpdated = inner.timestamp || "";
 							}
 						}

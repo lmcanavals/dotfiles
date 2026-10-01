@@ -111,43 +111,28 @@ PopupWindow {
 
 					delegate: Item {
 						id: delegateRoot
-						required property string modelData
+						required property var modelData
 						required property int index
 
 						width: listView.width
 						implicitHeight: newVerLabel.implicitHeight + Config.spacing / 2
-						readonly property var parts: {
-							const m = delegateRoot.modelData.match(/^(\S+)\s+(.+?)\s+->\s+(\S+)$/);
-							if (m) {
-								return {
-									name: m[1],
-									oldVer: m[2],
-									newVer: m[3]
-								};
-							}
-							return {
-								name: delegateRoot.modelData,
-								oldVer: "",
-								newVer: ""
-							};
-						}
 
 						StyledText {
 							id: nameLabel
-							text: delegateRoot.parts.name
+							text: delegateRoot.modelData.name
 							font.pixelSize: Config.fontSizeBase
 							elide: Text.ElideRight
 							horizontalAlignment: Text.AlignLeft
 							anchors.left: delegateRoot.left
-							anchors.right: oldVerLabel.left
+							anchors.right: oldVerLabel.visible ? oldVerLabel.left : arrow.visible ? arrow.left : newVerLabel.visible ? newVerLabel.left : delegateRoot.right
 							anchors.rightMargin: Config.spacing
 							anchors.verticalCenter: delegateRoot.verticalCenter
 						}
 
 						StyledText {
 							id: oldVerLabel
-							visible: delegateRoot.parts.oldVer.length > 0
-							text: delegateRoot.parts.oldVer
+							visible: delegateRoot.modelData.oldVer.length > 0
+							text: delegateRoot.modelData.oldVer
 							font.pixelSize: Config.fontSizeSmall
 							color: Theme.colors.comment
 							horizontalAlignment: Text.AlignRight
@@ -157,7 +142,7 @@ PopupWindow {
 
 						StyledText {
 							id: arrow
-							visible: delegateRoot.parts.newVer.length > 0
+							visible: delegateRoot.modelData.newVer.length > 0
 							text: ""
 							font.pixelSize: Config.fontSizeSmall
 							color: Theme.colors.comment
@@ -169,8 +154,8 @@ PopupWindow {
 
 						StyledText {
 							id: newVerLabel
-							visible: delegateRoot.parts.newVer.length > 0
-							text: delegateRoot.parts.newVer
+							visible: delegateRoot.modelData.newVer.length > 0
+							text: delegateRoot.modelData.newVer
 							font.bold: true
 							font.pixelSize: Config.fontSizeBase
 							color: Theme.colors.success
