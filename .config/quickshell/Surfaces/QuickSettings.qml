@@ -9,8 +9,8 @@ import Widgets
 PopupWindow {
 	id: root
 
-	implicitWidth: 360
-	implicitHeight: contentLayout.implicitHeight + Config.padding * 4
+	implicitWidth: mainCard.implicitWidth
+	implicitHeight: mainCard.implicitHeight
 
 	visible: QuickSettingsService.open && QuickSettingsService.targetItem !== null
 	grabFocus: true
@@ -34,14 +34,22 @@ PopupWindow {
 
 	SurfaceCard {
 		id: mainCard
-		anchors.fill: parent
+
+		implicitHeight: contentLayout.implicitHeight + Config.padding * 3
+		implicitWidth: 400
 		color: Theme.bgSurface
 
 		ColumnLayout {
 			id: contentLayout
-			anchors.fill: parent
-			anchors.margins: Config.padding * 2
-			spacing: Config.spacing * 2
+
+			anchors {
+				left: parent.left
+				right: parent.right
+				top: parent.top
+				margins: Config.padding * 1.5
+			}
+
+			spacing: Config.spacing
 
 			HeaderSection {}
 

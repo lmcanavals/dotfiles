@@ -2,10 +2,11 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import Quickshell
+import Quickshell.Widgets
 import Core
 import Primitives
 
-Rectangle {
+ClippingRectangle {
 	id: root
 
 	property string source: ""

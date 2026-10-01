@@ -32,7 +32,7 @@ PanelWindow { // qmllint enable uncreatable-type
 	SurfaceCard {
 		id: content
 
-		implicitWidth: label.implicitWidth + Config.padding * 4
+		implicitWidth: label.implicitWidth + Config.padding * 3
 		implicitHeight: label.implicitHeight + Config.padding * 2
 
 		StyledText {

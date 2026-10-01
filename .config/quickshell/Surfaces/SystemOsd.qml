@@ -117,8 +117,8 @@ PanelWindow { // qmllint enable uncreatable-type
 
 		MetricBar {
 			anchors.fill: parent
-			anchors.leftMargin: Config.padding * 2
-			anchors.rightMargin: Config.padding * 2
+			anchors.leftMargin: Config.padding * 1.5
+			anchors.rightMargin: Config.padding * 1.5
 			glyph: root.activeGlyph
 			value: root.activeValue
 			barColor: root.activeBarColor

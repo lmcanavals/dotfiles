@@ -21,8 +21,8 @@ PanelWindow {
 
 	// qmllint disable unqualified unresolved-type
 	margins {
-		top: Config.barHeight + 12
-		right: 12
+		top: Config.barHeight + Config.padding
+		right: Config.padding
 	}
 	// qmllint enable unqualified unresolved-type
 

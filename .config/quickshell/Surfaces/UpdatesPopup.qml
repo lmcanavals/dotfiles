@@ -40,8 +40,8 @@ PopupWindow {
 		ColumnLayout {
 			id: contentLayout
 			anchors.fill: parent
-			anchors.margins: Config.padding * 2
-			spacing: Config.spacing * 2
+			anchors.margins: Config.padding * 1.5
+			spacing: Config.spacing
 
 			// Header Row
 			RowLayout {

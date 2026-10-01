@@ -21,8 +21,8 @@ PopupWindow {
 
 	color: "transparent"
 	grabFocus: true
-	implicitHeight: contentLayout.implicitHeight + Config.padding * 4
-	implicitWidth: 450
+	implicitWidth: mainCard.implicitWidth
+	implicitHeight: mainCard.implicitHeight
 	visible: MediaService.open && MediaService.targetItem !== null
 
 	onVisibleChanged: {
@@ -41,16 +41,22 @@ PopupWindow {
 	SurfaceCard {
 		id: mainCard
 
-		anchors.fill: parent
+		implicitHeight: contentLayout.implicitHeight + Config.padding * 3
+		implicitWidth: 450
 		color: Theme.bgSurface
 
 		// Top Row: Album Art & Track Metadata
 		RowLayout {
 			id: contentLayout
 
-			anchors.fill: parent
-			anchors.margins: Config.padding * 2
-			spacing: Config.spacing * 2
+			anchors {
+				left: parent.left
+				right: parent.right
+				top: parent.top
+				margins: Config.padding * 1.5
+			}
+
+			spacing: Config.spacing
 
 			ThumbnailImage {
 				id: artContainer
