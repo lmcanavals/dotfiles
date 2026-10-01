@@ -8,5 +8,6 @@ Text {
 	font.family: Config.fontFamily
 	font.pixelSize: Config.fontSizeBase
 	verticalAlignment: Text.AlignVCenter
+	horizontalAlignment: Text.AlignHCenter
 	renderType: Text.NativeRendering
 }

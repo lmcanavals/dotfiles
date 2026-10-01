@@ -1,11 +1,11 @@
 import QtQuick
 import Core
 
-SurfaceCard {
+Rectangle {
 	id: root
 
 	property string text: "Btn"
-	property int minWidth: 30
+	property int minWidth: 20
 	property color bg: Theme.bgControl
 	property color bgHover: Theme.bgControlHover
 	property color fg: Theme.colors.fg
@@ -38,8 +38,8 @@ SurfaceCard {
 		id: label
 
 		anchors.centerIn: parent
+		anchors.fill: parent
 		text: root.text
 		color: mouseArea.containsMouse ? root.fgHover : root.fg
-		font.pixelSize: root.fontSize
 	}
 }

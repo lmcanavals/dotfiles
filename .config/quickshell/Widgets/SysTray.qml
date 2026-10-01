@@ -8,13 +8,10 @@ import Quickshell.Services.SystemTray
 import Core
 import Primitives
 
-SurfaceCard {
+BarPill {
 	id: root
 
 	required property PanelWindow bar
-
-	implicitWidth: layout.implicitWidth + Config.padding * 2
-	implicitHeight: Config.widgetHeight
 
 	RowLayout {
 		id: layout
