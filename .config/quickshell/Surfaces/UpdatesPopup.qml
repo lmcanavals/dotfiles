@@ -102,6 +102,7 @@ PopupWindow {
 				ListView {
 					id: listView
 					anchors.fill: parent
+					anchors.rightMargin: scrollbar.visible ? 6 : 0
 					visible: UpdatesService.updates.length > 0
 					clip: true
 					boundsBehavior: Flickable.StopAtBounds
@@ -114,7 +115,7 @@ PopupWindow {
 						required property int index
 
 						width: listView.width
-						implicitHeight: oldVer.implicitHeight + Config.spacing / 2
+						implicitHeight: newVerLabel.implicitHeight + Config.spacing / 2
 						readonly property var parts: {
 							const m = delegateRoot.modelData.match(/^(\S+)\s+(.+?)\s+->\s+(\S+)$/);
 							if (m) {
@@ -132,58 +133,66 @@ PopupWindow {
 						}
 
 						StyledText {
+							id: nameLabel
 							text: delegateRoot.parts.name
-							font.pixelSize: Config.fontSizeSmall
+							font.pixelSize: Config.fontSizeBase
 							elide: Text.ElideRight
-							Layout.fillWidth: true
+							horizontalAlignment: Text.AlignLeft
 							anchors.left: delegateRoot.left
+							anchors.right: oldVerLabel.left
+							anchors.rightMargin: Config.spacing
+							anchors.verticalCenter: delegateRoot.verticalCenter
 						}
 
 						StyledText {
+							id: oldVerLabel
 							visible: delegateRoot.parts.oldVer.length > 0
 							text: delegateRoot.parts.oldVer
-							font.pixelSize: Config.fontSizeTiny
+							font.pixelSize: Config.fontSizeSmall
 							color: Theme.colors.comment
 							horizontalAlignment: Text.AlignRight
 							anchors.right: arrow.left
+							anchors.verticalCenter: delegateRoot.verticalCenter
 						}
 
 						StyledText {
 							id: arrow
 							visible: delegateRoot.parts.newVer.length > 0
 							text: ""
-							font.pixelSize: Config.fontSizeTiny
+							font.pixelSize: Config.fontSizeSmall
 							color: Theme.colors.comment
 							horizontalAlignment: Text.AlignHCenter
-							anchors.right: oldVer.left
+							anchors.right: newVerLabel.left
+							anchors.verticalCenter: delegateRoot.verticalCenter
 							width: 20
 						}
 
 						StyledText {
-							id: oldVer
+							id: newVerLabel
 							visible: delegateRoot.parts.newVer.length > 0
 							text: delegateRoot.parts.newVer
 							font.bold: true
-							font.pixelSize: Config.fontSizeSmall
+							font.pixelSize: Config.fontSizeBase
 							color: Theme.colors.success
 							horizontalAlignment: Text.AlignRight
-							width: Math.max(80, implicitWidth)
+							width: Math.max(85, implicitWidth)
 							anchors.right: delegateRoot.right
+							anchors.verticalCenter: delegateRoot.verticalCenter
 						}
 					}
 				}
-			}
-		}
 
-		// Subtle scrollbar indicator
-		Rectangle {
-			anchors.left: contentLayout.right
-			y: listView.visibleArea.yPosition * listView.height + 80
-			height: Math.max(16, listView.visibleArea.heightRatio * listView.height)
-			width: 3
-			radius: 1.5
-			color: Theme.colors.border
-			visible: listView.visibleArea.heightRatio < 1.0 && UpdatesService.updates.length > 0
+				Rectangle {
+					id: scrollbar
+					anchors.right: parent.right
+					y: Math.max(0, Math.min(parent.height - height, listView.visibleArea.yPosition * listView.height))
+					height: Math.max(16, listView.visibleArea.heightRatio * listView.height)
+					width: 3
+					radius: 1.5
+					color: Theme.colors.border
+					visible: listView.visibleArea.heightRatio < 1.0
+				}
+			}
 		}
 	}
 }
