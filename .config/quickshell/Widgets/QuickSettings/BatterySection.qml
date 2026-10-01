@@ -19,43 +19,38 @@ SurfaceCard {
 		spacing: Config.spacing
 
 		// Primary Laptop Battery row
-		ColumnLayout {
+		RowLayout {
 			visible: PowerService.hasBattery
 			Layout.fillWidth: true
-			spacing: 2
+			spacing: Config.spacing
 
-			RowLayout {
+			StyledText {
+				text: PowerService.primaryGlyph
+				font.pixelSize: Config.fontSizeBase
+				color: PowerService.primaryColor
+			}
+
+			StyledText {
+				text: PowerService.deviceLabelWithState(PowerService.displayDevice)
+				font.bold: true
+				font.pixelSize: Config.fontSizeLarge
+				color: PowerService.primaryColor
 				Layout.fillWidth: true
-				spacing: Config.spacing
+				elide: Text.ElideRight
+			}
 
-				StyledText {
-					text: PowerService.primaryGlyph
-					font.pixelSize: Config.fontSizeBase
-					color: PowerService.primaryColor
-				}
+			StyledText {
+				visible: PowerService.primaryTimeEstimate.length > 0
+				text: PowerService.primaryTimeEstimate
+				font.pixelSize: Config.fontSizeTiny
+				color: Theme.colors.comment
+			}
 
-				StyledText {
-					text: PowerService.deviceLabelWithState(PowerService.displayDevice)
-					font.bold: true
-					font.pixelSize: Config.fontSizeLarge
-					color: PowerService.primaryColor
-					Layout.fillWidth: true
-					elide: Text.ElideRight
-				}
-
-				StyledText {
-					visible: PowerService.primaryTimeEstimate.length > 0
-					text: PowerService.primaryTimeEstimate
-					font.pixelSize: Config.fontSizeTiny
-					color: Theme.colors.comment
-				}
-
-				StyledText {
-					text: PowerService.primaryPercentText
-					font.bold: true
-					font.pixelSize: Config.fontSizeSmall
-					color: PowerService.primaryColor
-				}
+			StyledText {
+				text: PowerService.primaryPercentText
+				font.bold: true
+				font.pixelSize: Config.fontSizeSmall
+				color: PowerService.primaryColor
 			}
 		}
 
@@ -92,12 +87,41 @@ SurfaceCard {
 		Repeater {
 			model: PowerService.peripheralDevices
 
-			delegate: BatteryDeviceRow {
+			delegate: RowLayout {
 				id: deviceDelegate
 				required property var modelData
 
 				Layout.fillWidth: true
-				device: deviceDelegate.modelData
+				spacing: Config.spacing
+
+				StyledText {
+					text: PowerService.glyphForDevice(deviceDelegate.modelData)
+					font.pixelSize: Config.fontSizeBase
+					color: PowerService.colorForDevice(deviceDelegate.modelData)
+				}
+
+				StyledText {
+					text: PowerService.deviceName(deviceDelegate.modelData)
+					font.pixelSize: Config.fontSizeSmall
+					Layout.fillWidth: true
+					elide: Text.ElideRight
+					color: Theme.colors.fg
+				}
+
+				ProgressBar {
+					implicitWidth: 120
+					implicitHeight: 6
+					fillRadius: 3
+					fillColor: PowerService.colorForDevice(deviceDelegate.modelData)
+					value: deviceDelegate.modelData?.percentage ?? 0.0
+				}
+
+				StyledText {
+					text: PowerService.percentText(deviceDelegate.modelData)
+					font.pixelSize: Config.fontSizeTiny
+					horizontalAlignment: Text.AlignRight
+					color: Theme.colors.fg_dark
+				}
 			}
 		}
 	}
