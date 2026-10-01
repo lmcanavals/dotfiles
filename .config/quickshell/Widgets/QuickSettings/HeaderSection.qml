@@ -5,17 +5,14 @@ import Primitives
 import Services
 
 RowLayout {
-	id: root
-
 	Layout.fillWidth: true
 	spacing: Config.spacing
 
 	ThumbnailImage {
-		id: artContainer
 		source: SystemInfoService.userIcon
-		fallbackIcon: ""
-		minHeight: 48
-		maxHeight: 64
+		fallbackIcon: ""
+		minHeight: 64
+		maxHeight: 96
 		showFallback: true
 	}
 
@@ -29,16 +26,15 @@ RowLayout {
 				font.bold: true
 				font.pixelSize: Config.fontSizeLarge
 				color: Theme.colors.accent
-			}
-
-			Item {
-				Layout.fillWidth: true
+				visible: SystemInfoService.realName !== ""
 			}
 
 			StyledText {
+				Layout.fillWidth: true
 				text: "󱎫"
 				color: Theme.colors.comment
 				font.pixelSize: Config.fontSizeSmall
+				horizontalAlignment: Text.AlignRight
 			}
 
 			StyledText {
@@ -72,26 +68,18 @@ RowLayout {
 				font.bold: true
 			}
 
-			Item {
-				Layout.fillWidth: true
-			}
-
 			StyledText {
+				Layout.fillWidth: true
 				text: TimeService.shortTime
 				font.bold: true
+				horizontalAlignment: Text.AlignRight
 			}
 		}
 
-		RowLayout {
+		StyledText {
 			Layout.fillWidth: true
-
-			Item {
-				Layout.fillWidth: true
-			}
-
-			StyledText {
-				text: TimeService.formattedTime
-			}
+			text: TimeService.formattedTime
+			horizontalAlignment: Text.AlignRight
 		}
 	}
 }
