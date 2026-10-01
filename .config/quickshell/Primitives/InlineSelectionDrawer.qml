@@ -26,17 +26,9 @@ SurfaceCard {
 		anchors.margins: Config.padding
 		spacing: Config.spacing
 
-		StyledText {
-			text: root.title
-			font.bold: true
-			font.pixelSize: Config.fontSizeSmall
-			color: Theme.colors.accent
-		}
-
-		Rectangle {
-			Layout.fillWidth: true
-			implicitHeight: 1
-			color: Theme.colors.border
+		SectionHeader {
+			title: root.title
+			titleSize: Config.fontSizeSmall
 		}
 
 		StyledText {

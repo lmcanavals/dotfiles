@@ -43,28 +43,9 @@ PopupWindow {
 			anchors.margins: Config.padding * 1.5
 			spacing: Config.spacing
 
-			// Header Row
-			RowLayout {
-				Layout.fillWidth: true
-				spacing: Config.spacing
-
-				StyledText {
-					text: "System Updates"
-					font.bold: true
-					font.pixelSize: Config.fontSizeLarge
-					color: Theme.colors.accent
-				}
-
-				StyledText {
-					id: countText
-					text: `(${UpdatesService.count})`
-					font.pixelSize: Config.fontSizeSmall
-					visible: UpdatesService.count > 0
-				}
-
-				Item {
-					Layout.fillWidth: true
-				}
+			SectionHeader {
+				title: "System Updates"
+				count: UpdatesService.count
 
 				StyledButton {
 					visible: UpdatesService.count > 0
@@ -76,13 +57,6 @@ PopupWindow {
 					text: "󰅖"
 					onClicked: UpdatesService.close()
 				}
-			}
-
-			// Separator
-			Rectangle {
-				Layout.fillWidth: true
-				implicitHeight: 1
-				color: Theme.colors.border
 			}
 
 			// Updates List or Empty placeholder

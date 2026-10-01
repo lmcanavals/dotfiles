@@ -18,41 +18,15 @@ SurfaceCard {
 		anchors.margins: Config.padding
 		spacing: Config.spacing
 
-		// Header row
-		RowLayout {
-			Layout.fillWidth: true
-			spacing: Config.spacing
-
-			StyledText {
-				text: "Notifications"
-				font.bold: true
-				font.pixelSize: Config.fontSizeLarge
-				color: Theme.colors.accent
-			}
-
-			StyledText {
-				id: countText
-				text: `(${NotificationService.unreadCount})`
-				font.pixelSize: Config.fontSizeSmall
-				visible: NotificationService.unreadCount > 0
-			}
-
-			Item {
-				Layout.fillWidth: true
-			}
+		SectionHeader {
+			title: "Notifications"
+			count: NotificationService.unreadCount
 
 			StyledButton {
 				visible: NotificationService.historyList.length > 0
 				text: "Clear"
 				onClicked: NotificationService.clearHistory()
 			}
-		}
-
-		// Separator
-		Rectangle {
-			Layout.fillWidth: true
-			implicitHeight: 1
-			color: Theme.colors.border
 		}
 
 		// Empty placeholder
