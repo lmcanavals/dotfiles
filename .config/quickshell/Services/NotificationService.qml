@@ -4,10 +4,37 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Services.Notifications
-import Services
 
 QtObject {
 	id: root
+
+	property bool dndActive: false
+
+	function toggleDnd(): void {
+		root.dndActive = !root.dndActive;
+	}
+
+	onDndActiveChanged: {
+		if (root.dndActive) {
+			const cachedFiles = [];
+			for (let i = 0; i < activeListModel.count; i++) {
+				const it = activeListModel.get(i);
+				if (it) {
+					if (it.cachedFile)
+						cachedFiles.push(it.cachedFile);
+					if (it.rawNotif) {
+						try {
+							it.rawNotif.expire();
+						} catch (e) {}
+					}
+				}
+			}
+			activeListModel.clear();
+			for (let i = 0; i < cachedFiles.length; i++) {
+				root._safeUnlinkIcon(cachedFiles[i]);
+			}
+		}
+	}
 
 	property ListModel activeList: ListModel {
 		id: activeListModel
@@ -313,7 +340,7 @@ QtObject {
 					replyPlaceholder: replyPlaceholder
 				};
 
-				if (!EnvironmentService.dndActive) {
+				if (!root.dndActive) {
 					activeListModel.append(itemToStore);
 				}
 			}
@@ -366,32 +393,6 @@ QtObject {
 				}
 			}
 			root.historyList = newHistory.slice(0, 50);
-		}
-	}
-
-	property Connections dndConn: Connections {
-		target: EnvironmentService
-
-		function onDndActiveChanged() {
-			if (EnvironmentService.dndActive) {
-				const cachedFiles = [];
-				for (let i = 0; i < activeListModel.count; i++) {
-					const it = activeListModel.get(i);
-					if (it) {
-						if (it.cachedFile)
-							cachedFiles.push(it.cachedFile);
-						if (it.rawNotif) {
-							try {
-								it.rawNotif.expire();
-							} catch (e) {}
-						}
-					}
-				}
-				activeListModel.clear();
-				for (let i = 0; i < cachedFiles.length; i++) {
-					root._safeUnlinkIcon(cachedFiles[i]);
-				}
-			}
 		}
 	}
 

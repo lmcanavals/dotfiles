@@ -17,13 +17,6 @@ QtObject {
 		root.idleInhibited = !root.idleInhibited;
 	}
 
-	// --- Do Not Disturb (Native Quickshell) ---
-	property bool dndActive: false
-
-	function toggleDnd(): void {
-		root.dndActive = !root.dndActive;
-	}
-
 	// --- Night Light Hyprsunset IPC ---
 	// TODO: figure out a way to detect if this thing is on
 	property bool nightLightActive: true
@@ -40,17 +33,5 @@ QtObject {
 			nightLightSetter.command = ["hyprctl", "hyprsunset", "identity"];
 		}
 		nightLightSetter.running = true;
-	}
-
-	// --- Session Lock Execution ---
-	property Process lockProc: Process {
-		command: ["loginctl", "lock-session"]
-		running: false
-	}
-
-	function lockSession(): void {
-		if (!lockProc.running) {
-			lockProc.running = true;
-		}
 	}
 }

@@ -17,6 +17,10 @@ QtObject {
 		actionProc.startDetached();
 	}
 
+	function lock(): void {
+		execute(["loginctl", "lock-session"]);
+	}
+
 	function logout(): void {
 		execute(["uwsm", "stop"]);
 	}

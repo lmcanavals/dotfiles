@@ -36,10 +36,10 @@ GridLayout {
 
 	QuickToggle {
 		Layout.fillWidth: true
-		glyph: EnvironmentService.dndActive ? "󰂛" : "󰂚"
+		glyph: NotificationService.dndActive ? "󰂛" : "󰂚"
 		label: "Do Not Disturb"
-		active: EnvironmentService.dndActive
-		onClicked: EnvironmentService.toggleDnd()
+		active: NotificationService.dndActive
+		onClicked: NotificationService.toggleDnd()
 	}
 
 	QuickToggle {
@@ -63,9 +63,6 @@ GridLayout {
 		glyph: "󰌾"
 		label: "Lock Screen"
 		active: false
-		onClicked: {
-			QuickSettingsService.close();
-			EnvironmentService.lockSession();
-		}
+		onClicked: SessionService.lock()
 	}
 }
