@@ -5,7 +5,6 @@ Canvas {
 	id: root
 
 	property var values: []
-	property real total: 0.
 	property real maxValue: 1.
 
 	property color gridColor: Theme.colors.border
@@ -14,7 +13,6 @@ Canvas {
 	property color areaColor: Theme.alpha(lineColor, .35)
 	property real lineWidth: 1.
 	property int gridLevels: 3
-	property string glyph: "R"
 
 	antialiasing: true
 
@@ -30,47 +28,9 @@ Canvas {
 		if (count < 3)
 			return;
 
-		// glyph and percentage
-		ctx.fillStyle = lineColor;
-		ctx.font = "12px monospace";
-		ctx.textBaseline = "top";
-		ctx.textAlign = "left";
-		ctx.fillText(`${Math.round(Math.max(0.0, Math.min(1.0, root.total)) * 100)}%`, 16, 0);
-		ctx.font = "24px monospace";
-		ctx.textBaseline = "bottom";
-		ctx.textAlign = "left";
-		ctx.fillText(glyph, 0, height);
-
-		// total cpu usage bar
-		const barX = 4;
-		const barY = 6;
-		const barW = 8;
-		const barH = Math.max(height - 40, 0);
-
-		if (barH > 0) {
-			ctx.strokeStyle = gridColor;
-			ctx.lineWidth = barW;
-			ctx.lineCap = "round";
-			ctx.beginPath();
-			ctx.moveTo(barX + barW / 2, barY);
-			ctx.lineTo(barX + barW / 2, barY + barH);
-			ctx.stroke();
-
-			const clampedTotal = Math.max(0, Math.min(root.total, 1.0));
-			const fillH = barH * clampedTotal;
-
-			ctx.strokeStyle = lineColor;
-			ctx.beginPath();
-			ctx.moveTo(barX + barW / 2, barY + barH - fillH);
-			ctx.lineTo(barX + barW / 2, barY + barH);
-			ctx.stroke();
-		}
-
-		const leftOffset = 20;
-		const availWidth = width - leftOffset;
-		const centerX = leftOffset + (availWidth / 2);
+		const centerX = width / 2;
 		const centerY = height / 2;
-		const radius = Math.min(availWidth / 2, centerY) - (lineWidth * 2);
+		const radius = Math.min(centerX, centerY) - (lineWidth * 2);
 		if (radius <= 0)
 			return;
 

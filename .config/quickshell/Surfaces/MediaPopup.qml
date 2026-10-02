@@ -10,15 +10,6 @@ import Services
 PopupWindow {
 	id: root
 
-	function formatTime(val: real): string {
-		if (val <= 0 || isNaN(val))
-			return "0:00";
-		const totalSecs = val > 10000 ? Math.floor(val / 1000000) : Math.floor(val);
-		const mins = Math.floor(totalSecs / 60);
-		const secs = totalSecs % 60;
-		return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
-	}
-
 	color: "transparent"
 	grabFocus: true
 	implicitWidth: mainCard.implicitWidth
@@ -120,7 +111,7 @@ PopupWindow {
 						StyledText {
 							color: Theme.colors.comment
 							font.pixelSize: Config.fontSizeTiny
-							text: root.formatTime(MediaService.position)
+							text: MediaService.formatTime(MediaService.position)
 						}
 
 						Item {
@@ -130,7 +121,7 @@ PopupWindow {
 						StyledText {
 							color: Theme.colors.comment
 							font.pixelSize: Config.fontSizeTiny
-							text: root.formatTime(MediaService.length)
+							text: MediaService.formatTime(MediaService.length)
 						}
 					}
 				}

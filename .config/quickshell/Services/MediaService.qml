@@ -25,6 +25,15 @@ QtObject {
 	property bool hasOpened: false
 	property Item targetItem: null
 
+	function formatTime(val: real): string {
+		if (val <= 0 || isNaN(val))
+			return "0:00";
+		const totalSecs = val > 10000 ? Math.floor(val / 1000000) : Math.floor(val);
+		const mins = Math.floor(totalSecs / 60);
+		const secs = totalSecs % 60;
+		return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
+	}
+
 	// INFO: there is a chance that position is updated twice, by timer and naturally by
 	// signal from mpris, but some apps appear to not update at the same rate. Youtube only
 	// updates on demand, while hbo+ updates automatically even without timer

@@ -11,15 +11,21 @@ RowLayout {
 	spacing: Config.spacing * 2
 
 	RadarChart {
-		Layout.preferredWidth: 116
+		Layout.preferredWidth: 96
 		Layout.preferredHeight: 96
 
-		glyph: "󰻠"
 		lineColor: HardwareService.cpuColor
 		values: HardwareService.coresUsage
-		total: HardwareService.cpuUsage
 	}
 	ColumnLayout {
+		MetricBar {
+			Layout.fillWidth: true
+			glyph: "󰻠"
+			value: HardwareService.cpuUsage
+			valueText: `${Math.round(Math.max(0.0, Math.min(1.0, HardwareService.cpuUsage)) * 100)}%`
+			barColor: HardwareService.cpuColor
+		}
+
 		MetricBar {
 			Layout.fillWidth: true
 			glyph: `󰍛 ${HardwareService.memTotal.toFixed(1)}GiB`
