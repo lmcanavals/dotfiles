@@ -41,21 +41,18 @@ QtObject {
 	property FileView statFile: FileView {
 		id: procStat
 		path: "/proc/stat"
-		blockLoading: true
 		onLoaded: root.parseCpu()
 	}
 
 	property FileView memFile: FileView {
 		id: procMeminfo
 		path: "/proc/meminfo"
-		blockLoading: true
 		onLoaded: root.parseMem()
 	}
 
 	property FileView tempFile: FileView {
 		id: thermalTemp
 		path: "/sys/class/thermal/thermal_zone0/temp"
-		blockLoading: true
 		onLoaded: root.parseTemp()
 	}
 
@@ -164,6 +161,4 @@ QtObject {
 		triggeredOnStart: true
 		onTriggered: root.refresh()
 	}
-
-	Component.onCompleted: root.refresh()
 }

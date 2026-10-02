@@ -39,7 +39,7 @@ PanelWindow {
 
 	ColumnLayout {
 		id: notifColumn
-		spacing: 8
+		spacing: Config.spacing
 		width: parent.width
 
 		Repeater {
@@ -95,6 +95,7 @@ PanelWindow {
 							color: Theme.colors.comment
 							Layout.fillWidth: true
 							elide: Text.ElideRight
+							horizontalAlignment: Text.AlignLeft
 						}
 
 						StyledText {

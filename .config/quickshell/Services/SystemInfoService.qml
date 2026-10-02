@@ -9,7 +9,7 @@ QtObject {
 	id: root
 
 	readonly property string username: Quickshell.env("USER") || "unknown"
-	readonly property string hostname: hostFile.text().trim() || Quickshell.env("HOSTNAME") || "unknown"
+	property string hostname: Quickshell.env("HOSTNAME") || "unknown"
 	property string uptime: "..."
 	property string userIcon: ""
 	property string realName: ""
@@ -17,13 +17,16 @@ QtObject {
 
 	property FileView hostFile: FileView {
 		path: "/etc/hostname"
-		blockLoading: true
+		onLoaded: {
+			const text = this.text().trim();
+			if (text.length > 0)
+				root.hostname = text;
+		}
 	}
 
 	property FileView uptimeFile: FileView {
 		id: procUptime
 		path: "/proc/uptime"
-		blockLoading: true
 
 		onLoaded: root.updateUptime()
 	}
@@ -108,5 +111,4 @@ QtObject {
 		triggeredOnStart: true
 		onTriggered: root.refresh()
 	}
-
 }
