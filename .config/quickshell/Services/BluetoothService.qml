@@ -10,6 +10,7 @@ QtObject {
 	property bool connected: false
 	property string connectedDevice: ""
 	property string glyph: "󰂲"
+	readonly property bool busy: toggleProc.running
 
 	property Process statusProc: Process {
 		id: poller
@@ -103,6 +104,8 @@ QtObject {
 	}
 
 	function toggleBluetooth(): void {
+		if (toggleProc.running)
+			return;
 		const next = !root.enabled;
 		root.enabled = next; // Optimistic update
 		toggleProc.command = ["bluetoothctl", "power", next ? "on" : "off"];

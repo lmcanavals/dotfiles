@@ -10,6 +10,7 @@ QtObject {
 	property bool connected: false
 	property string ssid: ""
 	property string glyph: "󰤮"
+	readonly property bool busy: toggleProc.running
 
 	// Primary poller for NetworkManager radio and active Wi-Fi connection
 	property Process statusProc: Process {
@@ -101,6 +102,8 @@ QtObject {
 	}
 
 	function toggleWifi(): void {
+		if (toggleProc.running)
+			return;
 		const next = !root.enabled;
 		root.enabled = next; // Optimistic update
 		toggleProc.command = ["nmcli", "radio", "wifi", next ? "on" : "off"];
