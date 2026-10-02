@@ -13,30 +13,61 @@ QtObject {
 
 	property Process statusProc: Process {
 		id: poller
-		command: ["sh", "-c", "powered=$(bluetoothctl show | grep -i 'Powered:' | awk '{print $2}'); " + "device=$(bluetoothctl devices Connected | head -n1 | cut -d' ' -f3-); " + "echo \"$powered|$device\""]
+		command: ["bluetoothctl", "show"]
+		running: false
+
+		stdout: StdioCollector {
+			onStreamFinished: {
+				const out = this.text;
+				if (!out) {
+					root.enabled = false;
+					root.connected = false;
+					root.connectedDevice = "";
+					root.glyph = "󰂲";
+					return;
+				}
+
+				const match = out.match(/^\s*Powered:\s*(\w+)/m);
+				const isPowered = match ? (match[1].toLowerCase() === "yes") : false;
+
+				root.enabled = isPowered;
+
+				if (!isPowered) {
+					root.connected = false;
+					root.connectedDevice = "";
+					root.glyph = "󰂲";
+					return;
+				}
+
+				if (!devicesPoller.running) {
+					devicesPoller.running = true;
+				}
+			}
+		}
+	}
+
+	property Process devicesProc: Process {
+		id: devicesPoller
+		command: ["bluetoothctl", "devices", "Connected"]
 		running: false
 
 		stdout: StdioCollector {
 			onStreamFinished: {
 				const out = this.text.trim();
-				if (!out)
-					return;
-
-				const parts = out.split("|");
-				const power = parts[0] || "no";
-				const dev = parts[1] || "";
-
-				root.enabled = (power.toLowerCase() === "yes");
-				root.connectedDevice = dev;
-				root.connected = (dev.length > 0);
-
-				if (!root.enabled) {
-					root.glyph = "󰂲";
-				} else if (!root.connected) {
+				if (!out) {
+					root.connected = false;
+					root.connectedDevice = "";
 					root.glyph = "󰂯";
-				} else {
-					root.glyph = "󰂱";
+					return;
 				}
+
+				const firstLine = out.split("\n")[0].trim();
+				const match = firstLine.match(/^Device\s+([0-9A-Fa-f:]+)(?:\s+(.+))?$/);
+				const devName = match ? (match[2] ? match[2].trim() : match[1]) : "";
+
+				root.connectedDevice = devName;
+				root.connected = (devName.length > 0);
+				root.glyph = root.connected ? "󰂱" : "󰂯";
 			}
 		}
 	}

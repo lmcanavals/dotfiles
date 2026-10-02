@@ -14,7 +14,7 @@ QtObject {
 	// Primary poller for NetworkManager radio and active Wi-Fi connection
 	property Process statusProc: Process {
 		id: poller
-		command: ["sh", "-c", "wifi_status=$(nmcli -t -f WIFI g); " + "active_conn=$(nmcli -t -f TYPE,STATE,CONNECTION dev | grep -E '^wifi:connected' | head -n1 | cut -d: -f3); " + "echo \"$wifi_status|$active_conn\""]
+		command: ["nmcli", "-t", "-f", "TYPE,STATE,CONNECTION", "dev"]
 		running: false
 
 		stdout: StdioCollector {
@@ -23,13 +23,39 @@ QtObject {
 				if (!out)
 					return;
 
-				const parts = out.split("|");
-				const wifiPower = parts[0] || "disabled";
-				const activeSsid = parts[1] || "";
+				let wifiFound = false;
+				let isEnabled = false;
+				let isConnected = false;
+				let activeSsid = "";
 
-				root.enabled = (wifiPower === "enabled");
-				root.ssid = activeSsid;
-				root.connected = (activeSsid.length > 0);
+				const lines = out.split("\n");
+				for (let i = 0; i < lines.length; i++) {
+					const line = lines[i];
+					if (line.startsWith("wifi:")) {
+						wifiFound = true;
+						const match = line.match(/^wifi:([^:]+):?(.*)$/);
+						if (match) {
+							const state = match[1];
+							const rawConn = match[2] || "";
+							activeSsid = rawConn.replace(/\\:/g, ":").trim();
+							isEnabled = (state !== "unavailable" && state !== "unmanaged");
+							isConnected = (state === "connected" && activeSsid.length > 0);
+						}
+						break;
+					}
+				}
+
+				if (!wifiFound) {
+					root.enabled = false;
+					root.connected = false;
+					root.ssid = "";
+					root.glyph = "󰤮";
+					return;
+				}
+
+				root.enabled = isEnabled;
+				root.ssid = isConnected ? activeSsid : "";
+				root.connected = isConnected;
 
 				if (!root.enabled) {
 					root.glyph = "󰤮";
