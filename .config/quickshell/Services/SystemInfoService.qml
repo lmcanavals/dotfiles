@@ -31,27 +31,48 @@ QtObject {
 		onLoaded: root.updateUptime()
 	}
 
+	readonly property string uid: {
+		const runtimeDir = Quickshell.env("XDG_RUNTIME_DIR") || "";
+		const match = runtimeDir.match(/\/run\/user\/(\d+)/);
+		return match ? match[1] : "1000";
+	}
+
 	property Process accountProc: Process {
 		id: accountProcess
-		command: ["sh", "-c", "icon=$(busctl get-property org.freedesktop.Accounts /org/freedesktop/Accounts/User$(id -u) org.freedesktop.Accounts.User IconFile --json=short 2>/dev/null | jq -r '.data // empty'); realname=$(busctl get-property org.freedesktop.Accounts /org/freedesktop/Accounts/User$(id -u) org.freedesktop.Accounts.User RealName --json=short 2>/dev/null | jq -r '.data // empty'); if [ -z \"$icon\" ] || [ ! -f \"$icon\" ]; then if [ -f \"$HOME/.face\" ]; then icon=\"$HOME/.face\"; elif [ -f \"$HOME/.face.icon\" ]; then icon=\"$HOME/.face.icon\"; else icon=\"\"; fi; fi; printf '%s\\n%s\\n' \"$icon\" \"$realname\""]
+		command: ["busctl", "get-property", "--json=short", "org.freedesktop.Accounts", "/org/freedesktop/Accounts/User" + root.uid, "org.freedesktop.Accounts.User", "IconFile", "RealName"]
 		running: false
 
 		stdout: StdioCollector {
 			id: accountCollector
 			onStreamFinished: {
 				try {
-					const lines = accountCollector.text.split("\n");
-					const iconPath = lines.length > 0 ? lines[0].trim() : "";
-					const rName = lines.length > 1 ? lines[1].trim() : "";
+					const lines = accountCollector.text.trim().split("\n");
+					let iconPath = "";
+					let rName = "";
+
+					if (lines.length > 0 && lines[0].trim().length > 0) {
+						const iconObj = JSON.parse(lines[0]);
+						if (iconObj && typeof iconObj.data === "string") {
+							iconPath = iconObj.data.trim();
+						}
+					}
+
+					if (lines.length > 1 && lines[1].trim().length > 0) {
+						const nameObj = JSON.parse(lines[1]);
+						if (nameObj && typeof nameObj.data === "string") {
+							rName = nameObj.data.trim();
+						}
+					}
+
 					if (iconPath.length > 0) {
 						root.userIcon = iconPath.startsWith("/") ? ("file://" + iconPath) : iconPath;
 					} else {
-						root.userIcon = "";
+						const home = Quickshell.env("HOME") || "";
+						root.userIcon = home.length > 0 ? ("file://" + home + "/.face") : "";
 					}
 					root.realName = rName;
 				} catch (e) {
-					console.log(`Error on SystemInfoService ${accountProcess.command}
-					${e}`);
+					console.log(`Error on SystemInfoService ${accountProcess.command}: ${e}`);
 				}
 				root.isQueryingAccount = false;
 			}
