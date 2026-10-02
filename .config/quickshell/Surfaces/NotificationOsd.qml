@@ -12,7 +12,7 @@ import Services
 PanelWindow {
 	id: root
 
-	visible: NotificationService.activeList.length > 0
+	visible: NotificationService.activeList.count > 0
 
 	anchors {
 		top: true
@@ -47,9 +47,9 @@ PanelWindow {
 
 			delegate: SurfaceCard {
 				id: card
-				required property var modelData
+				required property var model
 
-				readonly property bool isActionable: Boolean(card.modelData && card.modelData.hasDefaultAction)
+				readonly property bool isActionable: Boolean(card.model && card.model.hasDefaultAction)
 
 				color: Theme.bgSurface
 				border.color: (card.isActionable && cardMouseArea.containsMouse) ? Theme.colors.accent : Theme.colors.border
@@ -60,10 +60,10 @@ PanelWindow {
 					id: dismissTimer
 					interval: 5000
 					running: !(replyRow.visible && replyInput.activeFocus)
-					onTriggered: NotificationService.expireActive(card.modelData.id)
+					onTriggered: NotificationService.expireActive(card.model.id)
 				}
 
-				property double lastTimestamp: (card.modelData && card.modelData.timestamp) ? card.modelData.timestamp : 0
+				property double lastTimestamp: (card.model && card.model.timestamp) ? card.model.timestamp : 0
 				onLastTimestampChanged: dismissTimer.restart()
 
 				// Card-level click for default action
@@ -74,7 +74,7 @@ PanelWindow {
 					cursorShape: card.isActionable ? Qt.PointingHandCursor : Qt.ArrowCursor
 					enabled: card.isActionable
 					onClicked: {
-						NotificationService.invokeDefault(card.modelData.id);
+						NotificationService.invokeDefault(card.model.id);
 					}
 				}
 
@@ -89,7 +89,7 @@ PanelWindow {
 						Layout.fillWidth: true
 
 						StyledText {
-							text: "󰂚 " + (card.modelData.appName || "Notification")
+							text: "󰂚 " + (card.model.appName || "Notification")
 							font.bold: true
 							font.pixelSize: Config.fontSizeTiny
 							color: Theme.colors.comment
@@ -107,7 +107,7 @@ PanelWindow {
 
 						StyledButton {
 							text: "󰅖"
-							onClicked: NotificationService.dismissActive(card.modelData.id)
+							onClicked: NotificationService.dismissActive(card.model.id)
 						}
 					}
 
@@ -118,7 +118,7 @@ PanelWindow {
 
 						ThumbnailImage {
 							id: notifThumb
-							source: card.modelData ? (card.modelData.appIcon || "") : ""
+							source: card.model ? (card.model.appIcon || "") : ""
 							minHeight: 64
 							maxHeight: 80
 							showFallback: false
@@ -131,7 +131,7 @@ PanelWindow {
 							spacing: 2
 
 							StyledText {
-								text: card.modelData.summary
+								text: card.model.summary
 								font.bold: true
 								font.pixelSize: Config.fontSizeLarge
 								color: Theme.colors.fg
@@ -142,8 +142,8 @@ PanelWindow {
 							}
 
 							StyledText {
-								visible: card.modelData.body.length > 0
-								text: card.modelData.body
+								visible: card.model.body.length > 0
+								text: card.model.body
 								font.pixelSize: Config.fontSizeSmall
 								color: Theme.colors.fg_dark
 								textFormat: Text.StyledText
@@ -156,20 +156,20 @@ PanelWindow {
 
 					// 3. Interactive Action Buttons Row
 					RowLayout {
-						visible: card.modelData && card.modelData.actions && card.modelData.actions.length > 0
+						visible: card.model && card.model.actions && (card.model.actions.count ? card.model.actions.count > 0 : card.model.actions.length > 0)
 						Layout.fillWidth: true
 						spacing: Config.spacing
 
 						Repeater {
-							model: card.modelData ? (card.modelData.actions || []) : []
+							model: card.model ? card.model.actions : null
 
 							delegate: StyledButton {
 								id: actionBtn
-								required property var modelData
+								required property var model
 
-								text: actionBtn.modelData.text
+								text: actionBtn.model.text
 								onClicked: {
-									NotificationService.invokeAction(card.modelData.id, actionBtn.modelData.id);
+									NotificationService.invokeAction(card.model.id, actionBtn.model.id);
 								}
 							}
 						}
@@ -178,7 +178,7 @@ PanelWindow {
 					// 4. Inline Reply Input Field
 					RowLayout {
 						id: replyRow
-						visible: card.modelData && card.modelData.hasInlineReply
+						visible: card.model && card.model.hasInlineReply
 						Layout.fillWidth: true
 						spacing: Config.spacing
 
@@ -223,7 +223,7 @@ PanelWindow {
 								StyledText {
 									anchors.fill: parent
 									verticalAlignment: Text.AlignVCenter
-									text: (card.modelData && card.modelData.replyPlaceholder) ? card.modelData.replyPlaceholder : "Type a reply..."
+									text: (card.model && card.model.replyPlaceholder) ? card.model.replyPlaceholder : "Type a reply..."
 									font.pixelSize: Config.fontSizeSmall
 									color: Theme.colors.comment
 									visible: replyInput.text.length === 0
@@ -233,7 +233,7 @@ PanelWindow {
 									const text = replyInput.text.trim();
 									replyInput.focus = false;
 									if (text.length > 0) {
-										NotificationService.sendReply(card.modelData.id, text);
+										NotificationService.sendReply(card.model.id, text);
 									}
 								}
 							}
@@ -246,7 +246,7 @@ PanelWindow {
 								const text = replyInput.text.trim();
 								replyInput.focus = false;
 								if (text.length > 0) {
-									NotificationService.sendReply(card.modelData.id, text);
+									NotificationService.sendReply(card.model.id, text);
 								}
 							}
 						}
@@ -255,14 +255,14 @@ PanelWindow {
 					// 5. Progress Bar
 					ProgressBar {
 						id: progressBar
-						visible: card.modelData && card.modelData.value !== undefined && card.modelData.value >= 0
+						visible: card.model && card.model.value !== undefined && card.model.value >= 0
 						Layout.fillWidth: true
 						Layout.topMargin: 2
 						implicitHeight: 4
 						fillRadius: 2
 						fillColor: Theme.colors.accent
 						trackColor: Theme.bgTrack
-						value: (card.modelData && card.modelData.value !== undefined) ? (Number(card.modelData.value) / 100.0) : 0.0
+						value: (card.model && card.model.value !== undefined) ? (Number(card.model.value) / 100.0) : 0.0
 					}
 				}
 			}

@@ -19,10 +19,11 @@ SurfaceCard {
 		id: layout
 
 		anchors.centerIn: parent
+		spacing: 0
 
 		Repeater {
 			model: {
-				const list = Hyprland.workspaces.values.filter(ws => ws && ws.monitor?.name === root.screen?.name);
+				const list = Hyprland.workspaces.values.filter(ws => ws?.monitor?.name === root.screen?.name);
 				return list.slice().sort((a, b) => a.id - b.id);
 			}
 

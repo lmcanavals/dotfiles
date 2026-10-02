@@ -9,7 +9,9 @@ import Services
 QtObject {
 	id: root
 
-	property var activeList: []
+	property ListModel activeList: ListModel {
+		id: activeListModel
+	}
 	property var historyList: []
 	readonly property int unreadCount: historyList.length
 
@@ -19,9 +21,64 @@ QtObject {
 		return base + "/quickshell/notification-icons";
 	}
 
+	property Timer cachePruneTimer: Timer {
+		interval: 86400000 // 24 hours
+		repeat: true
+		running: true
+		onTriggered: Quickshell.execDetached(["find", root.iconCacheDir, "-type", "f", "-mtime", "+3", "-delete"])
+	}
+
 	Component.onCompleted: {
 		Quickshell.execDetached(["mkdir", "-p", root.iconCacheDir]);
 		Quickshell.execDetached(["find", root.iconCacheDir, "-type", "f", "-mtime", "+3", "-delete"]);
+	}
+
+	function _isCachedFileInActive(path: string): bool {
+		if (!path || path.length === 0)
+			return false;
+		for (let i = 0; i < activeListModel.count; i++) {
+			const it = activeListModel.get(i);
+			if (it && it.cachedFile === path)
+				return true;
+		}
+		return false;
+	}
+
+	function _isCachedFileInHistory(path: string): bool {
+		if (!path || path.length === 0)
+			return false;
+		for (let i = 0; i < root.historyList.length; i++) {
+			const it = root.historyList[i];
+			if (it && it.cachedFile === path)
+				return true;
+		}
+		return false;
+	}
+
+	function _safeUnlinkIcon(path: string): void {
+		if (!path || path.length === 0)
+			return;
+		if (!_isCachedFileInActive(path) && !_isCachedFileInHistory(path)) {
+			Quickshell.execDetached(["rm", "-f", path]);
+		}
+	}
+
+	function _findActiveIndex(id: int): int {
+		for (let i = 0; i < activeListModel.count; i++) {
+			const it = activeListModel.get(i);
+			if (it && (it.id === id || it.previousId === id))
+				return i;
+		}
+		return -1;
+	}
+
+	function _removeActiveAt(idx: int): void {
+		if (idx < 0 || idx >= activeListModel.count)
+			return;
+		const item = activeListModel.get(idx);
+		const cachedFile = item ? item.cachedFile : "";
+		activeListModel.remove(idx);
+		root._safeUnlinkIcon(cachedFile);
 	}
 
 	function sanitizeNotificationText(text: string): string {
@@ -153,16 +210,28 @@ QtObject {
 			// 1. Check for match in activeList
 			let activeIdx = -1;
 			if (tag.length > 0) {
-				activeIdx = root.activeList.findIndex(item => item && item.tag === tag);
+				for (let i = 0; i < activeListModel.count; i++) {
+					const item = activeListModel.get(i);
+					if (item && item.tag === tag) {
+						activeIdx = i;
+						break;
+					}
+				}
 			}
 			if (activeIdx === -1) {
-				activeIdx = root.activeList.findIndex(item => item && item.appName === appName && item.baseSummary === summary && item.body === body);
+				for (let i = 0; i < activeListModel.count; i++) {
+					const item = activeListModel.get(i);
+					if (item && item.appName === appName && item.baseSummary === summary && item.body === body) {
+						activeIdx = i;
+						break;
+					}
+				}
 			}
 
 			let itemToStore = null;
 
 			if (activeIdx !== -1) {
-				const existing = root.activeList[activeIdx];
+				const existing = activeListModel.get(activeIdx);
 				// Dismiss the older notification instance that is being replaced
 				if (existing && existing.rawNotif && existing.rawNotif !== notif) {
 					try {
@@ -185,7 +254,7 @@ QtObject {
 					finalSource = cached.source;
 					finalCachedFile = cached.cachedFile;
 					if (existing.cachedFile && existing.cachedFile.length > 0 && existing.cachedFile !== finalCachedFile) {
-						Quickshell.execDetached(["rm", "-f", existing.cachedFile]);
+						root._safeUnlinkIcon(existing.cachedFile);
 					}
 				} else {
 					finalSource = existing.appIcon || "";
@@ -213,9 +282,7 @@ QtObject {
 					replyPlaceholder: replyPlaceholder
 				};
 
-				const newActive = [...root.activeList];
-				newActive[activeIdx] = itemToStore;
-				root.activeList = newActive;
+				activeListModel.set(activeIdx, itemToStore);
 			} else {
 				let finalSource = "";
 				let finalCachedFile = "";
@@ -247,7 +314,7 @@ QtObject {
 				};
 
 				if (!EnvironmentService.dndActive) {
-					root.activeList = [...root.activeList, itemToStore];
+					activeListModel.append(itemToStore);
 				}
 			}
 
@@ -276,7 +343,7 @@ QtObject {
 					continue;
 				const matches = (tag.length > 0) ? (it.tag === tag) : (it.appName === appName && it.baseSummary === summary && it.body === body);
 				if (matches && it.cachedFile && it.cachedFile.length > 0 && it.cachedFile !== historyItem.cachedFile) {
-					Quickshell.execDetached(["rm", "-f", it.cachedFile]);
+					root._safeUnlinkIcon(it.cachedFile);
 				}
 			}
 
@@ -294,7 +361,7 @@ QtObject {
 				const dropped = newHistory.slice(50);
 				for (let i = 0; i < dropped.length; i++) {
 					if (dropped[i] && dropped[i].cachedFile && dropped[i].cachedFile.length > 0) {
-						Quickshell.execDetached(["rm", "-f", dropped[i].cachedFile]);
+						root._safeUnlinkIcon(dropped[i].cachedFile);
 					}
 				}
 			}
@@ -307,133 +374,154 @@ QtObject {
 
 		function onDndActiveChanged() {
 			if (EnvironmentService.dndActive) {
-				for (let i = 0; i < root.activeList.length; i++) {
-					const it = root.activeList[i];
-					if (it && it.rawNotif) {
-						try {
-							it.rawNotif.expire();
-						} catch (e) {}
+				const cachedFiles = [];
+				for (let i = 0; i < activeListModel.count; i++) {
+					const it = activeListModel.get(i);
+					if (it) {
+						if (it.cachedFile)
+							cachedFiles.push(it.cachedFile);
+						if (it.rawNotif) {
+							try {
+								it.rawNotif.expire();
+							} catch (e) {}
+						}
 					}
 				}
-				root.activeList = [];
+				activeListModel.clear();
+				for (let i = 0; i < cachedFiles.length; i++) {
+					root._safeUnlinkIcon(cachedFiles[i]);
+				}
 			}
 		}
 	}
 
 	function invokeDefault(id: int): void {
-		const item = root.activeList.find(n => n && (n.id === id || n.previousId === id));
-		if (item && item.rawNotif) {
-			let invoked = false;
-			try {
-				let act = null;
-				if (item.rawNotif.actions && item.rawNotif.actions.length > 0) {
-					act = item.rawNotif.actions.find(a => a && a.identifier === "default");
-					if (!act) {
-						const first = item.rawNotif.actions[0];
-						if (first && (first.identifier === "" || first.identifier === "0")) {
-							act = first;
+		const idx = root._findActiveIndex(id);
+		if (idx !== -1) {
+			const item = activeListModel.get(idx);
+			if (item && item.rawNotif) {
+				let invoked = false;
+				try {
+					let act = null;
+					if (item.rawNotif.actions && item.rawNotif.actions.length > 0) {
+						act = item.rawNotif.actions.find(a => a && a.identifier === "default");
+						if (!act) {
+							const first = item.rawNotif.actions[0];
+							if (first && (first.identifier === "" || first.identifier === "0")) {
+								act = first;
+							}
 						}
 					}
+					if (act) {
+						act.invoke();
+						invoked = true;
+					}
+				} catch (e) {
+					console.log("Error invoking default action:", e);
 				}
-				if (act) {
-					act.invoke();
-					invoked = true;
-				}
-			} catch (e) {
-				console.log("Error invoking default action:", e);
-			}
 
-			// In Desktop Notifications spec, Quickshell automatically destroys non-resident notifications on invoke.
-			// Calling notif.dismiss() after invoke causes "Cannot close destroyed notification".
-			if (invoked && !item.rawNotif.resident) {
-				root.activeList = root.activeList.filter(n => n && n.id !== id && n.previousId !== id);
-				return;
+				if (invoked && !item.rawNotif.resident) {
+					root._removeActiveAt(idx);
+					return;
+				}
 			}
 		}
 		root.dismissActive(id);
 	}
 
 	function invokeAction(id: int, actionId: string): void {
-		const item = root.activeList.find(n => n && (n.id === id || n.previousId === id));
-		if (item && item.rawNotif) {
-			let invoked = false;
-			try {
-				if (item.rawNotif.actions && item.rawNotif.actions.length > 0) {
-					const act = item.rawNotif.actions.find(a => a && a.identifier === actionId);
-					if (act) {
-						act.invoke();
-						invoked = true;
+		const idx = root._findActiveIndex(id);
+		if (idx !== -1) {
+			const item = activeListModel.get(idx);
+			if (item && item.rawNotif) {
+				let invoked = false;
+				try {
+					if (item.rawNotif.actions && item.rawNotif.actions.length > 0) {
+						const act = item.rawNotif.actions.find(a => a && a.identifier === actionId);
+						if (act) {
+							act.invoke();
+							invoked = true;
+						}
 					}
+				} catch (e) {
+					console.log("Error invoking action:", actionId, e);
 				}
-			} catch (e) {
-				console.log("Error invoking action:", actionId, e);
-			}
 
-			if (invoked && !item.rawNotif.resident) {
-				root.activeList = root.activeList.filter(n => n && n.id !== id && n.previousId !== id);
-				return;
+				if (invoked && !item.rawNotif.resident) {
+					root._removeActiveAt(idx);
+					return;
+				}
 			}
 		}
 		root.dismissActive(id);
 	}
 
 	function sendReply(id: int, replyText: string): void {
-		const item = root.activeList.find(n => n && (n.id === id || n.previousId === id));
-		if (item && item.rawNotif) {
-			let sent = false;
-			try {
-				item.rawNotif.sendInlineReply(String(replyText));
-				item.invoked = true;
-				sent = true;
-			} catch (e) {
-				console.log("Error sending reply:", e);
-			}
+		const idx = root._findActiveIndex(id);
+		if (idx !== -1) {
+			const item = activeListModel.get(idx);
+			if (item && item.rawNotif) {
+				let sent = false;
+				try {
+					item.rawNotif.sendInlineReply(String(replyText));
+					sent = true;
+				} catch (e) {
+					console.log("Error sending reply:", e);
+				}
 
-			if (sent && !item.rawNotif.resident) {
-				root.activeList = root.activeList.filter(n => n && n.id !== id && n.previousId !== id);
-				return;
+				if (sent && !item.rawNotif.resident) {
+					root._removeActiveAt(idx);
+					return;
+				}
 			}
 		}
 		root.dismissActive(id);
 	}
 
 	function dismissActive(id: int): void {
-		const item = root.activeList.find(n => n && (n.id === id || n.previousId === id));
-		if (item && item.rawNotif) {
-			try {
-				item.rawNotif.dismiss();
-			} catch (e) {}
+		const idx = root._findActiveIndex(id);
+		if (idx !== -1) {
+			const item = activeListModel.get(idx);
+			if (item && item.rawNotif) {
+				try {
+					item.rawNotif.dismiss();
+				} catch (e) {}
+			}
+			root._removeActiveAt(idx);
 		}
-		root.activeList = root.activeList.filter(n => n && n.id !== id && n.previousId !== id);
 	}
 
 	function expireActive(id: int): void {
-		const item = root.activeList.find(n => n && (n.id === id || n.previousId === id));
-		if (item && item.rawNotif) {
-			try {
-				item.rawNotif.expire();
-			} catch (e) {}
+		const idx = root._findActiveIndex(id);
+		if (idx !== -1) {
+			const item = activeListModel.get(idx);
+			if (item && item.rawNotif) {
+				try {
+					item.rawNotif.expire();
+				} catch (e) {}
+			}
+			root._removeActiveAt(idx);
 		}
-		root.activeList = root.activeList.filter(n => n && n.id !== id && n.previousId !== id);
 	}
 
 	function clearHistory(): void {
-		for (let i = 0; i < root.historyList.length; i++) {
-			const it = root.historyList[i];
+		const oldList = root.historyList;
+		root.historyList = [];
+		for (let i = 0; i < oldList.length; i++) {
+			const it = oldList[i];
 			if (it && it.cachedFile && it.cachedFile.length > 0) {
-				Quickshell.execDetached(["rm", "-f", it.cachedFile]);
+				root._safeUnlinkIcon(it.cachedFile);
 			}
 		}
-		root.historyList = [];
 	}
 
 	function removeHistory(id: int): void {
 		const toRemove = root.historyList.filter(n => n && (n.id === id || n.previousId === id));
+		root.historyList = root.historyList.filter(n => n && n.id !== id && n.previousId !== id);
 		for (let i = 0; i < toRemove.length; i++) {
 			if (toRemove[i] && toRemove[i].cachedFile && toRemove[i].cachedFile.length > 0) {
-				Quickshell.execDetached(["rm", "-f", toRemove[i].cachedFile]);
+				root._safeUnlinkIcon(toRemove[i].cachedFile);
 			}
 		}
-		root.historyList = root.historyList.filter(n => n && n.id !== id && n.previousId !== id);
 	}
 }
