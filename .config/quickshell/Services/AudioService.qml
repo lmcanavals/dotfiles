@@ -44,10 +44,6 @@ QtObject {
 		return "󰕾";
 	}
 
-	property PwObjectTracker tracker: PwObjectTracker {
-		objects: [root.sink, root.source]
-	}
-
 	function setVolume(val: real): void {
 		if (sink?.audio) {
 			sink.audio.volume = Math.max(0.0, Math.min(1.0, val));
@@ -76,6 +72,14 @@ QtObject {
 	readonly property var sinks: (Pipewire.nodes && Pipewire.nodes.values) ? Pipewire.nodes.values.filter(n => n && n.isSink && !n.isStream) : []
 
 	readonly property var sources: (Pipewire.nodes && Pipewire.nodes.values) ? Pipewire.nodes.values.filter(n => n && (n.isSource || (!n.isSink && !n.isStream && (n.audio || n.properties?.["media.class"] === "Audio/Source")))) : []
+	readonly property var trackedNodes: {
+		const raw = [root.sink, root.source, ...(root.sinks || []), ...(root.sources || [])];
+		return raw.filter((node, index, self) => node && self.indexOf(node) === index);
+	}
+
+	property PwObjectTracker tracker: PwObjectTracker {
+		objects: root.trackedNodes
+	}
 
 	function nodeLabel(node: var): string {
 		if (!node)
