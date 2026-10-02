@@ -10,38 +10,43 @@ RowLayout {
 	Layout.fillWidth: true
 	spacing: Config.spacing
 
+	function trigger(action: var): void {
+		QuickSettingsService.close();
+		action();
+	}
+
 	StyledButton {
 		Layout.fillWidth: true
 		text: "󰍃"
 		fontSize: Config.fontSizeXL
-		onClicked: SessionService.logout()
+		onClicked: root.trigger(SessionService.logout)
 	}
 
 	StyledButton {
 		Layout.fillWidth: true
 		text: "󰤄"
 		fontSize: Config.fontSizeXL
-		onClicked: SessionService.suspend()
+		onClicked: root.trigger(SessionService.suspend)
 	}
 
 	StyledButton {
 		Layout.fillWidth: true
 		text: ""
 		fontSize: Config.fontSizeXL
-		onClicked: SessionService.hibernate()
+		onClicked: root.trigger(SessionService.hibernate)
 	}
 
 	StyledButton {
 		Layout.fillWidth: true
 		text: "󰜉"
 		fontSize: Config.fontSizeXL
-		onClicked: SessionService.reboot()
+		onClicked: root.trigger(SessionService.reboot)
 	}
 
 	StyledButton {
 		Layout.fillWidth: true
 		text: "󰐥"
 		fontSize: Config.fontSizeXL
-		onClicked: SessionService.poweroff()
+		onClicked: root.trigger(SessionService.poweroff)
 	}
 }

@@ -87,10 +87,12 @@ QtObject {
 		running: false
 	}
 
+	property bool active: false
+
 	property Timer pollTimer: Timer {
 		interval: 4000
 		repeat: true
-		running: QuickSettingsService.open
+		running: root.active
 		triggeredOnStart: true
 		onTriggered: root.refresh()
 	}
@@ -113,7 +115,6 @@ QtObject {
 	}
 
 	function openPicker(): void {
-		QuickSettingsService.close();
 		if (!pickerProc.running) {
 			pickerProc.running = true;
 		}

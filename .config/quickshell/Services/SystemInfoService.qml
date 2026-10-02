@@ -3,7 +3,6 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Services
 
 QtObject {
 	id: root
@@ -125,10 +124,12 @@ QtObject {
 		root.queryAccount();
 	}
 
+	property bool active: false
+
 	property Timer pollTimer: Timer {
 		interval: 60000
 		repeat: true
-		running: QuickSettingsService.open
+		running: root.active
 		triggeredOnStart: true
 		onTriggered: root.refresh()
 	}

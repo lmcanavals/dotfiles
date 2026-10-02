@@ -3,7 +3,6 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Services
 
 QtObject {
 	id: root
@@ -109,18 +108,8 @@ QtObject {
 	}
 
 	function openLazygit(): void {
-		QuickSettingsService.close();
 		lazygitProcess.command = ["kitty", "--title", "󰣇  Lazygit: dotfiles", "lazygit", `--git-dir=${root.gitDir}`, `--work-tree=${root.workTree}`];
 		lazygitProcess.startDetached();
-	}
-
-	property Connections openWatcher: Connections {
-		target: QuickSettingsService
-		function onOpenChanged() {
-			if (QuickSettingsService.open) {
-				root.refresh();
-			}
-		}
 	}
 
 	Component.onCompleted: root.refresh()

@@ -2,7 +2,6 @@ pragma Singleton
 
 import QtQuick
 import Quickshell.Io
-import Services
 
 QtObject {
 	id: root
@@ -12,7 +11,6 @@ QtObject {
 	}
 
 	function execute(cmd: list<string>): void {
-		QuickSettingsService.close();
 		actionProc.command = cmd;
 		actionProc.startDetached();
 	}

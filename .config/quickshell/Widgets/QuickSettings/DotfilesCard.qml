@@ -17,7 +17,10 @@ SurfaceCard {
 		anchors.fill: parent
 		hoverEnabled: true
 		cursorShape: Qt.PointingHandCursor
-		onClicked: DotfilesService.openLazygit()
+		onClicked: {
+			QuickSettingsService.close();
+			DotfilesService.openLazygit();
+		}
 	}
 
 	RowLayout {

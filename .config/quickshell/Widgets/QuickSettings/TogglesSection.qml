@@ -12,6 +12,11 @@ GridLayout {
 	rowSpacing: Config.spacing
 	Layout.fillWidth: true
 
+	function trigger(action: var): void {
+		QuickSettingsService.close();
+		action();
+	}
+
 	// Wi-Fi Toggle
 	QuickToggle {
 		Layout.fillWidth: true
@@ -19,7 +24,7 @@ GridLayout {
 		label: NetworkService.connected ? NetworkService.ssid : (NetworkService.enabled ? "Disconnected" : "Wi-Fi Off")
 		active: NetworkService.enabled
 		onClicked: NetworkService.toggleWifi()
-		onRightClicked: NetworkService.openPicker()
+		onRightClicked: root.trigger(NetworkService.openPicker)
 		onMiddleClicked: NetworkService.refresh()
 	}
 
@@ -30,7 +35,7 @@ GridLayout {
 		label: BluetoothService.connected ? BluetoothService.connectedDevice : (BluetoothService.enabled ? "Disconnected" : "Bluetooth Off")
 		active: BluetoothService.enabled
 		onClicked: BluetoothService.toggleBluetooth()
-		onRightClicked: BluetoothService.openPicker()
+		onRightClicked: root.trigger(BluetoothService.openPicker)
 		onMiddleClicked: BluetoothService.refresh()
 	}
 
@@ -63,6 +68,6 @@ GridLayout {
 		glyph: "󰌾"
 		label: "Lock Screen"
 		active: false
-		onClicked: SessionService.lock()
+		onClicked: root.trigger(SessionService.lock)
 	}
 }

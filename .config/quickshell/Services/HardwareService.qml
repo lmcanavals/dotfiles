@@ -3,7 +3,6 @@ pragma Singleton
 import QtQuick
 import Quickshell.Io
 import Core
-import Services
 
 QtObject {
 	id: root
@@ -154,10 +153,12 @@ QtObject {
 		thermalTemp.reload();
 	}
 
+	property bool active: false
+
 	property Timer pollTimer: Timer {
 		interval: 2000
 		repeat: true
-		running: QuickSettingsService.open
+		running: root.active
 		triggeredOnStart: true
 		onTriggered: root.refresh()
 	}

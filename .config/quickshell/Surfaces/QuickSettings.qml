@@ -20,7 +20,29 @@ PopupWindow {
 			QuickSettingsService.close();
 		} else if (visible) {
 			BrightnessService.refresh();
+			DotfilesService.refresh();
 		}
+	}
+
+	Binding {
+		target: HardwareService
+		property: "active"
+		value: root.visible
+	}
+	Binding {
+		target: SystemInfoService
+		property: "active"
+		value: root.visible
+	}
+	Binding {
+		target: BluetoothService
+		property: "active"
+		value: root.visible
+	}
+	Binding {
+		target: NetworkService
+		property: "active"
+		value: root.visible
 	}
 
 	// qmllint disable missing-type
@@ -28,7 +50,7 @@ PopupWindow {
 		item: QuickSettingsService.targetItem
 		edges: Edges.Bottom
 		gravity: Edges.Bottom
-	}
+	} // qmllint enable missing-type
 
 	color: "transparent"
 
