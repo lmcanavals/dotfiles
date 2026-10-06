@@ -94,6 +94,7 @@ rust.sh
 .jupyter/
 .kde4/
 .lldb/
+.minetest/
 .m2/
 .mplayer/
 .npm/
@@ -250,6 +251,7 @@ __pycache__/
 .local/bin/spots
 .local/bin/testt.zsh
 .local/bin/thm
+.local/bin/updates-query
 .local/bin/wezterm
 
 !.local/share/applications/

@@ -22,6 +22,5 @@ BarPill {
 		anchors.leftMargin: Config.padding
 		width: Math.max(0, parent.width - Config.padding * 2)
 		text: root.titleText
-		elide: Text.ElideRight
 	}
 }

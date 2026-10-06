@@ -95,7 +95,6 @@ SurfaceCard {
 							color: itemRect.isSelected ? Theme.colors.fg : Theme.colors.fg_dark
 							font.bold: itemRect.isSelected
 							font.pixelSize: Config.fontSizeSmall
-							elide: Text.ElideRight
 							Layout.fillWidth: true
 						}
 					}

@@ -43,7 +43,6 @@ BarPill {
 
 			Layout.fillWidth: true
 			color: MediaService.isPlaying ? Theme.colors.fg_widget : Theme.colors.comment
-			elide: Text.ElideRight
 			text: trackLabel
 		}
 	}

@@ -28,6 +28,14 @@ RowLayout {
 
 		MetricBar {
 			Layout.fillWidth: true
+			glyph: "󰔏"
+			value: Math.min(1.0, HardwareService.temperature / 100.0)
+			valueText: `${HardwareService.temperature}°C`
+			barColor: HardwareService.tempColor
+		}
+
+		MetricBar {
+			Layout.fillWidth: true
 			glyph: `󰍛 ${HardwareService.memTotal.toFixed(1)}GiB`
 			value: HardwareService.memUsage
 			valueText: `${Math.round(Math.max(0.0, Math.min(1.0, HardwareService.memUsage)) * 100)}%`
@@ -40,14 +48,6 @@ RowLayout {
 			value: HardwareService.swapUsage
 			valueText: `${Math.round(Math.max(0.0, Math.min(1.0, HardwareService.swapUsage)) * 100)}%`
 			barColor: HardwareService.swapColor
-		}
-
-		MetricBar {
-			Layout.fillWidth: true
-			glyph: "󰔏"
-			value: Math.min(1.0, HardwareService.temperature / 100.0)
-			valueText: `${HardwareService.temperature}°C`
-			barColor: HardwareService.tempColor
 		}
 	}
 }

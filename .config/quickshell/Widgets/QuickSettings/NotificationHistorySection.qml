@@ -99,10 +99,9 @@ SurfaceCard {
 
 							StyledText {
 								text: itemCard.modelData.appName || "Notification"
+								color: Theme.colors.accent
 								font.bold: true
 								font.pixelSize: Config.fontSizeSmall
-								color: Theme.colors.accent
-								elide: Text.ElideRight
 							}
 
 							StyledText {
@@ -114,11 +113,11 @@ SurfaceCard {
 
 						StyledText {
 							text: itemCard.modelData.summary || ""
-							font.pixelSize: Config.fontSizeSmall
+							Layout.fillWidth: true
 							color: Theme.colors.fg
 							elide: itemCard.expanded ? Text.ElideNone : Text.ElideRight
+							font.pixelSize: Config.fontSizeSmall
 							wrapMode: itemCard.expanded ? Text.Wrap : Text.NoWrap
-							Layout.fillWidth: true
 						}
 
 						StyledText {

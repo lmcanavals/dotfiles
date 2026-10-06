@@ -26,7 +26,6 @@ SurfaceCard {
 
 			StyledText {
 				text: PowerService.primaryGlyph
-				font.pixelSize: Config.fontSizeBase
 				color: PowerService.primaryColor
 			}
 
@@ -36,7 +35,6 @@ SurfaceCard {
 				font.pixelSize: Config.fontSizeLarge
 				color: PowerService.primaryColor
 				Layout.fillWidth: true
-				elide: Text.ElideRight
 			}
 
 			StyledText {
@@ -62,7 +60,6 @@ SurfaceCard {
 
 			StyledText {
 				text: "󰚥"
-				font.pixelSize: Config.fontSizeBase
 				color: Theme.colors.fg_dark
 			}
 
@@ -96,7 +93,6 @@ SurfaceCard {
 
 				StyledText {
 					text: PowerService.glyphForDevice(deviceDelegate.modelData)
-					font.pixelSize: Config.fontSizeBase
 					color: PowerService.colorForDevice(deviceDelegate.modelData)
 				}
 
@@ -104,7 +100,6 @@ SurfaceCard {
 					text: PowerService.deviceName(deviceDelegate.modelData)
 					font.pixelSize: Config.fontSizeSmall
 					Layout.fillWidth: true
-					elide: Text.ElideRight
 					color: Theme.colors.fg
 				}
 

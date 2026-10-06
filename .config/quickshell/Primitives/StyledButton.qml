@@ -15,6 +15,7 @@ Rectangle {
 	signal clicked
 
 	color: mouseArea.containsMouse ? bgHover : bg
+	radius: Config.radius
 
 	Behavior on color {
 		ColorAnimation {

@@ -31,6 +31,7 @@ SurfaceCard {
 				required property HyprlandWorkspace modelData
 
 				minWidth: Config.workspaceButtonWidth
+				radius: 0
 				bg: modelData?.focused ? Theme.colors.bg_widget_r : modelData?.urgent ? Theme.colors.accent_dim : modelData?.active ? Theme.colors.bg_highlight : Theme.colors.bg_widget
 				fg: modelData?.focused ? Theme.colors.fg_widget_r : Theme.colors.fg_widget
 

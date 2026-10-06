@@ -58,12 +58,11 @@ RowLayout {
 	}
 
 	StyledText {
-		visible: root.expandable
 		text: root.expanded ? "󰅀" : "󰅂"
-		font.pixelSize: Config.fontSizeSmall
-		color: chevronMouseArea.containsMouse ? Theme.colors.accent : Theme.colors.comment
 		Layout.preferredWidth: 16
-		horizontalAlignment: Text.AlignHCenter
+		color: chevronMouseArea.containsMouse ? Theme.colors.accent : Theme.colors.comment
+		font.pixelSize: Config.fontSizeSmall
+		visible: root.expandable
 
 		MouseArea {
 			id: chevronMouseArea

@@ -94,7 +94,6 @@ PanelWindow {
 							font.pixelSize: Config.fontSizeTiny
 							color: Theme.colors.comment
 							Layout.fillWidth: true
-							elide: Text.ElideRight
 							horizontalAlignment: Text.AlignLeft
 						}
 
@@ -138,7 +137,6 @@ PanelWindow {
 								textFormat: Text.StyledText
 								onLinkActivated: link => Qt.openUrlExternally(link)
 								Layout.fillWidth: true
-								elide: Text.ElideRight
 							}
 
 							StyledText {
@@ -222,7 +220,6 @@ PanelWindow {
 
 								StyledText {
 									anchors.fill: parent
-									verticalAlignment: Text.AlignVCenter
 									text: (card.model && card.model.replyPlaceholder) ? card.model.replyPlaceholder : "Type a reply..."
 									font.pixelSize: Config.fontSizeSmall
 									color: Theme.colors.comment

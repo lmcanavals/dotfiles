@@ -77,9 +77,9 @@ PopupWindow {
 
 			BatterySection {}
 
-			DotfilesCard {}
-
 			MetricsSection {}
+
+			DotfilesCard {}
 
 			SlidersSection {}
 

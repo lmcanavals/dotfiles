@@ -66,7 +66,6 @@ PopupWindow {
 				StyledText {
 					Layout.fillWidth: true
 					color: Theme.colors.fg
-					elide: Text.ElideRight
 					font.bold: true
 					font.pixelSize: Config.fontSizeLarge
 					text: MediaService.title
@@ -78,14 +77,12 @@ PopupWindow {
 
 					StyledText {
 						Layout.fillWidth: true
-						elide: Text.ElideRight
 						font.pixelSize: Config.fontSizeSmall
 						text: MediaService.artist
 					}
 
 					StyledText {
 						Layout.fillWidth: true
-						elide: Text.ElideRight
 						font.pixelSize: Config.fontSizeSmall
 						text: MediaService.album
 						horizontalAlignment: Text.AlignRight
