@@ -199,6 +199,9 @@ Headless box:
 # Headless box: sparse checks out
 git sparse-checkout init --cone
 git sparse-checkout set \
+  .bash_logout \
+  .bash_profile \
+  .bashrc \
   .config/aconfmgr \
   .config/asciinema \
   .config/bat \
@@ -211,17 +214,17 @@ git sparse-checkout set \
   .config/lazydocker \
   .config/lazysql \
   .config/nvim \
+  .config/shpool \
   .config/starship.toml \
+  .config/systemd/user/shpool.service \
+  .config/systemd/user/shpool.socket \
   .config/tmux \
   .config/zsh \
-  .local/bin \
-  .bash_logout \
-  .bash_profile \
-  .bashrc \
   .gitconfig \
   .gitignore \
   .gitignore_global \
   .inputrc \
+  .local/bin \
   .tmux.conf \
   .toprc \
   .zshenv

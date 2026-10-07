@@ -9,14 +9,11 @@ set -gx CC /usr/bin/clang
 set -gx CXX '/usr/bin/clang++'
 
 # Go stuff
-if test -d /usr/local/go/bin
-    fish_add_path $GOPATH_BIN
+set -gx GOPATH "$XDG_DATA_HOME/go"
+if not test -d "$GOPATH/bin"
+    mkdir -p "$GOPATH/bin"
 end
-
-if test -d "$HOME/.local/share/go"
-    set -gx GOPATH "$HOME/.local/share/go"
-    fish_add_path "$GOPATH/bin"
-end
+fish_add_path "$GOPATH/bin"
 
 # Java stuff
 if test -d /opt/java
