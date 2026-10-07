@@ -1,5 +1,9 @@
 add_newline = false
-format = "$character"
+format = """
+${custom.local}\
+${custom.ssh}\
+${custom.shpool}\
+$character"""
 right_format = """
 $status\
 $sudo\
@@ -23,8 +27,21 @@ $hostname\
 $directory"""
 continuation_prompt = "[ 󱞩_ ](bg:black cyan) "
 
+[custom.local]
+when = '[ -z "$SHPOOL_SESSION_NAME" ] && [ -z "$SSH_CONNECTION" ] && [ -z "$SSH_CLIENT" ]'
+format = "[ ](bg:yellow black)"
+
+[custom.shpool]
+when = '[ -n "$SHPOOL_SESSION_NAME" ]'
+command = "echo $SHPOOL_SESSION_NAME"
+format = "[  $output](bg:yellow black)"
+
+[custom.ssh]
+when = '[ -n "$SSH_CONNECTION" ] || [ -n "$SSH_CLIENT" ]'
+format = "[ ](bg:yellow black)"
+
 [character]
-format = "[ 󱓞  ](bg:yellow black)$symbol "
+format = "[ ](bg:yellow black)$symbol "
 error_symbol = "[ %! ](bg:bright-red black)"
 success_symbol = "[ %_ ](bg:black bright-yellow)"
 vimcmd_symbol = "[ %: ](bg:black purple)"
