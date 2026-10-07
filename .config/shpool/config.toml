@@ -1,0 +1,3 @@
+forward_env = ["DISPLAY", "SSH_AUTH_SOCK", "TERM", "SSH_CONNECTION", "SSH_CLIENT", "SSH_TTY"]
+prompt_prefix = ""
+
