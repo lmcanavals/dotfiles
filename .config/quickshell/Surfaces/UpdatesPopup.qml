@@ -10,8 +10,8 @@ import Services
 PopupWindow {
 	id: root
 
-	implicitWidth: 440
-	implicitHeight: 440
+	implicitWidth: 480
+	implicitHeight: 460
 
 	visible: UpdatesService.open && UpdatesService.targetItem !== null
 	grabFocus: true
@@ -54,6 +54,13 @@ PopupWindow {
 				}
 
 				StyledButton {
+					text: "󰑮"
+					enabled: !UpdatesService.isChecking
+					opacity: UpdatesService.isChecking ? 0.5 : 1.0
+					onClicked: UpdatesService.checkNow()
+				}
+
+				StyledButton {
 					text: "󰅖"
 					onClicked: UpdatesService.close()
 				}
@@ -67,10 +74,9 @@ PopupWindow {
 				StyledText {
 					anchors.centerIn: parent
 					visible: UpdatesService.updates.length === 0
-					text: "System is up to date"
-					color: Theme.colors.success
+					text: UpdatesService.isChecking ? "Checking for updates..." : "System is up to date"
+					color: UpdatesService.isChecking ? Theme.colors.info : Theme.colors.success
 					font.bold: true
-					font.pixelSize: Config.fontSizeBase
 				}
 
 				ListView {
@@ -80,76 +86,129 @@ PopupWindow {
 					visible: UpdatesService.updates.length > 0
 					clip: true
 					boundsBehavior: Flickable.StopAtBounds
-					spacing: 2
+					spacing: Config.spacing
 					model: UpdatesService.updates
 
-					delegate: Item {
+					delegate: RowLayout {
 						id: delegateRoot
 						required property var modelData
 						required property int index
+						spacing: 0
 
 						width: listView.width
-						implicitHeight: newVerLabel.implicitHeight + Config.spacing / 2
+						implicitHeight: newVerChanged.implicitHeight
 
 						StyledText {
-							id: nameLabel
-							text: delegateRoot.modelData.name
-							font.pixelSize: Config.fontSizeBase
-							elide: Text.ElideRight
-							horizontalAlignment: Text.AlignLeft
-							anchors.left: delegateRoot.left
-							anchors.right: oldVerLabel.visible ? oldVerLabel.left : arrow.visible ? arrow.left : newVerLabel.visible ? newVerLabel.left : delegateRoot.right
-							anchors.rightMargin: Config.spacing
-							anchors.verticalCenter: delegateRoot.verticalCenter
-						}
-
-						StyledText {
-							id: oldVerLabel
-							visible: delegateRoot.modelData.oldVer.length > 0
-							text: delegateRoot.modelData.oldVer
-							font.pixelSize: Config.fontSizeSmall
-							color: Theme.colors.comment
-							horizontalAlignment: Text.AlignRight
-							anchors.right: arrow.left
-							anchors.verticalCenter: delegateRoot.verticalCenter
-						}
-
-						StyledText {
-							id: arrow
-							visible: delegateRoot.modelData.newVer.length > 0
-							text: ""
-							font.pixelSize: Config.fontSizeSmall
-							color: Theme.colors.comment
-							horizontalAlignment: Text.AlignHCenter
-							anchors.right: newVerLabel.left
-							anchors.verticalCenter: delegateRoot.verticalCenter
-							width: 20
-						}
-
-						StyledText {
-							id: newVerLabel
-							visible: delegateRoot.modelData.newVer.length > 0
-							text: delegateRoot.modelData.newVer
+							text: {
+								const source = delegateRoot.modelData.source || "pacman";
+								return source === "pacman" ? "󰮯" : source === "aur" ? "󰢚" : "?";
+							}
+							Layout.minimumWidth: 20
+							color: delegateRoot.modelData.source === "aur" ? Theme.colors.warning : Theme.colors.accent
 							font.bold: true
-							font.pixelSize: Config.fontSizeBase
-							color: Theme.colors.success
+							font.pixelSize: Config.fontSizeTiny
+						}
+
+						StyledText {
+							text: delegateRoot.modelData.name
+							Layout.fillWidth: true
+							horizontalAlignment: Text.AlignLeft
+						}
+
+						StyledText {
+							text: delegateRoot.modelData.old || "?"
+							color: Theme.colors.fg
+							font.pixelSize: Config.fontSizeSmall
+						}
+
+						StyledText {
+							text: ""
+							Layout.minimumWidth: 20
+							color: Theme.colors.fg
+							font.pixelSize: Config.fontSizeSmall
+						}
+
+						StyledText {
+							text: delegateRoot.modelData.unchanged || ""
+							Layout.minimumWidth: 85 - newVerChanged.implicitWidth
+							color: Theme.colors.fg
+							font.pixelSize: Config.fontSizeSmall
 							horizontalAlignment: Text.AlignRight
-							width: Math.max(85, implicitWidth)
-							anchors.right: delegateRoot.right
-							anchors.verticalCenter: delegateRoot.verticalCenter
+						}
+
+						StyledText {
+							id: newVerChanged
+
+							text: delegateRoot.modelData.changed || delegateRoot.modelData.newVer || "?"
+							color: UpdatesService.levelColor(delegateRoot.modelData.level)
+							font.bold: true
 						}
 					}
 				}
 
 				Rectangle {
 					id: scrollbar
+
 					anchors.right: parent.right
-					y: Math.max(0, Math.min(parent.height - height, listView.visibleArea.yPosition * listView.height))
-					height: Math.max(16, listView.visibleArea.heightRatio * listView.height)
-					width: 3
-					radius: 1.5
 					color: Theme.colors.border
+					height: Math.max(16, listView.visibleArea.heightRatio * listView.height)
+					radius: 1.5
 					visible: listView.visibleArea.heightRatio < 1.0
+					width: 3
+					y: Math.max(0, Math.min(parent.height - height, listView.visibleArea.yPosition * listView.height))
+				}
+			}
+
+			// Counts and timestamp row
+			RowLayout {
+				visible: UpdatesService.count > 0
+				Layout.fillWidth: true
+				spacing: Config.spacing
+
+				StyledText {
+					text: `${UpdatesService.levelCounts.major} major`
+					color: UpdatesService.levelColor("major")
+					font.bold: true
+					font.pixelSize: Config.fontSizeTiny
+				}
+
+				StyledText {
+					text: `${UpdatesService.levelCounts.minor} minor`
+					color: UpdatesService.levelColor("minor")
+					font.bold: true
+					font.pixelSize: Config.fontSizeTiny
+				}
+
+				StyledText {
+					text: `${UpdatesService.levelCounts.patch} patch`
+					color: UpdatesService.levelColor("patch")
+					font.bold: true
+					font.pixelSize: Config.fontSizeTiny
+				}
+
+				StyledText {
+					text: `${UpdatesService.levelCounts.pre} pkg release`
+					color: UpdatesService.levelColor("pre")
+					font.bold: true
+					font.pixelSize: Config.fontSizeTiny
+				}
+
+				StyledText {
+					text: `${UpdatesService.levelCounts.other} other`
+					color: UpdatesService.levelColor("other")
+					font.bold: true
+					font.pixelSize: Config.fontSizeTiny
+				}
+
+				Item {
+					Layout.fillWidth: true
+				}
+
+				StyledText {
+					visible: UpdatesService.lastUpdated.length > 0
+					text: UpdatesService.lastUpdated.replace("T", " ").substring(0, 19)
+					font.pixelSize: Config.fontSizeSmall
+					color: Theme.colors.comment
 				}
 			}
 		}
