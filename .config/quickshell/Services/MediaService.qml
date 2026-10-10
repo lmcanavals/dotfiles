@@ -7,7 +7,8 @@ QtObject {
 	id: root
 
 	readonly property MprisPlayer activePlayer: {
-		const players = Mpris.players?.values;
+		// qmllint disable missing-property
+		const players = Mpris.players.values; // qmllint enable missing-property
 		if (!players || players.length === 0)
 			return null;
 

@@ -10,6 +10,8 @@ QtObject {
 	property bool connected: false
 	property string connectedDevice: ""
 	property string glyph: "󰂲"
+	property bool active: false
+
 	readonly property bool busy: toggleProc.running
 
 	property Process statusProc: Process {
@@ -75,19 +77,15 @@ QtObject {
 
 	property Process toggleProc: Process {
 		running: false
-		// qmllint disable signal-handler-parameters
 		onExited: exitCode => {
 			root.refresh();
 		}
-		// qmllint enable signal-handler-parameters
 	}
 
 	property Process pickerProc: Process {
 		command: ["blueman-manager"]
 		running: false
 	}
-
-	property bool active: false
 
 	property Timer pollTimer: Timer {
 		interval: 4000
@@ -96,8 +94,6 @@ QtObject {
 		triggeredOnStart: true
 		onTriggered: root.refresh()
 	}
-
-	Component.onCompleted: root.refresh()
 
 	function refresh(): void {
 		if (!poller.running) {
@@ -119,4 +115,6 @@ QtObject {
 			pickerProc.running = true;
 		}
 	}
+
+	Component.onCompleted: root.refresh()
 }

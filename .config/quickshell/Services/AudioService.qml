@@ -68,10 +68,11 @@ QtObject {
 		}
 	}
 
-	// Filtered lists
+	// qmllint disable missing-property
 	readonly property var sinks: (Pipewire.nodes && Pipewire.nodes.values) ? Pipewire.nodes.values.filter(n => n && n.isSink && !n.isStream) : []
-
 	readonly property var sources: (Pipewire.nodes && Pipewire.nodes.values) ? Pipewire.nodes.values.filter(n => n && (n.isSource || (!n.isSink && !n.isStream && (n.audio || n.properties?.["media.class"] === "Audio/Source")))) : []
+	// qmllint enable missing-property
+
 	readonly property var trackedNodes: {
 		const raw = [root.sink, root.source, ...(root.sinks || []), ...(root.sources || [])];
 		return raw.filter((node, index, self) => node && self.indexOf(node) === index);

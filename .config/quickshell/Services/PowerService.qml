@@ -18,7 +18,7 @@ QtObject {
 	readonly property string primaryPercentText: percentText(root.displayDevice)
 	readonly property bool primaryShowPercent: showPercent(root.displayDevice)
 
-	// Peripheral devices collection
+	// qmllint disable missing-property
 	readonly property var peripheralDevices: {
 		if (!UPower.devices || !UPower.devices.values)
 			return [];
@@ -31,6 +31,7 @@ QtObject {
 		}
 		return list;
 	}
+	// qmllint enable missing-property
 
 	readonly property int peripheralCount: peripheralDevices.length
 

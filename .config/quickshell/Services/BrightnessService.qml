@@ -50,7 +50,6 @@ QtObject {
 	property Process writeProc: Process {
 		id: writer
 		running: false
-		// qmllint disable signal-handler-parameters
 		onExited: exitCode => {
 			if (root._targetPct >= 0) {
 				const next = root._targetPct;

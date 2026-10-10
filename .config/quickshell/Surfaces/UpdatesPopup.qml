@@ -22,13 +22,13 @@ PopupWindow {
 		}
 	}
 
-	// qmllint disable missing-type
+	// qmllint disable missing-property
 	anchor {
 		item: UpdatesService.targetItem
 		edges: Edges.Bottom
 		gravity: Edges.Bottom
 	}
-	// qmllint enable missing-type
+	// qmllint enable missing-property
 
 	color: "transparent"
 

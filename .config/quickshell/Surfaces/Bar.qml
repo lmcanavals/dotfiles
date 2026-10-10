@@ -6,7 +6,7 @@ import Quickshell.Wayland
 import Widgets
 
 // qmllint disable uncreatable-type
-PanelWindow {
+PanelWindow { // qmllint enable uncreatable-type
 	id: panel
 
 	property var modelData: null

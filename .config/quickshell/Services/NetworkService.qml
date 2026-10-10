@@ -72,11 +72,9 @@ QtObject {
 	// Setter for Wi-Fi radio state
 	property Process toggleProc: Process {
 		running: false
-		// qmllint disable signal-handler-parameters
 		onExited: exitCode => {
 			root.refresh();
 		}
-		// qmllint enable signal-handler-parameters
 	}
 
 	// Launch external helper (networkmanager-dmenu)

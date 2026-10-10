@@ -16,8 +16,8 @@ PanelWindow { // qmllint enable uncreatable-type
 	visible: root.submap !== ""
 
 	anchors.bottom: true
-	// qmllint disable unqualified unresolved-type
-	margins.bottom: (screen?.height ?? 1080) / 6 // qmllint enable unqualified unresolved-type
+	// qmllint disable missing-property
+	margins.bottom: (screen.height ?? 1080) / 6 // qmllint enable missing-property
 	exclusiveZone: 0
 
 	implicitWidth: content.implicitWidth + Config.padding

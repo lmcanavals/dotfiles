@@ -127,7 +127,6 @@ QtObject {
 			id: queryErrCollector
 		}
 
-		// qmllint disable signal-handler-parameters
 		onExited: (exitCode, exitStatus) => {
 			if (exitCode !== 0) {
 				const err = queryErrCollector.text.trim();
@@ -139,7 +138,6 @@ QtObject {
 			checkingTimeoutTimer.stop();
 			restartTimer.restart();
 		}
-		// qmllint enable signal-handler-parameters
 	}
 
 	property Timer restartTimer: Timer {
@@ -169,7 +167,6 @@ QtObject {
 			id: checkNowErr
 		}
 
-		// qmllint disable signal-handler-parameters
 		onExited: (exitCode, exitStatus) => {
 			if (exitCode !== 0) {
 				const err = checkNowErr.text.trim();
@@ -180,7 +177,6 @@ QtObject {
 				checkingTimeoutTimer.stop();
 			}
 		}
-		// qmllint enable signal-handler-parameters
 	}
 
 	property Process upgradeProc: Process {

@@ -192,7 +192,7 @@ QtObject {
 			const activeActions = [];
 			const historyActions = [];
 
-			// qmllint disable unresolved-type
+			// qmllint disable missing-property
 			if (notif.actions && notif.actions.length > 0) {
 				for (let i = 0; i < notif.actions.length; i++) {
 					const act = notif.actions[i];
@@ -222,7 +222,7 @@ QtObject {
 					}
 				}
 			}
-			// qmllint enable unresolved-type
+			// qmllint enable missing-property
 
 			// Extract inline reply
 			const hasInlineReply = Boolean(notif.hasInlineReply);

@@ -45,12 +45,12 @@ PopupWindow {
 		value: root.visible
 	}
 
-	// qmllint disable missing-type
+	// qmllint disable missing-property
 	anchor {
 		item: QuickSettingsService.targetItem
 		edges: Edges.Bottom
 		gravity: Edges.Bottom
-	} // qmllint enable missing-type
+	} // qmllint enable missing-property
 
 	color: "transparent"
 

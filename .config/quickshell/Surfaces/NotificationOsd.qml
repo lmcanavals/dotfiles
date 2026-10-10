@@ -9,7 +9,7 @@ import Primitives
 import Services
 
 // qmllint disable uncreatable-type
-PanelWindow {
+PanelWindow { // qmllint enable uncreatable-type
 	id: root
 
 	visible: NotificationService.activeList.count > 0
@@ -19,12 +19,12 @@ PanelWindow {
 		right: true
 	}
 
-	// qmllint disable unqualified unresolved-type
+	// qmllint disable missing-property
 	margins {
 		top: Config.barHeight + Config.padding
 		right: Config.padding
 	}
-	// qmllint enable unqualified unresolved-type
+	// qmllint enable missing-property
 
 	implicitWidth: Config.popupWidth
 	implicitHeight: notifColumn.implicitHeight

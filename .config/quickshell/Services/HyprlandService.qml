@@ -22,7 +22,7 @@ QtObject {
 
 	function titleForScreen(screen): string {
 		if (!screen)
-			return HyprlandService.activeTitle;
+			return root.activeTitle;
 
 		const monitor = Hyprland.monitorFor(screen);
 		if (!monitor || !monitor.activeWorkspace)

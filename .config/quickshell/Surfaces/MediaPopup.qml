@@ -22,12 +22,12 @@ PopupWindow {
 		}
 	}
 
-	// qmllint disable missing-type
+	// qmllint disable missing-property
 	anchor {
 		edges: Edges.Bottom
 		gravity: Edges.Bottom
 		item: MediaService.targetItem
-	} // qmllint enable missing-type
+	} // qmllint enable missing-property
 
 	SurfaceCard {
 		id: mainCard

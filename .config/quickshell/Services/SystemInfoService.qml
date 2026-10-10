@@ -77,11 +77,9 @@ QtObject {
 			}
 		}
 
-		// qmllint disable signal-handler-parameters
 		onExited: exitCode => {
 			root.isQueryingAccount = false;
 		}
-		// qmllint enable signal-handler-parameters
 	}
 
 	function queryAccount(): void {
