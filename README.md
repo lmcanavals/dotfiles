@@ -236,6 +236,8 @@ Full graphical box:
 ```sh
 # Full graphical box: checks out everything
 git checkout
+
+# INFO: BEWARE sparse files add. It causes aggressive pruning on like .local/share
 ```
 
 Clone `aconfmgr` link it and run it.
