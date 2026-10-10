@@ -27,16 +27,15 @@ PopupWindow {
 		edges: Edges.Bottom
 		gravity: Edges.Bottom
 		item: MediaService.targetItem
-	}
+	} // qmllint enable missing-type
 
 	SurfaceCard {
 		id: mainCard
 
 		implicitHeight: contentLayout.implicitHeight + Config.padding * 3
-		implicitWidth: 450
+		implicitWidth: 400
 		color: Theme.bgSurface
 
-		// Top Row: Album Art & Track Metadata
 		RowLayout {
 			id: contentLayout
 
@@ -46,8 +45,6 @@ PopupWindow {
 				top: parent.top
 				margins: Config.padding * 1.5
 			}
-
-			spacing: Config.spacing
 
 			ThumbnailImage {
 				id: artContainer
@@ -61,89 +58,83 @@ PopupWindow {
 			ColumnLayout {
 				Layout.alignment: Qt.AlignVCenter
 				Layout.fillWidth: true
-				spacing: 3
 
 				StyledText {
 					Layout.fillWidth: true
-					color: Theme.colors.fg
 					font.bold: true
-					font.pixelSize: Config.fontSizeLarge
 					text: MediaService.title
 				}
 
 				RowLayout {
 					Layout.fillWidth: true
-					spacing: Config.spacing
+					visible: MediaService.artist || MediaService.album
 
 					StyledText {
-						Layout.fillWidth: true
+						color: Theme.colors.fg
 						font.pixelSize: Config.fontSizeSmall
 						text: MediaService.artist
 					}
 
-					StyledText {
+					Item {
 						Layout.fillWidth: true
+					}
+
+					StyledText {
+						color: Theme.colors.fg
 						font.pixelSize: Config.fontSizeSmall
 						text: MediaService.album
-						horizontalAlignment: Text.AlignRight
 					}
 				}
 
-				// Interactive Seek Track
-				ColumnLayout {
+				TrackSlider {
 					Layout.fillWidth: true
-					spacing: 4
-
-					TrackSlider {
-						Layout.fillWidth: true
-						implicitHeight: 6
-						value: MediaService.progress
-						accentColor: Theme.colors.accent
-						onValueModified: ratio => MediaService.seek(ratio)
-					}
-
-					RowLayout {
-						Layout.fillWidth: true
-
-						StyledText {
-							color: Theme.colors.comment
-							font.pixelSize: Config.fontSizeTiny
-							text: MediaService.formatTime(MediaService.position)
-						}
-
-						Item {
-							Layout.fillWidth: true
-						}
-
-						StyledText {
-							color: Theme.colors.comment
-							font.pixelSize: Config.fontSizeTiny
-							text: MediaService.formatTime(MediaService.length)
-						}
-					}
+					implicitHeight: 6
+					value: MediaService.progress
+					accentColor: Theme.colors.accent
+					onValueModified: ratio => MediaService.seek(ratio)
 				}
 
-				// Transport Buttons (previous, play/pause, next)
 				RowLayout {
-					Layout.alignment: Qt.AlignHCenter
-					spacing: Config.spacing * 2
-
 					StyledButton {
-						text: "󰒮"
+						text: ""
 
 						onClicked: MediaService.previous()
 					}
 
 					StyledButton {
-						text: MediaService.isPlaying ? "󰏤" : "󰐊"
+						text: MediaService.isPlaying ? "" : ""
 
 						onClicked: MediaService.playPause()
 					}
 
 					StyledButton {
-						text: "󰒭"
+						text: ""
 
 						onClicked: MediaService.next()
+					}
+
+					Item {
+						Layout.fillWidth: true
+					}
+
+					StyledText {
+						text: MediaService.formatTime(MediaService.position)
+						Layout.minimumWidth: 30
+						color: Theme.colors.fg
+						font.pixelSize: Config.fontSizeSmall
+					}
+
+					StyledText {
+						text: "/"
+						color: Theme.colors.fg
+						font.pixelSize: Config.fontSizeSmall
+					}
+
+					StyledText {
+						text: MediaService.formatTime(MediaService.length)
+						Layout.minimumWidth: 30
+						color: Theme.colors.fg
+						font.pixelSize: Config.fontSizeSmall
 					}
 				}
 			}

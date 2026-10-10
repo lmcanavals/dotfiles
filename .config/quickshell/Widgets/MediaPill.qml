@@ -31,7 +31,7 @@ BarPill {
 
 		StyledText {
 			color: MediaService.isPlaying ? Theme.colors.accent : Theme.colors.fg_widget
-			text: MediaService.isPlaying ? "󰏤" : "󰐊"
+			text: MediaService.isPlaying ? "" : ""
 		}
 
 		StyledText {
