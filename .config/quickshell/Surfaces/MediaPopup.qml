@@ -56,7 +56,7 @@ PopupWindow {
 			}
 
 			ColumnLayout {
-				Layout.alignment: Qt.AlignVCenter
+				Layout.alignment: Qt.AlignTop
 				Layout.fillWidth: true
 
 				StyledText {

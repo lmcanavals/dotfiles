@@ -86,7 +86,6 @@ SurfaceCard {
 						maxHeight: 32
 						radius: Config.radiusSmall
 						showFallback: false
-						Layout.alignment: Qt.AlignVCenter
 					}
 
 					ColumnLayout {

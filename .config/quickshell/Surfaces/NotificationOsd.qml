@@ -112,6 +112,7 @@ PanelWindow { // qmllint enable uncreatable-type
 					}
 
 					ColumnLayout {
+						Layout.alignment: Qt.AlignTop
 						// 1. App Header Row
 						RowLayout {
 							Layout.fillWidth: true
@@ -155,7 +156,6 @@ PanelWindow { // qmllint enable uncreatable-type
 
 							ColumnLayout {
 								Layout.fillWidth: true
-								Layout.alignment: Qt.AlignVCenter
 
 								StyledText {
 									text: card.model.summary
