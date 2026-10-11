@@ -274,7 +274,7 @@ QtObject {
 				let count = 1;
 
 				if (tag.length === 0) {
-					count = (existing.count || 1) + 1;
+					count = (existing.count ?? 1) + 1;
 					displaySummary = `(${count}) ${summary}`;
 				}
 

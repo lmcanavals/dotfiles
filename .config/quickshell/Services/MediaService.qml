@@ -12,7 +12,7 @@ QtObject {
 		if (!players || players.length === 0)
 			return null;
 
-		return players.find(p => p?.playbackState === MprisPlaybackState.Playing) || players.find(p => p?.playbackState === MprisPlaybackState.Paused) || players[0] || null;
+		return players.find(p => p?.playbackState === MprisPlaybackState.Playing) ?? players.find(p => p?.playbackState === MprisPlaybackState.Paused) ?? players[0] ?? null;
 	}
 	readonly property string album: activePlayer?.trackAlbum ?? ""
 	readonly property string artUrl: activePlayer?.trackArtUrl ?? ""

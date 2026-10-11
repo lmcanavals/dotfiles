@@ -30,7 +30,7 @@ ClippingRectangle {
 		if (src.startsWith("/"))
 			return "file://" + src;
 
-		const iconPath = Quickshell.hasThemeIcon(src) ? Quickshell.iconPath(src) : (Quickshell.iconPath(src) || "");
+		const iconPath = Quickshell.hasThemeIcon(src) ? Quickshell.iconPath(src) : "";
 		if (iconPath && iconPath.length > 0) {
 			if (iconPath.startsWith("/"))
 				return "file://" + iconPath;

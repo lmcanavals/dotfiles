@@ -74,7 +74,7 @@ QtObject {
 	// qmllint enable missing-property
 
 	readonly property var trackedNodes: {
-		const raw = [root.sink, root.source, ...(root.sinks || []), ...(root.sources || [])];
+		const raw = [root.sink, root.source, ...root.sinks, ...root.sources];
 		return raw.filter((node, index, self) => node && self.indexOf(node) === index);
 	}
 

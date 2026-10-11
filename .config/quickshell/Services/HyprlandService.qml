@@ -35,7 +35,7 @@ QtObject {
 		if (toplevels.length === 0)
 			return "";
 
-		const activeClient = toplevels.find(tl => tl && tl.activated) || toplevels[0];
+		const activeClient = toplevels.find(tl => tl && tl.activated) ?? toplevels[0];
 		return activeClient?.title ?? "";
 	}
 }
