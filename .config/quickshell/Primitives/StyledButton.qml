@@ -42,5 +42,6 @@ Rectangle {
 		anchors.fill: parent
 		text: root.text
 		color: mouseArea.containsMouse ? root.fgHover : root.fg
+		font.pixelSize: root.fontSize
 	}
 }

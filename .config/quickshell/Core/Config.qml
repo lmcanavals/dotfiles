@@ -26,7 +26,7 @@ QtObject {
 	readonly property int fontSizeSmall: fontSize - 2
 	readonly property int fontSizeBase: fontSize
 	readonly property int fontSizeLarge: fontSize + 2
-	readonly property int fontSizeXL: fontSize + 6
+	readonly property int fontSizeXL: fontSize + 10
 
 	readonly property string iconClose: ""
 	readonly property string iconOs: "󰣇"

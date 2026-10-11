@@ -49,7 +49,6 @@ SurfaceCard {
 				anchors.rightMargin: scrollbar.visible ? 6 : 0
 				clip: true
 				boundsBehavior: Flickable.StopAtBounds
-				spacing: 4
 				model: root.modelList
 
 				delegate: Rectangle {

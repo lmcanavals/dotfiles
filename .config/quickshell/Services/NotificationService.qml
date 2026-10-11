@@ -189,6 +189,7 @@ QtObject {
 
 			// Extract actions info
 			let hasDefaultAction = false;
+			let defaultActionText = "";
 			const activeActions = [];
 			const historyActions = [];
 
@@ -203,6 +204,7 @@ QtObject {
 
 					if (idStr === "default") {
 						hasDefaultAction = true;
+						defaultActionText = textStr !== "default" ? textStr : "";
 					} else {
 						activeActions.push({
 							id: idStr,
@@ -219,6 +221,8 @@ QtObject {
 					const first = notif.actions[0];
 					if (first && (first.identifier === "" || first.identifier === "0")) {
 						hasDefaultAction = true;
+						const txt = String(first.text || "");
+						defaultActionText = (txt !== "" && txt !== "0") ? txt : "";
 					}
 				}
 			}
@@ -293,6 +297,7 @@ QtObject {
 					previousId: existing.id,
 					rawNotif: notif,
 					hasDefaultAction: hasDefaultAction,
+					defaultActionText: defaultActionText,
 					appName: appName,
 					summary: displaySummary,
 					baseSummary: summary,
@@ -324,6 +329,7 @@ QtObject {
 					previousId: notif.id,
 					rawNotif: notif,
 					hasDefaultAction: hasDefaultAction,
+					defaultActionText: defaultActionText,
 					appName: appName,
 					summary: summary,
 					baseSummary: summary,

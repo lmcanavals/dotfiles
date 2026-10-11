@@ -7,15 +7,19 @@ import Core
 QtObject {
 	id: root
 
-	readonly property date currentDate: clock.date
-	readonly property string formattedTime: Qt.formatDateTime(clock.date, Config.dateFormat)
-	readonly property string shortTime: Qt.formatDateTime(clock.date, Config.timeFormat)
+	property SystemClock clock: SystemClock {
+		precision: SystemClock.Seconds
+	}
 
-	readonly property string iconZero: "\uf4c3"
-	readonly property string iconOne: "\uf444"
+	readonly property date currentDate: clock?.date ?? new Date()
+	readonly property string formattedTime: Qt.formatDateTime(currentDate, Config.dateFormat)
+	readonly property string shortTime: Qt.formatDateTime(currentDate, Config.timeFormat)
+
+	readonly property string iconZero: ""
+	readonly property string iconOne: ""
 
 	readonly property string binaryTime: {
-		const d = clock.date;
+		const d = root.currentDate;
 		const hr = d.getHours();
 		const min = d.getMinutes();
 
@@ -30,9 +34,5 @@ QtObject {
 		}
 
 		return `${hStr} : ${mStr}`;
-	}
-
-	property SystemClock clock: SystemClock {
-		precision: SystemClock.Seconds
 	}
 }

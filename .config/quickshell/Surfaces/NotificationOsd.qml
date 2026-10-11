@@ -21,10 +21,9 @@ PanelWindow { // qmllint enable uncreatable-type
 
 	// qmllint disable missing-property
 	margins {
-		top: Config.barHeight + Config.padding
+		top: Config.padding
 		right: Config.padding
-	}
-	// qmllint enable missing-property
+	} // qmllint enable missing-property
 
 	implicitWidth: Config.popupWidth
 	implicitHeight: notifColumn.implicitHeight
@@ -47,186 +46,226 @@ PanelWindow { // qmllint enable uncreatable-type
 
 			delegate: SurfaceCard {
 				id: card
+
+				property double lastTimestamp: (card.model && card.model.timestamp) ? card.model.timestamp : 0
 				required property var model
-
 				readonly property bool isActionable: Boolean(card.model && card.model.hasDefaultAction)
+				readonly property string defaultActionLabel: (card.model && card.model.defaultActionText) ? card.model.defaultActionText : ""
+				readonly property bool hasInputFocus: Boolean(replyRow.visible && replyInput.activeFocus)
+				readonly property bool isHovered: cardHoverArea.containsMouse
 
-				color: Theme.bgSurface
-				border.color: (card.isActionable && cardMouseArea.containsMouse) ? Theme.colors.accent : Theme.colors.border
 				Layout.fillWidth: true
+				color: card.isHovered ? Theme.bgCardHover : Theme.bgCard
 				implicitHeight: innerLayout.implicitHeight + (Config.padding * 2)
+				onLastTimestampChanged: dismissTimer.restart()
 
 				Timer {
 					id: dismissTimer
+
 					interval: 5000
-					running: !(replyRow.visible && replyInput.activeFocus)
 					onTriggered: NotificationService.expireActive(card.model.id)
+					running: !card.isHovered && !card.hasInputFocus
 				}
 
-				property double lastTimestamp: (card.model && card.model.timestamp) ? card.model.timestamp : 0
-				onLastTimestampChanged: dismissTimer.restart()
-
-				// Card-level click for default action
-				MouseArea {
-					id: cardMouseArea
-					anchors.fill: parent
-					hoverEnabled: true
-					cursorShape: card.isActionable ? Qt.PointingHandCursor : Qt.ArrowCursor
-					enabled: card.isActionable
-					onClicked: {
-						NotificationService.invokeDefault(card.model.id);
+				// Restart countdown whenever user unhovers or finishes typing
+				Connections {
+					target: card
+					function onIsHoveredChanged() {
+						if (!card.isHovered && !card.hasInputFocus) {
+							dismissTimer.restart();
+						}
+					}
+					function onHasInputFocusChanged() {
+						if (!card.isHovered && !card.hasInputFocus) {
+							dismissTimer.restart();
+						}
 					}
 				}
 
-				ColumnLayout {
+				// Card-level hover tracking (always active)
+				MouseArea {
+					id: cardHoverArea
+
+					anchors.fill: parent
+					hoverEnabled: true
+					acceptedButtons: Qt.NoButton
+				}
+
+				// Card-level click for default action (underneath interactive buttons)
+				MouseArea {
+					id: cardClickArea
+
+					anchors.fill: parent
+					cursorShape: Qt.PointingHandCursor
+					enabled: card.isActionable
+					onClicked: NotificationService.invokeDefault(card.model.id)
+				}
+
+				RowLayout {
 					id: innerLayout
 					anchors.fill: parent
 					anchors.margins: Config.padding
 					spacing: Config.spacing
 
-					// 1. App Header Row
-					RowLayout {
-						Layout.fillWidth: true
-
-						StyledText {
-							text: "󰂚 " + (card.model.appName || "Notification")
-							font.bold: true
-							font.pixelSize: Config.fontSizeTiny
-							color: Theme.colors.comment
-							Layout.fillWidth: true
-							horizontalAlignment: Text.AlignLeft
-						}
-
-						StyledText {
-							visible: card.isActionable
-							text: "󰌹"
-							font.pixelSize: Config.fontSizeSmall
-							color: cardMouseArea.containsMouse ? Theme.colors.accent : Theme.colors.comment
-						}
-
-						StyledButton {
-							text: "󰅖"
-							onClicked: NotificationService.dismissActive(card.model.id)
-						}
+					ThumbnailImage {
+						source: card.model?.appIcon ?? ""
 					}
 
-					// 2. Main Content Row: Thumbnail + Text
-					RowLayout {
-						Layout.fillWidth: true
-						spacing: Config.spacing
-
-						ThumbnailImage {
-							id: notifThumb
-							source: card.model ? (card.model.appIcon || "") : ""
-							minHeight: 64
-							maxHeight: 80
-							showFallback: false
-							Layout.alignment: Qt.AlignTop
-						}
-
-						ColumnLayout {
+					ColumnLayout {
+						// 1. App Header Row
+						RowLayout {
 							Layout.fillWidth: true
-							Layout.alignment: Qt.AlignVCenter
-							spacing: 2
+							spacing: Config.spacing
 
 							StyledText {
-								text: card.model.summary
+								text: card.model.appName || "Notification"
+								Layout.fillWidth: true
+								color: Theme.colors.comment
 								font.bold: true
-								font.pixelSize: Config.fontSizeLarge
-								color: Theme.colors.fg
-								textFormat: Text.StyledText
-								onLinkActivated: link => Qt.openUrlExternally(link)
-								Layout.fillWidth: true
+								font.pixelSize: Config.fontSizeTiny
+								horizontalAlignment: Text.AlignLeft
 							}
 
 							StyledText {
-								visible: card.model.body.length > 0
-								text: card.model.body
-								font.pixelSize: Config.fontSizeSmall
-								color: Theme.colors.fg_dark
-								textFormat: Text.StyledText
-								onLinkActivated: link => Qt.openUrlExternally(link)
-								wrapMode: Text.Wrap
+								text: "󰝁"
+								color: card.isHovered ? Theme.colors.accent : Theme.colors.comment
+								visible: card.isHovered && card.defaultActionLabel.length > 0
+							}
+
+							StyledText {
+								text: card.defaultActionLabel
+								color: card.isHovered ? Theme.colors.accent : Theme.colors.comment
+								font.pixelSize: Config.fontSizeTiny
+								visible: card.isHovered && card.defaultActionLabel.length > 0
+							}
+
+							Item {
 								Layout.fillWidth: true
 							}
-						}
-					}
 
-					// 3. Interactive Action Buttons Row
-					RowLayout {
-						visible: card.model && card.model.actions && (card.model.actions.count ? card.model.actions.count > 0 : card.model.actions.length > 0)
-						Layout.fillWidth: true
-						spacing: Config.spacing
-
-						Repeater {
-							model: card.model ? card.model.actions : null
-
-							delegate: StyledButton {
-								id: actionBtn
-								required property var model
-
-								text: actionBtn.model.text
-								onClicked: {
-									NotificationService.invokeAction(card.model.id, actionBtn.model.id);
-								}
+							StyledButton {
+								text: Config.iconClose
+								onClicked: NotificationService.dismissActive(card.model.id)
 							}
 						}
-					}
 
-					// 4. Inline Reply Input Field
-					RowLayout {
-						id: replyRow
-						visible: card.model && card.model.hasInlineReply
-						Layout.fillWidth: true
-						spacing: Config.spacing
-
-						Rectangle {
+						// 2. Main Content Row
+						RowLayout {
 							Layout.fillWidth: true
-							implicitHeight: 28
-							radius: Config.radiusSmall
-							color: Theme.colors.bg_dark
-							border.color: replyInput.activeFocus ? Theme.colors.accent : Theme.colors.border
-							border.width: 1
 
-							TextInput {
-								id: replyInput
-								anchors.fill: parent
-								anchors.leftMargin: Config.padding
-								anchors.rightMargin: Config.padding
-								verticalAlignment: TextInput.AlignVCenter
-								color: Theme.colors.fg
-								font.family: Config.fontFamily
-								font.pixelSize: Config.fontSizeSmall
-								clip: true
+							ColumnLayout {
+								Layout.fillWidth: true
+								Layout.alignment: Qt.AlignVCenter
 
-								onActiveFocusChanged: {
-									if (replyInput.activeFocus) {
-										root.focusedReplyInput = replyInput;
-									} else if (root.focusedReplyInput === replyInput) {
-										root.focusedReplyInput = null;
-									}
-								}
-
-								Component.onDestruction: {
-									if (root.focusedReplyInput === replyInput) {
-										root.focusedReplyInput = null;
-									}
-								}
-
-								Keys.onEscapePressed: event => {
-									replyInput.focus = false;
-									event.accepted = true;
+								StyledText {
+									text: card.model.summary
+									Layout.fillWidth: true
+									font.bold: true
+									onLinkActivated: link => Qt.openUrlExternally(link)
+									textFormat: Text.StyledText
 								}
 
 								StyledText {
-									anchors.fill: parent
-									text: (card.model && card.model.replyPlaceholder) ? card.model.replyPlaceholder : "Type a reply..."
+									text: card.model.body
+									Layout.fillWidth: true
+									color: Theme.colors.fg
 									font.pixelSize: Config.fontSizeSmall
-									color: Theme.colors.comment
-									visible: replyInput.text.length === 0
+									onLinkActivated: link => Qt.openUrlExternally(link)
+									textFormat: Text.StyledText
+									visible: card.model.body.length > 0
+									wrapMode: Text.Wrap
 								}
+							}
+						}
 
-								onAccepted: {
+						// 3. Interactive Action Buttons Row
+						RowLayout {
+							Layout.fillWidth: true
+							spacing: Config.spacing
+							visible: card.model?.actions.count > 0
+
+							Repeater {
+								model: card.model?.actions
+
+								delegate: StyledButton {
+									id: actionBtn
+
+									required property var model
+
+									text: actionBtn.model.text
+									onClicked: NotificationService.invokeAction(card.model.id, actionBtn.model.id)
+								}
+							}
+						}
+
+						// 4. Inline Reply Input Field
+						RowLayout {
+							id: replyRow
+
+							Layout.fillWidth: true
+							spacing: Config.spacing
+							visible: card.model && card.model.hasInlineReply
+
+							Rectangle {
+								Layout.fillWidth: true
+								implicitHeight: 28
+								radius: Config.radiusSmall
+								color: Theme.colors.bg_dark
+								border.color: replyInput.activeFocus ? Theme.colors.accent : Theme.colors.border
+								border.width: 1
+
+								TextInput {
+									id: replyInput
+
+									anchors.fill: parent
+									anchors.leftMargin: Config.padding
+									anchors.rightMargin: Config.padding
+									verticalAlignment: TextInput.AlignVCenter
+									color: Theme.colors.fg
+									font.family: Config.fontFamily
+									font.pixelSize: Config.fontSizeSmall
+									clip: true
+
+									onActiveFocusChanged: {
+										if (replyInput.activeFocus) {
+											root.focusedReplyInput = replyInput;
+										} else if (root.focusedReplyInput === replyInput) {
+											root.focusedReplyInput = null;
+										}
+									}
+
+									Component.onDestruction: {
+										if (root.focusedReplyInput === replyInput) {
+											root.focusedReplyInput = null;
+										}
+									}
+
+									Keys.onEscapePressed: event => {
+										replyInput.focus = false;
+										event.accepted = true;
+									}
+
+									StyledText {
+										text: card.model?.replyPlaceholder ? card.model.replyPlaceholder : "Type a reply..."
+										anchors.fill: parent
+										color: Theme.colors.comment
+										font.pixelSize: Config.fontSizeSmall
+										visible: replyInput.text.length === 0
+									}
+
+									onAccepted: {
+										const text = replyInput.text.trim();
+										replyInput.focus = false;
+										if (text.length > 0) {
+											NotificationService.sendReply(card.model.id, text);
+										}
+									}
+								}
+							}
+
+							StyledButton {
+								text: Config.iconSend
+								onClicked: {
 									const text = replyInput.text.trim();
 									replyInput.focus = false;
 									if (text.length > 0) {
@@ -236,30 +275,13 @@ PanelWindow { // qmllint enable uncreatable-type
 							}
 						}
 
-						StyledButton {
-							text: "󰒊"
-							implicitHeight: 28
-							onClicked: {
-								const text = replyInput.text.trim();
-								replyInput.focus = false;
-								if (text.length > 0) {
-									NotificationService.sendReply(card.model.id, text);
-								}
-							}
-						}
-					}
+						ProgressBar {
+							id: progressBar
 
-					// 5. Progress Bar
-					ProgressBar {
-						id: progressBar
-						visible: card.model && card.model.value !== undefined && card.model.value >= 0
-						Layout.fillWidth: true
-						Layout.topMargin: 2
-						implicitHeight: 4
-						fillRadius: 2
-						fillColor: Theme.colors.accent
-						trackColor: Theme.bgTrack
-						value: (card.model && card.model.value !== undefined) ? (Number(card.model.value) / 100.0) : 0.0
+							Layout.fillWidth: true
+							value: (card.model && card.model.value !== undefined) ? (Number(card.model.value) / 100.0) : 0.0
+							visible: card.model && card.model.value !== undefined && card.model.value >= 0
+						}
 					}
 				}
 			}

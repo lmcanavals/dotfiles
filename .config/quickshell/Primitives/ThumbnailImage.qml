@@ -10,7 +10,7 @@ ClippingRectangle {
 	id: root
 
 	property string source: ""
-	property string fallbackIcon: "󰂚"
+	property string fallbackIcon: ""
 	property bool showFallback: true
 	property real minHeight: 64
 	property real maxHeight: 80
