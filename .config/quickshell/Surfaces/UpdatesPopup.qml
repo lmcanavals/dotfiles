@@ -27,8 +27,7 @@ PopupWindow {
 		item: UpdatesService.targetItem
 		edges: Edges.Bottom
 		gravity: Edges.Bottom
-	}
-	// qmllint enable missing-property
+	} // qmllint enable missing-property
 
 	color: "transparent"
 
@@ -61,7 +60,7 @@ PopupWindow {
 				}
 
 				StyledButton {
-					text: "󰅖"
+					text: Config.iconClose
 					onClicked: UpdatesService.close()
 				}
 			}

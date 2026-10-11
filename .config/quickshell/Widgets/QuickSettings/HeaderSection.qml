@@ -44,7 +44,7 @@ RowLayout {
 			}
 
 			StyledButton {
-				text: "󰅖"
+				text: Config.iconClose
 				onClicked: QuickSettingsService.close()
 			}
 		}

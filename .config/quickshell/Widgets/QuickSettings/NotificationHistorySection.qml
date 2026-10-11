@@ -142,7 +142,7 @@ SurfaceCard {
 					}
 
 					StyledButton {
-						text: "󰅖"
+						text: Config.iconClose
 						onClicked: NotificationService.removeHistory(itemCard.modelData.id)
 					}
 				}

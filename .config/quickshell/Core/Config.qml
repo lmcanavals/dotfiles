@@ -16,7 +16,6 @@ QtObject {
 	readonly property int animDurationFast: 150
 	readonly property int animDurationMedium: 250
 	readonly property int animDurationSlow: 400
-	readonly property string osIcon: "󰣇"
 	readonly property string dateFormat: "dddd, d MMMM yyyy"
 	readonly property string timeFormat: "HH:mm"
 	readonly property string fontFamily: "sans-serif, Font Awesome 7 Free, Symbols Nerd Font"
@@ -28,4 +27,8 @@ QtObject {
 	readonly property int fontSizeBase: fontSize
 	readonly property int fontSizeLarge: fontSize + 2
 	readonly property int fontSizeXL: fontSize + 6
+
+	readonly property string iconClose: ""
+	readonly property string iconOs: "󰣇"
+	readonly property string iconSend: "󰒊"
 }

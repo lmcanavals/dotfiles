@@ -18,7 +18,7 @@ BarPill {
 
 		StyledText {
 			id: iconGlyph
-			text: UpdatesService.count > 0 ? UpdatesService.glyph : Config.osIcon
+			text: UpdatesService.count > 0 ? UpdatesService.glyph : Config.iconOs
 			font.bold: true
 			color: UpdatesService.isChecking ? Theme.colors.info : (UpdatesService.levelCounts.major > 0 ? Theme.colors.error : (UpdatesService.count > 0 ? Theme.colors.warning : Theme.colors.fg_widget))
 			opacity: UpdatesService.isChecking ? 0.6 : 1.0
