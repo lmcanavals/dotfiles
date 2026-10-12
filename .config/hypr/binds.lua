@@ -1,3 +1,16 @@
+-------------------------
+---- The other stuff ----
+-------------------------
+
+local f = require("utils").f
+local exec = hl.dsp.exec_cmd
+local submap = hl.dsp.submap
+local win = hl.dsp.window
+
+-------------------------
+---- Declaring stuff ----
+-------------------------
+
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 -- local tablet = "device[wacom-one-by-wacom-m-pen]"
@@ -25,63 +38,64 @@ local swappy = "󱇣 : 󰍺 All │ 󰍹 Output │  Window │ 󰩭
 local save = "󰉏 : 󰍺 All │ 󰍹 Output │  Window │ 󰩭 Region"
 local rec = " : 󰍹 Output │ 󰩭 Region │  Stop"
 local testKeys = "Test keys with wev"
-local window = " 󰙕 : 󰞗 │󰞖 │󰞙 │󰞘"
+local window =
+	"󰘴 󰘴󰙕 : 󰞗 │󰞖 │󰞙 │󰞘 │ 󰻿 Center │ 󰊓 Fullscreen │ 󰐃 Pin │ 󱂬 [v]Float"
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 if hl.get_config("general.layout") == "scrolling" then
-	hl.bind(mainMod .. " + left", hl.dsp.layout("focus left"))
-	hl.bind(mainMod .. " + right", hl.dsp.layout("focus right"))
-	hl.bind(mainMod .. " + page_up", hl.dsp.layout("colresize +conf"))
-	hl.bind(mainMod .. " + page_down", hl.dsp.layout("colresize -conf"))
-	hl.bind(mainMod .. " + space", hl.dsp.layout("fit all"))
-	hl.bind(mainMod .. " + SHIFT + left", hl.dsp.layout("swapcol l"))
-	hl.bind(mainMod .. " + SHIFT + right", hl.dsp.layout("swapcol r"))
-	hl.bind(mainMod .. " + SHIFT + page_up", hl.dsp.layout("consume_or_expel next"))
-	hl.bind(mainMod .. " + SHIFT + page_down", hl.dsp.layout("consume_or_expel prev"))
+	hl.bind(f("%s + left", mainMod), hl.dsp.layout("focus left"))
+	hl.bind(f("%s + right", mainMod), hl.dsp.layout("focus right"))
+	hl.bind(f("%s + page_up", mainMod), hl.dsp.layout("colresize +conf"))
+	hl.bind(f("%s + page_down", mainMod), hl.dsp.layout("colresize -conf"))
+	hl.bind(f("%s + space", mainMod), hl.dsp.layout("fit all"))
+	hl.bind(f("%s + SHIFT + left", mainMod), hl.dsp.layout("swapcol l"))
+	hl.bind(f("%s + SHIFT + right", mainMod), hl.dsp.layout("swapcol r"))
+	hl.bind(f("%s + SHIFT + page_up", mainMod), hl.dsp.layout("consume_or_expel next"))
+	hl.bind(f("%s + SHIFT + page_down", mainMod), hl.dsp.layout("consume_or_expel prev"))
 else
-	hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
-	hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
-	hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
+	hl.bind(f("%s + J", mainMod), hl.dsp.layout("togglesplit"))
+	hl.bind(f("%s + left", mainMod), hl.dsp.focus({ direction = "left" }))
+	hl.bind(f("%s + right", mainMod), hl.dsp.focus({ direction = "right" }))
 end
-hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(hideBar))
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + G", hl.dsp.submap(groups))
-hl.bind(mainMod .. " + I", hl.dsp.exec_cmd(fyi .. ' Missing "Settings Win+I"'))
-hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("loginctl lock-session"))
-hl.bind(mainMod .. " + M", hl.dsp.submap(power))
-hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
-hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menuDrun))
-hl.bind(mainMod .. " + S", hl.dsp.submap(scrGrab))
-hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + W", hl.dsp.submap(window))
-hl.bind(mainMod .. " + X", hl.dsp.workspace.toggle_special(myEsp))
-hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd(clipboardTool))
+hl.bind(f("%s + B", mainMod), exec(hideBar))
+hl.bind(f("%s + E", mainMod), exec(fileManager))
+hl.bind(f("%s + G", mainMod), submap(groups))
+hl.bind(f("%s + I", mainMod), exec(f("%s Missing Settings_Win+I", fyi)))
+hl.bind(f("%s + L", mainMod), exec("loginctl lock-session"))
+hl.bind(f("%s + M", mainMod), submap(power))
+hl.bind(f("%s + P", mainMod), win.pseudo())
+hl.bind(f("%s + Q", mainMod), exec(terminal))
+hl.bind(f("%s + R", mainMod), exec(menuDrun))
+hl.bind(f("%s + S", mainMod), submap(scrGrab))
+hl.bind(f("%s + V", mainMod), win.float({ action = "toggle" }))
+hl.bind(f("%s + W", mainMod), submap(window))
+hl.bind(f("%s + X", mainMod), hl.dsp.workspace.toggle_special(myEsp))
+hl.bind(f("%s + Z", mainMod), exec(clipboardTool))
 
-hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd(resetBar))
-hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.exec_cmd(browser))
-hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd(menuRun))
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("lshot -f " .. ssfile .. "'swappy -f' -r"))
-hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.pin({ action = "toggle" }))
-hl.bind(mainMod .. " + SHIFT + X", hl.dsp.window.move({ workspace = "special:" .. myEsp }))
+hl.bind(f("%s + SHIFT + B", mainMod), exec(resetBar))
+hl.bind(f("%s + SHIFT + Q", mainMod), exec(browser))
+hl.bind(f("%s + SHIFT + R", mainMod), exec(menuRun))
+hl.bind(f("%s + SHIFT + S", mainMod), exec(f("lshot -f %s'swappy -f' -r", ssfile)))
+hl.bind(f("%s + SHIFT + V", mainMod), win.pin({ action = "toggle" }))
+hl.bind(f("%s + SHIFT + X", mainMod), win.move({ workspace = f("special:%s", myEsp) }))
 
-hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
-hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
+hl.bind(f("%s + up", mainMod), hl.dsp.focus({ direction = "up" }))
+hl.bind(f("%s + down", mainMod), hl.dsp.focus({ direction = "down" }))
 
-hl.bind(mainMod .. " + escape", hl.dsp.submap("reset"), { submap_universal = true })
-hl.bind(mainMod .. " + period", hl.dsp.exec_cmd("uwsm-app -- lmojis"))
-hl.bind(mainMod .. " + tab", hl.dsp.focus({ workspace = "previous" }))
-hl.bind("ALT + CTRL + tab", hl.dsp.exec_cmd(fyi .. " Missing Alt+Ctrl+Tab"))
+hl.bind(f("%s + escape", mainMod), submap("reset"), { submap_universal = true })
+hl.bind(f("%s + period", mainMod), exec("uwsm-app -- lmojis"))
+hl.bind(f("%s + tab", mainMod), hl.dsp.focus({ workspace = "previous" }))
+hl.bind("ALT + CTRL + tab", exec(f("%s Missing Alt+Ctrl+Tab", fyi)))
 
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
 for i = 1, 10 do
 	local key = i % 10 -- 10 maps to key 0
-	hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
-	hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+	hl.bind(f("%s + %d", mainMod, key), hl.dsp.focus({ workspace = i }))
+	hl.bind(f("%s + SHIFT + %d", mainMod, key), win.move({ workspace = i }))
 end
 
-hl.bind(mainMod .. " + F4", hl.dsp.window.close())
+hl.bind(f("%s + F4", mainMod), win.close())
 
 -- Hyprzoom
 local function zoomHelper(mode)
@@ -97,168 +111,156 @@ local function zoomHelper(mode)
 		hl.config({ cursor = { zoom_factor = newZoom } })
 	end
 end
-hl.bind(mainMod .. " + ALT + 0", zoomHelper("reset"))
-hl.bind(mainMod .. " + ALT + mouse_down", zoomHelper("in"))
-hl.bind(mainMod .. " + ALT + mouse_up", zoomHelper("out"))
-hl.bind(mainMod .. " + ALT + equal", zoomHelper("in"), { repeating = true })
-hl.bind(mainMod .. " + ALT + minus", zoomHelper("out"), { repeating = true })
-hl.bind(mainMod .. " + ALT + KP_ADD", zoomHelper("in"), { repeating = true })
-hl.bind(mainMod .. " + ALT + KP_SUBTRACT", zoomHelper("out"), { repeating = true })
+hl.bind(f("%s + ALT + 0", mainMod), zoomHelper("reset"))
+hl.bind(f("%s + ALT + mouse_down", mainMod), zoomHelper("in"))
+hl.bind(f("%s + ALT + mouse_up", mainMod), zoomHelper("out"))
+hl.bind(f("%s + ALT + equal", mainMod), zoomHelper("in"), { repeating = true })
+hl.bind(f("%s + ALT + minus", mainMod), zoomHelper("out"), { repeating = true })
+hl.bind(f("%s + ALT + KP_ADD", mainMod), zoomHelper("in"), { repeating = true })
+hl.bind(f("%s + ALT + KP_SUBTRACT", mainMod), zoomHelper("out"), { repeating = true })
 
 -- Scroll through existing workspaces with mainMod + scroll
-hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
-hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
+hl.bind(f("%s + mouse_down", mainMod), hl.dsp.focus({ workspace = "e+1" }))
+hl.bind(f("%s + mouse_up", mainMod), hl.dsp.focus({ workspace = "e-1" }))
 
 -- Move/resize windows with mainMod + LMB/RMB and dragging
-hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
-hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+hl.bind(f("%s + mouse:272", mainMod), win.drag(), { mouse = true })
+hl.bind(f("%s + mouse:273", mainMod), win.resize(), { mouse = true })
 
 -- Laptop multimedia keys for volume
 hl.bind(
 	"XF86AudioRaiseVolume",
-	hl.dsp.exec_cmd("wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+"),
+	exec("wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+"),
 	{ locked = true, repeating = true }
 )
-hl.bind(
-	"XF86AudioLowerVolume",
-	hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),
-	{ locked = true, repeating = true }
-)
-hl.bind(
-	"XF86AudioMute",
-	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),
-	{ locked = true, repeating = true }
-)
-hl.bind(
-	"XF86AudioMicMute",
-	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),
-	{ locked = true, repeating = true }
-)
+hl.bind("XF86AudioLowerVolume", exec("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true, repeating = true })
+hl.bind("XF86AudioMute", exec("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), { locked = true, repeating = true })
+hl.bind("XF86AudioMicMute", exec("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), { locked = true, repeating = true })
 
 -- Requieres brightnessctl
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 5%-"), { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl set 5%+"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown", exec("brightnessctl set 5%-"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp", exec("brightnessctl set 5%+"), { locked = true, repeating = true })
 
 -- Requires playerctl
-hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
-hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl pause"), { locked = true })
-hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
-hl.bind("XF86AudioStop", hl.dsp.exec_cmd("playerctl stop"), { locked = true })
+hl.bind("XF86AudioNext", exec("playerctl next"), { locked = true })
+hl.bind("XF86AudioPause", exec("playerctl pause"), { locked = true })
+hl.bind("XF86AudioPlay", exec("playerctl play-pause"), { locked = true })
+hl.bind("XF86AudioPrev", exec("playerctl previous"), { locked = true })
+hl.bind("XF86AudioStop", exec("playerctl stop"), { locked = true })
 
 -- Other special keys
-hl.bind("Print", hl.dsp.submap(scrGrab), { locked = true })
-hl.bind("XF86Calculator", hl.dsp.exec_cmd("uwsm-app -- qalculate-qt"), { locked = true })
-hl.bind("XF86Favorites", hl.dsp.exec_cmd(fyi .. " Missing Favorites"), { locked = true })
-hl.bind("XF86HomePage", hl.dsp.exec_cmd(fileManager), { locked = true })
-hl.bind("XF86Mail", hl.dsp.exec_cmd(mailClient), { locked = true })
-hl.bind("XF86PowerOff", hl.dsp.submap(power), { locked = true })
-hl.bind("XF86Search", hl.dsp.exec_cmd(menuDrun), { locked = true })
-hl.bind("XF86Tools", hl.dsp.exec_cmd(fyi .. " Missing Tools"), { locked = true })
+hl.bind("Print", submap(scrGrab), { locked = true })
+hl.bind("XF86Calculator", exec("uwsm-app -- qalculate-qt"), { locked = true })
+hl.bind("XF86Favorites", exec(f("%s Missing Favorites", fyi)), { locked = true })
+hl.bind("XF86HomePage", exec(fileManager), { locked = true })
+hl.bind("XF86Mail", exec(mailClient), { locked = true })
+hl.bind("XF86PowerOff", submap(power), { locked = true })
+hl.bind("XF86Search", exec(menuDrun), { locked = true })
+hl.bind("XF86Tools", exec(f("%s Missing Tools", fyi)), { locked = true })
 
 -- Global keybinds
 for i = 9, 12 do
-	hl.bind("SUPER + F" .. i, hl.dsp.pass({ window = "class:^(com.obsproject.Studio)$" }))
+	hl.bind(f("SUPER + F%d", i), hl.dsp.pass({ window = "class:^(com.obsproject.Studio)$" }))
 end
 
 -- Submaps
 
 -- Special submap to test keys
-hl.bind(mainMod .. " + SHIFT + ALT + K", hl.dsp.submap(testKeys))
+hl.bind(f("%s + SHIFT + ALT + K", mainMod), submap(testKeys))
 hl.define_submap(testKeys, function()
-	hl.bind(mainMod .. " + SHIFT + ALT + K", hl.dsp.submap("reset"))
+	hl.bind(f("%s + SHIFT + ALT + K", mainMod), submap("reset"))
 end)
 
 -- Helper function to auto close submap after hitting a key when catchall is not an option
 local function hitAndReset(func)
 	return function()
 		hl.dispatch(func)
-		hl.dispatch(hl.dsp.submap("reset"))
+		hl.dispatch(submap("reset"))
 	end
 end
 
 hl.define_submap(groups, function()
 	hl.bind("T", hl.dsp.group.toggle())
 	hl.bind("L", hl.dsp.group.lock_active({ action = "toggle" }))
-	hl.bind("left", hl.dsp.window.move({ group_aware = true, direction = "l" }))
-	hl.bind("right", hl.dsp.window.move({ group_aware = true, direction = "r" }))
+	hl.bind("left", win.move({ group_aware = true, direction = "l" }))
+	hl.bind("right", win.move({ group_aware = true, direction = "r" }))
 	hl.bind("tab", hl.dsp.group.next())
 	hl.bind("SHIFT + left", hl.dsp.group.move_window({ forward = false }))
 	hl.bind("SHIFT + right", hl.dsp.group.move_window())
 	hl.bind("SHIFT + tab", hl.dsp.group.prev())
-	hl.bind("escape", hl.dsp.submap("reset"))
+	hl.bind("escape", submap("reset"))
 end)
 
 hl.define_submap(power, "reset", function()
-	hl.bind("L", hl.dsp.exec_cmd("loginctl lock-session"))
-	hl.bind("Q", hl.dsp.exec_cmd("uwsm stop"))
-	hl.bind("S", hl.dsp.exec_cmd("systemctl -i suspend"))
-	hl.bind("H", hl.dsp.exec_cmd("systemctl -i hibernate"))
-	hl.bind("R", hl.dsp.exec_cmd("systemctl -i reboot"))
-	hl.bind("P", hl.dsp.exec_cmd("systemctl -i poweroff"))
-	hl.bind("catchall", hl.dsp.submap("reset"))
+	hl.bind("L", exec("loginctl lock-session"))
+	hl.bind("Q", exec("uwsm stop"))
+	hl.bind("S", exec("systemctl -i suspend"))
+	hl.bind("H", exec("systemctl -i hibernate"))
+	hl.bind("R", exec("systemctl -i reboot"))
+	hl.bind("P", exec("systemctl -i poweroff"))
+	hl.bind("catchall", submap("reset"))
 end)
 
 hl.define_submap(scrGrab, function()
-	hl.bind("E", hl.dsp.submap(swappy))
-	hl.bind("S", hl.dsp.submap(save))
-	hl.bind("R", hl.dsp.submap(rec))
-	hl.bind("escape", hl.dsp.submap("reset"))
+	hl.bind("E", submap(swappy))
+	hl.bind("S", submap(save))
+	hl.bind("R", submap(rec))
+	hl.bind("escape", submap("reset"))
 	hl.define_submap(swappy, "reset", function()
-		hl.bind("A", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f'"))
-		hl.bind("O", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -o"))
-		hl.bind("W", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -w"))
-		hl.bind("R", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -r"))
-		hl.bind("SHIFT + A", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -d 2"))
-		hl.bind("SHIFT + O", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -d 2 -o"))
-		hl.bind("SHIFT + W", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -d 2 -w"))
-		hl.bind("SHIFT + R", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -e 'swappy -f' -d 2 -r"))
-		hl.bind("escape", hl.dsp.submap("reset"))
+		hl.bind("A", exec(f("lshot -f %s -e 'swappy -f'", ssfile)))
+		hl.bind("O", exec(f("lshot -f %s -e 'swappy -f' -o", ssfile)))
+		hl.bind("W", exec(f("lshot -f %s -e 'swappy -f' -w", ssfile)))
+		hl.bind("R", exec(f("lshot -f %s -e 'swappy -f' -r", ssfile)))
+		hl.bind("SHIFT + A", exec(f("lshot -f %s -e 'swappy -f' -d 2", ssfile)))
+		hl.bind("SHIFT + O", exec(f("lshot -f %s -e 'swappy -f' -d 2 -o", ssfile)))
+		hl.bind("SHIFT + W", exec(f("lshot -f %s -e 'swappy -f' -d 2 -w", ssfile)))
+		hl.bind("SHIFT + R", exec(f("lshot -f %s -e 'swappy -f' -d 2 -r", ssfile)))
+		hl.bind("escape", submap("reset"))
 	end)
 	hl.define_submap(save, "reset", function()
-		hl.bind("A", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c"))
-		hl.bind("O", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -o"))
-		hl.bind("W", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -w"))
-		hl.bind("R", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -r"))
-		hl.bind("SHIFT + A", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -d 2"))
-		hl.bind("SHIFT + O", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -d 2 -o"))
-		hl.bind("SHIFT + W", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -d 2 -w"))
-		hl.bind("SHIFT + R", hl.dsp.exec_cmd("lshot -f " .. ssfile .. " -c -d 2 -r"))
-		hl.bind("escape", hl.dsp.submap("reset"))
+		hl.bind("A", exec(f("lshot -f %s -c", ssfile)))
+		hl.bind("O", exec(f("lshot -f %s -c -o", ssfile)))
+		hl.bind("W", exec(f("lshot -f %s -c -w", ssfile)))
+		hl.bind("R", exec(f("lshot -f %s -c -r", ssfile)))
+		hl.bind("SHIFT + A", exec(f("lshot -f %s -c -d 2", ssfile)))
+		hl.bind("SHIFT + O", exec(f("lshot -f %s -c -d 2 -o", ssfile)))
+		hl.bind("SHIFT + W", exec(f("lshot -f %s -c -d 2 -w", ssfile)))
+		hl.bind("SHIFT + R", exec(f("lshot -f %s -c -d 2 -r", ssfile)))
+		hl.bind("escape", submap("reset"))
 	end)
 	hl.define_submap(rec, "reset", function()
-		hl.bind("O", hl.dsp.exec_cmd("lwfrec -f " .. srfile))
-		hl.bind("R", hl.dsp.exec_cmd("lwfrec -f " .. srfile .. " -r"))
-		hl.bind("S", hl.dsp.exec_cmd("lwfrec --stop"))
-		hl.bind("escape", hl.dsp.submap("reset"))
+		hl.bind("O", exec(f("lwfrec -f %s", srfile)))
+		hl.bind("R", exec(f("lwfrec -f %s -r", srfile)))
+		hl.bind("S", exec("lwfrec --stop"))
+		hl.bind("escape", submap("reset"))
 	end)
 end)
 
 hl.define_submap(window, function()
-	hl.bind("right", hl.dsp.window.move({ x = 5, y = 0, relative = true }), { repeating = true })
-	hl.bind("left", hl.dsp.window.move({ x = -5, y = 0, relative = true }), { repeating = true })
-	hl.bind("up", hl.dsp.window.move({ x = 0, y = -5, relative = true }), { repeating = true })
-	hl.bind("down", hl.dsp.window.move({ x = 0, y = 5, relative = true }), { repeating = true })
-	hl.bind("CONTROL + right", hl.dsp.window.move({ x = 25, y = 0, relative = true }), { repeating = true })
-	hl.bind("CONTROL + left", hl.dsp.window.move({ x = -25, y = 0, relative = true }), { repeating = true })
-	hl.bind("CONTROL + up", hl.dsp.window.move({ x = 0, y = -25, relative = true }), { repeating = true })
-	hl.bind("CONTROL + down", hl.dsp.window.move({ x = 0, y = 25, relative = true }), { repeating = true })
-	hl.bind("SHIFT + right", hl.dsp.window.resize({ x = 5, y = 0, relative = true }), { repeating = true })
-	hl.bind("SHIFT + left", hl.dsp.window.resize({ x = -5, y = 0, relative = true }), { repeating = true })
-	hl.bind("SHIFT + up", hl.dsp.window.resize({ x = 0, y = -5, relative = true }), { repeating = true })
-	hl.bind("SHIFT + down", hl.dsp.window.resize({ x = 0, y = 5, relative = true }), { repeating = true })
-	hl.bind("SHIFT + CONTROL + right", hl.dsp.window.resize({ x = 25, y = 0, relative = true }), { repeating = true })
-	hl.bind("SHIFT + CONTROL + left", hl.dsp.window.resize({ x = -25, y = 0, relative = true }), { repeating = true })
-	hl.bind("SHIFT + CONTROL + up", hl.dsp.window.resize({ x = 0, y = -25, relative = true }), { repeating = true })
-	hl.bind("SHIFT + CONTROL + down", hl.dsp.window.resize({ x = 0, y = 25, relative = true }), { repeating = true })
-	hl.bind("mouse:272", hl.dsp.window.drag(), { mouse = true })
-	hl.bind("mouse:273", hl.dsp.window.resize(), { mouse = true })
+	hl.bind("right", win.move({ x = 5, y = 0, relative = true }), { repeating = true })
+	hl.bind("left", win.move({ x = -5, y = 0, relative = true }), { repeating = true })
+	hl.bind("up", win.move({ x = 0, y = -5, relative = true }), { repeating = true })
+	hl.bind("down", win.move({ x = 0, y = 5, relative = true }), { repeating = true })
+	hl.bind("CONTROL + right", win.move({ x = 25, y = 0, relative = true }), { repeating = true })
+	hl.bind("CONTROL + left", win.move({ x = -25, y = 0, relative = true }), { repeating = true })
+	hl.bind("CONTROL + up", win.move({ x = 0, y = -25, relative = true }), { repeating = true })
+	hl.bind("CONTROL + down", win.move({ x = 0, y = 25, relative = true }), { repeating = true })
+	hl.bind("SHIFT + right", win.resize({ x = 5, y = 0, relative = true }), { repeating = true })
+	hl.bind("SHIFT + left", win.resize({ x = -5, y = 0, relative = true }), { repeating = true })
+	hl.bind("SHIFT + up", win.resize({ x = 0, y = -5, relative = true }), { repeating = true })
+	hl.bind("SHIFT + down", win.resize({ x = 0, y = 5, relative = true }), { repeating = true })
+	hl.bind("SHIFT + CONTROL + right", win.resize({ x = 25, y = 0, relative = true }), { repeating = true })
+	hl.bind("SHIFT + CONTROL + left", win.resize({ x = -25, y = 0, relative = true }), { repeating = true })
+	hl.bind("SHIFT + CONTROL + up", win.resize({ x = 0, y = -25, relative = true }), { repeating = true })
+	hl.bind("SHIFT + CONTROL + down", win.resize({ x = 0, y = 25, relative = true }), { repeating = true })
+	hl.bind("mouse:272", win.drag(), { mouse = true })
+	hl.bind("mouse:273", win.resize(), { mouse = true })
 
-	hl.bind("C", hitAndReset(hl.dsp.window.center()))
-	hl.bind("F", hitAndReset(hl.dsp.window.fullscreen({ action = "toggle" })))
-	hl.bind("P", hitAndReset(hl.dsp.window.pin({ action = "toggle" })))
-	hl.bind("V", hitAndReset(hl.dsp.window.float({ action = "toggle" })))
+	hl.bind("C", hitAndReset(win.center()))
+	hl.bind("F", hitAndReset(win.fullscreen({ action = "toggle" })))
+	hl.bind("P", hitAndReset(win.pin({ action = "toggle" })))
+	hl.bind("V", hitAndReset(win.float({ action = "toggle" })))
 
-	hl.bind("escape", hl.dsp.submap("reset"))
-	hl.bind("return", hl.dsp.submap("reset"))
+	hl.bind("escape", submap("reset"))
+	hl.bind("return", submap("reset"))
 end)

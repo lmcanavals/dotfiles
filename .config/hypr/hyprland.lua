@@ -10,11 +10,12 @@
 hl.monitor({ output = "HDMI-A-1", mode = "preferred", position = "auto", scale = "1" })
 hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "1" })
 
---------------------
----- The colors ----
---------------------
+------------------------------------
+---- The colors and other stuff ----
+------------------------------------
 
 local c = require("colors")
+local f = require("utils").f
 
 -------------------
 ---- AUTOSTART ----
@@ -29,11 +30,11 @@ local debugMsgs = {}
 
 local function load_fonts()
 	local myfonts = {}
-	local filepath = os.getenv("XDG_CONFIG_HOME") .. "/myfonts.conf"
+	local filepath = f("%s/myfonts.conf", os.getenv("XDG_CONFIG_HOME"))
 
 	local file = io.open(filepath, "r")
 	if not file then
-		table.insert(debugMsgs, "Error: Could not open font configuration file at " .. filepath)
+		table.insert(debugMsgs, f("Error: Could not open font configuration file at %s", filepath))
 		return nil
 	end
 
@@ -54,11 +55,11 @@ local function load_fonts()
 end
 
 local function load_lclr()
-	local filepath = os.getenv("XDG_CONFIG_HOME") .. "/lmcscolors"
+	local filepath = f("%s/lmcscolors", os.getenv("XDG_CONFIG_HOME"))
 
 	local file = io.open(filepath, "r")
 	if not file then
-		table.insert(debugMsgs, "Error: Could not open colors file at " .. filepath)
+		table.insert(debugMsgs, f("Error: Could not open colors file at %s", filepath))
 		return
 	end
 
@@ -68,7 +69,7 @@ local function load_lclr()
 	content = content:gsub("\n", " ")
 
 	hl.env("LCLR", content) -- just in case for hyprland children
-	hl.exec_cmd("dbus-update-activation-environment --systemd LCLR=" .. string.format("%q", content))
+	hl.exec_cmd(f("dbus-update-activation-environment --systemd LCLR=%q", content))
 end
 
 hl.on("hyprland.start", function()
@@ -77,7 +78,7 @@ hl.on("hyprland.start", function()
 	load_lclr()
 	local function checkEnable(service)
 		local fmt = "systemctl --user is-enabled %s || systemctl --user enable --now %s"
-		hl.exec_cmd(string.format(fmt, service, service))
+		hl.exec_cmd(f(fmt, service, service))
 	end
 	checkEnable("hypridle")
 	checkEnable("hyprpaper")
@@ -86,14 +87,14 @@ hl.on("hyprland.start", function()
 	-- checkEnable("waybar")
 	checkEnable("lbatfyi")
 
-	hl.exec_cmd("uwsm-app -- quickshell")
+	hl.exec_cmd([[uwsm-app -- quickshell --log-rules "qt.qpa.wayland.textinput.warning=false"]])
 	hl.exec_cmd("uwsm-app -- wl-paste --watch cliphist store")
-	hl.exec_cmd('rm "$HOME/.cache/cliphist/db"')
+	hl.exec_cmd([[rm "$HOME/.cache/cliphist/db"]])
 
 	local myfonts = load_fonts()
 	if myfonts then
-		hl.exec_cmd("gsettings set org.gnome.desktop.interface font-name '" .. myfonts["sans-serif"] .. "'")
-		hl.exec_cmd("gsettings set org.gnome.desktop.interface monospace-font-name '" .. myfonts["monospace"] .. "'")
+		hl.exec_cmd(f("gsettings set org.gnome.desktop.interface font-name %q", myfonts["sans-serif"]))
+		hl.exec_cmd(f("gsettings set org.gnome.desktop.interface monospace-font-name %q", myfonts["monospace"]))
 	end
 	hl.exec_cmd("systemd-analyze >> .startup_time")
 end)
@@ -125,8 +126,8 @@ hl.config({
 		border_size = 2,
 
 		col = {
-			active_border = { colors = { "rgba(" .. c.accent .. "80)", "rgba(" .. c.border .. "80)" }, angle = 45 },
-			inactive_border = { colors = { "rgba(" .. c.accent .. "40)", "rgba(" .. c.border .. "40)" }, angle = 45 },
+			active_border = { colors = { f("rgba(%s80)", c.accent), f("rgba(%s80)", c.border) }, angle = 45 },
+			inactive_border = { colors = { f("rgba(%s40)", c.accent), f("rgba(%s40)", c.border) }, angle = 45 },
 		},
 
 		-- Set to true to enable resizing windows by clicking and dragging on borders and gaps
@@ -155,7 +156,7 @@ hl.config({
 			enabled = true,
 			range = 4,
 			render_power = 3,
-			color = "rgba(" .. c.shadow .. "40)",
+			color = f("rgba(%s40)", c.shadow),
 		},
 
 		blur = {
@@ -231,8 +232,8 @@ hl.config({
 		groupbar = {
 			blur = true,
 			col = {
-				active = "rgba(" .. c.bg_dark .. "88)",
-				inactive = "rgba(" .. c.t8_bglight .. "88)",
+				active = f("rgba(%s88)", c.bg_dark),
+				inactive = f("rgba(%s88)", c.t8_bglight),
 			},
 			font_size = 12,
 			gradients = true,
@@ -241,8 +242,8 @@ hl.config({
 			keep_upper_gap = false,
 			gaps_in = 0,
 			gaps_out = 0,
-			text_color = "rgb(" .. c.fg_widget .. ")",
-			text_color_inactive = "rgb(" .. c.t7_fgdark .. ")",
+			text_color = f("rgb(%s)", c.fg_widget),
+			text_color_inactive = f("rgb(%s)", c.t7_fgdark),
 		},
 	},
 })
@@ -441,7 +442,7 @@ if #debugMsgs > 0 then
 		text = table.concat(debugMsgs, "\n"),
 		timeout = 5000,
 		icon = "confused",
-		color = "rgb(" .. c.warning .. ")",
+		color = f("rgb(%s)", c.warning),
 		font_size = 13,
 	})
 end
