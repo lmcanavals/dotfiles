@@ -81,7 +81,7 @@ PopupWindow {
 				ListView {
 					id: listView
 					anchors.fill: parent
-					anchors.rightMargin: scrollbar.visible ? 6 : 0
+					anchors.rightMargin: scrollbar.visible ? scrollbar.width : 0
 					visible: UpdatesService.updates.length > 0
 					clip: true
 					boundsBehavior: Flickable.StopAtBounds
@@ -145,16 +145,10 @@ PopupWindow {
 					}
 				}
 
-				Rectangle {
+				CustomScrollbar {
 					id: scrollbar
 
-					anchors.right: parent.right
-					color: Theme.colors.border
-					height: Math.max(16, listView.visibleArea.heightRatio * listView.height)
-					radius: 1.5
-					visible: listView.visibleArea.heightRatio < 1.0
-					width: 3
-					y: Math.max(0, Math.min(parent.height - height, listView.visibleArea.yPosition * listView.height))
+					target: listView
 				}
 			}
 

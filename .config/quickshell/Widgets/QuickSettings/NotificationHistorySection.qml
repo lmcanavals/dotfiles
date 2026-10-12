@@ -29,122 +29,125 @@ SurfaceCard {
 			}
 		}
 
-		// Empty placeholder
 		Item {
-			visible: NotificationService.historyList.length === 0
 			Layout.fillWidth: true
 			Layout.fillHeight: true
 
 			StyledText {
-				anchors.centerIn: parent
 				text: "No notifications"
+				anchors.centerIn: parent
 				color: Theme.colors.comment
 				font.pixelSize: Config.fontSizeSmall
+				visible: NotificationService.historyList.length === 0
 			}
-		}
 
-		// ListView with history items
-		ListView {
-			id: listView
-			visible: NotificationService.historyList.length > 0
-			Layout.fillWidth: true
-			Layout.fillHeight: true
-			clip: true
-			spacing: 4
-			boundsBehavior: Flickable.StopAtBounds
-			model: NotificationService.historyList
+			ListView {
+				id: listView
+				anchors.fill: parent
+				anchors.rightMargin: scrollbar.visible ? scrollbar.width : 0
+				clip: true
+				spacing: 4
+				boundsBehavior: Flickable.StopAtBounds
+				model: NotificationService.historyList
+				visible: NotificationService.historyList.length > 0
 
-			delegate: Rectangle {
-				id: itemCard
-				required property var modelData
-				required property int index
-				property bool expanded: false
+				delegate: Rectangle {
+					id: itemCard
+					required property var modelData
+					required property int index
+					property bool expanded: false
 
-				width: ListView.view ? ListView.view.width : 300
-				implicitHeight: rowLayout.implicitHeight + 8
-				radius: Config.radius
-				color: itemMouseArea.containsMouse ? Theme.bgControlHover : Theme.bgControl
+					width: ListView.view ? ListView.view.width : 300
+					implicitHeight: rowLayout.implicitHeight + 8
+					radius: Config.radius
+					color: itemMouseArea.containsMouse ? Theme.bgControlHover : Theme.bgControl
 
-				MouseArea {
-					id: itemMouseArea
-					anchors.fill: parent
-					hoverEnabled: true
-					cursorShape: (itemCard.modelData && itemCard.modelData.body && itemCard.modelData.body.length > 0) ? Qt.PointingHandCursor : Qt.ArrowCursor
-					onClicked: itemCard.expanded = !itemCard.expanded
-				}
-
-				RowLayout {
-					id: rowLayout
-					anchors.fill: parent
-					anchors.leftMargin: Config.padding
-					anchors.rightMargin: Config.padding
-					spacing: Config.spacing
-
-					ThumbnailImage {
-						source: itemCard.modelData ? (itemCard.modelData.appIcon || "") : ""
-						minHeight: 32
-						maxHeight: 32
-						radius: Config.radiusSmall
-						showFallback: false
+					MouseArea {
+						id: itemMouseArea
+						anchors.fill: parent
+						hoverEnabled: true
+						cursorShape: (itemCard.modelData && itemCard.modelData.body && itemCard.modelData.body.length > 0) ? Qt.PointingHandCursor : Qt.ArrowCursor
+						onClicked: itemCard.expanded = !itemCard.expanded
 					}
 
-					ColumnLayout {
-						Layout.fillWidth: true
-						spacing: 2
+					RowLayout {
+						id: rowLayout
+						anchors.fill: parent
+						anchors.leftMargin: Config.padding
+						anchors.rightMargin: Config.padding
+						spacing: Config.spacing
 
-						RowLayout {
+						ThumbnailImage {
+							source: itemCard.modelData ? (itemCard.modelData.appIcon || "") : ""
+							minHeight: 32
+							maxHeight: 32
+							radius: Config.radiusSmall
+							showFallback: false
+						}
+
+						ColumnLayout {
 							Layout.fillWidth: true
-							spacing: Config.spacing
+							spacing: 2
+
+							RowLayout {
+								Layout.fillWidth: true
+								spacing: Config.spacing
+
+								StyledText {
+									text: itemCard.modelData.appName || "Notification"
+									color: Theme.colors.accent
+									font.bold: true
+									font.pixelSize: Config.fontSizeSmall
+								}
+
+								StyledText {
+									text: itemCard.modelData.time || ""
+									font.pixelSize: Config.fontSizeTiny
+									color: Theme.colors.comment
+								}
+							}
 
 							StyledText {
-								text: itemCard.modelData.appName || "Notification"
-								color: Theme.colors.accent
-								font.bold: true
+								text: itemCard.modelData.summary || ""
+								Layout.fillWidth: true
+								color: Theme.colors.fg
+								elide: itemCard.expanded ? Text.ElideNone : Text.ElideRight
 								font.pixelSize: Config.fontSizeSmall
+								wrapMode: itemCard.expanded ? Text.Wrap : Text.NoWrap
 							}
 
 							StyledText {
-								text: itemCard.modelData.time || ""
+								visible: itemCard.expanded && itemCard.modelData && itemCard.modelData.body && itemCard.modelData.body.length > 0
+								text: itemCard.modelData ? (itemCard.modelData.body || "") : ""
 								font.pixelSize: Config.fontSizeTiny
-								color: Theme.colors.comment
+								color: Theme.colors.fg_dark
+								wrapMode: Text.Wrap
+								Layout.fillWidth: true
+							}
+
+							ProgressBar {
+								visible: itemCard.modelData && itemCard.modelData.value !== undefined && itemCard.modelData.value >= 0
+								Layout.fillWidth: true
+								Layout.topMargin: 2
+								implicitHeight: 3
+								fillRadius: 1
+								fillColor: Theme.colors.accent
+								trackColor: Theme.bgTrack
+								value: (itemCard.modelData && itemCard.modelData.value !== undefined) ? (Number(itemCard.modelData.value) / 100.0) : 0.0
 							}
 						}
 
-						StyledText {
-							text: itemCard.modelData.summary || ""
-							Layout.fillWidth: true
-							color: Theme.colors.fg
-							elide: itemCard.expanded ? Text.ElideNone : Text.ElideRight
-							font.pixelSize: Config.fontSizeSmall
-							wrapMode: itemCard.expanded ? Text.Wrap : Text.NoWrap
+						StyledButton {
+							text: Config.iconClose
+							onClicked: NotificationService.removeHistory(itemCard.modelData.id)
 						}
-
-						StyledText {
-							visible: itemCard.expanded && itemCard.modelData && itemCard.modelData.body && itemCard.modelData.body.length > 0
-							text: itemCard.modelData ? (itemCard.modelData.body || "") : ""
-							font.pixelSize: Config.fontSizeTiny
-							color: Theme.colors.fg_dark
-							wrapMode: Text.Wrap
-							Layout.fillWidth: true
-						}
-
-						ProgressBar {
-							visible: itemCard.modelData && itemCard.modelData.value !== undefined && itemCard.modelData.value >= 0
-							Layout.fillWidth: true
-							Layout.topMargin: 2
-							implicitHeight: 3
-							fillRadius: 1
-							fillColor: Theme.colors.accent
-							trackColor: Theme.bgTrack
-							value: (itemCard.modelData && itemCard.modelData.value !== undefined) ? (Number(itemCard.modelData.value) / 100.0) : 0.0
-						}
-					}
-
-					StyledButton {
-						text: Config.iconClose
-						onClicked: NotificationService.removeHistory(itemCard.modelData.id)
 					}
 				}
+			}
+
+			CustomScrollbar {
+				id: scrollbar
+				target: listView
 			}
 		}
 	}

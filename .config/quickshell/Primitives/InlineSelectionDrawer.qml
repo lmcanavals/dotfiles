@@ -46,7 +46,7 @@ SurfaceCard {
 			ListView {
 				id: listView
 				anchors.fill: parent
-				anchors.rightMargin: scrollbar.visible ? 6 : 0
+				anchors.rightMargin: scrollbar.visible ? scrollbar.width : 0
 				clip: true
 				boundsBehavior: Flickable.StopAtBounds
 				model: root.modelList
@@ -100,15 +100,10 @@ SurfaceCard {
 				}
 			}
 
-			Rectangle {
+			CustomScrollbar {
 				id: scrollbar
-				anchors.right: parent.right
-				y: Math.max(0, Math.min(parent.height - height, listView.visibleArea.yPosition * listView.height))
-				height: Math.max(16, listView.visibleArea.heightRatio * listView.height)
-				width: 3
-				radius: 1.5
-				color: Theme.colors.border
-				visible: listView.visibleArea.heightRatio < 1.0
+
+				target: listView
 			}
 		}
 	}
