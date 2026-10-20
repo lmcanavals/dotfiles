@@ -328,12 +328,14 @@ hl.workspace_rule({ workspace = "f[1]", gaps_out = 0, gaps_in = 0 })
 hl.window_rule({
 	name = "no-gaps-wtv1",
 	match = { float = false, workspace = "w[tv1]" },
+
 	border_size = 0,
 	rounding = 0,
 })
 hl.window_rule({
 	name = "no-gaps-f1",
 	match = { float = false, workspace = "f[1]" },
+
 	border_size = 0,
 	rounding = 0,
 })
@@ -341,14 +343,27 @@ hl.window_rule({
 hl.window_rule({
 	name = "float-qt-dev",
 	match = { class = "^.*(?:appqml|appqt|prog.app).*$" },
+
 	float = true,
 })
 
+local float_apps = {
+	"ark",
+	"blueman-manager",
+	"dolphin",
+	"hyprpwcenter",
+	"keepassxc",
+	"kvantum",
+	"nm-connection-editor",
+	"nwg-look",
+	"pavucontrol",
+	"qalculate",
+	"qpwgraph",
+	"qt6ct",
+}
 hl.window_rule({
 	name = "float-applications",
-	match = {
-		class = "^.*(?:ark|blueman-manager|dolphin|hyprpwcenter|keepassxc|kvantum|nm-connection-editor|nwg-look|pavucontrol|qalculate|qpwgraph|qt6ct).*$",
-	},
+	match = { class = f(".*(?:%s).*", table.concat(float_apps, "|")) },
 
 	center = true,
 	float = true,
@@ -368,8 +383,8 @@ hl.window_rule({
 	name = "float-bw",
 	match = { title = "^(?:Bitwarden).*$" },
 
-	center = true,
 	float = true,
+	move = "monitor_w-monitor_w/4-20 80",
 	size = "monitor_w/4 monitor_h*2/3",
 })
 
@@ -379,6 +394,7 @@ hl.window_rule({
 
 	float = true,
 	pin = true,
+	move = "monitor_w-window_w*1.5-15 monitor_h-window_h*1.5-15",
 	size = "window_w*1.5 window_h*1.5",
 })
 
@@ -386,6 +402,15 @@ hl.window_rule({
 	name = "float-by-title",
 	match = { title = "^.*(?:Developer Tools|DevTools|󰣇  ).*$" },
 
+	float = true,
+})
+
+hl.window_rule({
+	name = "oldx-i-see-ya",
+	match = { xwayland = true },
+
+	border_size = 1,
+	border_color = { colors = { f("rgb(%s)", c.warning), f("rgb(%s)", c.error) } },
 	float = true,
 })
 

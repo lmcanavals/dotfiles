@@ -183,8 +183,11 @@ rust.sh
 
 .local/lib/
 .local/share/CMakeTools/
+.local/share/lutris/
+.local/share/umu/
 .local/share/Qt/
 .local/share/QtProject/
+.local/share/Steam/
 .local/share/Trash/
 .local/share/ark/
 .local/share/artwork/
