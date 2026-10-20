@@ -11,7 +11,7 @@ QtObject {
 		precision: SystemClock.Seconds
 	}
 
-	readonly property date currentDate: clock?.date ?? new Date()
+	readonly property date currentDate: (clock && clock.date) ? clock.date : new Date()
 	readonly property string formattedTime: Qt.formatDateTime(currentDate, Config.dateFormat)
 	readonly property string shortTime: Qt.formatDateTime(currentDate, Config.timeFormat)
 

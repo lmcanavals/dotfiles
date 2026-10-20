@@ -60,17 +60,17 @@ Rectangle {
 				color: root.active ? Theme.colors.fg_widget_r : Theme.colors.comment
 				font.bold: root.active
 				font.pixelSize: Config.fontSizeSmall
+				Layout.fillWidth: true
+				horizontalAlignment: Text.AlignLeft
 			}
 
 			StyledText {
 				text: root.active ? "On" : "Off"
 				color: Theme.colors.comment
 				font.pixelSize: Config.fontSizeTiny
+				Layout.fillWidth: true
+				horizontalAlignment: Text.AlignLeft
 			}
-		}
-
-		Item {
-			Layout.fillWidth: true
 		}
 	}
 }
