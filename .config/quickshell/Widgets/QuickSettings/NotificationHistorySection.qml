@@ -23,7 +23,7 @@ SurfaceCard {
 			count: NotificationService.unreadCount
 
 			StyledButton {
-				visible: NotificationService.historyList.length > 0
+				visible: NotificationService.historyList.count > 0
 				text: "Clear"
 				onClicked: NotificationService.clearHistory()
 			}
@@ -38,7 +38,7 @@ SurfaceCard {
 				anchors.centerIn: parent
 				color: Theme.colors.comment
 				font.pixelSize: Config.fontSizeSmall
-				visible: NotificationService.historyList.length === 0
+				visible: NotificationService.historyList.count === 0
 			}
 
 			ListView {
@@ -49,13 +49,14 @@ SurfaceCard {
 				spacing: 4
 				boundsBehavior: Flickable.StopAtBounds
 				model: NotificationService.historyList
-				visible: NotificationService.historyList.length > 0
+				visible: NotificationService.historyList.count > 0
 
 				delegate: Rectangle {
 					id: itemCard
-					required property var modelData
+					required property var model
 					required property int index
-					property bool expanded: false
+
+					readonly property bool isExpanded: Boolean(itemCard.model && itemCard.model.expanded)
 
 					width: ListView.view ? ListView.view.width : 300
 					implicitHeight: rowLayout.implicitHeight + 8
@@ -66,8 +67,8 @@ SurfaceCard {
 						id: itemMouseArea
 						anchors.fill: parent
 						hoverEnabled: true
-						cursorShape: (itemCard.modelData && itemCard.modelData.body && itemCard.modelData.body.length > 0) ? Qt.PointingHandCursor : Qt.ArrowCursor
-						onClicked: itemCard.expanded = !itemCard.expanded
+						cursorShape: (itemCard.model && itemCard.model.body && itemCard.model.body.length > 0) ? Qt.PointingHandCursor : Qt.ArrowCursor
+						onClicked: NotificationService.toggleHistoryExpanded(itemCard.index)
 					}
 
 					RowLayout {
@@ -78,7 +79,7 @@ SurfaceCard {
 						spacing: Config.spacing
 
 						ThumbnailImage {
-							source: itemCard.modelData ? (itemCard.modelData.appIcon || "") : ""
+							source: itemCard.model ? (itemCard.model.appIcon || "") : ""
 							minHeight: 32
 							maxHeight: 32
 							radius: Config.radiusSmall
@@ -94,31 +95,31 @@ SurfaceCard {
 								spacing: Config.spacing
 
 								StyledText {
-									text: itemCard.modelData.appName || "Notification"
+									text: (itemCard.model && itemCard.model.appName) ? itemCard.model.appName : "Notification"
 									color: Theme.colors.accent
 									font.bold: true
 									font.pixelSize: Config.fontSizeSmall
 								}
 
 								StyledText {
-									text: itemCard.modelData.time || ""
+									text: (itemCard.model && itemCard.model.time) ? itemCard.model.time : ""
 									font.pixelSize: Config.fontSizeTiny
 									color: Theme.colors.comment
 								}
 							}
 
 							StyledText {
-								text: itemCard.modelData.summary || ""
+								text: (itemCard.model && itemCard.model.summary) ? itemCard.model.summary : ""
 								Layout.fillWidth: true
 								color: Theme.colors.fg
-								elide: itemCard.expanded ? Text.ElideNone : Text.ElideRight
+								elide: itemCard.isExpanded ? Text.ElideNone : Text.ElideRight
 								font.pixelSize: Config.fontSizeSmall
-								wrapMode: itemCard.expanded ? Text.Wrap : Text.NoWrap
+								wrapMode: itemCard.isExpanded ? Text.Wrap : Text.NoWrap
 							}
 
 							StyledText {
-								visible: itemCard.expanded && itemCard.modelData && itemCard.modelData.body && itemCard.modelData.body.length > 0
-								text: itemCard.modelData ? (itemCard.modelData.body || "") : ""
+								visible: itemCard.isExpanded && itemCard.model && itemCard.model.body && itemCard.model.body.length > 0
+								text: itemCard.model ? (itemCard.model.body || "") : ""
 								font.pixelSize: Config.fontSizeTiny
 								color: Theme.colors.fg_dark
 								wrapMode: Text.Wrap
@@ -126,20 +127,20 @@ SurfaceCard {
 							}
 
 							ProgressBar {
-								visible: itemCard.modelData && itemCard.modelData.value !== undefined && itemCard.modelData.value >= 0
+								visible: itemCard.model && itemCard.model.value !== undefined && itemCard.model.value >= 0
 								Layout.fillWidth: true
 								Layout.topMargin: 2
 								implicitHeight: 3
 								fillRadius: 1
 								fillColor: Theme.colors.accent
 								trackColor: Theme.bgTrack
-								value: (itemCard.modelData && itemCard.modelData.value !== undefined) ? (Number(itemCard.modelData.value) / 100.0) : 0.0
+								value: (itemCard.model && itemCard.model.value !== undefined) ? (Number(itemCard.model.value) / 100.0) : 0.0
 							}
 						}
 
 						StyledButton {
 							text: Config.iconClose
-							onClicked: NotificationService.removeHistory(itemCard.modelData.id)
+							onClicked: NotificationService.removeHistory(itemCard.model.id)
 						}
 					}
 				}

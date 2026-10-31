@@ -16,31 +16,39 @@ QtObject {
 
 	onDndActiveChanged: {
 		if (root.dndActive) {
-			const cachedFiles = [];
 			for (let i = 0; i < activeListModel.count; i++) {
 				const it = activeListModel.get(i);
 				if (it) {
-					if (it.cachedFile)
-						cachedFiles.push(it.cachedFile);
 					if (it.rawNotif) {
 						try {
 							it.rawNotif.expire();
 						} catch (e) {}
 					}
+					if (it.cachedFile && it.cachedFile.length > 0) {
+						root._decrementIconRef(it.cachedFile);
+					}
 				}
 			}
 			activeListModel.clear();
-			for (let i = 0; i < cachedFiles.length; i++) {
-				root._safeUnlinkIcon(cachedFiles[i]);
-			}
+			root._rebuildActiveIndex();
 		}
 	}
 
 	property ListModel activeList: ListModel {
 		id: activeListModel
 	}
-	property var historyList: []
-	readonly property int unreadCount: historyList.length
+	property ListModel historyList: ListModel {
+		id: historyListModel
+	}
+	readonly property int unreadCount: historyList.count
+
+	readonly property var _activeIdMap: new Map()
+	readonly property var _activeTagMap: new Map()
+	readonly property var _activeSigMap: new Map()
+	readonly property var _historyIdMap: new Map()
+	readonly property var _historyTagMap: new Map()
+	readonly property var _historySigMap: new Map()
+	readonly property var _iconRefCounts: new Map()
 
 	readonly property string iconCacheDir: {
 		const xdg = Quickshell.env("XDG_CACHE_HOME");
@@ -60,41 +68,79 @@ QtObject {
 		Quickshell.execDetached(["find", root.iconCacheDir, "-type", "f", "-mtime", "+3", "-delete"]);
 	}
 
-	function _isCachedFileInActive(path: string): bool {
+	function _incrementIconRef(path: string): void {
 		if (!path || path.length === 0)
-			return false;
-		for (let i = 0; i < activeListModel.count; i++) {
-			const it = activeListModel.get(i);
-			if (it && it.cachedFile === path)
-				return true;
-		}
-		return false;
+			return;
+		const cur = root._iconRefCounts.get(path) || 0;
+		root._iconRefCounts.set(path, cur + 1);
 	}
 
-	function _isCachedFileInHistory(path: string): bool {
+	function _decrementIconRef(path: string): void {
 		if (!path || path.length === 0)
-			return false;
-		for (let i = 0; i < root.historyList.length; i++) {
-			const it = root.historyList[i];
-			if (it && it.cachedFile === path)
-				return true;
+			return;
+		const cur = root._iconRefCounts.get(path) || 0;
+		if (cur <= 1) {
+			root._iconRefCounts.delete(path);
+			Quickshell.execDetached(["rm", "-f", path]);
+		} else {
+			root._iconRefCounts.set(path, cur - 1);
 		}
-		return false;
 	}
 
 	function _safeUnlinkIcon(path: string): void {
-		if (!path || path.length === 0)
-			return;
-		if (!_isCachedFileInActive(path) && !_isCachedFileInHistory(path)) {
-			Quickshell.execDetached(["rm", "-f", path]);
+		root._decrementIconRef(path);
+	}
+
+	function _rebuildActiveIndex(): void {
+		root._activeIdMap.clear();
+		root._activeTagMap.clear();
+		root._activeSigMap.clear();
+		for (let i = 0; i < activeListModel.count; i++) {
+			const it = activeListModel.get(i);
+			if (!it)
+				continue;
+			root._activeIdMap.set(it.id, i);
+			if (it.previousId !== undefined && it.previousId !== 0) {
+				root._activeIdMap.set(it.previousId, i);
+			}
+			if (it.tag && it.tag.length > 0) {
+				root._activeTagMap.set(it.tag, i);
+			}
+			const sig = it.appName + "\0" + it.baseSummary + "\0" + it.body;
+			root._activeSigMap.set(sig, i);
+		}
+	}
+
+	function _rebuildHistoryIndex(): void {
+		root._historyIdMap.clear();
+		root._historyTagMap.clear();
+		root._historySigMap.clear();
+		for (let i = 0; i < historyListModel.count; i++) {
+			const it = historyListModel.get(i);
+			if (!it)
+				continue;
+			root._historyIdMap.set(it.id, i);
+			if (it.previousId !== undefined && it.previousId !== 0) {
+				root._historyIdMap.set(it.previousId, i);
+			}
+			if (it.tag && it.tag.length > 0) {
+				root._historyTagMap.set(it.tag, i);
+			}
+			const sig = it.appName + "\0" + it.baseSummary + "\0" + it.body;
+			root._historySigMap.set(sig, i);
 		}
 	}
 
 	function _findActiveIndex(id: int): int {
-		for (let i = 0; i < activeListModel.count; i++) {
-			const it = activeListModel.get(i);
-			if (it && (it.id === id || it.previousId === id))
-				return i;
+		if (root._activeIdMap.has(id)) {
+			return root._activeIdMap.get(id);
+		}
+		return -1;
+	}
+
+	function _findHistoryIndex(id: int): int {
+		if (root._historyIdMap.has(id)) {
+			return root._historyIdMap.get(id);
 		}
 		return -1;
 	}
@@ -105,7 +151,10 @@ QtObject {
 		const item = activeListModel.get(idx);
 		const cachedFile = item ? item.cachedFile : "";
 		activeListModel.remove(idx);
-		root._safeUnlinkIcon(cachedFile);
+		if (cachedFile && cachedFile.length > 0) {
+			root._decrementIconRef(cachedFile);
+		}
+		root._rebuildActiveIndex();
 	}
 
 	function sanitizeNotificationText(text: string): string {
@@ -238,25 +287,15 @@ QtObject {
 			});
 			const timestamp = Date.now();
 
-			// 1. Check for match in activeList
+			// 1. Check for match in activeList using index maps
+			const sig = appName + "\0" + summary + "\0" + body;
 			let activeIdx = -1;
 			if (tag.length > 0) {
-				for (let i = 0; i < activeListModel.count; i++) {
-					const item = activeListModel.get(i);
-					if (item && item.tag === tag) {
-						activeIdx = i;
-						break;
-					}
-				}
-			}
-			if (activeIdx === -1) {
-				for (let i = 0; i < activeListModel.count; i++) {
-					const item = activeListModel.get(i);
-					if (item && item.appName === appName && item.baseSummary === summary && item.body === body) {
-						activeIdx = i;
-						break;
-					}
-				}
+				if (root._activeTagMap.has(tag))
+					activeIdx = root._activeTagMap.get(tag);
+			} else {
+				if (root._activeSigMap.has(sig))
+					activeIdx = root._activeSigMap.get(sig);
 			}
 
 			let itemToStore = null;
@@ -285,7 +324,10 @@ QtObject {
 					finalSource = cached.source;
 					finalCachedFile = cached.cachedFile;
 					if (existing.cachedFile && existing.cachedFile.length > 0 && existing.cachedFile !== finalCachedFile) {
-						root._safeUnlinkIcon(existing.cachedFile);
+						root._decrementIconRef(existing.cachedFile);
+					}
+					if (finalCachedFile.length > 0 && finalCachedFile !== existing.cachedFile) {
+						root._incrementIconRef(finalCachedFile);
 					}
 				} else {
 					finalSource = existing.appIcon || "";
@@ -347,11 +389,15 @@ QtObject {
 				};
 
 				if (!root.dndActive) {
+					if (finalCachedFile.length > 0) {
+						root._incrementIconRef(finalCachedFile);
+					}
 					activeListModel.append(itemToStore);
 				}
 			}
+			root._rebuildActiveIndex();
 
-			// 2. Update historyList (deduplicate and move latest to top, sanitized pure data log)
+			// 2. Update historyList (deduplicate and move latest to top, preserving expanded state)
 			const historyItem = {
 				id: itemToStore.id,
 				previousId: itemToStore.previousId,
@@ -367,38 +413,51 @@ QtObject {
 				time: itemToStore.time,
 				timestamp: itemToStore.timestamp,
 				actions: historyActions,
-				hasInlineReply: false
+				hasInlineReply: false,
+				expanded: false
 			};
 
-			for (let i = 0; i < root.historyList.length; i++) {
-				const it = root.historyList[i];
-				if (!it)
-					continue;
-				const matches = (tag.length > 0) ? (it.tag === tag) : (it.appName === appName && it.baseSummary === summary && it.body === body);
-				if (matches && it.cachedFile && it.cachedFile.length > 0 && it.cachedFile !== historyItem.cachedFile) {
-					root._safeUnlinkIcon(it.cachedFile);
-				}
+			let historyIdx = -1;
+			if (tag.length > 0) {
+				if (root._historyTagMap.has(tag))
+					historyIdx = root._historyTagMap.get(tag);
+			} else {
+				if (root._historySigMap.has(sig))
+					historyIdx = root._historySigMap.get(sig);
 			}
 
-			const filteredHistory = root.historyList.filter(item => {
-				if (!item)
-					return false;
-				if (tag.length > 0) {
-					return item.tag !== tag;
-				}
-				return !(item.appName === appName && item.baseSummary === summary && item.body === body);
-			});
-
-			const newHistory = [historyItem, ...filteredHistory];
-			if (newHistory.length > 50) {
-				const dropped = newHistory.slice(50);
-				for (let i = 0; i < dropped.length; i++) {
-					if (dropped[i] && dropped[i].cachedFile && dropped[i].cachedFile.length > 0) {
-						root._safeUnlinkIcon(dropped[i].cachedFile);
+			if (historyIdx !== -1) {
+				const existing = historyListModel.get(historyIdx);
+				if (existing) {
+					historyItem.expanded = Boolean(existing.expanded);
+					if (existing.cachedFile && existing.cachedFile.length > 0 && existing.cachedFile !== historyItem.cachedFile) {
+						root._decrementIconRef(existing.cachedFile);
 					}
 				}
+				if (historyItem.cachedFile && historyItem.cachedFile.length > 0 && (!existing || existing.cachedFile !== historyItem.cachedFile)) {
+					root._incrementIconRef(historyItem.cachedFile);
+				}
+				historyListModel.set(historyIdx, historyItem);
+				if (historyIdx !== 0) {
+					historyListModel.move(historyIdx, 0, 1);
+				}
+			} else {
+				if (historyItem.cachedFile && historyItem.cachedFile.length > 0) {
+					root._incrementIconRef(historyItem.cachedFile);
+				}
+				historyListModel.insert(0, historyItem);
 			}
-			root.historyList = newHistory.slice(0, 50);
+
+			while (historyListModel.count > 50) {
+				const tailIdx = historyListModel.count - 1;
+				const dropped = historyListModel.get(tailIdx);
+				if (dropped && dropped.cachedFile && dropped.cachedFile.length > 0) {
+					root._decrementIconRef(dropped.cachedFile);
+				}
+				historyListModel.remove(tailIdx);
+			}
+
+			root._rebuildHistoryIndex();
 		}
 	}
 
@@ -511,24 +570,35 @@ QtObject {
 		}
 	}
 
-	function clearHistory(): void {
-		const oldList = root.historyList;
-		root.historyList = [];
-		for (let i = 0; i < oldList.length; i++) {
-			const it = oldList[i];
-			if (it && it.cachedFile && it.cachedFile.length > 0) {
-				root._safeUnlinkIcon(it.cachedFile);
+	function toggleHistoryExpanded(idx: int): void {
+		if (idx >= 0 && idx < historyListModel.count) {
+			const it = historyListModel.get(idx);
+			if (it) {
+				historyListModel.setProperty(idx, "expanded", !it.expanded);
 			}
 		}
 	}
 
-	function removeHistory(id: int): void {
-		const toRemove = root.historyList.filter(n => n && (n.id === id || n.previousId === id));
-		root.historyList = root.historyList.filter(n => n && n.id !== id && n.previousId !== id);
-		for (let i = 0; i < toRemove.length; i++) {
-			if (toRemove[i] && toRemove[i].cachedFile && toRemove[i].cachedFile.length > 0) {
-				root._safeUnlinkIcon(toRemove[i].cachedFile);
+	function clearHistory(): void {
+		for (let i = 0; i < historyListModel.count; i++) {
+			const it = historyListModel.get(i);
+			if (it && it.cachedFile && it.cachedFile.length > 0) {
+				root._decrementIconRef(it.cachedFile);
 			}
+		}
+		historyListModel.clear();
+		root._rebuildHistoryIndex();
+	}
+
+	function removeHistory(id: int): void {
+		const idx = root._findHistoryIndex(id);
+		if (idx !== -1) {
+			const it = historyListModel.get(idx);
+			if (it && it.cachedFile && it.cachedFile.length > 0) {
+				root._decrementIconRef(it.cachedFile);
+			}
+			historyListModel.remove(idx);
+			root._rebuildHistoryIndex();
 		}
 	}
 }

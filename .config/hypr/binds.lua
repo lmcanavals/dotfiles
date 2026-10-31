@@ -181,7 +181,7 @@ end
 
 hl.define_submap(groups, function()
 	hl.bind("T", hl.dsp.group.toggle())
-	hl.bind("L", hl.dsp.group.lock_active({ action = "toggle" }))
+	hl.bind("L", hl.dsp.group.lock({ action = "toggle" }))
 	hl.bind("left", win.move({ group_aware = true, direction = "l" }))
 	hl.bind("right", win.move({ group_aware = true, direction = "r" }))
 	hl.bind("tab", hl.dsp.group.next())
