@@ -53,10 +53,18 @@ PopupWindow {
 				}
 
 				StyledButton {
-					text: "󰑮"
+					text: UpdatesService.isChecking ? "" : "󰑮"
 					enabled: !UpdatesService.isChecking
-					opacity: UpdatesService.isChecking ? 0.5 : 1.0
+					opacity: UpdatesService.isChecking ? 0.7 : 1.0
 					onClicked: UpdatesService.checkNow()
+
+					LoadingSpinner {
+						visible: UpdatesService.isChecking
+						running: UpdatesService.isChecking
+						anchors.centerIn: parent
+						fontSize: Config.fontSizeBase
+						color: Theme.colors.info
+					}
 				}
 
 				StyledButton {
@@ -70,12 +78,24 @@ PopupWindow {
 				Layout.fillWidth: true
 				Layout.fillHeight: true
 
-				StyledText {
+				RowLayout {
 					anchors.centerIn: parent
 					visible: UpdatesService.updates.length === 0
-					text: UpdatesService.isChecking ? "Checking for updates..." : "System is up to date"
-					color: UpdatesService.isChecking ? Theme.colors.info : Theme.colors.success
-					font.bold: true
+					spacing: Config.spacing
+
+					LoadingSpinner {
+						visible: UpdatesService.isChecking
+						running: UpdatesService.isChecking
+						fontSize: Config.fontSizeLarge
+						color: Theme.colors.info
+					}
+
+					StyledText {
+						text: UpdatesService.isChecking ? "Checking for updates..." : "System is up to date"
+						color: UpdatesService.isChecking ? Theme.colors.info : Theme.colors.success
+						font.bold: true
+						font.pixelSize: Config.fontSizeSmall
+					}
 				}
 
 				ListView {

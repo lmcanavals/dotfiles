@@ -16,18 +16,19 @@ BarPill {
 		anchors.centerIn: parent
 		spacing: Config.spacing
 
+		LoadingSpinner {
+			visible: UpdatesService.isChecking
+			running: UpdatesService.isChecking
+			color: Theme.colors.info
+			fontSize: Config.fontSizeBase
+		}
+
 		StyledText {
 			id: iconGlyph
+			visible: !UpdatesService.isChecking
 			text: UpdatesService.count > 0 ? UpdatesService.glyph : Config.iconOs
 			font.bold: true
-			color: UpdatesService.isChecking ? Theme.colors.info : (UpdatesService.levelCounts.major > 0 ? Theme.colors.error : (UpdatesService.count > 0 ? Theme.colors.warning : Theme.colors.fg_widget))
-			opacity: UpdatesService.isChecking ? 0.6 : 1.0
-
-			Behavior on opacity {
-				NumberAnimation {
-					duration: 200
-				}
-			}
+			color: UpdatesService.levelCounts.major > 0 ? Theme.colors.error : (UpdatesService.count > 0 ? Theme.colors.warning : Theme.colors.fg_widget)
 
 			Behavior on color {
 				ColorAnimation {

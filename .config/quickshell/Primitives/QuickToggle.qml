@@ -9,6 +9,7 @@ Rectangle {
 	required property string glyph
 	required property string label
 	property bool active: false
+	property bool busy: false
 
 	signal clicked
 	signal rightClicked
@@ -21,14 +22,23 @@ Rectangle {
 	color: active ? Theme.colors.bg_widget_r : (mouseArea.containsMouse ? Theme.bgControlHover : Theme.bgControl)
 	border.color: Theme.colors.border
 	border.width: 1
+	opacity: root.busy ? 0.7 : 1.0
+
+	Behavior on opacity {
+		NumberAnimation {
+			duration: Config.animDurationFast
+		}
+	}
 
 	MouseArea {
 		id: mouseArea
 		anchors.fill: parent
 		hoverEnabled: true
-		cursorShape: Qt.PointingHandCursor
+		cursorShape: root.busy ? Qt.BusyCursor : Qt.PointingHandCursor
 		acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
 		onClicked: mouse => {
+			if (root.busy)
+				return;
 			if (mouse.button === Qt.RightButton) {
 				root.rightClicked();
 			} else if (mouse.button === Qt.MiddleButton) {
@@ -44,7 +54,16 @@ Rectangle {
 		anchors.leftMargin: Config.padding
 		anchors.rightMargin: Config.padding
 
+		LoadingSpinner {
+			visible: root.busy
+			running: root.busy
+			fontSize: Config.fontSizeXL
+			color: root.active ? Theme.colors.fg_widget_r : Theme.colors.info
+			Layout.preferredWidth: 24
+		}
+
 		StyledText {
+			visible: !root.busy
 			text: root.glyph
 			color: root.active ? Theme.colors.fg_widget_r : Theme.colors.comment
 			font.pixelSize: Config.fontSizeXL
@@ -65,8 +84,8 @@ Rectangle {
 			}
 
 			StyledText {
-				text: root.active ? "On" : "Off"
-				color: Theme.colors.comment
+				text: root.busy ? "Pending..." : (root.active ? "On" : "Off")
+				color: root.busy ? Theme.colors.info : Theme.colors.comment
 				font.pixelSize: Config.fontSizeTiny
 				Layout.fillWidth: true
 				horizontalAlignment: Text.AlignLeft

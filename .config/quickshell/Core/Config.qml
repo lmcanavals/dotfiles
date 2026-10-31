@@ -31,4 +31,5 @@ QtObject {
 	readonly property string iconClose: ""
 	readonly property string iconOs: "󰣇"
 	readonly property string iconSend: "󰒊"
+	readonly property string iconSpinner: "󱑊"
 }

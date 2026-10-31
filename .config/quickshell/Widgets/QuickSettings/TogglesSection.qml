@@ -23,6 +23,7 @@ GridLayout {
 		glyph: NetworkService.glyph
 		label: NetworkService.connected ? NetworkService.ssid : (NetworkService.enabled ? "Disconnected" : "Wi-Fi Off")
 		active: NetworkService.enabled
+		busy: NetworkService.busy
 		onClicked: NetworkService.toggleWifi()
 		onRightClicked: root.trigger(NetworkService.openPicker)
 		onMiddleClicked: NetworkService.refresh()
@@ -34,6 +35,7 @@ GridLayout {
 		glyph: BluetoothService.glyph
 		label: BluetoothService.connected ? BluetoothService.connectedDevice : (BluetoothService.enabled ? "Disconnected" : "Bluetooth Off")
 		active: BluetoothService.enabled
+		busy: BluetoothService.busy
 		onClicked: BluetoothService.toggleBluetooth()
 		onRightClicked: root.trigger(BluetoothService.openPicker)
 		onMiddleClicked: BluetoothService.refresh()
