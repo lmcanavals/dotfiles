@@ -53,16 +53,21 @@ PanelWindow { // qmllint enable uncreatable-type
 				readonly property string defaultActionLabel: (card.model && card.model.defaultActionText) ? card.model.defaultActionText : ""
 				readonly property bool hasInputFocus: Boolean(replyRow.visible && replyInput.activeFocus)
 				readonly property bool isHovered: cardHoverArea.containsMouse
+				readonly property string urgency: (card.model && card.model.urgency) ? card.model.urgency : "normal"
+				readonly property bool isCritical: card.urgency === "critical"
+				readonly property bool isLow: card.urgency === "low"
 
 				Layout.fillWidth: true
 				color: card.isHovered ? Theme.bgCardHover : Theme.bgCard
+				border.color: card.isCritical ? Theme.colors.error : Theme.colors.border
+				border.width: card.isCritical ? 2 : 1
 				implicitHeight: innerLayout.implicitHeight + (Config.padding * 2)
 				onLastTimestampChanged: dismissTimer.restart()
 
 				Timer {
 					id: dismissTimer
 
-					interval: 5000
+					interval: card.isCritical ? 15000 : (card.isLow ? 3000 : 5000)
 					onTriggered: NotificationService.expireActive(card.model.id)
 					running: !card.isHovered && !card.hasInputFocus
 				}
@@ -120,11 +125,18 @@ PanelWindow { // qmllint enable uncreatable-type
 
 							StyledText {
 								text: card.model.appName || "Notification"
-								Layout.fillWidth: true
-								color: Theme.colors.comment
+								color: card.isCritical ? Theme.colors.error : Theme.colors.comment
 								font.bold: true
 								font.pixelSize: Config.fontSizeTiny
 								horizontalAlignment: Text.AlignLeft
+							}
+
+							StyledText {
+								visible: card.isCritical
+								text: "󰀦 CRITICAL"
+								color: Theme.colors.error
+								font.bold: true
+								font.pixelSize: Config.fontSizeTiny
 							}
 
 							StyledText {
@@ -160,6 +172,7 @@ PanelWindow { // qmllint enable uncreatable-type
 								StyledText {
 									text: card.model.summary
 									Layout.fillWidth: true
+									color: card.isCritical ? Theme.colors.error : Theme.colors.fg
 									font.bold: true
 									onLinkActivated: link => Qt.openUrlExternally(link)
 									textFormat: Text.StyledText

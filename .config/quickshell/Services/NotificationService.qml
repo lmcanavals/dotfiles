@@ -31,6 +31,7 @@ QtObject {
 			}
 			activeListModel.clear();
 			root._rebuildActiveIndex();
+			root._checkZeroStatePurge();
 		}
 	}
 
@@ -49,6 +50,7 @@ QtObject {
 	readonly property var _historyTagMap: new Map()
 	readonly property var _historySigMap: new Map()
 	readonly property var _iconRefCounts: new Map()
+	readonly property var _pendingUnlinks: new Map()
 
 	readonly property string iconCacheDir: {
 		const xdg = Quickshell.env("XDG_CACHE_HOME");
@@ -63,14 +65,49 @@ QtObject {
 		onTriggered: Quickshell.execDetached(["find", root.iconCacheDir, "-type", "f", "-mtime", "+3", "-delete"])
 	}
 
+	property Timer deferredPurgeTimer: Timer {
+		interval: 1000
+		repeat: true
+		running: false
+		onTriggered: {
+			if (root._pendingUnlinks.size === 0) {
+				stop();
+				return;
+			}
+			const now = Date.now();
+			for (const [path, expiry] of root._pendingUnlinks.entries()) {
+				if (now >= expiry) {
+					root._pendingUnlinks.delete(path);
+					Quickshell.execDetached(["rm", "-f", path]);
+				}
+			}
+			if (root._pendingUnlinks.size === 0) {
+				stop();
+			}
+		}
+	}
+
+	function _checkZeroStatePurge(): void {
+		if (activeListModel.count === 0 && historyListModel.count === 0) {
+			root._iconRefCounts.clear();
+			root._pendingUnlinks.clear();
+			root.deferredPurgeTimer.stop();
+			Quickshell.execDetached(["find", root.iconCacheDir, "-mindepth", "1", "-delete"]);
+		}
+	}
+
 	Component.onCompleted: {
 		Quickshell.execDetached(["mkdir", "-p", root.iconCacheDir]);
+		root._checkZeroStatePurge();
 		Quickshell.execDetached(["find", root.iconCacheDir, "-type", "f", "-mtime", "+3", "-delete"]);
 	}
 
 	function _incrementIconRef(path: string): void {
 		if (!path || path.length === 0)
 			return;
+		if (root._pendingUnlinks.has(path)) {
+			root._pendingUnlinks.delete(path);
+		}
 		const cur = root._iconRefCounts.get(path) || 0;
 		root._iconRefCounts.set(path, cur + 1);
 	}
@@ -81,7 +118,9 @@ QtObject {
 		const cur = root._iconRefCounts.get(path) || 0;
 		if (cur <= 1) {
 			root._iconRefCounts.delete(path);
-			Quickshell.execDetached(["rm", "-f", path]);
+			// 2-second grace period for texture cleanup and delegate teardown
+			root._pendingUnlinks.set(path, Date.now() + 2000);
+			root.deferredPurgeTimer.start();
 		} else {
 			root._iconRefCounts.set(path, cur - 1);
 		}
@@ -155,6 +194,7 @@ QtObject {
 			root._decrementIconRef(cachedFile);
 		}
 		root._rebuildActiveIndex();
+		root._checkZeroStatePurge();
 	}
 
 	function sanitizeNotificationText(text: string): string {
@@ -226,6 +266,13 @@ QtObject {
 			const appName = String(notif.appName || "System");
 			const summary = root.sanitizeNotificationText(String(notif.summary || ""));
 			const body = root.sanitizeNotificationText(String(notif.body || ""));
+
+			let urgency = "normal";
+			if (notif.urgency === NotificationUrgency.Critical || (notif.hints && Number(notif.hints["urgency"]) === 2)) {
+				urgency = "critical";
+			} else if (notif.urgency === NotificationUrgency.Low || (notif.hints && Number(notif.hints["urgency"]) === 0)) {
+				urgency = "low";
+			}
 
 			let iconSrc = "";
 			if (notif.image && String(notif.image).trim().length > 0) {
@@ -347,6 +394,7 @@ QtObject {
 					appIcon: finalSource,
 					cachedFile: finalCachedFile,
 					tag: tag,
+					urgency: urgency,
 					count: count,
 					value: value,
 					time: time,
@@ -379,6 +427,7 @@ QtObject {
 					appIcon: finalSource,
 					cachedFile: finalCachedFile,
 					tag: tag,
+					urgency: urgency,
 					count: 1,
 					value: value,
 					time: time,
@@ -408,6 +457,7 @@ QtObject {
 				appIcon: itemToStore.appIcon,
 				cachedFile: itemToStore.cachedFile,
 				tag: itemToStore.tag,
+				urgency: itemToStore.urgency,
 				count: itemToStore.count,
 				value: itemToStore.value,
 				time: itemToStore.time,
@@ -588,6 +638,7 @@ QtObject {
 		}
 		historyListModel.clear();
 		root._rebuildHistoryIndex();
+		root._checkZeroStatePurge();
 	}
 
 	function removeHistory(id: int): void {
@@ -599,6 +650,7 @@ QtObject {
 			}
 			historyListModel.remove(idx);
 			root._rebuildHistoryIndex();
+			root._checkZeroStatePurge();
 		}
 	}
 }

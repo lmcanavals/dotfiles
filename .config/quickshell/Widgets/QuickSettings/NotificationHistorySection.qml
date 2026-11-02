@@ -96,9 +96,21 @@ SurfaceCard {
 
 								StyledText {
 									text: (itemCard.model && itemCard.model.appName) ? itemCard.model.appName : "Notification"
-									color: Theme.colors.accent
+									color: (itemCard.model && itemCard.model.urgency === "critical") ? Theme.colors.error : Theme.colors.accent
 									font.bold: true
 									font.pixelSize: Config.fontSizeSmall
+								}
+
+								StyledText {
+									visible: itemCard.model && itemCard.model.urgency === "critical"
+									text: "󰀦 CRITICAL"
+									color: Theme.colors.error
+									font.bold: true
+									font.pixelSize: Config.fontSizeTiny
+								}
+
+								Item {
+									Layout.fillWidth: true
 								}
 
 								StyledText {
