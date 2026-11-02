@@ -20,11 +20,24 @@ GridLayout {
 	// Wi-Fi Toggle
 	QuickToggle {
 		Layout.fillWidth: true
-		glyph: NetworkService.glyph
-		label: NetworkService.connected ? NetworkService.ssid : (NetworkService.enabled ? "Disconnected" : "Wi-Fi Off")
-		active: NetworkService.enabled
+		glyph: NetworkService.wifiGlyph
+		label: NetworkService.wifiConnected ? NetworkService.ssid : (NetworkService.wifiEnabled ? "Disconnected" : "Wi-Fi Off")
+		active: NetworkService.wifiEnabled
 		busy: NetworkService.busy
 		onClicked: NetworkService.toggleWifi()
+		onRightClicked: root.trigger(NetworkService.openPicker)
+		onMiddleClicked: NetworkService.refresh()
+	}
+
+	// Ethernet Toggle
+	QuickToggle {
+		visible: NetworkService.hasEthernet
+		Layout.fillWidth: true
+		glyph: NetworkService.ethernetGlyph
+		label: NetworkService.ethernetConnected ? NetworkService.ethernetName : (NetworkService.hasEthernet ? "Disconnected" : "No Ethernet")
+		active: NetworkService.ethernetConnected
+		busy: NetworkService.ethernetBusy
+		onClicked: NetworkService.toggleEthernet()
 		onRightClicked: root.trigger(NetworkService.openPicker)
 		onMiddleClicked: NetworkService.refresh()
 	}
@@ -67,6 +80,7 @@ GridLayout {
 
 	QuickToggle {
 		Layout.fillWidth: true
+		Layout.columnSpan: NetworkService.hasEthernet ? 2 : 1
 		glyph: "󰌾"
 		label: "Lock Screen"
 		active: false
