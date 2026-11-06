@@ -30,6 +30,9 @@ if test -d /opt/maven
     fish_add_path $M2
 end
 
+# opencode
+fish_add_path /home/lmcs/.opencode/bin
+
 # Local bin
 if test -d "$HOME/.local/bin"
     fish_add_path "$HOME/.local/bin"

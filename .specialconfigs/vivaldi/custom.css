@@ -1,0 +1,12 @@
+/* Completely destroy the side panel container and region */
+#panels-container,
+#ui-region-panel {
+  display: none !important;
+  max-width: 0px !important;
+  width: 0px !important;
+}
+
+/* Hide the toggle switch column entirely */
+#switch {
+  display: none !important;
+}

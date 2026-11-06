@@ -85,7 +85,7 @@ hl.on("hyprland.start", function()
 	checkEnable("hyprpolkitagent")
 	checkEnable("hyprsunset")
 	-- checkEnable("waybar")
-	checkEnable("lbatfyi")
+	-- checkEnable("lbatfyi")
 
 	hl.exec_cmd([[uwsm-app -- quickshell --log-rules "qt.qpa.wayland.textinput.warning=false"]])
 	hl.exec_cmd("uwsm-app -- wl-paste --watch cliphist store")
