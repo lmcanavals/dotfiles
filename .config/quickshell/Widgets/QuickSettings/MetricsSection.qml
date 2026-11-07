@@ -49,5 +49,13 @@ RowLayout {
 			valueText: `${Math.round(Math.max(0.0, Math.min(1.0, HardwareService.swapUsage)) * 100)}%`
 			barColor: HardwareService.swapColor
 		}
+
+		MetricBar {
+			Layout.fillWidth: true
+			glyph: `󰋊 ${HardwareService.diskTotal.toFixed(1)}GiB`
+			value: HardwareService.diskUsage
+			valueText: `${Math.round(Math.max(0.0, Math.min(1.0, HardwareService.diskUsage)) * 100)}%`
+			barColor: HardwareService.diskColor
+		}
 	}
 }

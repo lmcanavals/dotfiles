@@ -14,17 +14,30 @@ QtObject {
 	property real memUsage: 0.0
 	property real swapTotal: 0.0
 	property real swapUsage: 0.0
+	property real diskTotal: 0.0
+	property real diskUsed: 0.0
+	property real diskUsage: 0.0
+	property real diskFreePercent: 0.0
 	property int temperature: 0
 
 	readonly property color cpuColor: colorForUsage(cpuUsage)
 	readonly property color memColor: colorForUsage(memUsage)
 	readonly property color swapColor: colorForUsage(swapUsage)
+	readonly property color diskColor: colorForDisk(diskUsage)
 	readonly property color tempColor: colorForTemp(temperature)
 
 	function colorForUsage(ratio: real): color {
 		if (ratio >= 0.80)
 			return Theme.colors.error;
 		if (ratio >= 0.60)
+			return Theme.colors.warning;
+		return Theme.colors.accent;
+	}
+
+	function colorForDisk(ratio: real): color {
+		if (ratio >= 0.85)
+			return Theme.colors.error;
+		if (ratio >= 0.75)
 			return Theme.colors.warning;
 		return Theme.colors.accent;
 	}
@@ -147,10 +160,51 @@ QtObject {
 		}
 	}
 
+	property Process diskProc: Process {
+		id: diskProcess
+		command: ["df", "-P", "-k", "/"]
+		running: false
+
+		stdout: StdioCollector {
+			onStreamFinished: root.parseDisk(this.text)
+		}
+	}
+
+	function parseDisk(text: string): void {
+		if (!text || text.length === 0)
+			return;
+
+		const lines = text.trim().split("\n");
+		if (lines.length < 2)
+			return;
+
+		const parts = lines[1].trim().split(/\s+/);
+		if (parts.length < 4)
+			return;
+
+		const totalKb = parseInt(parts[1], 10);
+		const usedKb = parseInt(parts[2], 10);
+		const availKb = parseInt(parts[3], 10);
+
+		if (!isNaN(totalKb) && totalKb > 0 && !isNaN(usedKb) && !isNaN(availKb)) {
+			root.diskTotal = totalKb / 1048576;
+			root.diskUsed = usedKb / 1048576;
+			root.diskUsage = Math.max(0.0, Math.min(1.0, usedKb / totalKb));
+			root.diskFreePercent = Math.max(0.0, Math.min(100.0, (availKb / totalKb) * 100));
+		}
+	}
+
+	function refreshDisk(): void {
+		if (!diskProcess.running) {
+			diskProcess.running = true;
+		}
+	}
+
 	function refresh(): void {
 		procStat.reload();
 		procMeminfo.reload();
 		thermalTemp.reload();
+		refreshDisk();
 	}
 
 	property bool active: false
@@ -161,5 +215,13 @@ QtObject {
 		running: root.active
 		triggeredOnStart: true
 		onTriggered: root.refresh()
+	}
+
+	property Timer diskTimer: Timer {
+		interval: 60000
+		repeat: true
+		running: true
+		triggeredOnStart: true
+		onTriggered: root.refreshDisk()
 	}
 }
