@@ -22,7 +22,7 @@ QtObject {
 
 	property Process statusProc: Process {
 		id: statusProcess
-		command: ["git", `--git-dir=${root.gitDir}`, `--work-tree=${root.workTree}`, "status", "-u", "--porcelain=v1", "--branch"]
+		command: ["git", `--git-dir=${root.gitDir}`, `--work-tree=${root.workTree}`, "status", "-uno", "--porcelain=v1", "--branch"]
 		running: false
 
 		stdout: StdioCollector {
