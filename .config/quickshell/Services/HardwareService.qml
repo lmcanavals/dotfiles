@@ -210,7 +210,8 @@ QtObject {
 	property bool active: false
 	property bool statusAwareness: true
 
-	readonly property bool isCpuUrgent: root.temperature >= 80 || root.cpuUsage >= 0.80
+	readonly property bool isTempUrgent: root.temperature >= 80
+	readonly property bool isCpuUrgent: isTempUrgent || root.cpuUsage >= 0.80
 	readonly property bool isMemUrgent: root.memUsage >= 0.90 || root.swapUsage >= 0.75
 	readonly property bool isDiskUrgent: root.diskUsage >= 0.85 || (root.diskFreePercent > 0 && root.diskFreePercent < 15)
 	readonly property bool hasUrgentHardwareState: isCpuUrgent || isMemUrgent || isDiskUrgent

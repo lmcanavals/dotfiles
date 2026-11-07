@@ -24,6 +24,7 @@ QtObject {
 
 	// Combined telemetry & status
 	property string primaryConnectionType: "none" // "dual", "ethernet", "wifi", "none"
+	readonly property bool isDisconnected: primaryConnectionType === "none"
 	property string glyph: "󰤮"
 	property string label: "Disconnected"
 

@@ -14,6 +14,7 @@ QtObject {
 	readonly property PwNode source: Pipewire.defaultAudioSource
 	readonly property real micVolume: Pipewire.defaultAudioSource?.audio?.volume ?? 0.0
 	readonly property bool micMuted: Pipewire.defaultAudioSource?.audio?.muted ?? false
+	readonly property bool isMicUnmuted: root.source !== null && !root.micMuted
 	readonly property string micGlyph: root.micMuted ? "󰍭" : "󰍬"
 
 	readonly property string sinkType: {

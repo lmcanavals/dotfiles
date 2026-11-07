@@ -17,6 +17,8 @@ QtObject {
 	readonly property string primaryTimeEstimate: timeEstimate(root.displayDevice)
 	readonly property string primaryPercentText: percentText(root.displayDevice)
 	readonly property bool primaryShowPercent: showPercent(root.displayDevice)
+	readonly property bool isCritical: hasBattery && (displayDevice.percentage < 0.20) && (displayDevice.state !== UPowerDeviceState.Charging)
+	readonly property bool isWarning: hasBattery && (displayDevice.percentage < 0.40) && (displayDevice.state !== UPowerDeviceState.Charging)
 
 	// qmllint disable missing-property
 	readonly property var peripheralDevices: {
