@@ -102,7 +102,7 @@ QtObject {
 			if (root._coresUsage.length <= coreIdx)
 				root._coresUsage.push(0);
 
-			root._coresUsage[coreIdx] = Math.sqrt(_getUsage(lines[i], i));
+			root._coresUsage[coreIdx] = _getUsage(lines[i], i);
 		}
 
 		const temp = root.coresUsage;
