@@ -208,20 +208,59 @@ QtObject {
 	}
 
 	property bool active: false
+	property bool statusAwareness: true
 
-	property Timer pollTimer: Timer {
-		interval: 2000
+	readonly property bool isCpuUrgent: root.temperature >= 80 || root.cpuUsage >= 0.80
+	readonly property bool isMemUrgent: root.memUsage >= 0.90 || root.swapUsage >= 0.75
+	readonly property bool isDiskUrgent: root.diskUsage >= 0.85 || (root.diskFreePercent > 0 && root.diskFreePercent < 15)
+	readonly property bool hasUrgentHardwareState: isCpuUrgent || isMemUrgent || isDiskUrgent
+
+	readonly property int cpuTempInterval: isCpuUrgent ? 500 : (root.active ? 2000 : 5000)
+	readonly property int memInterval: isMemUrgent ? 2000 : (root.active ? 5000 : 10000)
+	readonly property int diskInterval: isDiskUrgent ? 10000 : 60000
+
+	onIsCpuUrgentChanged: if (cpuTimer.running)
+		cpuTimer.restart()
+	onIsMemUrgentChanged: if (memoryTimer.running)
+		memoryTimer.restart()
+	onIsDiskUrgentChanged: if (storageTimer.running)
+		storageTimer.restart()
+	onActiveChanged: {
+		if (cpuTimer.running)
+			cpuTimer.restart();
+		if (memoryTimer.running)
+			memoryTimer.restart();
+	}
+
+	property Timer cpuTempTimer: Timer {
+		id: cpuTimer
+		interval: root.cpuTempInterval
 		repeat: true
-		running: root.active
+		running: root.active || root.statusAwareness
 		triggeredOnStart: true
-		onTriggered: root.refresh()
+		onTriggered: {
+			procStat.reload();
+			thermalTemp.reload();
+		}
+	}
+
+	property Timer memTimer: Timer {
+		id: memoryTimer
+		interval: root.memInterval
+		repeat: true
+		running: root.active || root.statusAwareness
+		triggeredOnStart: true
+		onTriggered: procMeminfo.reload()
 	}
 
 	property Timer diskTimer: Timer {
-		interval: 60000
+		id: storageTimer
+		interval: root.diskInterval
 		repeat: true
-		running: true
+		running: root.active || root.statusAwareness
 		triggeredOnStart: true
 		onTriggered: root.refreshDisk()
 	}
+
+	readonly property alias pollTimer: cpuTimer
 }
