@@ -17,6 +17,13 @@ RowLayout {
 
 	StyledButton {
 		Layout.fillWidth: true
+		text: "󰌾"
+		fontSize: Config.fontSizeXL
+		onClicked: root.trigger(SessionService.lock)
+	}
+
+	StyledButton {
+		Layout.fillWidth: true
 		text: "󰍃"
 		fontSize: Config.fontSizeXL
 		onClicked: root.trigger(SessionService.logout)

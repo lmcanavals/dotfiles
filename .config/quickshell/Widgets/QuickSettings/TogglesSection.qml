@@ -72,18 +72,10 @@ GridLayout {
 
 	QuickToggle {
 		Layout.fillWidth: true
+		Layout.columnSpan: !NetworkService.hasEthernet ? 2 : 1
 		glyph: EnvironmentService.nightLightActive ? "󰖔" : "󰖙"
 		label: "Hyprsunset"
 		active: EnvironmentService.nightLightActive
 		onClicked: EnvironmentService.toggleNightLight()
-	}
-
-	QuickToggle {
-		Layout.fillWidth: true
-		Layout.columnSpan: NetworkService.hasEthernet ? 2 : 1
-		glyph: "󰌾"
-		label: "Lock Screen"
-		active: false
-		onClicked: root.trigger(SessionService.lock)
 	}
 }
