@@ -32,4 +32,12 @@ return {
 			statuscolumn = { enabled = true },
 		},
 	},
+	{
+		"folke/which-key.nvim",
+		opts = {
+			spec = {
+				{ "<leader>X", group = "lmcs extras", icon = "" },
+			},
+		},
+	},
 }
