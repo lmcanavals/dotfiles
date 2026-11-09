@@ -2,6 +2,9 @@ pragma Singleton
 
 import QtQuick
 
+// Coordinator singleton for QuickSettings popup surface lifecycle (anchoring and open state).
+// Domain services (HardwareService, NetworkService, etc.) manage their own activation state
+// driven declaratively by the consuming surface (Surfaces/QuickSettings.qml) to maintain zero service-to-service coupling.
 QtObject {
 	id: root
 
@@ -15,7 +18,7 @@ QtObject {
 		}
 	}
 
-	function toggle(item: Item) {
+	function toggle(item: Item): void {
 		if (root.open && root.targetItem === item) {
 			root.close();
 		} else {
@@ -24,7 +27,7 @@ QtObject {
 		}
 	}
 
-	function close() {
+	function close(): void {
 		root.open = false;
 	}
 }

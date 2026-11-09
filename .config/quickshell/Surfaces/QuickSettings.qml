@@ -28,21 +28,25 @@ PopupWindow {
 		target: HardwareService
 		property: "active"
 		value: root.visible
+		restoreMode: Binding.RestoreBindingOrValue
 	}
 	Binding {
 		target: SystemInfoService
 		property: "active"
 		value: root.visible
+		restoreMode: Binding.RestoreBindingOrValue
 	}
 	Binding {
 		target: BluetoothService
 		property: "active"
 		value: root.visible
+		restoreMode: Binding.RestoreBindingOrValue
 	}
 	Binding {
 		target: NetworkService
 		property: "active"
 		value: root.visible
+		restoreMode: Binding.RestoreBindingOrValue
 	}
 
 	// qmllint disable missing-property
