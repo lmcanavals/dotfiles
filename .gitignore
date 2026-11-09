@@ -64,6 +64,7 @@ rust.sh
 
 .local/share/.vivaldi_reporting_data
 .local/share/applications/Qt-MaintenanceTool.desktop
+.local/share/applications/net.lutris*
 .local/share/emojicache.txt
 .local/share/fish/fish_history
 .local/share/krita-sysinfo.log

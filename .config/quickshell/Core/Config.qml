@@ -37,5 +37,8 @@ QtObject {
 	readonly property bool workspaceAppIconDeduplicate: false
 	readonly property string workspaceFallbackAppIcon: "application-x-executable"
 	readonly property int workspaceAppIconSize: fontSize
-	readonly property var workspaceAppIconOverrides: ({})
+	readonly property var workspaceAppIconOverrides: ({
+			"battle.net.exe": "lutris_battlenet",
+			"warcraft iii.exe": "lutris_warcraft-iii-reforged"
+		})
 }
