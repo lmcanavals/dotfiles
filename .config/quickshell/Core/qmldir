@@ -1,4 +1,5 @@
 module Core
 
-singleton Theme 1.0 Theme.qml
 singleton Config 1.0 Config.qml
+singleton LmcsPalette 1.0 LmcsPalette.qml
+singleton Theme 1.0 Theme.qml

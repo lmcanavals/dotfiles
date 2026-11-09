@@ -51,6 +51,7 @@ rust.sh
 .config/okular.kmessagebox
 .config/pavucontrol.ini
 .config/quickshell/.qmlls.ini
+.config/quickshell/Core/LmcsPalette.qml
 .config/themes/active_theme.*
 .config/user-dirs.dirs
 .config/user-dirs.locale
