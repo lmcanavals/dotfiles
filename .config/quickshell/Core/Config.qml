@@ -32,4 +32,10 @@ QtObject {
 	readonly property string iconOs: "󰣇"
 	readonly property string iconSend: "󰒊"
 	readonly property string iconSpinner: "󱑊"
+
+	// Workspace Application Icons
+	readonly property bool workspaceAppIconDeduplicate: false
+	readonly property string workspaceFallbackAppIcon: "application-x-executable"
+	readonly property int workspaceAppIconSize: fontSize
+	readonly property var workspaceAppIconOverrides: ({})
 }
