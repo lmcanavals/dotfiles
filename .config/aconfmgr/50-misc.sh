@@ -37,6 +37,7 @@ IgnorePackage abiword
 IgnorePackage asciinema
 IgnorePackage blender
 IgnorePackage dunst
+IgnorePackage falkon
 IgnorePackage foot
 IgnorePackage gnuplot
 IgnorePackage gthumb
@@ -44,6 +45,7 @@ IgnorePackage guvcview
 IgnorePackage krita
 IgnorePackage libva-utils
 IgnorePackage loupe
+IgnorePackage luanti
 IgnorePackage network-manager-applet
 IgnorePackage obs-studio
 IgnorePackage qpwgraph
@@ -51,6 +53,7 @@ IgnorePackage qt5-wayland
 IgnorePackage snapshot
 IgnorePackage thunderbird
 IgnorePackage vulkan-tools
+IgnorePackage waybar
 IgnorePackage wl-mirror
 IgnorePackage wofi
 IgnorePackage xorg-server
@@ -71,6 +74,7 @@ IgnorePackage lua51
 IgnorePackage openbsd-netcat
 IgnorePackage openmp
 IgnorePackage ruby-erb
+IgnorePackage stress
 IgnorePackage tcpdump
 IgnorePackage wavemon
 IgnorePackage wget

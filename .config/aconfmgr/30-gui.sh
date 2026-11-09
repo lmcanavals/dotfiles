@@ -73,13 +73,13 @@ AddPackage ttf-ubuntu-mono-nerd
 AddPackage uwsm
 AddPackage v4l2loopback-dkms
 AddPackage vivaldi
-AddPackage waybar
 AddPackage wev
 AddPackage wf-recorder
 AddPackage wl-clipboard
 AddPackage wtype
 AddPackage xdg-desktop-portal
 AddPackage xdg-desktop-portal-hyprland
+AddPackage xdg-terminal-exec
 AddPackage xdg-user-dirs
 AddPackage xf86-input-wacom
 AddPackage xsel
