@@ -10,3 +10,4 @@ export XDG_MENU_PREFIX=arch-
 
 export LCTHEME=dark
 export PATH=$HOME/.local/bin:$PATH
+export TERMINAL=xdg-terminal-exec
