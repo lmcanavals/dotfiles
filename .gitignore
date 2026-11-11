@@ -70,6 +70,7 @@ rust.sh
 .local/share/krita-sysinfo.log
 .local/share/krita.log
 .local/share/mimeapps.list
+.local/share/pki/
 .local/share/recently-used.xbel
 .local/share/user-places.xbel*
 

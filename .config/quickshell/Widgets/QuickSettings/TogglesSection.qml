@@ -34,7 +34,7 @@ GridLayout {
 		visible: NetworkService.hasEthernet
 		Layout.fillWidth: true
 		glyph: NetworkService.ethernetGlyph
-		label: NetworkService.ethernetConnected ? NetworkService.ethernetName : (NetworkService.hasEthernet ? "Disconnected" : "No Ethernet")
+		label: NetworkService.ethernetConnected ? NetworkService.ethernetName : "Disconnected"
 		active: NetworkService.ethernetConnected
 		busy: NetworkService.ethernetBusy
 		onClicked: NetworkService.toggleEthernet()
@@ -46,7 +46,7 @@ GridLayout {
 	QuickToggle {
 		Layout.fillWidth: true
 		glyph: BluetoothService.glyph
-		label: BluetoothService.connected ? BluetoothService.connectedDevice : (BluetoothService.enabled ? "Disconnected" : "Bluetooth Off")
+		label: BluetoothService.connected ? BluetoothService.connectedDevice : "No device"
 		active: BluetoothService.enabled
 		busy: BluetoothService.busy
 		onClicked: BluetoothService.toggleBluetooth()
@@ -57,15 +57,15 @@ GridLayout {
 	QuickToggle {
 		Layout.fillWidth: true
 		glyph: NotificationService.dndActive ? "󰂛" : "󰂚"
-		label: "Do Not Disturb"
+		label: "Do not disturb"
 		active: NotificationService.dndActive
 		onClicked: NotificationService.toggleDnd()
 	}
 
 	QuickToggle {
 		Layout.fillWidth: true
-		glyph: EnvironmentService.idleInhibited ? "󰅶" : "󰾪"
-		label: "Keep Awake"
+		glyph: EnvironmentService.idleInhibited ? "󰒳" : "󰒲"
+		label: "Keep awake"
 		active: EnvironmentService.idleInhibited
 		onClicked: EnvironmentService.toggleIdleInhibit()
 	}
@@ -74,7 +74,7 @@ GridLayout {
 		Layout.fillWidth: true
 		Layout.columnSpan: !NetworkService.hasEthernet ? 2 : 1
 		glyph: EnvironmentService.nightLightActive ? "󰖔" : "󰖙"
-		label: "Hyprsunset"
+		label: "Night shift"
 		active: EnvironmentService.nightLightActive
 		onClicked: EnvironmentService.toggleNightLight()
 	}

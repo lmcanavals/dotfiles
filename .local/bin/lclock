@@ -93,7 +93,7 @@ dotfiles_status() {
 		output="$(tag "$COLOR_MODIFIED" "<b>$ICON_CHECK  files out of sync</b>")${CR}${output}"
 	fi
 
-	print -nr -- "$output"
+	print -f "$output"
 }
 
 ICON_H0=$'\uf4c3' ICON_H1=$'\uf444'
@@ -112,7 +112,6 @@ cool_time() {
 
 bclock_dotstatus() {
 	local tip="$(dotfiles_status)"
-	#print -f '{"text": "%s", "tooltip": "%s"}\n' "$(cool_time)" "${tip//\"/\\\"}"
 	print -f '{"text": "%s", "tooltip": "%s"}\n' "$(cool_time)" "${tip//\"/\\\"}"
 }
 

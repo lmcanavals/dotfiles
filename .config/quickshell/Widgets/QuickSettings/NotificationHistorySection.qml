@@ -10,7 +10,7 @@ SurfaceCard {
 	id: root
 
 	Layout.fillWidth: true
-	implicitHeight: 180
+	Layout.fillHeight: true
 
 	ColumnLayout {
 		id: contentLayout

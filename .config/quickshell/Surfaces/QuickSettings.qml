@@ -62,10 +62,10 @@ PopupWindow {
 		id: mainCard
 
 		implicitHeight: contentLayout.implicitHeight + Config.padding * 3
-		implicitWidth: 400
+		implicitWidth: 700
 		color: Theme.bgSurface
 
-		ColumnLayout {
+		RowLayout {
 			id: contentLayout
 
 			anchors {
@@ -77,21 +77,23 @@ PopupWindow {
 
 			spacing: Config.spacing
 
-			HeaderSection {}
+			ColumnLayout {
+				spacing: Config.spacing
 
-			BatterySection {}
+				MetricsSection {}
+				BatterySection {}
+				SlidersSection {}
+				TogglesSection {}
+			}
 
-			MetricsSection {}
+			ColumnLayout {
+				spacing: Config.spacing
 
-			DotfilesCard {}
-
-			SlidersSection {}
-
-			TogglesSection {}
-
-			NotificationHistorySection {}
-
-			SessionSection {}
+				HeaderSection {}
+				DotfilesCard {}
+				NotificationHistorySection {}
+				SessionSection {}
+			}
 		}
 	}
 }
