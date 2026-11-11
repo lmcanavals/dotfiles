@@ -32,4 +32,6 @@ ShellRoot {
 	SubmapIndicator {}
 
 	NotificationOsd {}
+
+	WaylandIntegrations {}
 }

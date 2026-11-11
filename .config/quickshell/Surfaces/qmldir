@@ -7,3 +7,4 @@ QuickSettings 1.0 QuickSettings.qml
 SubmapIndicator 1.0 SubmapIndicator.qml
 SystemOsd 1.0 SystemOsd.qml
 UpdatesPopup 1.0 UpdatesPopup.qml
+WaylandIntegrations 1.0 WaylandIntegrations.qml

@@ -2,16 +2,13 @@ pragma Singleton
 
 import QtQuick
 import Quickshell.Io
-import Quickshell.Wayland
 
 QtObject {
 	id: root
 
-	// --- Idle Inhibitor (Wayland Protocol Native) ---
+	// --- Idle Inhibitor State (Wayland Protocol Native) ---
+	// Consumed by Surfaces/WaylandIntegrations.qml
 	property bool idleInhibited: false
-	property IdleInhibitor inhibitor: IdleInhibitor {
-		enabled: root.idleInhibited
-	}
 
 	function toggleIdleInhibit(): void {
 		root.idleInhibited = !root.idleInhibited;
