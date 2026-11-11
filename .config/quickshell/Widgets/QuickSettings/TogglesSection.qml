@@ -7,10 +7,10 @@ import Services
 GridLayout {
 	id: root
 
-	columns: 2
-	columnSpacing: Config.spacing
-	rowSpacing: Config.spacing
 	Layout.fillWidth: true
+	columnSpacing: Config.spacing
+	columns: 3
+	rowSpacing: Config.spacing
 
 	function trigger(action: var): void {
 		QuickSettingsService.close();
@@ -20,62 +20,61 @@ GridLayout {
 	// Wi-Fi Toggle
 	QuickToggle {
 		Layout.fillWidth: true
-		glyph: NetworkService.wifiGlyph
-		label: NetworkService.wifiConnected ? NetworkService.ssid : (NetworkService.wifiEnabled ? "Disconnected" : "Wi-Fi Off")
 		active: NetworkService.wifiEnabled
 		busy: NetworkService.busy
+		glyph: NetworkService.wifiGlyph
+		label: NetworkService.wifiConnected ? NetworkService.ssid : (NetworkService.wifiEnabled ? "Disconnected" : "None")
 		onClicked: NetworkService.toggleWifi()
-		onRightClicked: root.trigger(NetworkService.openPicker)
 		onMiddleClicked: NetworkService.refresh()
+		onRightClicked: root.trigger(NetworkService.openPicker)
 	}
 
 	// Ethernet Toggle
 	QuickToggle {
-		visible: NetworkService.hasEthernet
 		Layout.fillWidth: true
-		glyph: NetworkService.ethernetGlyph
-		label: NetworkService.ethernetConnected ? NetworkService.ethernetName : "Disconnected"
 		active: NetworkService.ethernetConnected
 		busy: NetworkService.ethernetBusy
+		glyph: NetworkService.ethernetGlyph
+		label: NetworkService.ethernetConnected ? NetworkService.ethernetName : "Disconnected"
 		onClicked: NetworkService.toggleEthernet()
-		onRightClicked: root.trigger(NetworkService.openPicker)
 		onMiddleClicked: NetworkService.refresh()
+		onRightClicked: root.trigger(NetworkService.openPicker)
+		visible: NetworkService.hasEthernet
 	}
 
 	// Bluetooth Toggle
 	QuickToggle {
 		Layout.fillWidth: true
-		glyph: BluetoothService.glyph
-		label: BluetoothService.connected ? BluetoothService.connectedDevice : "No device"
 		active: BluetoothService.enabled
 		busy: BluetoothService.busy
+		glyph: BluetoothService.glyph
+		label: BluetoothService.connected ? BluetoothService.connectedDevice : "None"
 		onClicked: BluetoothService.toggleBluetooth()
-		onRightClicked: root.trigger(BluetoothService.openPicker)
 		onMiddleClicked: BluetoothService.refresh()
+		onRightClicked: root.trigger(BluetoothService.openPicker)
 	}
 
 	QuickToggle {
 		Layout.fillWidth: true
-		glyph: NotificationService.dndActive ? "󰂛" : "󰂚"
-		label: "Do not disturb"
+		active: EnvironmentService.nightLightActive
+		glyph: EnvironmentService.nightLightActive ? "󰖔" : "󰖙"
+		label: "Hyprsunset"
+		onClicked: EnvironmentService.toggleNightLight()
+	}
+
+	QuickToggle {
+		Layout.fillWidth: true
 		active: NotificationService.dndActive
+		glyph: NotificationService.dndActive ? "󰂛" : "󰂚"
+		label: "DND"
 		onClicked: NotificationService.toggleDnd()
 	}
 
 	QuickToggle {
 		Layout.fillWidth: true
-		glyph: EnvironmentService.idleInhibited ? "󰒳" : "󰒲"
-		label: "Keep awake"
 		active: EnvironmentService.idleInhibited
+		glyph: EnvironmentService.idleInhibited ? "󰒳" : "󰒲"
+		label: "Inhibit"
 		onClicked: EnvironmentService.toggleIdleInhibit()
-	}
-
-	QuickToggle {
-		Layout.fillWidth: true
-		Layout.columnSpan: !NetworkService.hasEthernet ? 2 : 1
-		glyph: EnvironmentService.nightLightActive ? "󰖔" : "󰖙"
-		label: "Night shift"
-		active: EnvironmentService.nightLightActive
-		onClicked: EnvironmentService.toggleNightLight()
 	}
 }

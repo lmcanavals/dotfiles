@@ -9,8 +9,8 @@ import Services
 SurfaceCard {
 	id: root
 
-	Layout.fillWidth: true
 	Layout.fillHeight: true
+	implicitWidth: 300
 
 	ColumnLayout {
 		id: contentLayout
