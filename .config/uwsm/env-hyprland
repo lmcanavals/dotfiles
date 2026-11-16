@@ -2,6 +2,7 @@ export HYPRCURSOR_SIZE=32
 export HYPRCURSOR_THEME=rose-pine-hyprcursor
 export QML_IMPORT_PATH="$HOME/.config/quickshell:/usr/lib/qt6/qml"
 export QT_AUTO_SCREEN_SCALE_FACTOR=1
+export QT_LOGGING_RULES="qt.qpa.wayland.textinput=false"
 export QT_QPA_PLATFORM="wayland;xcb"
 export QT_QPA_PLATFORMTHEME=hyprqt6engine
 export QT_WAYLAND_DISABLE_WINDOWDECORATION=1

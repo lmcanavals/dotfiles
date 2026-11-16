@@ -42,7 +42,7 @@
         "border": "nord2",
         "shadow": "nord3",
         "git_added": "nord14",
-        "git_modified": "nord8",
+        "git_modified": "nord13",
         "git_deleted": "nord11",
         "success": "nord14",
         "info": "nord10",

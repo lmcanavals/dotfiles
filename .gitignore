@@ -37,6 +37,7 @@ rust.sh
 .config/fuzzel/theme.ini
 .config/gh/hosts.yml
 .config/ghostty/theme
+.config/git/theme.gitconfig
 .config/gtkrc-2.0
 .config/hypr/colors.*
 .config/kitty/theme.conf
@@ -199,6 +200,7 @@ rust.sh
 .local/share/artwork/
 .local/share/backgrounds/
 .local/share/containers/
+.local/share/delta/
 .local/share/flatpak/
 .local/share/font-manager/
 .local/share/fonts/

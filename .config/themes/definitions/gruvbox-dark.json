@@ -54,7 +54,7 @@
         "border": "bg2",
         "shadow": "bg2",
         "git_added": "green1",
-        "git_modified": "blue1",
+        "git_modified": "yellow1",
         "git_deleted": "red1",
         "success": "green1",
         "info": "blue0",
