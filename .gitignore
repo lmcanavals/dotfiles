@@ -233,6 +233,7 @@
 /.local/share/okular/
 /.local/share/opencode/
 /.local/share/opentui/
+/.local/share/pki/
 /.local/share/qalculate/
 /.local/share/sddm/
 /.local/share/sounds/
