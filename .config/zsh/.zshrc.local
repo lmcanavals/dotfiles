@@ -196,9 +196,14 @@ alias dotfiles='git --git-dir="$HOME/.dotfiles.git" --work-tree="$HOME" '
 alias tree="ee -T"
 
 #
-# some extra sources
+# conf.d style auto sourcing and other manual sourcing
 #
-[[ -s "$ZDOTDIR/dynamic.zsh" ]] && source "$ZDOTDIR/dynamic.zsh"
+if [[ -d "$ZDOTDIR/conf.d" ]]; then
+	for file in $ZDOTDIR/conf.d/*.zsh; do
+		source "$file"
+	done
+fi
+
 # shellcheck disable=SC1090
 source <(fzf --zsh)
 

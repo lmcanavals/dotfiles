@@ -42,50 +42,10 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
     set -gx LCLR (cat ~/.config/lmcscolors | string collect)
 
-    if test "$TERM" = linux
-        echo -en "\e]P0"(string sub -l 6 -s 2 "$LCLR")
-        for i in (seq 1 15)
-            set start (math "$i * 8 + 2")
-            set color_code (string sub -l 6 -s "$start" "$LCLR")
-            set hex_i (printf "%x" "$i")
-            echo -en "\e]P$hex_i$color_code"
-        end
-        clear # for background artifacting
-    end
-
     set -gx EDITOR nvim
     set -gx DIFFPROG 'nvim -d'
     set -gx FZF_DEFAULT_COMMAND 'fd --type f'
     set -gx FZF_CTRL_T_COMMAND 'fd --type d'
-    # Theme stuff
-    if test -f "$HOME/.config/themes/active_theme.fish"
-        source "$HOME/.config/themes/active_theme.fish"
-    else
-        set -gx BAT_THEME tokyonight_night
-        set -gx FZF_DEFAULT_OPTS "$FZF_DEFAULT_OPTS \
-            --highlight-line \
-            --info=inline-right \
-            --ansi \
-            --layout=reverse \
-            --border=none \
-            --color=bg+:#283457 \
-            --color=bg:#16161e \
-            --color=border:#27a1b9 \
-            --color=fg:#c0caf5 \
-            --color=gutter:#16161e \
-            --color=header:#ff9e64 \
-            --color=hl+:#2ac3de \
-            --color=hl:#2ac3de \
-            --color=info:#545c7e \
-            --color=marker:#ff007c \
-            --color=pointer:#ff007c \
-            --color=prompt:#2ac3de \
-            --color=query:#c0caf5:regular \
-            --color=scrollbar:#27a1b9 \
-            --color=separator:#ff9e64 \
-            --color=spinner:#ff007c"
-        set -gx FISH_THEME "TokyoNight Night"
-    end
 
     lismosh; and set -gx ISMOSHBRUH yup
     set --global fish_key_bindings fish_vi_key_bindings
