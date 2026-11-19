@@ -32,6 +32,15 @@ PanelWindow { // qmllint enable uncreatable-type
 	property Item focusedReplyInput: null
 	readonly property bool hasActiveReplyFocus: focusedReplyInput !== null && focusedReplyInput.activeFocus
 
+	function openSafeLink(link: string): void {
+		const url = String(link).trim();
+		if (/^https?:\/\//i.test(url)) {
+			Qt.openUrlExternally(url);
+		} else {
+			console.warn("Blocked untrusted URL scheme:", url);
+		}
+	}
+
 	WlrLayershell.layer: WlrLayer.Overlay
 	WlrLayershell.namespace: "quickshell:notifications"
 	WlrLayershell.keyboardFocus: root.hasActiveReplyFocus ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
@@ -47,13 +56,24 @@ PanelWindow { // qmllint enable uncreatable-type
 			delegate: SurfaceCard {
 				id: card
 
-				property double lastTimestamp: (card.model && card.model.timestamp) ? card.model.timestamp : 0
-				required property var model
-				readonly property bool isActionable: Boolean(card.model && card.model.hasDefaultAction)
-				readonly property string defaultActionLabel: (card.model && card.model.defaultActionText) ? card.model.defaultActionText : ""
+				required property int id
+				required property double timestamp
+				required property bool hasDefaultAction
+				required property string defaultActionText
+				required property string urgency
+				required property string appIcon
+				required property string appName
+				required property string summary
+				required property string body
+				required property var actions
+				required property bool hasInlineReply
+				required property string replyPlaceholder
+				required property double value
+
+				readonly property bool isActionable: card.hasDefaultAction
+				readonly property string defaultActionLabel: card.defaultActionText
 				readonly property bool hasInputFocus: Boolean(replyRow.visible && replyInput.activeFocus)
 				readonly property bool isHovered: cardHoverArea.containsMouse
-				readonly property string urgency: (card.model && card.model.urgency) ? card.model.urgency : "normal"
 				readonly property bool isCritical: card.urgency === "critical"
 				readonly property bool isLow: card.urgency === "low"
 
@@ -62,13 +82,13 @@ PanelWindow { // qmllint enable uncreatable-type
 				border.color: card.isCritical ? Theme.colors.error : Theme.colors.border
 				border.width: card.isCritical ? 2 : 1
 				implicitHeight: innerLayout.implicitHeight + (Config.padding * 2)
-				onLastTimestampChanged: dismissTimer.restart()
+				onTimestampChanged: dismissTimer.restart()
 
 				Timer {
 					id: dismissTimer
 
 					interval: card.isCritical ? 15000 : (card.isLow ? 3000 : 5000)
-					onTriggered: NotificationService.expireActive(card.model.id)
+					onTriggered: NotificationService.expireActive(card.id)
 					running: !card.isHovered && !card.hasInputFocus
 				}
 
@@ -103,7 +123,7 @@ PanelWindow { // qmllint enable uncreatable-type
 					anchors.fill: parent
 					cursorShape: Qt.PointingHandCursor
 					enabled: card.isActionable
-					onClicked: NotificationService.invokeDefault(card.model.id)
+					onClicked: NotificationService.invokeDefault(card.id)
 				}
 
 				RowLayout {
@@ -113,7 +133,7 @@ PanelWindow { // qmllint enable uncreatable-type
 					spacing: Config.spacing
 
 					ThumbnailImage {
-						source: card.model?.appIcon ?? ""
+						source: card.appIcon
 					}
 
 					ColumnLayout {
@@ -124,7 +144,7 @@ PanelWindow { // qmllint enable uncreatable-type
 							spacing: Config.spacing
 
 							StyledText {
-								text: card.model.appName || "Notification"
+								text: card.appName || "Notification"
 								color: card.isCritical ? Theme.colors.error : Theme.colors.comment
 								font.bold: true
 								font.pixelSize: Config.fontSizeTiny
@@ -158,7 +178,7 @@ PanelWindow { // qmllint enable uncreatable-type
 
 							StyledButton {
 								text: Config.iconClose
-								onClicked: NotificationService.dismissActive(card.model.id)
+								onClicked: NotificationService.dismissActive(card.id)
 							}
 						}
 
@@ -170,22 +190,22 @@ PanelWindow { // qmllint enable uncreatable-type
 								Layout.fillWidth: true
 
 								StyledText {
-									text: card.model.summary
+									text: card.summary
 									Layout.fillWidth: true
 									color: card.isCritical ? Theme.colors.error : Theme.colors.fg
 									font.bold: true
-									onLinkActivated: link => Qt.openUrlExternally(link)
+									onLinkActivated: link => root.openSafeLink(link)
 									textFormat: Text.StyledText
 								}
 
 								StyledText {
-									text: card.model.body
+									text: card.body
 									Layout.fillWidth: true
 									color: Theme.colors.fg
 									font.pixelSize: Config.fontSizeSmall
-									onLinkActivated: link => Qt.openUrlExternally(link)
+									onLinkActivated: link => root.openSafeLink(link)
 									textFormat: Text.StyledText
-									visible: card.model.body.length > 0
+									visible: card.body.length > 0
 									wrapMode: Text.Wrap
 								}
 							}
@@ -195,10 +215,10 @@ PanelWindow { // qmllint enable uncreatable-type
 						RowLayout {
 							Layout.fillWidth: true
 							spacing: Config.spacing
-							visible: card.model?.actions.count > 0
+							visible: Boolean(card.actions && card.actions.length > 0)
 
 							Repeater {
-								model: card.model?.actions
+								model: card.actions
 
 								delegate: StyledButton {
 									id: actionBtn
@@ -206,7 +226,7 @@ PanelWindow { // qmllint enable uncreatable-type
 									required property var model
 
 									text: actionBtn.model.text
-									onClicked: NotificationService.invokeAction(card.model.id, actionBtn.model.id)
+									onClicked: NotificationService.invokeAction(card.id, actionBtn.model.id)
 								}
 							}
 						}
@@ -217,7 +237,7 @@ PanelWindow { // qmllint enable uncreatable-type
 
 							Layout.fillWidth: true
 							spacing: Config.spacing
-							visible: card.model && card.model.hasInlineReply
+							visible: card.hasInlineReply
 
 							Rectangle {
 								Layout.fillWidth: true
@@ -259,7 +279,7 @@ PanelWindow { // qmllint enable uncreatable-type
 									}
 
 									StyledText {
-										text: card.model?.replyPlaceholder ? card.model.replyPlaceholder : "Type a reply..."
+										text: card.replyPlaceholder ? card.replyPlaceholder : "Type a reply..."
 										anchors.fill: parent
 										color: Theme.colors.comment
 										font.pixelSize: Config.fontSizeSmall
@@ -270,7 +290,7 @@ PanelWindow { // qmllint enable uncreatable-type
 										const text = replyInput.text.trim();
 										replyInput.focus = false;
 										if (text.length > 0) {
-											NotificationService.sendReply(card.model.id, text);
+											NotificationService.sendReply(card.id, text);
 										}
 									}
 								}
@@ -282,7 +302,7 @@ PanelWindow { // qmllint enable uncreatable-type
 									const text = replyInput.text.trim();
 									replyInput.focus = false;
 									if (text.length > 0) {
-										NotificationService.sendReply(card.model.id, text);
+										NotificationService.sendReply(card.id, text);
 									}
 								}
 							}
@@ -292,8 +312,8 @@ PanelWindow { // qmllint enable uncreatable-type
 							id: progressBar
 
 							Layout.fillWidth: true
-							value: (card.model && card.model.value !== undefined) ? (Number(card.model.value) / 100.0) : 0.0
-							visible: card.model && card.model.value !== undefined && card.model.value >= 0
+							value: Number(card.value) / 100.0
+							visible: card.value >= 0
 						}
 					}
 				}
