@@ -18,6 +18,7 @@ RowLayout {
 		values: HardwareService.coresUsage
 	}
 	ColumnLayout {
+		Layout.fillWidth: true
 		MetricBar {
 			Layout.fillWidth: true
 			glyph: "󰻠"
