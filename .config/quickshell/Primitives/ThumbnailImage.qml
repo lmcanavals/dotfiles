@@ -45,7 +45,6 @@ ClippingRectangle {
 	readonly property real calculatedHeight: hasValidImage ? Math.max(root.minHeight, Math.min(root.maxHeight, artImage.sourceSize.height > 0 ? (artImage.sourceSize.height / 2) : root.minHeight)) : (root.showFallback ? root.minHeight : 0)
 	readonly property real calculatedWidth: calculatedHeight * clampedAspect
 
-	clip: true
 	radius: Config.radius
 	color: "transparent"
 
@@ -60,6 +59,8 @@ ClippingRectangle {
 		asynchronous: true
 		fillMode: Image.PreserveAspectCrop
 		source: root.actualSource
+		sourceSize.height: Math.round(root.maxHeight * (Screen.devicePixelRatio || 1))
+		sourceSize.width: Math.round(root.maxHeight * root.maxAspect * (Screen.devicePixelRatio || 1))
 		visible: status === Image.Ready
 
 		onStatusChanged: {

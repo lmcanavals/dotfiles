@@ -21,7 +21,6 @@ Rectangle {
 	implicitHeight: 8
 	radius: Config.radiusSmall
 	color: root.trackColor
-	clip: true
 
 	Rectangle {
 		id: fillBar

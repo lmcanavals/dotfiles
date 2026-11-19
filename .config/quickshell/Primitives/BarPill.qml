@@ -12,6 +12,7 @@ SurfaceCard {
 	property color bgHover: Theme.bgCardHover
 
 	property int horizontalPadding: Config.padding * 2
+	property Item contentItem: root.children.length > 1 ? root.children[1] : null
 
 	signal clicked
 	signal rightClicked
@@ -27,15 +28,7 @@ SurfaceCard {
 	}
 
 	implicitHeight: Config.widgetHeight
-	implicitWidth: {
-		for (let i = 0; i < children.length; i++) {
-			const child = children[i];
-			if (child !== mouseArea && child.implicitWidth > 0) {
-				return child.implicitWidth + horizontalPadding;
-			}
-		}
-		return Config.widgetHeight;
-	}
+	implicitWidth: (contentItem && contentItem.implicitWidth > 0) ? (contentItem.implicitWidth + horizontalPadding) : Config.widgetHeight
 
 	MouseArea {
 		id: mouseArea
