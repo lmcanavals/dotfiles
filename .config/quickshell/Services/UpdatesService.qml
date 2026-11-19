@@ -2,7 +2,6 @@ pragma Singleton
 
 import QtQuick
 import Quickshell.Io
-import Core
 
 QtObject {
 	id: root
@@ -65,21 +64,6 @@ QtObject {
 		root._detachTarget();
 		root.open = false;
 		root.targetItem = null;
-	}
-
-	function levelColor(level: string): color {
-		switch (level) {
-		case "major":
-			return Theme.colors.error;
-		case "minor":
-			return Theme.colors.warning;
-		case "patch":
-			return Theme.colors.success;
-		case "pre":
-			return Theme.colors.info;
-		default:
-			return Theme.colors.comment;
-		}
 	}
 
 	function _handleJSON(line: string): void {

@@ -48,4 +48,44 @@ QtObject {
 	readonly property color bgControl: root.alpha(root.bgWidget, 0.2)
 	readonly property color bgControlHover: root.alpha(root.bgHighlight, 0.4)
 	readonly property color bgTrack: root.alpha(root.fgDark, 0.2)
+
+	// Semantic state-to-color helpers for decoupled services
+	function updateLevelColor(level: string): color {
+		switch (level) {
+		case "major":
+			return root.error;
+		case "minor":
+			return root.warning;
+		case "patch":
+			return root.success;
+		case "pre":
+			return root.info;
+		default:
+			return root.comment;
+		}
+	}
+
+	function metricStateColor(state: string): color {
+		switch (state) {
+		case "critical":
+			return root.error;
+		case "warning":
+			return root.warning;
+		default:
+			return root.accent;
+		}
+	}
+
+	function powerStateColor(state: string): color {
+		switch (state) {
+		case "charging":
+			return root.success;
+		case "critical":
+			return root.error;
+		case "warning":
+			return root.warning;
+		default:
+			return root.fgWidget;
+		}
+	}
 }

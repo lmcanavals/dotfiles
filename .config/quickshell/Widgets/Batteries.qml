@@ -79,12 +79,12 @@ BarPill {
 		// Battery / Power telemetry
 		StyledText {
 			text: PowerService.primaryGlyph
-			color: PowerService.primaryColor
+			color: Theme.powerStateColor(PowerService.primaryState)
 		}
 
 		StyledText {
 			text: PowerService.primaryPercentText
-			color: PowerService.primaryColor
+			color: Theme.powerStateColor(PowerService.primaryState)
 			visible: PowerService.primaryShowPercent
 		}
 	}

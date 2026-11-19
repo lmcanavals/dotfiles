@@ -14,7 +14,7 @@ RowLayout {
 		Layout.preferredWidth: 96
 		Layout.preferredHeight: 96
 
-		lineColor: HardwareService.cpuColor
+		lineColor: Theme.metricStateColor(HardwareService.cpuState)
 		values: HardwareService.coresUsage
 	}
 	ColumnLayout {
@@ -24,7 +24,7 @@ RowLayout {
 			glyph: "󰻠"
 			value: HardwareService.cpuUsage
 			valueText: `${Math.round(Math.max(0.0, Math.min(1.0, HardwareService.cpuUsage)) * 100)}%`
-			barColor: HardwareService.cpuColor
+			barColor: Theme.metricStateColor(HardwareService.cpuState)
 		}
 
 		MetricBar {
@@ -32,7 +32,7 @@ RowLayout {
 			glyph: "󰔏"
 			value: Math.min(1.0, HardwareService.temperature / 100.0)
 			valueText: `${HardwareService.temperature}°C`
-			barColor: HardwareService.tempColor
+			barColor: Theme.metricStateColor(HardwareService.tempState)
 		}
 
 		MetricBar {
@@ -40,7 +40,7 @@ RowLayout {
 			glyph: `󰍛 ${HardwareService.memTotal.toFixed(1)}GiB`
 			value: HardwareService.memUsage
 			valueText: `${Math.round(Math.max(0.0, Math.min(1.0, HardwareService.memUsage)) * 100)}%`
-			barColor: HardwareService.memColor
+			barColor: Theme.metricStateColor(HardwareService.memState)
 		}
 
 		MetricBar {
@@ -48,7 +48,7 @@ RowLayout {
 			glyph: `󰾴 ${HardwareService.swapTotal.toFixed(1)}GiB`
 			value: HardwareService.swapUsage
 			valueText: `${Math.round(Math.max(0.0, Math.min(1.0, HardwareService.swapUsage)) * 100)}%`
-			barColor: HardwareService.swapColor
+			barColor: Theme.metricStateColor(HardwareService.swapState)
 		}
 
 		MetricBar {
@@ -56,7 +56,7 @@ RowLayout {
 			glyph: `󰋊 ${HardwareService.diskTotal.toFixed(1)}GiB`
 			value: HardwareService.diskUsage
 			valueText: `${Math.round(Math.max(0.0, Math.min(1.0, HardwareService.diskUsage)) * 100)}%`
-			barColor: HardwareService.diskColor
+			barColor: Theme.metricStateColor(HardwareService.diskState)
 		}
 	}
 }

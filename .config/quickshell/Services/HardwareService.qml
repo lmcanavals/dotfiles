@@ -2,7 +2,6 @@ pragma Singleton
 
 import QtQuick
 import Quickshell.Io
-import Core
 
 QtObject {
 	id: root
@@ -20,34 +19,34 @@ QtObject {
 	property real diskFreePercent: 0.0
 	property int temperature: 0
 
-	readonly property color cpuColor: colorForUsage(cpuUsage)
-	readonly property color memColor: colorForUsage(memUsage)
-	readonly property color swapColor: colorForUsage(swapUsage)
-	readonly property color diskColor: colorForDisk(diskUsage)
-	readonly property color tempColor: colorForTemp(temperature)
+	readonly property string cpuState: stateForUsage(cpuUsage)
+	readonly property string memState: stateForUsage(memUsage)
+	readonly property string swapState: stateForUsage(swapUsage)
+	readonly property string diskState: stateForDisk(diskUsage)
+	readonly property string tempState: stateForTemp(temperature)
 
-	function colorForUsage(ratio: real): color {
+	function stateForUsage(ratio: real): string {
 		if (ratio >= 0.80)
-			return Theme.colors.error;
+			return "critical";
 		if (ratio >= 0.60)
-			return Theme.colors.warning;
-		return Theme.colors.accent;
+			return "warning";
+		return "normal";
 	}
 
-	function colorForDisk(ratio: real): color {
+	function stateForDisk(ratio: real): string {
 		if (ratio >= 0.85)
-			return Theme.colors.error;
+			return "critical";
 		if (ratio >= 0.75)
-			return Theme.colors.warning;
-		return Theme.colors.accent;
+			return "warning";
+		return "normal";
 	}
 
-	function colorForTemp(celsius: int): color {
+	function stateForTemp(celsius: int): string {
 		if (celsius >= 80)
-			return Theme.colors.error;
+			return "critical";
 		if (celsius >= 60)
-			return Theme.colors.warning;
-		return Theme.colors.accent;
+			return "warning";
+		return "normal";
 	}
 
 	property FileView statFile: FileView {

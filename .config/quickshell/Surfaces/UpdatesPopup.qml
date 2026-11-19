@@ -159,7 +159,7 @@ PopupWindow {
 							id: newVerChanged
 
 							text: delegateRoot.modelData.changed || delegateRoot.modelData.newVer || "?"
-							color: UpdatesService.levelColor(delegateRoot.modelData.level)
+							color: Theme.updateLevelColor(delegateRoot.modelData.level)
 							font.bold: true
 						}
 					}
@@ -180,35 +180,35 @@ PopupWindow {
 
 				StyledText {
 					text: `${UpdatesService.levelCounts.major} major`
-					color: UpdatesService.levelColor("major")
+					color: Theme.updateLevelColor("major")
 					font.bold: true
 					font.pixelSize: Config.fontSizeTiny
 				}
 
 				StyledText {
 					text: `${UpdatesService.levelCounts.minor} minor`
-					color: UpdatesService.levelColor("minor")
+					color: Theme.updateLevelColor("minor")
 					font.bold: true
 					font.pixelSize: Config.fontSizeTiny
 				}
 
 				StyledText {
 					text: `${UpdatesService.levelCounts.patch} patch`
-					color: UpdatesService.levelColor("patch")
+					color: Theme.updateLevelColor("patch")
 					font.bold: true
 					font.pixelSize: Config.fontSizeTiny
 				}
 
 				StyledText {
 					text: `${UpdatesService.levelCounts.pre} pkg release`
-					color: UpdatesService.levelColor("pre")
+					color: Theme.updateLevelColor("pre")
 					font.bold: true
 					font.pixelSize: Config.fontSizeTiny
 				}
 
 				StyledText {
 					text: `${UpdatesService.levelCounts.other} other`
-					color: UpdatesService.levelColor("other")
+					color: Theme.updateLevelColor("other")
 					font.bold: true
 					font.pixelSize: Config.fontSizeTiny
 				}

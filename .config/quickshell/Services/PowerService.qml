@@ -2,7 +2,6 @@ pragma Singleton
 
 import QtQuick
 import Quickshell.Services.UPower
-import Core
 
 QtObject {
 	id: root
@@ -12,7 +11,7 @@ QtObject {
 
 	// Primary device properties
 	readonly property string primaryGlyph: glyphForDevice(root.displayDevice)
-	readonly property color primaryColor: colorForDevice(root.displayDevice)
+	readonly property string primaryState: stateForDevice(root.displayDevice)
 	readonly property string primaryName: deviceName(root.displayDevice)
 	readonly property string primaryTimeEstimate: timeEstimate(root.displayDevice)
 	readonly property string primaryPercentText: percentText(root.displayDevice)
@@ -63,16 +62,16 @@ QtObject {
 		return dischargingIcons[dIdx];
 	}
 
-	function colorForDevice(dev: UPowerDevice): color {
+	function stateForDevice(dev: UPowerDevice): string {
 		if (!dev || !dev.isPresent)
-			return Theme.colors.fg_widget;
+			return "normal";
 		if (dev.state === UPowerDeviceState.Charging)
-			return Theme.colors.success;
+			return "charging";
 		if (dev.percentage < 0.20)
-			return Theme.colors.error;
+			return "critical";
 		if (dev.percentage < 0.40)
-			return Theme.colors.warning;
-		return Theme.colors.fg_widget;
+			return "warning";
+		return "normal";
 	}
 
 	function _decodeHexAscii(str) {

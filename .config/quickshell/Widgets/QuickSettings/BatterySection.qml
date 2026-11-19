@@ -26,14 +26,14 @@ SurfaceCard {
 
 			StyledText {
 				text: PowerService.primaryGlyph
-				color: PowerService.primaryColor
+				color: Theme.powerStateColor(PowerService.primaryState)
 			}
 
 			StyledText {
 				text: PowerService.deviceLabelWithState(PowerService.displayDevice)
 				font.bold: true
 				font.pixelSize: Config.fontSizeLarge
-				color: PowerService.primaryColor
+				color: Theme.powerStateColor(PowerService.primaryState)
 				Layout.fillWidth: true
 			}
 
@@ -48,7 +48,7 @@ SurfaceCard {
 				text: PowerService.primaryPercentText
 				font.bold: true
 				font.pixelSize: Config.fontSizeSmall
-				color: PowerService.primaryColor
+				color: Theme.powerStateColor(PowerService.primaryState)
 			}
 		}
 
@@ -93,7 +93,7 @@ SurfaceCard {
 
 				StyledText {
 					text: PowerService.glyphForDevice(deviceDelegate.modelData)
-					color: PowerService.colorForDevice(deviceDelegate.modelData)
+					color: Theme.powerStateColor(PowerService.stateForDevice(deviceDelegate.modelData))
 				}
 
 				StyledText {
@@ -107,7 +107,7 @@ SurfaceCard {
 					implicitWidth: 120
 					implicitHeight: 6
 					fillRadius: 3
-					fillColor: PowerService.colorForDevice(deviceDelegate.modelData)
+					fillColor: Theme.powerStateColor(PowerService.stateForDevice(deviceDelegate.modelData))
 					value: deviceDelegate.modelData?.percentage ?? 0.0
 				}
 
