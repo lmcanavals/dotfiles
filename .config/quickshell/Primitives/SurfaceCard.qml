@@ -1,10 +1,10 @@
 import QtQuick
-import Quickshell.Widgets
 import Core
 
-ClippingRectangle {
+Rectangle {
 	id: root
 
+	antialiasing: true
 	color: Theme.bgCard
 	radius: Config.radius
 	border.color: Theme.colors.border

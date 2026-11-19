@@ -17,6 +17,7 @@ RowLayout {
 	}
 
 	ColumnLayout {
+		Layout.fillWidth: true
 
 		RowLayout {
 			Layout.fillWidth: true

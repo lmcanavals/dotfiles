@@ -16,9 +16,23 @@ Canvas {
 
 	antialiasing: true
 
-	onValuesChanged: requestPaint()
-	onWidthChanged: requestPaint()
-	onHeightChanged: requestPaint()
+	function requestPaintIfVisible(): void {
+		if (root.visible && root.Window.window?.visible) {
+			root.requestPaint();
+		}
+	}
+
+	onValuesChanged: requestPaintIfVisible()
+	onVisibleChanged: requestPaintIfVisible()
+	onWidthChanged: requestPaintIfVisible()
+	onHeightChanged: requestPaintIfVisible()
+
+	Connections {
+		target: root.Window.window
+		function onVisibleChanged(): void {
+			root.requestPaintIfVisible();
+		}
+	}
 
 	onPaint: {
 		const ctx = getContext("2d");

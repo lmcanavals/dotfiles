@@ -38,7 +38,6 @@ Rectangle {
 	StyledText {
 		id: label
 
-		anchors.centerIn: parent
 		anchors.fill: parent
 		text: root.text
 		color: mouseArea.containsMouse ? root.fgHover : root.fg

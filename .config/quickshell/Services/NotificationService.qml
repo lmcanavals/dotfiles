@@ -53,16 +53,25 @@ QtObject {
 	readonly property var _pendingUnlinks: new Map()
 
 	readonly property string iconCacheDir: {
-		const xdg = Quickshell.env("XDG_CACHE_HOME");
-		const base = (xdg && xdg.length > 0) ? xdg : (Quickshell.env("HOME") + "/.cache");
+		const xdg = Quickshell.env("XDG_CACHE_HOME") || "";
+		const home = Quickshell.env("HOME") || "";
+		const base = xdg.length > 0 ? xdg : (home.length > 0 ? (home + "/.cache") : "/tmp");
 		return base + "/quickshell/notification-icons";
+	}
+
+	function _isSafeIconCacheDir(dir: string): bool {
+		return Boolean(dir && dir.length >= 25 && dir.startsWith("/") && dir.endsWith("/quickshell/notification-icons"));
 	}
 
 	property Timer cachePruneTimer: Timer {
 		interval: 86400000 // 24 hours
 		repeat: true
 		running: true
-		onTriggered: Quickshell.execDetached(["find", root.iconCacheDir, "-type", "f", "-mtime", "+3", "-delete"])
+		onTriggered: {
+			if (root._isSafeIconCacheDir(root.iconCacheDir)) {
+				Quickshell.execDetached(["find", root.iconCacheDir, "-type", "f", "-mtime", "+3", "-delete"]);
+			}
+		}
 	}
 
 	property Timer deferredPurgeTimer: Timer {
@@ -92,14 +101,18 @@ QtObject {
 			root._iconRefCounts.clear();
 			root._pendingUnlinks.clear();
 			root.deferredPurgeTimer.stop();
-			Quickshell.execDetached(["find", root.iconCacheDir, "-mindepth", "1", "-delete"]);
+			if (root._isSafeIconCacheDir(root.iconCacheDir)) {
+				Quickshell.execDetached(["find", root.iconCacheDir, "-mindepth", "1", "-delete"]);
+			}
 		}
 	}
 
 	Component.onCompleted: {
 		Quickshell.execDetached(["mkdir", "-p", root.iconCacheDir]);
 		root._checkZeroStatePurge();
-		Quickshell.execDetached(["find", root.iconCacheDir, "-type", "f", "-mtime", "+3", "-delete"]);
+		if (root._isSafeIconCacheDir(root.iconCacheDir)) {
+			Quickshell.execDetached(["find", root.iconCacheDir, "-type", "f", "-mtime", "+3", "-delete"]);
+		}
 	}
 
 	function _incrementIconRef(path: string): void {
@@ -218,6 +231,13 @@ QtObject {
 
 		let clean = rawIcon.trim().replace(/^image:\/\/icon\/(file:\/\/)?/, "").replace(/^file:\/\//, "");
 
+		if (clean.includes("..") || clean.includes("\0")) {
+			return {
+				source: "",
+				cachedFile: ""
+			};
+		}
+
 		const isTemp = clean.startsWith("/tmp/") || clean.startsWith("/var/tmp/") || clean.startsWith("/run/user/");
 		if (!isTemp) {
 			return {
@@ -231,7 +251,7 @@ QtObject {
 		const safeExt = /^\.[a-zA-Z0-9]+$/.test(ext) ? ext : ".png";
 		const destFile = root.iconCacheDir + "/" + notifId + "_" + Date.now() + safeExt;
 
-		Quickshell.execDetached(["cp", clean, destFile]);
+		Quickshell.execDetached(["cp", "-P", "--", clean, destFile]);
 
 		return {
 			source: "file://" + destFile,
@@ -533,7 +553,7 @@ QtObject {
 						invoked = true;
 					}
 				} catch (e) {
-					console.log("Error invoking default action:", e);
+					console.error("Error invoking default action:", e);
 				}
 
 				if (invoked && !item.rawNotif.resident) {
@@ -560,7 +580,7 @@ QtObject {
 						}
 					}
 				} catch (e) {
-					console.log("Error invoking action:", actionId, e);
+					console.error("Error invoking action:", actionId, e);
 				}
 
 				if (invoked && !item.rawNotif.resident) {
@@ -582,7 +602,7 @@ QtObject {
 					item.rawNotif.sendInlineReply(String(replyText));
 					sent = true;
 				} catch (e) {
-					console.log("Error sending reply:", e);
+					console.error("Error sending reply:", e);
 				}
 
 				if (sent && !item.rawNotif.resident) {
@@ -620,8 +640,9 @@ QtObject {
 		}
 	}
 
-	function toggleHistoryExpanded(idx: int): void {
-		if (idx >= 0 && idx < historyListModel.count) {
+	function toggleHistoryExpanded(id: int): void {
+		const idx = root._findHistoryIndex(id);
+		if (idx !== -1) {
 			const it = historyListModel.get(idx);
 			if (it) {
 				historyListModel.setProperty(idx, "expanded", !it.expanded);
