@@ -8,7 +8,7 @@ QtObject {
 	id: root
 
 	property SystemClock clock: SystemClock {
-		precision: SystemClock.Seconds
+		precision: SystemClock.Minutes
 	}
 
 	readonly property date currentDate: (clock && clock.date) ? clock.date : new Date()

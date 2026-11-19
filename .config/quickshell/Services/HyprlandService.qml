@@ -11,6 +11,21 @@ QtObject {
 	readonly property string activeTitle: Hyprland.activeToplevel?.title ?? ""
 	property string currentSubmap: ""
 
+	readonly property var _emptyArray: []
+	readonly property var _iconCache: new Map()
+	readonly property var _workspacesCache: new Map()
+	readonly property var _appIconsCache: new Map()
+
+	function _arraysEqual(a, b): bool {
+		if (!a || !b || a.length !== b.length)
+			return false;
+		for (let i = 0; i < a.length; i++) {
+			if (a[i] !== b[i])
+				return false;
+		}
+		return true;
+	}
+
 	property Connections ipcConn: Connections {
 		target: Hyprland
 
@@ -24,20 +39,26 @@ QtObject {
 
 	function workspacesForScreen(screen): var {
 		if (!screen)
-			return [];
+			return root._emptyArray;
 
 		const monitor = Hyprland.monitorFor(screen);
 		const screenName = monitor?.name ?? screen?.name ?? (typeof screen === "string" ? screen : "");
 		if (!screenName)
-			return [];
+			return root._emptyArray;
 
-		return Hyprland.workspaces.values.filter(ws => ws?.monitor?.name === screenName).slice().sort((a, b) => a.id - b.id);
+		const next = Hyprland.workspaces.values.filter(ws => ws?.monitor?.name === screenName).slice().sort((a, b) => a.id - b.id);
+		const prev = root._workspacesCache.get(screenName);
+		if (root._arraysEqual(prev, next))
+			return prev;
+
+		root._workspacesCache.set(screenName, next);
+		return next;
 	}
 
 	function toplevelsForWorkspace(workspace): var {
 		if (!workspace)
-			return [];
-		return workspace.toplevels?.values ?? [];
+			return root._emptyArray;
+		return workspace.toplevels?.values ?? root._emptyArray;
 	}
 
 	function iconForToplevel(toplevel): string {
@@ -46,31 +67,43 @@ QtObject {
 
 		const rawClass = toplevel.lastIpcObject?.class ?? toplevel.lastIpcObject?.initialClass ?? toplevel.wayland?.appId ?? "";
 		const appClass = String(rawClass).trim();
-		if (!appClass)
-			return Quickshell.iconPath(Config.workspaceFallbackAppIcon);
 
-		const overrides = Config.workspaceAppIconOverrides ?? {};
-		const override = overrides[appClass] ?? overrides[appClass.toLowerCase()];
-		if (override && override.length > 0) {
-			if (Quickshell.hasThemeIcon(override))
-				return Quickshell.iconPath(override);
-			return override;
+		if (root._iconCache.has(appClass))
+			return root._iconCache.get(appClass);
+
+		let resolved = "";
+		if (!appClass) {
+			resolved = Quickshell.iconPath(Config.workspaceFallbackAppIcon);
+		} else {
+			const overrides = Config.workspaceAppIconOverrides ?? {};
+			const override = overrides[appClass] ?? overrides[appClass.toLowerCase()];
+			if (override && override.length > 0) {
+				resolved = Quickshell.hasThemeIcon(override) ? Quickshell.iconPath(override) : override;
+			} else if (Quickshell.hasThemeIcon(appClass)) {
+				resolved = Quickshell.iconPath(appClass);
+			} else {
+				const lower = appClass.toLowerCase();
+				if (Quickshell.hasThemeIcon(lower))
+					resolved = Quickshell.iconPath(lower);
+				else
+					resolved = Quickshell.iconPath(Config.workspaceFallbackAppIcon);
+			}
 		}
 
-		if (Quickshell.hasThemeIcon(appClass))
-			return Quickshell.iconPath(appClass);
-
-		const lower = appClass.toLowerCase();
-		if (Quickshell.hasThemeIcon(lower))
-			return Quickshell.iconPath(lower);
-
-		return Quickshell.iconPath(Config.workspaceFallbackAppIcon);
+		root._iconCache.set(appClass, resolved);
+		return resolved;
 	}
 
 	function appIconsForWorkspace(workspace): var {
+		if (!workspace)
+			return root._emptyArray;
+
+		const wsKey = workspace.id !== undefined ? workspace.id : workspace;
 		const toplevels = root.toplevelsForWorkspace(workspace);
-		if (!toplevels || toplevels.length === 0)
-			return [];
+		if (!toplevels || toplevels.length === 0) {
+			root._appIconsCache.set(wsKey, root._emptyArray);
+			return root._emptyArray;
+		}
 
 		const icons = [];
 		for (let i = 0; i < toplevels.length; i++) {
@@ -80,6 +113,12 @@ QtObject {
 					icons.push(icon);
 			}
 		}
+
+		const prev = root._appIconsCache.get(wsKey);
+		if (root._arraysEqual(prev, icons))
+			return prev;
+
+		root._appIconsCache.set(wsKey, icons);
 		return icons;
 	}
 

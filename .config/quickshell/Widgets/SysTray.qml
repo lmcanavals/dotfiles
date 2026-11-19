@@ -48,7 +48,7 @@ BarPill {
 				IconImage {
 					anchors.fill: parent
 					source: itemArea.modelData ? itemArea.modelData.icon : ""
-					asynchronous: false
+					asynchronous: true
 				}
 			}
 		}
