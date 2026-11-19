@@ -61,6 +61,7 @@ PopupWindow {
 	SurfaceCard {
 		id: mainCard
 
+		anchors.fill: parent
 		implicitHeight: contentLayout.implicitHeight + Config.padding * 3
 		implicitWidth: 700
 		color: Theme.bgSurface

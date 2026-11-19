@@ -18,7 +18,7 @@ ShellRoot {
 	}
 
 	LazyLoader {
-		active: UpdatesService.open
+		active: UpdatesService.hasOpened
 		UpdatesPopup {}
 	}
 

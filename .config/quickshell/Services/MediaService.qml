@@ -25,6 +25,8 @@ QtObject {
 	property bool open: false
 	property bool hasOpened: false
 	property Item targetItem: null
+	property Item _trackedItem: null
+	property var _destructionHandler: null
 
 	function formatTime(val: real): string {
 		if (val <= 0 || isNaN(val))
@@ -71,8 +73,18 @@ QtObject {
 		activePlayer.volume = Math.max(0.0, Math.min(1.0, current + delta));
 	}
 
+	function _detachTarget(): void {
+		if (root._trackedItem && root._destructionHandler) {
+			root._trackedItem.Component.destruction.disconnect(root._destructionHandler);
+		}
+		root._trackedItem = null;
+		root._destructionHandler = null;
+	}
+
 	function close(): void {
+		root._detachTarget();
 		root.open = false;
+		root.targetItem = null;
 	}
 
 	function next(): void {
@@ -107,8 +119,19 @@ QtObject {
 		if (root.open && root.targetItem === target) {
 			root.close();
 		} else {
+			root._detachTarget();
 			root.targetItem = target;
 			root.open = true;
+			if (target) {
+				const handler = () => {
+					if (root.targetItem === target) {
+						root.close();
+					}
+				};
+				root._trackedItem = target;
+				root._destructionHandler = handler;
+				target.Component.destruction.connect(handler);
+			}
 		}
 	}
 }
