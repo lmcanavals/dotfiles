@@ -59,9 +59,10 @@ QtObject {
 		running: false
 
 		stdout: StdioCollector {
+			id: queryCollector
 			onStreamFinished: {
 				try {
-					const raw = this.text.trim();
+					const raw = queryCollector.text.trim();
 					if (raw.length === 0)
 						return;
 					const parsed = JSON.parse(raw);
@@ -74,8 +75,7 @@ QtObject {
 						root.updateLayout(mainKb.active_keymap);
 					}
 				} catch (e) {
-					console.log(`Error on KeyboardService ${queryProcess.command}
-					${e}`);
+					console.error(`Error on KeyboardService ${queryProcess.command}: ${e}`);
 				}
 			}
 		}

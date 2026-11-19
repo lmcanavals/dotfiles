@@ -83,18 +83,6 @@ QtObject {
 		objects: root.trackedNodes
 	}
 
-	// Fallback sanity poller for untracked / disconnected audio states (2s)
-	property Timer sanityTimer: Timer {
-		interval: 2000
-		repeat: true
-		running: !root.source || !root.sink
-		onTriggered: {
-			if (Pipewire.defaultAudioSource || Pipewire.defaultAudioSink) {
-				// Re-evaluation triggers naturally via QML reactive bindings
-			}
-		}
-	}
-
 	function nodeLabel(node: var): string {
 		if (!node)
 			return "";
@@ -108,7 +96,7 @@ QtObject {
 		try {
 			Pipewire.preferredDefaultAudioSink = node;
 		} catch (e) {
-			console.log("Error setting preferredDefaultAudioSink:", e);
+			console.error("Error setting preferredDefaultAudioSink:", e);
 		}
 	}
 
@@ -119,7 +107,7 @@ QtObject {
 		try {
 			Pipewire.preferredDefaultAudioSource = node;
 		} catch (e) {
-			console.log("Error setting preferredDefaultAudioSource:", e);
+			console.error("Error setting preferredDefaultAudioSource:", e);
 		}
 	}
 }

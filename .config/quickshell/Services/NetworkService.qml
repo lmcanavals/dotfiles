@@ -59,8 +59,9 @@ QtObject {
 		running: false
 
 		stdout: StdioCollector {
+			id: statusCollector
 			onStreamFinished: {
-				const out = this.text.trim();
+				const out = statusCollector.text.trim();
 				if (!out)
 					return;
 
@@ -182,10 +183,16 @@ QtObject {
 
 	property bool active: false
 
+	onActiveChanged: {
+		if (root.pollTimer.running) {
+			root.pollTimer.restart();
+		}
+	}
+
 	property Timer pollTimer: Timer {
-		interval: 4000
+		interval: root.active ? 3000 : 15000
 		repeat: true
-		running: root.active
+		running: true
 		triggeredOnStart: true
 		onTriggered: root.refresh()
 	}
@@ -211,9 +218,9 @@ QtObject {
 		if (ethToggleProcess.running || !root.ethernetDevice || root.ethernetDevice.length === 0)
 			return;
 		if (root.ethernetConnected) {
-			ethToggleProcess.command = ["nmcli", "device", "disconnect", root.ethernetDevice];
+			ethToggleProcess.command = ["nmcli", "device", "disconnect", "--", root.ethernetDevice];
 		} else {
-			ethToggleProcess.command = ["nmcli", "device", "connect", root.ethernetDevice];
+			ethToggleProcess.command = ["nmcli", "device", "connect", "--", root.ethernetDevice];
 		}
 		ethToggleProcess.running = true;
 	}

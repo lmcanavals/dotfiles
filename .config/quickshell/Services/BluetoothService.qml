@@ -20,8 +20,9 @@ QtObject {
 		running: false
 
 		stdout: StdioCollector {
+			id: statusCollector
 			onStreamFinished: {
-				const out = this.text;
+				const out = statusCollector.text;
 				if (!out) {
 					root.enabled = false;
 					root.connected = false;
@@ -55,8 +56,9 @@ QtObject {
 		running: false
 
 		stdout: StdioCollector {
+			id: devicesCollector
 			onStreamFinished: {
-				const out = this.text.trim();
+				const out = devicesCollector.text.trim();
 				if (!out) {
 					root.connected = false;
 					root.connectedDevice = "";
@@ -87,10 +89,16 @@ QtObject {
 		running: false
 	}
 
+	onActiveChanged: {
+		if (root.pollTimer.running) {
+			root.pollTimer.restart();
+		}
+	}
+
 	property Timer pollTimer: Timer {
-		interval: 4000
+		interval: root.active ? 3000 : 15000
 		repeat: true
-		running: root.active
+		running: true
 		triggeredOnStart: true
 		onTriggered: root.refresh()
 	}

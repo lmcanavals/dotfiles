@@ -7,33 +7,37 @@ import Quickshell.Io
 QtObject {
 	id: root
 
-	readonly property string gitDir: (Quickshell.env("HOME") ?? "") + "/.dotfiles.git"
-	readonly property string workTree: Quickshell.env("HOME") ?? ""
+	readonly property string _homeDir: {
+		const envHome = (Quickshell.env("HOME") || "").trim();
+		return envHome.startsWith("/") ? envHome : "/home/lmcs";
+	}
+	readonly property string gitDir: _homeDir + "/.dotfiles.git"
+	readonly property string workTree: _homeDir
 
 	property string branch: "main"
 	property int ahead: 0
 	property int behind: 0
 	property int staged: 0
 	property int modified: 0
-	property int untracked: 0
+	readonly property int untracked: 0
 
 	readonly property bool isDiverged: (root.ahead > 0 && root.behind > 0)
 	readonly property bool isClean: (root.ahead === 0 && root.behind === 0 && root.staged === 0 && root.modified === 0 && root.untracked === 0)
 
 	property Process statusProc: Process {
 		id: statusProcess
-		command: ["git", `--git-dir=${root.gitDir}`, `--work-tree=${root.workTree}`, "status", "-uno", "--porcelain=v1", "--branch"]
+		command: ["git", "--git-dir", root.gitDir, "--work-tree", root.workTree, "status", "-uno", "--porcelain=v1", "--branch"]
 		running: false
 
 		stdout: StdioCollector {
+			id: statusCollector
 			onStreamFinished: {
-				const text = this.text;
+				const text = statusCollector.text;
 				if (!text || text.trim().length === 0) {
 					root.ahead = 0;
 					root.behind = 0;
 					root.staged = 0;
 					root.modified = 0;
-					root.untracked = 0;
 					return;
 				}
 
@@ -46,7 +50,6 @@ QtObject {
 				let parsedBehind = 0;
 				let parsedStaged = 0;
 				let parsedModified = 0;
-				let parsedUntracked = 0;
 
 				// Line 0 contains branch tracking info: e.g. "## main...origin/main [ahead 1, behind 2]"
 				if (lines[0].startsWith("## ")) {
@@ -65,7 +68,7 @@ QtObject {
 					}
 				}
 
-				// Subsequent lines contain file changes
+				// Subsequent lines contain file changes (-uno skips untracked files)
 				for (let i = 1; i < lines.length; i++) {
 					const line = lines[i];
 					if (!line || line.length < 2)
@@ -74,15 +77,11 @@ QtObject {
 					const x = line[0];
 					const y = line[1];
 
-					if (x === "?" && y === "?") {
-						parsedUntracked++;
-					} else {
-						if (x !== " " && x !== "?") {
-							parsedStaged++;
-						}
-						if (y === "M" || y === "D") {
-							parsedModified++;
-						}
+					if (x !== " " && x !== "?") {
+						parsedStaged++;
+					}
+					if (y === "M" || y === "D") {
+						parsedModified++;
 					}
 				}
 
@@ -91,7 +90,6 @@ QtObject {
 				root.behind = parsedBehind;
 				root.staged = parsedStaged;
 				root.modified = parsedModified;
-				root.untracked = parsedUntracked;
 			}
 		}
 	}
@@ -108,7 +106,7 @@ QtObject {
 	}
 
 	function openLazygit(): void {
-		lazygitProcess.command = ["kitty", "--title", "󰣇  Lazygit: dotfiles", "lazygit", `--git-dir=${root.gitDir}`, `--work-tree=${root.workTree}`];
+		lazygitProcess.command = ["kitty", "--title", "󰣇  Lazygit: dotfiles", "lazygit", "--git-dir", root.gitDir, "--work-tree", root.workTree];
 		lazygitProcess.startDetached();
 	}
 

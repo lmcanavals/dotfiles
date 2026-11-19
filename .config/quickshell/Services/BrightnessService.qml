@@ -29,8 +29,9 @@ QtObject {
 		running: true
 
 		stdout: StdioCollector {
+			id: readCollector
 			onStreamFinished: {
-				const out = this.text.trim();
+				const out = readCollector.text.trim();
 				if (out.length > 0) {
 					const parts = out.split(",");
 					if (parts.length >= 4) {

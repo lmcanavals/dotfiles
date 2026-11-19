@@ -15,9 +15,10 @@ QtObject {
 	property bool isQueryingAccount: false
 
 	property FileView hostFile: FileView {
+		id: hostFileView
 		path: "/etc/hostname"
 		onLoaded: {
-			const text = this.text().trim();
+			const text = hostFileView.text().trim();
 			if (text.length > 0)
 				root.hostname = text;
 		}
@@ -71,7 +72,7 @@ QtObject {
 					}
 					root.realName = rName;
 				} catch (e) {
-					console.log(`Error on SystemInfoService ${accountProcess.command}: ${e}`);
+					console.error(`Error on SystemInfoService ${accountProcess.command}: ${e}`);
 				}
 				root.isQueryingAccount = false;
 			}
