@@ -2,6 +2,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import Quickshell
+import Quickshell.Hyprland
 import Quickshell.Wayland
 import Core
 import Services
@@ -14,10 +15,11 @@ PanelWindow { // qmllint enable uncreatable-type
 	readonly property string submap: HyprlandService.currentSubmap
 
 	visible: root.submap !== ""
+	screen: Quickshell.screens.find(s => s.name === Hyprland.focusedMonitor?.name) ?? null
 
 	anchors.bottom: true
-	// qmllint disable missing-property
-	margins.bottom: (screen.height ?? 1080) / 6 // qmllint enable missing-property
+	// qmllint disable missing-property redundant-optional-chaining
+	margins.bottom: (screen?.height ?? 1080) / 6 // qmllint enable missing-property redundant-optional-chaining
 	exclusiveZone: 0
 
 	implicitWidth: content.implicitWidth + Config.padding

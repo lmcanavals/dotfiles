@@ -20,21 +20,51 @@ QtObject {
 	property string lastUpdated: ""
 	property bool isChecking: false
 	property bool open: false
+	property bool hasOpened: false
 	property Item targetItem: null
+	property Item _trackedItem: null
+	property var _destructionHandler: null
 
 	readonly property string glyph: "󰮯"
+
+	onOpenChanged: {
+		if (root.open) {
+			root.hasOpened = true;
+		}
+	}
+
+	function _detachTarget(): void {
+		if (root._trackedItem && root._destructionHandler) {
+			root._trackedItem.Component.destruction.disconnect(root._destructionHandler);
+		}
+		root._trackedItem = null;
+		root._destructionHandler = null;
+	}
 
 	function toggle(item: Item): void {
 		if (root.open && root.targetItem === item) {
 			root.close();
 		} else {
+			root._detachTarget();
 			root.targetItem = item;
 			root.open = true;
+			if (item) {
+				const handler = () => {
+					if (root.targetItem === item) {
+						root.close();
+					}
+				};
+				root._trackedItem = item;
+				root._destructionHandler = handler;
+				item.Component.destruction.connect(handler);
+			}
 		}
 	}
 
 	function close(): void {
+		root._detachTarget();
 		root.open = false;
+		root.targetItem = null;
 	}
 
 	function levelColor(level: string): color {
