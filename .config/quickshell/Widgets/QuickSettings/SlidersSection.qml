@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Layouts
 import Core
@@ -45,17 +47,20 @@ ColumnLayout {
 		onValueModified: val => AudioService.setVolume(val)
 	}
 
-	InlineSelectionDrawer {
-		id: sinkDrawer
+	Loader {
+		id: sinkDrawerLoader
 		Layout.fillWidth: true
-		visible: root.activeDrawer === "sink"
-		title: "Audio Outputs"
-		modelList: AudioService.sinks
-		selectedItem: AudioService.sink
-		itemLabelFunc: node => AudioService.nodeLabel(node)
-		onItemSelected: node => {
-			AudioService.setSink(node);
-			root.activeDrawer = "";
+		active: root.activeDrawer === "sink"
+		visible: active
+		sourceComponent: InlineSelectionDrawer {
+			title: "Audio Outputs"
+			modelList: AudioService.sinks
+			selectedItem: AudioService.sink
+			itemLabelFunc: node => AudioService.nodeLabel(node)
+			onItemSelected: node => {
+				AudioService.setSink(node);
+				root.activeDrawer = "";
+			}
 		}
 	}
 
@@ -75,17 +80,20 @@ ColumnLayout {
 		onValueModified: val => AudioService.setMicVolume(val)
 	}
 
-	InlineSelectionDrawer {
-		id: sourceDrawer
+	Loader {
+		id: sourceDrawerLoader
 		Layout.fillWidth: true
-		visible: root.activeDrawer === "source"
-		title: "Audio Inputs"
-		modelList: AudioService.sources
-		selectedItem: AudioService.source
-		itemLabelFunc: node => AudioService.nodeLabel(node)
-		onItemSelected: node => {
-			AudioService.setSource(node);
-			root.activeDrawer = "";
+		active: root.activeDrawer === "source"
+		visible: active
+		sourceComponent: InlineSelectionDrawer {
+			title: "Audio Inputs"
+			modelList: AudioService.sources
+			selectedItem: AudioService.source
+			itemLabelFunc: node => AudioService.nodeLabel(node)
+			onItemSelected: node => {
+				AudioService.setSource(node);
+				root.activeDrawer = "";
+			}
 		}
 	}
 

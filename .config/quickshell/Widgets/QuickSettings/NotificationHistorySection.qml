@@ -53,10 +53,17 @@ SurfaceCard {
 
 				delegate: Rectangle {
 					id: itemCard
-					required property var model
-					required property int index
+					required property int id
+					required property bool expanded
+					required property string body
+					required property string appIcon
+					required property string appName
+					required property string urgency
+					required property string time
+					required property string summary
+					required property double value
 
-					readonly property bool isExpanded: Boolean(itemCard.model && itemCard.model.expanded)
+					readonly property bool isExpanded: itemCard.expanded
 
 					width: ListView.view ? ListView.view.width : 300
 					implicitHeight: rowLayout.implicitHeight + 8
@@ -67,8 +74,8 @@ SurfaceCard {
 						id: itemMouseArea
 						anchors.fill: parent
 						hoverEnabled: true
-						cursorShape: (itemCard.model && itemCard.model.body && itemCard.model.body.length > 0) ? Qt.PointingHandCursor : Qt.ArrowCursor
-						onClicked: NotificationService.toggleHistoryExpanded(itemCard.index)
+						cursorShape: itemCard.body.length > 0 ? Qt.PointingHandCursor : Qt.ArrowCursor
+						onClicked: NotificationService.toggleHistoryExpanded(itemCard.id)
 					}
 
 					RowLayout {
@@ -79,7 +86,7 @@ SurfaceCard {
 						spacing: Config.spacing
 
 						ThumbnailImage {
-							source: itemCard.model ? (itemCard.model.appIcon || "") : ""
+							source: itemCard.appIcon
 							minHeight: 32
 							maxHeight: 32
 							radius: Config.radiusSmall
@@ -95,14 +102,14 @@ SurfaceCard {
 								spacing: Config.spacing
 
 								StyledText {
-									text: (itemCard.model && itemCard.model.appName) ? itemCard.model.appName : "Notification"
-									color: (itemCard.model && itemCard.model.urgency === "critical") ? Theme.colors.error : Theme.colors.accent
+									text: itemCard.appName || "Notification"
+									color: itemCard.urgency === "critical" ? Theme.colors.error : Theme.colors.accent
 									font.bold: true
 									font.pixelSize: Config.fontSizeSmall
 								}
 
 								StyledText {
-									visible: itemCard.model && itemCard.model.urgency === "critical"
+									visible: itemCard.urgency === "critical"
 									text: "󰀦 CRITICAL"
 									color: Theme.colors.error
 									font.bold: true
@@ -114,14 +121,14 @@ SurfaceCard {
 								}
 
 								StyledText {
-									text: (itemCard.model && itemCard.model.time) ? itemCard.model.time : ""
+									text: itemCard.time
 									font.pixelSize: Config.fontSizeTiny
 									color: Theme.colors.comment
 								}
 							}
 
 							StyledText {
-								text: (itemCard.model && itemCard.model.summary) ? itemCard.model.summary : ""
+								text: itemCard.summary
 								Layout.fillWidth: true
 								color: Theme.colors.fg
 								elide: itemCard.isExpanded ? Text.ElideNone : Text.ElideRight
@@ -130,8 +137,8 @@ SurfaceCard {
 							}
 
 							StyledText {
-								visible: itemCard.isExpanded && itemCard.model && itemCard.model.body && itemCard.model.body.length > 0
-								text: itemCard.model ? (itemCard.model.body || "") : ""
+								visible: itemCard.isExpanded && itemCard.body.length > 0
+								text: itemCard.body
 								font.pixelSize: Config.fontSizeTiny
 								color: Theme.colors.fg_dark
 								wrapMode: Text.Wrap
@@ -139,20 +146,20 @@ SurfaceCard {
 							}
 
 							ProgressBar {
-								visible: itemCard.model && itemCard.model.value !== undefined && itemCard.model.value >= 0
+								visible: itemCard.value >= 0
 								Layout.fillWidth: true
 								Layout.topMargin: 2
 								implicitHeight: 3
 								fillRadius: 1
 								fillColor: Theme.colors.accent
 								trackColor: Theme.bgTrack
-								value: (itemCard.model && itemCard.model.value !== undefined) ? (Number(itemCard.model.value) / 100.0) : 0.0
+								value: Number(itemCard.value) / 100.0
 							}
 						}
 
 						StyledButton {
 							text: Config.iconClose
-							onClicked: NotificationService.removeHistory(itemCard.model.id)
+							onClicked: NotificationService.removeHistory(itemCard.id)
 						}
 					}
 				}
