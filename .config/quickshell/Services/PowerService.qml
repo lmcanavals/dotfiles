@@ -12,7 +12,6 @@ QtObject {
 	// Primary device properties
 	readonly property string primaryGlyph: glyphForDevice(root.displayDevice)
 	readonly property string primaryState: stateForDevice(root.displayDevice)
-	readonly property string primaryName: deviceName(root.displayDevice)
 	readonly property string primaryTimeEstimate: timeEstimate(root.displayDevice)
 	readonly property string primaryPercentText: percentText(root.displayDevice)
 	readonly property bool primaryShowPercent: showPercent(root.displayDevice)

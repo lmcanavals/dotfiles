@@ -213,7 +213,6 @@ QtObject {
 	readonly property bool isCpuUrgent: isTempUrgent || root.cpuUsage >= 0.80
 	readonly property bool isMemUrgent: root.memUsage >= 0.90 || root.swapUsage >= 0.75
 	readonly property bool isDiskUrgent: root.diskUsage >= 0.85 || (root.diskFreePercent > 0 && root.diskFreePercent < 15)
-	readonly property bool hasUrgentHardwareState: isCpuUrgent || isMemUrgent || isDiskUrgent
 
 	readonly property int cpuTempInterval: isCpuUrgent ? 500 : (root.active ? 2000 : 5000)
 	readonly property int memInterval: isMemUrgent ? 2000 : (root.active ? 5000 : 10000)
