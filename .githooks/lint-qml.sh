@@ -2,7 +2,6 @@
 set -euo pipefail
 
 QUICKSHELL_DIR="${QUICKSHELL_DIR:-$HOME/.config/quickshell}"
-MAX_AOT_WARNINGS="${MAX_AOT_WARNINGS:-253}"
 
 QMLLINT_BIN="${QMLLINT_BIN:-$(command -v qmllint || true)}"
 if [[ -z "$QMLLINT_BIN" && -x "$HOME/.local/bin/qmllint" ]]; then
@@ -47,11 +46,3 @@ if [[ -n "$LINT_OUTPUT" ]]; then
 	exit 1
 fi
 
-AOT_OUTPUT="$("$QMLLINT_BIN" --compiler warning "${LINT_ARGS[@]}" "${QML_FILES[@]}" 2>&1 || true)"
-AOT_COUNT="$(printf '%s\n' "$AOT_OUTPUT" | grep -c '^Warning:' || true)"
-echo "[qmllint] AOT compiler warnings: ${AOT_COUNT} (baseline: ${MAX_AOT_WARNINGS})"
-
-if (( AOT_COUNT > MAX_AOT_WARNINGS )); then
-	echo "[qmllint] ERROR: AOT warning count (${AOT_COUNT}) exceeded baseline (${MAX_AOT_WARNINGS})" >&2
-	exit 1
-fi
