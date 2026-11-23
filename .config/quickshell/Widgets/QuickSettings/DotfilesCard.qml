@@ -84,6 +84,13 @@ SurfaceCard {
 		}
 
 		StyledText {
+			visible: DotfilesService.untracked > 0
+			text: ` ${DotfilesService.untracked}${DotfilesService.untrackedTruncated ? "+" : ""}`
+			color: Theme.muted
+			font.pixelSize: Config.fontSizeSmall
+		}
+
+		StyledText {
 			text: "󰁔"
 			font.pixelSize: Config.fontSizeSmall
 			color: mouseArea.containsMouse ? Theme.accent : Theme.fgDark

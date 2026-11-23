@@ -19,13 +19,15 @@ QtObject {
 	property int behind: 0
 	property int staged: 0
 	property int modified: 0
+	property int untracked: 0
+	property bool untrackedTruncated: false
 
 	readonly property bool isDiverged: (root.ahead > 0 && root.behind > 0)
-	readonly property bool isClean: (root.ahead === 0 && root.behind === 0 && root.staged === 0 && root.modified === 0)
+	readonly property bool isClean: (root.ahead === 0 && root.behind === 0 && root.staged === 0 && root.modified === 0 && root.untracked === 0)
 
 	property Process statusProc: Process {
 		id: statusProcess
-		command: ["git", "--git-dir", root.gitDir, "--work-tree", root.workTree, "status", "-uno", "--porcelain=v1", "--branch"]
+		command: ["git", "--git-dir", root.gitDir, "--work-tree", root.workTree, "status", "-unormal", "--porcelain=v1", "--branch"]
 		running: false
 
 		stdout: StdioCollector {
@@ -37,6 +39,8 @@ QtObject {
 					root.behind = 0;
 					root.staged = 0;
 					root.modified = 0;
+					root.untracked = 0;
+					root.untrackedTruncated = false;
 					return;
 				}
 
@@ -49,6 +53,9 @@ QtObject {
 				let parsedBehind = 0;
 				let parsedStaged = 0;
 				let parsedModified = 0;
+				let parsedUntracked = 0;
+				let parsedTruncated = false;
+				const maxLines = 500;
 
 				// Line 0 contains branch tracking info: e.g. "## main...origin/main [ahead 1, behind 2]"
 				if (lines[0].startsWith("## ")) {
@@ -67,8 +74,12 @@ QtObject {
 					}
 				}
 
-				// Subsequent lines contain file changes (-uno skips untracked files)
+				// Subsequent lines contain file changes (-unormal includes untracked files, capped at maxLines)
 				for (let i = 1; i < lines.length; i++) {
+					if (i >= maxLines) {
+						parsedTruncated = true;
+						break;
+					}
 					const line = lines[i];
 					if (!line || line.length < 2)
 						continue;
@@ -76,11 +87,15 @@ QtObject {
 					const x = line[0];
 					const y = line[1];
 
-					if (x !== " " && x !== "?") {
-						parsedStaged++;
-					}
-					if (y === "M" || y === "D") {
-						parsedModified++;
+					if (x === "?" && y === "?") {
+						parsedUntracked++;
+					} else {
+						if (x !== " ") {
+							parsedStaged++;
+						}
+						if (y === "M" || y === "D") {
+							parsedModified++;
+						}
 					}
 				}
 
@@ -89,6 +104,8 @@ QtObject {
 				root.behind = parsedBehind;
 				root.staged = parsedStaged;
 				root.modified = parsedModified;
+				root.untracked = parsedUntracked;
+				root.untrackedTruncated = parsedTruncated;
 			}
 		}
 	}
