@@ -9,13 +9,18 @@ import Core
 import Services
 import Primitives
 
-SurfaceCard {
+ClippingRectangle {
 	id: root
 
 	required property ShellScreen screen
 
+	antialiasing: true
+	border.color: Theme.colors.border
+	border.width: 1
+	color: Theme.bgCard
 	implicitHeight: Config.widgetHeight
 	implicitWidth: layout.implicitWidth
+	radius: Config.radius
 
 	RowLayout {
 		id: layout
