@@ -54,9 +54,18 @@ QtObject {
 
 	readonly property string iconCacheDir: {
 		const xdg = Quickshell.env("XDG_CACHE_HOME") || "";
+		if (xdg.startsWith("/")) {
+			return xdg + "/quickshell/notification-icons";
+		}
 		const home = Quickshell.env("HOME") || "";
-		const base = xdg.length > 0 ? xdg : (home.length > 0 ? (home + "/.cache") : "/tmp");
-		return base + "/quickshell/notification-icons";
+		if (home.startsWith("/")) {
+			return home + "/.cache/quickshell/notification-icons";
+		}
+		const runtimeDir = Quickshell.env("XDG_RUNTIME_DIR") || "";
+		if (runtimeDir.startsWith("/")) {
+			return runtimeDir + "/quickshell/notification-icons";
+		}
+		return "";
 	}
 
 	function _isSafeIconCacheDir(dir: string): bool {
@@ -87,7 +96,7 @@ QtObject {
 			for (const [path, expiry] of root._pendingUnlinks.entries()) {
 				if (now >= expiry) {
 					root._pendingUnlinks.delete(path);
-					Quickshell.execDetached(["rm", "-f", path]);
+					Quickshell.execDetached(["rm", "-f", "--", path]);
 				}
 			}
 			if (root._pendingUnlinks.size === 0) {
@@ -108,7 +117,9 @@ QtObject {
 	}
 
 	Component.onCompleted: {
-		Quickshell.execDetached(["mkdir", "-p", root.iconCacheDir]);
+		if (root._isSafeIconCacheDir(root.iconCacheDir)) {
+			Quickshell.execDetached(["mkdir", "-p", "--", root.iconCacheDir]);
+		}
 		root._checkZeroStatePurge();
 		if (root._isSafeIconCacheDir(root.iconCacheDir)) {
 			Quickshell.execDetached(["find", root.iconCacheDir, "-type", "f", "-mtime", "+3", "-delete"]);
@@ -210,6 +221,15 @@ QtObject {
 		root._checkZeroStatePurge();
 	}
 
+	function openSafeLink(link: string): void {
+		const url = String(link).trim();
+		if (/^https?:\/\//i.test(url)) {
+			Qt.openUrlExternally(url);
+		} else {
+			console.warn("Blocked untrusted URL scheme:", url);
+		}
+	}
+
 	function sanitizeNotificationText(text: string): string {
 		if (!text || text.length === 0)
 			return "";
@@ -246,12 +266,19 @@ QtObject {
 			};
 		}
 
+		if (!root._isSafeIconCacheDir(root.iconCacheDir)) {
+			return {
+				source: "",
+				cachedFile: ""
+			};
+		}
+
 		const lastDot = clean.lastIndexOf(".");
 		const ext = (lastDot !== -1 && lastDot > clean.lastIndexOf("/")) ? clean.substring(lastDot) : ".png";
 		const safeExt = /^\.[a-zA-Z0-9]+$/.test(ext) ? ext : ".png";
 		const destFile = root.iconCacheDir + "/" + notifId + "_" + Date.now() + safeExt;
 
-		Quickshell.execDetached(["cp", "-P", "--", clean, destFile]);
+		Quickshell.execDetached(["sh", "-c", "test -f \"$1\" && test ! -L \"$1\" && test \"$(wc -c < \"$1\")\" -le 10485760 && cp -P -- \"$1\" \"$2\"", "sh", clean, destFile]);
 
 		return {
 			source: "file://" + destFile,

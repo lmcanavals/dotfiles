@@ -9,6 +9,7 @@ import Services
 SurfaceCard {
 	id: root
 
+	Layout.fillWidth: true
 	Layout.fillHeight: true
 	implicitWidth: 300
 
@@ -133,6 +134,8 @@ SurfaceCard {
 								color: Theme.colors.fg
 								elide: itemCard.isExpanded ? Text.ElideNone : Text.ElideRight
 								font.pixelSize: Config.fontSizeSmall
+								onLinkActivated: link => NotificationService.openSafeLink(link)
+								textFormat: Text.StyledText
 								wrapMode: itemCard.isExpanded ? Text.Wrap : Text.NoWrap
 							}
 
@@ -141,6 +144,8 @@ SurfaceCard {
 								text: itemCard.body
 								font.pixelSize: Config.fontSizeTiny
 								color: Theme.colors.fg_dark
+								onLinkActivated: link => NotificationService.openSafeLink(link)
+								textFormat: Text.StyledText
 								wrapMode: Text.Wrap
 								Layout.fillWidth: true
 							}

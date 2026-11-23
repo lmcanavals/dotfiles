@@ -3,6 +3,7 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import Quickshell.Hyprland
 import Quickshell.Wayland
 import Core
 import Primitives
@@ -12,6 +13,7 @@ import Services
 PanelWindow { // qmllint enable uncreatable-type
 	id: root
 
+	screen: Quickshell.screens.find(s => s.name === Hyprland.focusedMonitor?.name) ?? null
 	visible: NotificationService.activeList.count > 0
 
 	anchors {
@@ -31,15 +33,6 @@ PanelWindow { // qmllint enable uncreatable-type
 
 	property Item focusedReplyInput: null
 	readonly property bool hasActiveReplyFocus: focusedReplyInput !== null && focusedReplyInput.activeFocus
-
-	function openSafeLink(link: string): void {
-		const url = String(link).trim();
-		if (/^https?:\/\//i.test(url)) {
-			Qt.openUrlExternally(url);
-		} else {
-			console.warn("Blocked untrusted URL scheme:", url);
-		}
-	}
 
 	WlrLayershell.layer: WlrLayer.Overlay
 	WlrLayershell.namespace: "quickshell:notifications"
@@ -137,6 +130,7 @@ PanelWindow { // qmllint enable uncreatable-type
 					}
 
 					ColumnLayout {
+						Layout.fillWidth: true
 						Layout.alignment: Qt.AlignTop
 						// 1. App Header Row
 						RowLayout {
@@ -194,7 +188,7 @@ PanelWindow { // qmllint enable uncreatable-type
 									Layout.fillWidth: true
 									color: card.isCritical ? Theme.colors.error : Theme.colors.fg
 									font.bold: true
-									onLinkActivated: link => root.openSafeLink(link)
+									onLinkActivated: link => NotificationService.openSafeLink(link)
 									textFormat: Text.StyledText
 								}
 
@@ -203,7 +197,7 @@ PanelWindow { // qmllint enable uncreatable-type
 									Layout.fillWidth: true
 									color: Theme.colors.fg
 									font.pixelSize: Config.fontSizeSmall
-									onLinkActivated: link => root.openSafeLink(link)
+									onLinkActivated: link => NotificationService.openSafeLink(link)
 									textFormat: Text.StyledText
 									visible: card.body.length > 0
 									wrapMode: Text.Wrap
@@ -223,10 +217,10 @@ PanelWindow { // qmllint enable uncreatable-type
 								delegate: StyledButton {
 									id: actionBtn
 
-									required property var model
+									required property string id
+									required text
 
-									text: actionBtn.model.text
-									onClicked: NotificationService.invokeAction(card.id, actionBtn.model.id)
+									onClicked: NotificationService.invokeAction(card.id, actionBtn.id)
 								}
 							}
 						}
