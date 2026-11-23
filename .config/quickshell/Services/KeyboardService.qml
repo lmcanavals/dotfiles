@@ -38,11 +38,14 @@ QtObject {
 		root.shortLayout = root.deriveShort(name);
 	}
 
+	property bool _eventReceived: false
+
 	property Connections ipcConn: Connections {
 		target: Hyprland
 
 		function onRawEvent(event) {
 			if (event.name === "activelayout") {
+				root._eventReceived = true;
 				const parts = event.parse(2);
 				if (parts && parts.length > 1) {
 					root.updateLayout(parts[1].trim());
@@ -61,6 +64,8 @@ QtObject {
 		stdout: StdioCollector {
 			id: queryCollector
 			onStreamFinished: {
+				if (root._eventReceived)
+					return;
 				try {
 					const raw = queryCollector.text.trim();
 					if (raw.length === 0)

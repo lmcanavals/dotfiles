@@ -69,14 +69,46 @@ QtObject {
 		}
 	}
 
+	readonly property var _arrayCache: ({
+			sinks: [],
+			sources: [],
+			trackedNodes: []
+		})
+
+	function _nodeArraysEqual(a: var, b: var): bool {
+		if (!a || !b || a.length !== b.length)
+			return false;
+		for (let i = 0; i < a.length; i++) {
+			if (a[i]?.id !== b[i]?.id)
+				return false;
+		}
+		return true;
+	}
+
 	// qmllint disable missing-property
-	readonly property var sinks: (Pipewire.nodes && Pipewire.nodes.values) ? Pipewire.nodes.values.filter(n => n && n.isSink && !n.isStream) : []
-	readonly property var sources: (Pipewire.nodes && Pipewire.nodes.values) ? Pipewire.nodes.values.filter(n => n && (n.isSource || (!n.isSink && !n.isStream && (n.audio || n.properties?.["media.class"] === "Audio/Source")))) : []
+	readonly property var sinks: {
+		const next = (Pipewire.nodes && Pipewire.nodes.values) ? Pipewire.nodes.values.filter(n => n && n.isSink && !n.isStream) : [];
+		if (root._nodeArraysEqual(root._arrayCache.sinks, next))
+			return root._arrayCache.sinks;
+		root._arrayCache.sinks = next;
+		return next;
+	}
+	readonly property var sources: {
+		const next = (Pipewire.nodes && Pipewire.nodes.values) ? Pipewire.nodes.values.filter(n => n && (n.isSource || (!n.isSink && !n.isStream && (n.audio || n.properties?.["media.class"] === "Audio/Source")))) : [];
+		if (root._nodeArraysEqual(root._arrayCache.sources, next))
+			return root._arrayCache.sources;
+		root._arrayCache.sources = next;
+		return next;
+	}
 	// qmllint enable missing-property
 
 	readonly property var trackedNodes: {
 		const raw = [root.sink, root.source, ...root.sinks, ...root.sources];
-		return raw.filter((node, index, self) => node && self.indexOf(node) === index);
+		const next = raw.filter((node, index, self) => node && self.indexOf(node) === index);
+		if (root._nodeArraysEqual(root._arrayCache.trackedNodes, next))
+			return root._arrayCache.trackedNodes;
+		root._arrayCache.trackedNodes = next;
+		return next;
 	}
 
 	property PwObjectTracker tracker: PwObjectTracker {

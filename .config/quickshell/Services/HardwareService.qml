@@ -165,7 +165,8 @@ QtObject {
 		running: false
 
 		stdout: StdioCollector {
-			onStreamFinished: root.parseDisk(this.text)
+			id: diskCollector
+			onStreamFinished: root.parseDisk(diskCollector.text)
 		}
 	}
 

@@ -29,6 +29,6 @@ QtObject {
 		} else {
 			nightLightSetter.command = ["hyprctl", "hyprsunset", "identity"];
 		}
-		nightLightSetter.running = true;
+		nightLightSetter.startDetached();
 	}
 }

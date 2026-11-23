@@ -71,7 +71,9 @@ PanelWindow { // qmllint enable uncreatable-type
 		target: BrightnessService
 
 		function onBrightnessChanged() {
-			root.trigger("brightness");
+			if (BrightnessService.ready) {
+				root.trigger("brightness");
+			}
 		}
 	}
 
