@@ -84,13 +84,6 @@ SurfaceCard {
 		}
 
 		StyledText {
-			visible: DotfilesService.untracked > 0
-			text: ` ${DotfilesService.untracked}`
-			color: Theme.colors.comment
-			font.pixelSize: Config.fontSizeSmall
-		}
-
-		StyledText {
 			text: "󰁔"
 			font.pixelSize: Config.fontSizeSmall
 			color: mouseArea.containsMouse ? Theme.colors.accent : Theme.colors.fg_dark

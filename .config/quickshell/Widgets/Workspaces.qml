@@ -88,6 +88,7 @@ ClippingRectangle {
 						delegate: IconImage {
 							required property string modelData
 
+							asynchronous: true
 							implicitSize: Config.workspaceAppIconSize
 							source: modelData
 						}

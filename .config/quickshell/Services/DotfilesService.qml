@@ -19,10 +19,9 @@ QtObject {
 	property int behind: 0
 	property int staged: 0
 	property int modified: 0
-	readonly property int untracked: 0
 
 	readonly property bool isDiverged: (root.ahead > 0 && root.behind > 0)
-	readonly property bool isClean: (root.ahead === 0 && root.behind === 0 && root.staged === 0 && root.modified === 0 && root.untracked === 0)
+	readonly property bool isClean: (root.ahead === 0 && root.behind === 0 && root.staged === 0 && root.modified === 0)
 
 	property Process statusProc: Process {
 		id: statusProcess
