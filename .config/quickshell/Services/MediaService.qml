@@ -115,23 +115,34 @@ QtObject {
 		root.updatePosition();
 	}
 
+	function _openTarget(target: Item): void {
+		root._detachTarget();
+		root.targetItem = target;
+		root.open = true;
+		if (target) {
+			const handler = () => {
+				if (root.targetItem === target) {
+					root.close();
+				}
+			};
+			root._trackedItem = target;
+			root._destructionHandler = handler;
+			target.Component.destruction.connect(handler);
+		}
+	}
+
 	function toggle(target: Item): void {
 		if (root.open && root.targetItem === target) {
 			root.close();
+		} else if (root.open) {
+			root.close();
+			Qt.callLater(() => {
+				if (!root.open) {
+					root._openTarget(target);
+				}
+			});
 		} else {
-			root._detachTarget();
-			root.targetItem = target;
-			root.open = true;
-			if (target) {
-				const handler = () => {
-					if (root.targetItem === target) {
-						root.close();
-					}
-				};
-				root._trackedItem = target;
-				root._destructionHandler = handler;
-				target.Component.destruction.connect(handler);
-			}
+			root._openTarget(target);
 		}
 	}
 }

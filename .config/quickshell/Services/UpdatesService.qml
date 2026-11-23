@@ -40,23 +40,34 @@ QtObject {
 		root._destructionHandler = null;
 	}
 
+	function _openTarget(item: Item): void {
+		root._detachTarget();
+		root.targetItem = item;
+		root.open = true;
+		if (item) {
+			const handler = () => {
+				if (root.targetItem === item) {
+					root.close();
+				}
+			};
+			root._trackedItem = item;
+			root._destructionHandler = handler;
+			item.Component.destruction.connect(handler);
+		}
+	}
+
 	function toggle(item: Item): void {
 		if (root.open && root.targetItem === item) {
 			root.close();
+		} else if (root.open) {
+			root.close();
+			Qt.callLater(() => {
+				if (!root.open) {
+					root._openTarget(item);
+				}
+			});
 		} else {
-			root._detachTarget();
-			root.targetItem = item;
-			root.open = true;
-			if (item) {
-				const handler = () => {
-					if (root.targetItem === item) {
-						root.close();
-					}
-				};
-				root._trackedItem = item;
-				root._destructionHandler = handler;
-				item.Component.destruction.connect(handler);
-			}
+			root._openTarget(item);
 		}
 	}
 
@@ -121,7 +132,7 @@ QtObject {
 				};
 			}
 		} catch (e) {
-			console.log(`UpdatesService JSON parse error: ${e}`);
+			console.error(`UpdatesService JSON parse error: ${e}`);
 		}
 		root.isChecking = false;
 		checkingTimeoutTimer.stop();
@@ -145,7 +156,7 @@ QtObject {
 			if (exitCode !== 0) {
 				const err = queryErrCollector.text.trim();
 				if (err.length > 0) {
-					console.log(`UpdatesService updates-query failed (code ${exitCode}): ${err}`);
+					console.error(`UpdatesService updates-query failed (code ${exitCode}): ${err}`);
 				}
 			}
 			root.isChecking = false;
@@ -185,7 +196,7 @@ QtObject {
 			if (exitCode !== 0) {
 				const err = checkNowErr.text.trim();
 				if (err.length > 0) {
-					console.log(`UpdatesService check-now failed (code ${exitCode}): ${err}`);
+					console.error(`UpdatesService check-now failed (code ${exitCode}): ${err}`);
 				}
 				root.isChecking = false;
 				checkingTimeoutTimer.stop();
@@ -216,7 +227,7 @@ QtObject {
 
 	function triggerUpgrade(): void {
 		root.close();
-		upgradeProcess.command = ["kitty", "--title", "󰣇  System Upgrade", "sh", "-c", "yay; updates-query -check-now >/dev/null 2>&1; echo 'Press enter to exit'; read"];
+		upgradeProcess.command = ["kitty", "--hold", "--title", "󰣇  System Upgrade", "yay"];
 		upgradeProcess.startDetached();
 	}
 }

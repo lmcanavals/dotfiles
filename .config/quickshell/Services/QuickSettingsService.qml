@@ -28,23 +28,34 @@ QtObject {
 		root._destructionHandler = null;
 	}
 
+	function _openTarget(item: Item): void {
+		root._detachTarget();
+		root.targetItem = item;
+		root.open = true;
+		if (item) {
+			const handler = () => {
+				if (root.targetItem === item) {
+					root.close();
+				}
+			};
+			root._trackedItem = item;
+			root._destructionHandler = handler;
+			item.Component.destruction.connect(handler);
+		}
+	}
+
 	function toggle(item: Item): void {
 		if (root.open && root.targetItem === item) {
 			root.close();
+		} else if (root.open) {
+			root.close();
+			Qt.callLater(() => {
+				if (!root.open) {
+					root._openTarget(item);
+				}
+			});
 		} else {
-			root._detachTarget();
-			root.targetItem = item;
-			root.open = true;
-			if (item) {
-				const handler = () => {
-					if (root.targetItem === item) {
-						root.close();
-					}
-				};
-				root._trackedItem = item;
-				root._destructionHandler = handler;
-				item.Component.destruction.connect(handler);
-			}
+			root._openTarget(item);
 		}
 	}
 

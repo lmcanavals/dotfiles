@@ -18,6 +18,8 @@ import Services
 PanelWindow { // qmllint enable uncreatable-type
 	id: root
 
+	screen: Quickshell.screens[0] ?? null
+	exclusiveZone: 0
 	WlrLayershell.layer: WlrLayer.Background
 	WlrLayershell.namespace: "quickshell:integrations"
 
