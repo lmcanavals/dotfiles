@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Only run qmllint when Quickshell files are staged
+STAGED_QS="$(git diff --cached --name-only -- .config/quickshell || true)"
+if [[ -z "$STAGED_QS" ]]; then
+	exit 0
+fi
+
+HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+exec "$HOOK_DIR/lint-qml.sh"
