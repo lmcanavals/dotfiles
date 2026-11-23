@@ -90,7 +90,7 @@ ClippingRectangle {
 
 	StyledText {
 		anchors.centerIn: parent
-		color: Theme.colors.comment
+		color: Theme.comment
 		font.pixelSize: Config.fontSizeXL
 		text: root.fallbackIcon
 		visible: root.showFallback && artImage.status !== Image.Ready

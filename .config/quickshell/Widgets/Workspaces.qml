@@ -15,7 +15,7 @@ ClippingRectangle {
 	required property ShellScreen screen
 
 	antialiasing: true
-	border.color: Theme.colors.border
+	border.color: Theme.border
 	border.width: 1
 	color: Theme.bgCard
 	implicitHeight: Config.widgetHeight
@@ -41,10 +41,10 @@ ClippingRectangle {
 				readonly property bool isUrgent: modelData?.urgent ?? false
 				readonly property bool isActive: modelData?.active ?? false
 
-				readonly property color bgNormal: isFocused ? Theme.colors.bg_widget_r : isUrgent ? Theme.colors.accent_dim : isActive ? Theme.colors.bg_highlight : Theme.colors.bg_widget
-				readonly property color fgNormal: isFocused ? Theme.colors.fg_widget_r : Theme.colors.fg_widget
+				readonly property color bgNormal: isFocused ? Theme.bgWidgetR : isUrgent ? Theme.accentDim : isActive ? Theme.bgHighlight : Theme.bgWidget
+				readonly property color fgNormal: isFocused ? Theme.fgWidgetR : Theme.fgWidget
 
-				color: mouseArea.containsMouse ? (isFocused ? Theme.colors.bg_widget_r : Theme.bgControlHover) : bgNormal
+				color: mouseArea.containsMouse ? (isFocused ? Theme.bgWidgetR : Theme.bgControlHover) : bgNormal
 				radius: 0
 
 				Behavior on color {
@@ -78,7 +78,7 @@ ClippingRectangle {
 							const name = wsButton.modelData.name ?? `${wsButton.modelData.id ?? ""}`;
 							return name.replace(/^special:/, "");
 						}
-						color: mouseArea.containsMouse ? (wsButton.isFocused ? Theme.colors.fg_widget_r : Theme.colors.fg_widget) : wsButton.fgNormal
+						color: mouseArea.containsMouse ? (wsButton.isFocused ? Theme.fgWidgetR : Theme.fgWidget) : wsButton.fgNormal
 						font.pixelSize: Config.fontSizeBase
 					}
 

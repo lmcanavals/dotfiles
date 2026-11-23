@@ -37,7 +37,7 @@ ColumnLayout {
 		glyph: AudioService.glyph
 		value: AudioService.volume
 		muted: AudioService.muted
-		accentColor: Theme.colors.fg_widget
+		accentColor: Theme.fgWidget
 		expandable: true
 		expanded: root.activeDrawer === "sink"
 
@@ -70,7 +70,7 @@ ColumnLayout {
 		glyph: AudioService.micGlyph
 		value: AudioService.micVolume
 		muted: AudioService.micMuted
-		accentColor: Theme.colors.fg_widget
+		accentColor: Theme.fgWidget
 		expandable: true
 		expanded: root.activeDrawer === "source"
 
@@ -102,7 +102,7 @@ ColumnLayout {
 		glyph: BrightnessService.glyph
 		value: BrightnessService.brightness
 		muted: false
-		accentColor: Theme.colors.fg_widget
+		accentColor: Theme.fgWidget
 
 		onValueModified: val => BrightnessService.setBrightness(val)
 	}

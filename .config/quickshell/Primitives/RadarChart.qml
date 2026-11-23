@@ -7,9 +7,9 @@ Canvas {
 	property var values: []
 	property real maxValue: 1.
 
-	property color gridColor: Theme.colors.border
-	property color spokeColor: Theme.colors.border
-	property color lineColor: Theme.colors.success
+	property color gridColor: Theme.border
+	property color spokeColor: Theme.border
+	property color lineColor: Theme.success
 	property color areaColor: Theme.alpha(lineColor, .35)
 	property real lineWidth: 1.
 	property int gridLevels: 3

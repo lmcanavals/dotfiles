@@ -15,8 +15,8 @@ ColumnLayout {
 
 	property int titleSize: Config.fontSizeLarge
 	property int countSize: Config.fontSizeSmall
-	property color titleColor: Theme.colors.accent
-	property color countColor: Theme.colors.comment
+	property color titleColor: Theme.accent
+	property color countColor: Theme.comment
 
 	property bool showSeparator: true
 
@@ -56,7 +56,7 @@ ColumnLayout {
 	Rectangle {
 		Layout.fillWidth: true
 		implicitHeight: 1
-		color: Theme.colors.border
+		color: Theme.border
 		visible: root.showSeparator
 	}
 }

@@ -8,8 +8,8 @@ Rectangle {
 	property int minWidth: 20
 	property color bg: Theme.bgControl
 	property color bgHover: Theme.bgControlHover
-	property color fg: Theme.colors.fg
-	property color fgHover: Theme.colors.fg_widget
+	property color fg: Theme.fg
+	property color fgHover: Theme.fgWidget
 	property int fontSize: Config.fontSizeBase
 
 	signal clicked

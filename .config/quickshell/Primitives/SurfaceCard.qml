@@ -7,6 +7,6 @@ Rectangle {
 	antialiasing: true
 	color: Theme.bgCard
 	radius: Config.radius
-	border.color: Theme.colors.border
+	border.color: Theme.border
 	border.width: 1
 }

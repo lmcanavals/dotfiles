@@ -71,7 +71,7 @@ PopupWindow {
 					visible: MediaService.artist || MediaService.album
 
 					StyledText {
-						color: Theme.colors.fg
+						color: Theme.fg
 						font.pixelSize: Config.fontSizeSmall
 						text: MediaService.artist
 					}
@@ -81,7 +81,7 @@ PopupWindow {
 					}
 
 					StyledText {
-						color: Theme.colors.fg
+						color: Theme.fg
 						font.pixelSize: Config.fontSizeSmall
 						text: MediaService.album
 					}
@@ -91,7 +91,7 @@ PopupWindow {
 					Layout.fillWidth: true
 					implicitHeight: 6
 					value: MediaService.progress
-					accentColor: Theme.colors.accent
+					accentColor: Theme.accent
 					onValueModified: ratio => MediaService.seek(ratio)
 				}
 
@@ -121,20 +121,20 @@ PopupWindow {
 					StyledText {
 						text: MediaService.formatTime(MediaService.position)
 						Layout.minimumWidth: 30
-						color: Theme.colors.fg
+						color: Theme.fg
 						font.pixelSize: Config.fontSizeSmall
 					}
 
 					StyledText {
 						text: "/"
-						color: Theme.colors.fg
+						color: Theme.fg
 						font.pixelSize: Config.fontSizeSmall
 					}
 
 					StyledText {
 						text: MediaService.formatTime(MediaService.length)
 						Layout.minimumWidth: 30
-						color: Theme.colors.fg
+						color: Theme.fg
 						font.pixelSize: Config.fontSizeSmall
 					}
 				}

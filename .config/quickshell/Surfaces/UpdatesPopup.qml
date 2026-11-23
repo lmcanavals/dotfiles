@@ -63,7 +63,7 @@ PopupWindow {
 						running: UpdatesService.isChecking
 						anchors.centerIn: parent
 						fontSize: Config.fontSizeBase
-						color: Theme.colors.info
+						color: Theme.info
 					}
 				}
 
@@ -87,12 +87,12 @@ PopupWindow {
 						visible: UpdatesService.isChecking
 						running: UpdatesService.isChecking
 						fontSize: Config.fontSizeLarge
-						color: Theme.colors.info
+						color: Theme.info
 					}
 
 					StyledText {
 						text: UpdatesService.isChecking ? "Checking for updates..." : "System is up to date"
-						color: UpdatesService.isChecking ? Theme.colors.info : Theme.colors.success
+						color: UpdatesService.isChecking ? Theme.info : Theme.success
 						font.bold: true
 						font.pixelSize: Config.fontSizeSmall
 					}
@@ -123,7 +123,7 @@ PopupWindow {
 								return source === "pacman" ? "󰮯" : source === "aur" ? "󰢚" : "?";
 							}
 							Layout.minimumWidth: 20
-							color: delegateRoot.modelData.source === "aur" ? Theme.colors.warning : Theme.colors.accent
+							color: delegateRoot.modelData.source === "aur" ? Theme.warning : Theme.accent
 							font.bold: true
 							font.pixelSize: Config.fontSizeTiny
 						}
@@ -136,21 +136,21 @@ PopupWindow {
 
 						StyledText {
 							text: delegateRoot.modelData.old || "?"
-							color: Theme.colors.fg
+							color: Theme.fg
 							font.pixelSize: Config.fontSizeSmall
 						}
 
 						StyledText {
 							text: ""
 							Layout.minimumWidth: 20
-							color: Theme.colors.fg
+							color: Theme.fg
 							font.pixelSize: Config.fontSizeSmall
 						}
 
 						StyledText {
 							text: delegateRoot.modelData.unchanged || ""
 							Layout.minimumWidth: 85 - newVerChanged.implicitWidth
-							color: Theme.colors.fg
+							color: Theme.fg
 							font.pixelSize: Config.fontSizeSmall
 							horizontalAlignment: Text.AlignRight
 						}
@@ -221,7 +221,7 @@ PopupWindow {
 					visible: UpdatesService.lastUpdated.length > 0
 					text: UpdatesService.lastUpdated.replace("T", " ").substring(0, 19)
 					font.pixelSize: Config.fontSizeSmall
-					color: Theme.colors.comment
+					color: Theme.comment
 				}
 			}
 		}

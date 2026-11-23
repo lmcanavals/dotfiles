@@ -26,21 +26,21 @@ RowLayout {
 				text: SystemInfoService.realName
 				font.bold: true
 				font.pixelSize: Config.fontSizeLarge
-				color: Theme.colors.accent
+				color: Theme.accent
 				visible: SystemInfoService.realName !== ""
 			}
 
 			StyledText {
 				Layout.fillWidth: true
 				text: "󱎫"
-				color: Theme.colors.comment
+				color: Theme.comment
 				font.pixelSize: Config.fontSizeSmall
 				horizontalAlignment: Text.AlignRight
 			}
 
 			StyledText {
 				text: SystemInfoService.uptime
-				color: Theme.colors.comment
+				color: Theme.comment
 				font.pixelSize: Config.fontSizeSmall
 			}
 
@@ -56,12 +56,12 @@ RowLayout {
 			StyledText {
 				text: SystemInfoService.username
 				font.bold: true
-				color: Theme.colors.success
+				color: Theme.success
 			}
 
 			StyledText {
 				text: ""
-				color: Theme.colors.fg
+				color: Theme.fg
 			}
 
 			StyledText {

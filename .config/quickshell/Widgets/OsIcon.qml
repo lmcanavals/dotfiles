@@ -19,7 +19,7 @@ BarPill {
 		LoadingSpinner {
 			visible: UpdatesService.isChecking
 			running: UpdatesService.isChecking
-			color: Theme.colors.info
+			color: Theme.info
 			fontSize: Config.fontSizeBase
 		}
 
@@ -28,7 +28,7 @@ BarPill {
 			visible: !UpdatesService.isChecking
 			text: UpdatesService.count > 0 ? UpdatesService.glyph : Config.iconOs
 			font.bold: true
-			color: UpdatesService.levelCounts.major > 0 ? Theme.colors.error : (UpdatesService.count > 0 ? Theme.colors.warning : Theme.colors.fg_widget)
+			color: UpdatesService.levelCounts.major > 0 ? Theme.error : (UpdatesService.count > 0 ? Theme.warning : Theme.fgWidget)
 
 			Behavior on color {
 				ColorAnimation {
@@ -40,7 +40,7 @@ BarPill {
 		StyledText {
 			visible: UpdatesService.count > 0
 			text: `${UpdatesService.count}`
-			color: UpdatesService.isChecking ? Theme.colors.info : (UpdatesService.levelCounts.major > 0 ? Theme.colors.error : Theme.colors.warning)
+			color: UpdatesService.isChecking ? Theme.info : (UpdatesService.levelCounts.major > 0 ? Theme.error : Theme.warning)
 			opacity: UpdatesService.isChecking ? 0.6 : 1.0
 
 			Behavior on opacity {

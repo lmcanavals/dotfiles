@@ -19,8 +19,8 @@ Rectangle {
 	implicitHeight: 42
 	radius: Config.radius
 
-	color: active ? Theme.colors.bg_widget_r : (mouseArea.containsMouse ? Theme.bgControlHover : Theme.bgControl)
-	border.color: Theme.colors.border
+	color: active ? Theme.bgWidgetR : (mouseArea.containsMouse ? Theme.bgControlHover : Theme.bgControl)
+	border.color: Theme.border
 	border.width: 1
 	opacity: root.busy ? 0.7 : 1.0
 
@@ -58,14 +58,14 @@ Rectangle {
 			visible: root.busy
 			running: root.busy
 			fontSize: Config.fontSizeXL
-			color: root.active ? Theme.colors.fg_widget_r : Theme.colors.info
+			color: root.active ? Theme.fgWidgetR : Theme.info
 			Layout.preferredWidth: 24
 		}
 
 		StyledText {
 			visible: !root.busy
 			text: root.glyph
-			color: root.active ? Theme.colors.fg_widget_r : Theme.colors.comment
+			color: root.active ? Theme.fgWidgetR : Theme.comment
 			font.pixelSize: Config.fontSizeXL
 			Layout.preferredWidth: 24
 		}
@@ -76,7 +76,7 @@ Rectangle {
 
 			StyledText {
 				text: root.label
-				color: root.active ? Theme.colors.fg_widget_r : Theme.colors.comment
+				color: root.active ? Theme.fgWidgetR : Theme.comment
 				font.bold: root.active
 				font.pixelSize: Config.fontSizeSmall
 				Layout.fillWidth: true
@@ -85,7 +85,7 @@ Rectangle {
 
 			StyledText {
 				text: root.busy ? "Pending..." : (root.active ? "On" : "Off")
-				color: root.busy ? Theme.colors.info : Theme.colors.comment
+				color: root.busy ? Theme.info : Theme.comment
 				font.pixelSize: Config.fontSizeTiny
 				Layout.fillWidth: true
 				horizontalAlignment: Text.AlignLeft

@@ -33,7 +33,7 @@ SurfaceCard {
 			text: `󱁻 ${DotfilesService.branch} `
 			font.bold: true
 			font.pixelSize: Config.fontSizeLarge
-			color: Theme.colors.accent
+			color: Theme.accent
 		}
 
 		Item {
@@ -43,7 +43,7 @@ SurfaceCard {
 		StyledText {
 			visible: DotfilesService.isClean
 			text: "󰄬 synced"
-			color: Theme.colors.success
+			color: Theme.success
 			font.bold: true
 			font.pixelSize: Config.fontSizeSmall
 		}
@@ -51,42 +51,42 @@ SurfaceCard {
 		StyledText {
 			visible: DotfilesService.isDiverged
 			text: ""
-			color: Theme.colors.error
+			color: Theme.error
 			font.pixelSize: Config.fontSizeSmall
 		}
 
 		StyledText {
 			visible: DotfilesService.ahead > 0 && !DotfilesService.isDiverged
 			text: ` ${DotfilesService.ahead}`
-			color: Theme.colors.info
+			color: Theme.info
 			font.pixelSize: Config.fontSizeSmall
 		}
 
 		StyledText {
 			visible: DotfilesService.behind > 0 && !DotfilesService.isDiverged
 			text: ` ${DotfilesService.behind}`
-			color: Theme.colors.warning
+			color: Theme.warning
 			font.pixelSize: Config.fontSizeSmall
 		}
 
 		StyledText {
 			visible: DotfilesService.staged > 0
 			text: ` ${DotfilesService.staged}`
-			color: Theme.colors.success
+			color: Theme.success
 			font.pixelSize: Config.fontSizeSmall
 		}
 
 		StyledText {
 			visible: DotfilesService.modified > 0
 			text: ` ${DotfilesService.modified}`
-			color: Theme.colors.warning
+			color: Theme.warning
 			font.pixelSize: Config.fontSizeSmall
 		}
 
 		StyledText {
 			text: "󰁔"
 			font.pixelSize: Config.fontSizeSmall
-			color: mouseArea.containsMouse ? Theme.colors.accent : Theme.colors.fg_dark
+			color: mouseArea.containsMouse ? Theme.accent : Theme.fgDark
 		}
 	}
 }

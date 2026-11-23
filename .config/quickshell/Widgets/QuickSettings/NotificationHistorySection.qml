@@ -37,7 +37,7 @@ SurfaceCard {
 			StyledText {
 				text: "No notifications"
 				anchors.centerIn: parent
-				color: Theme.colors.comment
+				color: Theme.comment
 				font.pixelSize: Config.fontSizeSmall
 				visible: NotificationService.historyList.count === 0
 			}
@@ -104,7 +104,7 @@ SurfaceCard {
 
 								StyledText {
 									text: itemCard.appName || "Notification"
-									color: itemCard.urgency === "critical" ? Theme.colors.error : Theme.colors.accent
+									color: itemCard.urgency === "critical" ? Theme.error : Theme.accent
 									font.bold: true
 									font.pixelSize: Config.fontSizeSmall
 								}
@@ -112,7 +112,7 @@ SurfaceCard {
 								StyledText {
 									visible: itemCard.urgency === "critical"
 									text: "󰀦 CRITICAL"
-									color: Theme.colors.error
+									color: Theme.error
 									font.bold: true
 									font.pixelSize: Config.fontSizeTiny
 								}
@@ -124,14 +124,14 @@ SurfaceCard {
 								StyledText {
 									text: itemCard.time
 									font.pixelSize: Config.fontSizeTiny
-									color: Theme.colors.comment
+									color: Theme.comment
 								}
 							}
 
 							StyledText {
 								text: itemCard.summary
 								Layout.fillWidth: true
-								color: Theme.colors.fg
+								color: Theme.fg
 								elide: itemCard.isExpanded ? Text.ElideNone : Text.ElideRight
 								font.pixelSize: Config.fontSizeSmall
 								onLinkActivated: link => NotificationService.openSafeLink(link)
@@ -143,7 +143,7 @@ SurfaceCard {
 								visible: itemCard.isExpanded && itemCard.body.length > 0
 								text: itemCard.body
 								font.pixelSize: Config.fontSizeTiny
-								color: Theme.colors.fg_dark
+								color: Theme.fgDark
 								onLinkActivated: link => NotificationService.openSafeLink(link)
 								textFormat: Text.StyledText
 								wrapMode: Text.Wrap
@@ -156,7 +156,7 @@ SurfaceCard {
 								Layout.topMargin: 2
 								implicitHeight: 3
 								fillRadius: 1
-								fillColor: Theme.colors.accent
+								fillColor: Theme.accent
 								trackColor: Theme.bgTrack
 								value: Number(itemCard.value) / 100.0
 							}

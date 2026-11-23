@@ -9,7 +9,7 @@ Rectangle {
 	property int minHeight: 16
 	property int thickness: 3
 	property real barRadius: 1.5
-	property color barColor: Theme.colors.border
+	property color barColor: Theme.border
 
 	anchors.left: target?.right
 	width: thickness

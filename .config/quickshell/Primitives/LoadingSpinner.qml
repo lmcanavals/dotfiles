@@ -6,7 +6,7 @@ Item {
 
 	property bool running: true
 	property string glyph: Config.iconSpinner
-	property color color: Theme.colors.info
+	property color color: Theme.info
 	property int fontSize: Config.fontSizeBase
 	property int duration: 1000
 

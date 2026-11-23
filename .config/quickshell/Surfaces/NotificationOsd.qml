@@ -72,7 +72,7 @@ PanelWindow { // qmllint enable uncreatable-type
 
 				Layout.fillWidth: true
 				color: card.isHovered ? Theme.bgCardHover : Theme.bgCard
-				border.color: card.isCritical ? Theme.colors.error : Theme.colors.border
+				border.color: card.isCritical ? Theme.error : Theme.border
 				border.width: card.isCritical ? 2 : 1
 				implicitHeight: innerLayout.implicitHeight + (Config.padding * 2)
 				onTimestampChanged: dismissTimer.restart()
@@ -139,7 +139,7 @@ PanelWindow { // qmllint enable uncreatable-type
 
 							StyledText {
 								text: card.appName || "Notification"
-								color: card.isCritical ? Theme.colors.error : Theme.colors.comment
+								color: card.isCritical ? Theme.error : Theme.comment
 								font.bold: true
 								font.pixelSize: Config.fontSizeTiny
 								horizontalAlignment: Text.AlignLeft
@@ -148,20 +148,20 @@ PanelWindow { // qmllint enable uncreatable-type
 							StyledText {
 								visible: card.isCritical
 								text: "󰀦 CRITICAL"
-								color: Theme.colors.error
+								color: Theme.error
 								font.bold: true
 								font.pixelSize: Config.fontSizeTiny
 							}
 
 							StyledText {
 								text: "󰝁"
-								color: card.isHovered ? Theme.colors.accent : Theme.colors.comment
+								color: card.isHovered ? Theme.accent : Theme.comment
 								visible: card.isHovered && card.defaultActionLabel.length > 0
 							}
 
 							StyledText {
 								text: card.defaultActionLabel
-								color: card.isHovered ? Theme.colors.accent : Theme.colors.comment
+								color: card.isHovered ? Theme.accent : Theme.comment
 								font.pixelSize: Config.fontSizeTiny
 								visible: card.isHovered && card.defaultActionLabel.length > 0
 							}
@@ -186,7 +186,7 @@ PanelWindow { // qmllint enable uncreatable-type
 								StyledText {
 									text: card.summary
 									Layout.fillWidth: true
-									color: card.isCritical ? Theme.colors.error : Theme.colors.fg
+									color: card.isCritical ? Theme.error : Theme.fg
 									font.bold: true
 									onLinkActivated: link => NotificationService.openSafeLink(link)
 									textFormat: Text.StyledText
@@ -195,7 +195,7 @@ PanelWindow { // qmllint enable uncreatable-type
 								StyledText {
 									text: card.body
 									Layout.fillWidth: true
-									color: Theme.colors.fg
+									color: Theme.fg
 									font.pixelSize: Config.fontSizeSmall
 									onLinkActivated: link => NotificationService.openSafeLink(link)
 									textFormat: Text.StyledText
@@ -237,8 +237,8 @@ PanelWindow { // qmllint enable uncreatable-type
 								Layout.fillWidth: true
 								implicitHeight: 28
 								radius: Config.radiusSmall
-								color: Theme.colors.bg_dark
-								border.color: replyInput.activeFocus ? Theme.colors.accent : Theme.colors.border
+								color: Theme.bgDark
+								border.color: replyInput.activeFocus ? Theme.accent : Theme.border
 								border.width: 1
 
 								TextInput {
@@ -248,7 +248,7 @@ PanelWindow { // qmllint enable uncreatable-type
 									anchors.leftMargin: Config.padding
 									anchors.rightMargin: Config.padding
 									verticalAlignment: TextInput.AlignVCenter
-									color: Theme.colors.fg
+									color: Theme.fg
 									font.family: Config.fontFamily
 									font.pixelSize: Config.fontSizeSmall
 									clip: true
@@ -275,7 +275,7 @@ PanelWindow { // qmllint enable uncreatable-type
 									StyledText {
 										text: card.replyPlaceholder ? card.replyPlaceholder : "Type a reply..."
 										anchors.fill: parent
-										color: Theme.colors.comment
+										color: Theme.comment
 										font.pixelSize: Config.fontSizeSmall
 										visible: replyInput.text.length === 0
 									}

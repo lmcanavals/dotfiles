@@ -4,7 +4,7 @@ import Core
 Text {
 	id: root
 
-	color: Theme.colors.fg_widget
+	color: Theme.fgWidget
 	elide: Text.ElideRight
 	font.family: Config.fontFamily
 	font.pixelSize: Config.fontSizeBase

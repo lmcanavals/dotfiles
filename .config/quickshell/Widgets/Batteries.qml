@@ -22,7 +22,7 @@ BarPill {
 	readonly property bool hasWarningAlert: alertMic || PowerService.isWarning
 	readonly property bool hasAlerts: alertMic || alertNetwork || alertTemp || alertMem || alertDisk
 
-	border.color: hasErrorAlert ? Theme.colors.error : (hasWarningAlert ? Theme.colors.warning : Theme.colors.border)
+	border.color: hasErrorAlert ? Theme.error : (hasWarningAlert ? Theme.warning : Theme.border)
 
 	RowLayout {
 		id: layout
@@ -39,7 +39,7 @@ BarPill {
 			StyledText {
 				visible: root.alertMic
 				text: "󰍬"
-				color: Theme.colors.warning
+				color: Theme.warning
 				font.pixelSize: Config.fontSizeSmall
 			}
 
@@ -47,7 +47,7 @@ BarPill {
 			StyledText {
 				visible: root.alertNetwork
 				text: "󰤮"
-				color: Theme.colors.error
+				color: Theme.error
 				font.pixelSize: Config.fontSizeSmall
 			}
 
@@ -55,7 +55,7 @@ BarPill {
 			StyledText {
 				visible: root.alertTemp
 				text: "󰔏"
-				color: Theme.colors.error
+				color: Theme.error
 				font.pixelSize: Config.fontSizeSmall
 			}
 
@@ -63,7 +63,7 @@ BarPill {
 			StyledText {
 				visible: root.alertMem
 				text: HardwareService.memUsage >= 0.90 ? "󰍛" : "󰾴"
-				color: Theme.colors.error
+				color: Theme.error
 				font.pixelSize: Config.fontSizeSmall
 			}
 
@@ -71,7 +71,7 @@ BarPill {
 			StyledText {
 				visible: root.alertDisk
 				text: "󰋊"
-				color: Theme.colors.error
+				color: Theme.error
 				font.pixelSize: Config.fontSizeSmall
 			}
 		}

@@ -34,7 +34,7 @@ SurfaceCard {
 		StyledText {
 			visible: !root.modelList || root.modelList.length === 0
 			text: "No devices found"
-			color: Theme.colors.comment
+			color: Theme.comment
 			font.pixelSize: Config.fontSizeSmall
 		}
 
@@ -83,7 +83,7 @@ SurfaceCard {
 
 						StyledText {
 							text: itemRect.isSelected ? "󰄬" : ""
-							color: Theme.colors.accent
+							color: Theme.accent
 							font.bold: true
 							font.pixelSize: Config.fontSizeSmall
 							Layout.preferredWidth: 16
@@ -91,7 +91,7 @@ SurfaceCard {
 
 						StyledText {
 							text: root.itemLabelFunc ? root.itemLabelFunc(itemRect.modelData) : (itemRect.modelData?.name || itemRect.modelData?.description || String(itemRect.modelData))
-							color: itemRect.isSelected ? Theme.colors.fg : Theme.colors.fg_dark
+							color: itemRect.isSelected ? Theme.fg : Theme.fgDark
 							font.bold: itemRect.isSelected
 							font.pixelSize: Config.fontSizeSmall
 							Layout.fillWidth: true

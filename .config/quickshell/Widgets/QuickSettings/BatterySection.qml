@@ -41,7 +41,7 @@ SurfaceCard {
 				visible: PowerService.primaryTimeEstimate.length > 0
 				text: PowerService.primaryTimeEstimate
 				font.pixelSize: Config.fontSizeTiny
-				color: Theme.colors.comment
+				color: Theme.comment
 			}
 
 			StyledText {
@@ -60,14 +60,14 @@ SurfaceCard {
 
 			StyledText {
 				text: "󰚥"
-				color: Theme.colors.fg_dark
+				color: Theme.fgDark
 			}
 
 			StyledText {
 				text: "AC Powered"
 				font.bold: true
 				font.pixelSize: Config.fontSizeLarge
-				color: Theme.colors.fg_dark
+				color: Theme.fgDark
 				Layout.fillWidth: true
 			}
 		}
@@ -77,7 +77,7 @@ SurfaceCard {
 			visible: PowerService.hasBattery && PowerService.peripheralCount > 0
 			Layout.fillWidth: true
 			implicitHeight: 1
-			color: Theme.colors.border
+			color: Theme.border
 		}
 
 		// Peripherals list
@@ -100,7 +100,7 @@ SurfaceCard {
 					text: PowerService.deviceName(deviceDelegate.modelData)
 					font.pixelSize: Config.fontSizeSmall
 					Layout.fillWidth: true
-					color: Theme.colors.fg
+					color: Theme.fg
 				}
 
 				ProgressBar {
@@ -115,7 +115,7 @@ SurfaceCard {
 					text: PowerService.percentText(deviceDelegate.modelData)
 					font.pixelSize: Config.fontSizeTiny
 					horizontalAlignment: Text.AlignRight
-					color: Theme.colors.fg_dark
+					color: Theme.fgDark
 				}
 			}
 		}

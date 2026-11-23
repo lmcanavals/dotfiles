@@ -9,8 +9,8 @@ Rectangle {
 	required property real value
 	property real minValue: 0.0
 	property real maxValue: 1.0
-	property color fillColor: Theme.colors.accent
-	property color trackColor: Theme.colors.bg_highlight
+	property color fillColor: Theme.accent
+	property color trackColor: Theme.bgHighlight
 	property int fillRadius: Config.radiusSmall
 	property bool animated: true
 

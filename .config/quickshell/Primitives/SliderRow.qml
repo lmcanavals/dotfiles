@@ -24,7 +24,7 @@ RowLayout {
 
 	StyledText {
 		text: root.glyph
-		color: root.muted ? Theme.colors.comment : root.accentColor
+		color: root.muted ? Theme.comment : root.accentColor
 		Layout.minimumWidth: 20
 
 		MouseArea {
@@ -53,14 +53,14 @@ RowLayout {
 		horizontalAlignment: Text.AlignRight
 		text: `${Math.round(root.value * 100)}%`
 		font.pixelSize: Config.fontSizeSmall
-		color: root.muted ? Theme.colors.comment : root.accentColor
+		color: root.muted ? Theme.comment : root.accentColor
 		Layout.preferredWidth: 38
 	}
 
 	StyledText {
 		text: root.expanded ? "󰅀" : "󰅂"
 		Layout.preferredWidth: 16
-		color: chevronMouseArea.containsMouse ? Theme.colors.accent : Theme.colors.comment
+		color: chevronMouseArea.containsMouse ? Theme.accent : Theme.comment
 		font.pixelSize: Config.fontSizeSmall
 		visible: root.expandable
 

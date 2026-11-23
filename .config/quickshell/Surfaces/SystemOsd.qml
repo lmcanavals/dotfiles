@@ -101,10 +101,10 @@ PanelWindow { // qmllint enable uncreatable-type
 
 	readonly property color activeBarColor: {
 		if (root.currentMode === "mic")
-			return AudioService.micMuted ? Theme.colors.comment : Theme.colors.fg_widget;
+			return AudioService.micMuted ? Theme.comment : Theme.fgWidget;
 		if (root.currentMode === "brightness")
-			return Theme.colors.fg_widget;
-		return AudioService.muted ? Theme.colors.comment : Theme.colors.fg_widget;
+			return Theme.fgWidget;
+		return AudioService.muted ? Theme.comment : Theme.fgWidget;
 	}
 
 	readonly property string activeValueText: {

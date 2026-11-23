@@ -43,7 +43,7 @@ PanelWindow { // qmllint enable uncreatable-type
 			anchors.centerIn: parent
 			text: root.submap
 			font.pixelSize: Config.fontSizeLarge
-			color: Theme.colors.fg_widget
+			color: Theme.fgWidget
 		}
 	}
 }

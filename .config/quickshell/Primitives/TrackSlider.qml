@@ -9,8 +9,8 @@ Rectangle {
 	required property real value
 	property real minValue: 0.0
 	property real maxValue: 1.0
-	property color accentColor: Theme.colors.accent
-	property color trackColor: Theme.colors.bg_highlight
+	property color accentColor: Theme.accent
+	property color trackColor: Theme.bgHighlight
 	property bool muted: false
 	property real stepSize: 0.05
 
@@ -31,7 +31,7 @@ Rectangle {
 		}
 		width: root.width * root.normalized
 		radius: root.radius
-		color: root.muted ? Theme.colors.muted : root.accentColor
+		color: root.muted ? Theme.muted : root.accentColor
 
 		Behavior on width {
 			enabled: !mouseArea.pressed

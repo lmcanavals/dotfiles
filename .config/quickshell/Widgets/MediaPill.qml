@@ -30,7 +30,7 @@ BarPill {
 		spacing: Config.spacing
 
 		StyledText {
-			color: MediaService.isPlaying ? Theme.colors.accent : Theme.colors.fg_widget
+			color: MediaService.isPlaying ? Theme.accent : Theme.fgWidget
 			text: MediaService.isPlaying ? "" : ""
 		}
 
@@ -42,7 +42,7 @@ BarPill {
 			}
 
 			Layout.fillWidth: true
-			color: MediaService.isPlaying ? Theme.colors.fg_widget : Theme.colors.comment
+			color: MediaService.isPlaying ? Theme.fgWidget : Theme.comment
 			text: trackLabel
 		}
 	}
