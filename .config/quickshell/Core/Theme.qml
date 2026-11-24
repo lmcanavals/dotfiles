@@ -14,23 +14,23 @@ QtObject {
 
 	// Facade: camelCase properties mapping to LmcsPalette
 	final readonly property color bg: root._palette.bg
-	final readonly property color bgDark: root._palette.bgDark
-	final readonly property color bgHighlight: root._palette.bgHighlight
+	final readonly property color bgDark: root._palette.bg_dark
+	final readonly property color bgHighlight: root._palette.bg_highlight
 	final readonly property color fg: root._palette.fg
-	final readonly property color fgDark: root._palette.fgDark
-	final readonly property color bgWidget: root._palette.bgWidget
-	final readonly property color bgWidgetR: root._palette.bgWidgetR
-	final readonly property color fgWidget: root._palette.fgWidget
-	final readonly property color fgWidgetR: root._palette.fgWidgetR
+	final readonly property color fgDark: root._palette.fg_dark
+	final readonly property color bgWidget: root._palette.bg_widget
+	final readonly property color bgWidgetR: root._palette.bg_widget_r
+	final readonly property color fgWidget: root._palette.fg_widget
+	final readonly property color fgWidgetR: root._palette.fg_widget_r
 	final readonly property color comment: root._palette.comment
 	final readonly property color accent: root._palette.accent
-	final readonly property color accentDim: root._palette.accentDim
-	final readonly property color accentAlt: root._palette.accentAlt
+	final readonly property color accentDim: root._palette.accent_dim
+	final readonly property color accentAlt: root._palette.accent_alt
 	final readonly property color border: root._palette.border
 	final readonly property color shadow: root._palette.shadow
-	final readonly property color gitAdded: root._palette.gitAdded
-	final readonly property color gitModified: root._palette.gitModified
-	final readonly property color gitDeleted: root._palette.gitDeleted
+	final readonly property color gitAdded: root._palette.git_added
+	final readonly property color gitModified: root._palette.git_modified
+	final readonly property color gitDeleted: root._palette.git_deleted
 	final readonly property color success: root._palette.success
 	final readonly property color info: root._palette.info
 	final readonly property color warning: root._palette.warning
